@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+## ~/.bash_prompt: Shell prompt for Bash
+
+nonzero_return() {
+  ## Should not use local var, cause it hang bash when output
+  RETVAL=$?
+  [[ "${RETVAL}" -ne 0 ]] && echo "[${RETVAL}] "
+}
+
+if [[ "$COLORTERM" = gnome-* && "$TERM" = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+  export TERM='gnome-256color'
+elif infocmp xterm-256color >/dev/null 2>&1; then
+  export TERM='xterm-256color'
+fi
+
+## see which color xterm-256color supports
+#for C in {0..255}; do
+#  tput setaf $C # for foreground color
+#  # tput setab $C # for background color
+#  echo -n "$C "
+#done
+#tput sgr0
+#echo
+
+## Ref https://github.com/mathiasbynens/dotfiles/blob/master/.bash_prompt
+## Non-printing escape sequences have to be enclosed in `\[\e[` and `\]`
+if tput setaf 1 &> /dev/null; then
+  tput sgr0; # reset colors
+  bold="\[$(tput bold)\]"
+  reset="\[$(tput sgr0)\]"
+  ## Solarized colors, taken from http://git.io/solarized-colors.
+  black="\[$(tput setaf 0)\]"
+  blue="\[$(tput setaf 33)\]"
+  cyan="\[$(tput setaf 14)\]"
+  green="\[$(tput setaf 10)\]"
+  orange="\[$(tput setaf 166)\]"
+  purple="\[$(tput setaf 13)\]"
+  red="\[$(tput setaf 1)\]"
+  violet="\[$(tput setaf 61)\]"
+  white="\[$(tput setaf 15)\]"
+  yellow="\[$(tput setaf 11)\]"
+else
+  bold="\[\e[1m\]"
+  reset="\[\e[0m\]"
+  black="\[\e[1;30m\]"
+  blue="\[\e[1;34m\]"
+  cyan="\[\e[1;36m\]"
+  green="\[\e[1;32m\]"
+  orange="\[\e[1;33m\]"
+  purple="\[\e[1;35m\]"
+  red="\[\e[1;31m\]"
+  violet="\[\e[1;35m\]"
+  white="\[\e[1;37m\]"
+  yellow="\[\e[1;33m\]"
+fi
+
+## set a fancy prompt (non-color, unless we know we "want" color)
+##     user at host in ~/Documents
+##     9:39 $
+[[ "$TERM" != "dumb" ]] && color_prompt=yes
+[[ "$color_prompt" == yes ]] && color_host="${yellow}"
+
+## Highlight the hostname when connected via SSH.
+host_style="${color_host}\h"
+if [[ -o login || -n "${SSH_TTY}" ]]; then
+  host_style="${host_style} (remote)"
+fi
+
+PS1="\u at ${host_style} in \w\n\$(nonzero_return)\A\$ "
+
+user_at_host="${cyan}\u${white} at ${host_style}${white} in ${green}\w"
+error_prompt="${red}\$(nonzero_return)"
+time_prompt="${white}\A "${reset} # disable bold
+shell_state="${red}\$ "${reset}
+
+[[ "$color_prompt" == "yes" ]] && \
+  PS1="${bold}${user_at_host}\n${error_prompt}${time_prompt}${shell_state}"
+
+unset host_style user_at_host error_prompt time_prompt shell_state color_prompt
+unset bold reset black blue cyan green orange purple red violet white yellow
+
+## If this is an xterm set the title to dir
+( [[ "$TERM" = rxvt* ]] || [[ "$TERM" = xterm* ]] ) && PS1="\[\e]0;\w\a\]${PS1}"
+export PS1

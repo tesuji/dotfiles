@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Zathura
+Comment=A minimalistic document viewer
+Icon=/home/user/dotfiles/icon.d/pdf_file_icon.png
+Exec=zathura %U
+Terminal=false
+NoDisplay=true
+Categories=Office;Viewer;
+MimeType=application/pdf;

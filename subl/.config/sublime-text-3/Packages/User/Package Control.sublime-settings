@@ -1,0 +1,14 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"INI",
+		"Markdown Table Formatter",
+		"MasmAssembly",
+		"NASM x86 Assembly",
+		"Package Control"
+	]
+}

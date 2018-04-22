@@ -1,0 +1,15 @@
+{
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+	"default_line_ending": "unix",
+	"draw_white_space": "all",
+	"font_face": "Consolas",
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
+	"shift_tab_unindent": true,
+	"theme": "Adaptive.sublime-theme",
+	"trim_trailing_white_space_on_save": true
+}

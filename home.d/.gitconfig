@@ -1,0 +1,57 @@
+#!/usr/bin/env git
+## ~/.gitconfig: Config file and alias for git - the stupid content tracker
+[alias]
+	st = status
+	co = checkout
+
+	ci = commit
+	## commit and sign with gpg key
+	cis = commit -S
+	## Amend the currently staged files to the latest commit
+	amend = commit --amend --no-edit
+
+	br = branch
+
+	df = diff
+	dfs = diff --staged # or --cached
+
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+	logg = log --graph --decorate --oneline --abbrev-commit --all
+	stats = log -10 --dirstat=files,1,cumulative --ignore-blank-lines --abbrev-commit --oneline --graph --decorate
+
+	## Remove sensitive data from history, after a push
+	sensitive="!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch \"$1\"' --prune-empty --tag-name-filter cat -- --all && git push origin --force --all }; r"
+	pb = pull --rebase
+[color]
+	ui = auto
+[color "branch"]
+	current = yellow bold
+	local = green bold
+	remote = cyan bold
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "status"]
+	added = green bold
+	changed = yellow bold
+	untracked = red bold
+[core]
+	## set line-ending behavior
+	autocrlf = input
+	editor = vim
+	pager = less -+F -+X
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[merge]
+	tool = vimdiff
+[push]
+	## Push only the current branch
+	## more https://stackoverflow.com/a/21865319/5456794
+	default = simple
+[pull]
+	rebase = true

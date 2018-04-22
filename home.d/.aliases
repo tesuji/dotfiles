@@ -1,0 +1,299 @@
+#!/usr/bin/env bash
+## ~/.aliases
+
+############
+## Functions
+############
+
+## Check if command exists
+check_exist() { # check_exist name
+  ## POSIX compatible, not with `hash', `type', etc.
+  command -v "$1" > /dev/null
+}
+
+if check_exist pip; then
+  gpip() {
+    PIP_REQUIRE_VIRTUALENV="" pip "$@"
+  }
+fi
+
+## If zsh or bash
+typeofshell=$(ps -p $$ --no-headers -o cmd)
+
+## Enable colored man
+man() {
+  LESS_TERMCAP_md=$'\e[01;31m' \
+  LESS_TERMCAP_me=$'\e[0m' \
+  LESS_TERMCAP_se=$'\e[0m' \
+  LESS_TERMCAP_so=$'\e[01;44;33m' \
+  LESS_TERMCAP_ue=$'\e[0m' \
+  LESS_TERMCAP_us=$'\e[01;32m' \
+  command man "$@"
+}
+
+# Usage: extract <file>
+# Description: extracts archived files / mounts disk images
+# Note: .dmg/hdiutil is macOS-specific.
+#
+# credit: http://nparikh.org/notes/zshrc.txt
+extract() {
+  if [[ -f "$1" ]]; then
+    local lowername=$(printf "$1" | tr '[:upper:]' '[:lower:]')
+    case "${lowername}" in
+    *.tar | *.x)        tar -xvf        "$1" ;;
+    *.tar.bz2 | *.tbz2) tar -jxvf       "$1" ;;
+    *.tar.xz)           tar -Jxvf       "$1" ;;
+    *.tar.gz | *.tgz)   tar -zxvf       "$1" ;;
+    *.tar.lzma)         tar --lzma -xvf "$1" ;;
+    *.bz2)              bunzip2         "$1" ;;
+    *.xz)               unxz            "$1" ;;
+    *.gz)               gunzip -k       "$1" ;;
+    *.zip)              unzip           "$1" ;;
+    *.rar)              unrar x         "$1" ;;
+    *.7z)               7z e            "$1" ;;
+    *.z)                uncompress      "$1" ;;
+    *)                  echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+## Make path for each argument and cd into the last path
+mkcd() {
+  command mkdir -p "$@" && cd "$_"
+}
+
+##########
+## Aliases
+##########
+gnu_color_flag='--color=auto'
+## Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU ls and support colors
+  ## Make colors to ls command
+  [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
+  ls_color_flag=${gnu_color_flag}
+else
+  ls_color_flag=""
+fi
+
+if ! alias which > /dev/null 2>&1; then
+  alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot'
+fi
+
+case "$typeofshell" in
+*bash)
+  alias chi='history -c'
+  ;;
+*zsh)
+  alias help='run-help'
+  ;;
+esac
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias cd-='cd -'
+alias cd..='cd ..'
+alias cp='cp -iv'
+alias dd='dd status=progress'
+alias df='df -h'
+alias diff="diff ${gnu_color_flag}"
+alias du='du -sch'
+alias fail='journalctl -p 3 -xb'
+alias free='free -h'
+alias g++='g++ -Wall -Wpedantic -Wextra -Weffc++ -masm=intel' #-fno-stack-protector
+alias gcc='gcc -masm=intel'
+alias gccn='gcc -Wfatal-errors -std=gnu11 -Wall' # -pedantic -Wextra' # -Werror #-fno-stack-protector
+alias gccex='gcc -Wfatal-errors -m32 -fno-stack-protector -Wl,-z,norelro -z execstack -g'
+alias gdb='gdb -q'
+alias grep="grep ${gnu_color_flag}"
+alias egrep="egrep ${gnu_color_flag}"
+alias fgrep="fgrep ${gnu_color_flag}"
+check_exist hd || alias hd='hexdump -C'
+alias l='ls -CF'
+alias la='ls -AF'
+alias lh='ls -dF .??*'
+alias ll='ls -lF'
+alias ls="ls ${ls_color_flag} -h --group-directories-first"
+alias lssh='ps -ef | command grep "[s]sh.*pts"'
+alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
+alias ln='ln -iv'
+alias mkdir='mkdir -pv'
+alias mv='mv -iv'
+alias nc='nc -v'
+alias objdump='objdump -M intel'
+alias py='python'
+alias py2='python2'
+alias py3='python3'
+#alias rot13='tr "[A-Za-z]" "[N-ZA-Mn-za-m]"'
+alias rm='rm -I'
+alias shutdown='shutdown now'
+#alias ssh-keygen='ssh-keygen -E md5 -lf'
+alias sudo='sudo '
+#alias synctime='ntpd -qg'  # install ntp package
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"'
+alias vi='vim'
+#alias wifipasswod='sudo grep -r "^psk" /etc/NetworkManager/system-connections/'
+#alias whois='whois -H --verbose'
+
+## I think I can forget
+# ```bash
+# cmp -l file file2 | gawk '{printf "%08X %02X %02X\n", $1, strtonum(0$2), strtonum(0$3)}'
+# or
+# radiff2 file file2
+# ```
+
+uncompyle6_path=~/.local/bin/uncompyle6
+[[ -x "$uncompyle6_path" ]] && alias uncompyle6="$uncompyle6_path"
+unset uncompyle6_path
+
+checksecpath=~/checksec.sh/checksec
+[[ -x "$checksecpath" ]] && alias checksec="$checksecpath"
+unset checksecpath
+
+alias suspend='systemctl suspend'
+#if [[ -x /usr/bin/xflock4 ]]; then
+#  alias suspend='xflock4 && systemctl suspend'
+#fi
+
+## For shellcode building {{{
+if check_exist rasm2; then
+  alias asm32='rasm2 -a x86 -b 32'
+  alias asm64='rasm2 -a x86 -b 64'
+  alias disasm32='asm32 -d'
+  alias disasm64='asm64 -d'
+elif check_exist nasm; then
+  asm32() {
+    _assembly 32 "$1"
+  }
+  asm64() {
+    _assembly 64 "$1"
+  }
+  _assembly() { # _assembly(bits, asm)
+    local infile='.nasm.s'
+    local outfile='.nasm.bin'
+    local bits="$1"
+    local asm="$2"
+    printf 'BITS %d\n%s\n' "$bits" "$asm" > "$infile" && nasm "$infile" -o "$outfile" && ndisasm -b "$bits" "$outfile"
+  }
+  alias asm=asm32
+fi
+## }}}
+
+## Alias for fuser {{{
+if check_exist fuser; then
+  ## you could replace sed with `tail -n2`
+  alias findport='fuser --verbose --namespace tcp "$1"' # find pid base on tcp port
+  alias lsport='ss --processes --all --tcp'
+fi
+## }}}
+
+## Alias when commands exist {{{
+
+## Terminal browser Elinks
+if check_exist elinks; then
+  alias elinks='elinks --no-connect'
+fi
+
+if check_exist pngcheck; then
+  alias pngcheck='pngcheck -vv'
+fi
+
+## For VMWare
+#if check_exist vmhgfs-fuse; then
+#  alias ctfmount='vmhgfs-fuse -o allow_other -o auto_unmount -o umask=0077 -o uid=1000 -o gid=1000 .host:/ctf /ctf'
+#fi
+
+## for zathura
+if check_exist zathura; then
+  alias zathura='zathura --fork'
+fi
+
+## for evince
+if check_exist evince; then
+  evince() {
+    (command evince "$@" & )
+  }
+fi
+
+## for audacious
+if check_exist audacious; then
+  audacious() {
+    (command audacious "$@" & )
+  }
+fi
+
+## }}}
+
+## Alias for each distribution {{{
+## See more https://wiki.debian.org/ReduceDebian
+#clrdesktop() {
+#  echo "Clearing non English part in .desktop files ..."
+#  if [[ -d "/usr/share/help" ]]; then
+#    find /usr/share/applications/ -type f -iname '*\.desktop' -exec sudo sed -i "/]=/d" {} +
+#  fi
+#}
+
+#clrhelp() {
+#  echo "Clearing non-English help files ..."
+#  if [[ -d "/usr/share/help" ]]; then
+#    find "/usr/share/help" -maxdepth 1 $( echo "! -path /usr/share/help"{/C,/en_GB,} ) -type d -exec sudo rm -Irf {} +
+#  fi
+#}
+
+#clrlocale() {
+#  echo "Clearing non-English locale files ..."
+#  find "/usr/share/locale" -maxdepth 1 $( echo "! -path /usr/share/locale"{/en,/en_US,/en_GB,/en\@quot,} ) -type d -exec sudo rm -Ifr {} +
+#}
+
+#clrman() {
+#  echo "Clearing non-standard man files ..."
+#  find "/usr/share/man" -maxdepth 1 $( echo "! -path /usr/share/man"{/man0,/man1,/man2,/man3,/man4,/man5,/man6,/man7,/man8,/mann,} ) -type d -exec sudo rm -Ifr {} +
+#}
+
+## Debian variants
+if check_exist dpkg; then
+  ## Perform a simulation of the whole process by:
+  #apt-get clean --dry-run
+
+  #alias apts='apt-cache search'
+  #alias showpackage='apt show' # dpkg --print-avail PACKAGE_NAME; apt-cache show PACKAGE_NAME
+  #alias lsapt='apt list --installed'
+
+  clrapt() {
+    echo "Clearing apt cache ..."
+    sudo apt-get clean
+  }
+## Arch Linux
+elif [[ -x /bin/pacman ]]; then
+  #alias keepping='ping login.net.vn &> /dev/null &'
+  alias pacman="pacman ${gnu_color_flag}"
+  alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
+  alias wifioff='nmcli radio wifi off'
+  alias wifion='nmcli radio wifi on'
+  clrjournal() {
+    echo "Clearing journal files ..."
+    sudo rm -rf /var/log/journal
+  }
+  clrpac() {
+    echo "Clearing pacman cache ..."
+    ## remove all packages except for the latest three package versions
+    sudo paccache -rvk3
+  }
+## for CentOS, RedHat, Fedora
+elif [[ -x /usr/bin/yum ]]; then
+  clryum() {
+    echo "Clearing yum cache ..."
+    sudo rm -Ifr /var/cache/yum
+  }
+fi
+
+## Clean up
+###########
+unset check_exist typeofshell
+unset ls_color_flag gnu_color_flag
+## }}}
+
+## end of file
