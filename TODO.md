@@ -9,23 +9,23 @@
 
 ### Uncomplete
 
-- [ ] Remove sensitive information
+### Done or almost done
+
+- [x] Remove sensitive information
 
 Ref https://wiki.archlinux.org/index.php/Dotfiles#Confidential_information
 
 In `~/.gitconfig`:
 ```bash
-git config filter.strip_git_user.clean 'sed -E "s/(^\s*name\s*=\s*)\w*/\1user/" -E "s/[a-zA-Z0-9.!#$%&'*+\-\/=?^_`{|}~]+@[a-zA-Z0-9\-]+.\w+/\1example@email.com/" -E "s/(^\s*signingkey\s*=\s*)[0-9A-Z]{16}/\1DEAFBEEFCAFEBABY/"'
-## OR
 git config filter.strip_git_user.clean 'sed "/^\[alias]/p" | sed "/^\[user]/,/^\[alias]/d"'
+## OR (Not worked)
+git config filter.strip_git_user.clean 'sed -E "s/(^\s*name\s*=\s*)\w*/\1user/" -E "s/[a-zA-Z0-9.!#$%&'"'"'*+\-\/=?^_`{|}~]+@[a-zA-Z0-9\-]+.\w+/\1example@email.com/" -E "s/(^\s*signingkey\s*=\s*)[0-9A-Z]{16}/\1DEAFBEEFCAFEBABY/"'
 ```
 
 In `desktop.d/*.desktop` and `xfce4-keyboard-shortcuts.xml`:
 ```bash
 git config filter.home_user.clean 'sed -E "s/(\/home\/)[a-z_][a-z0-9_]{0,30}/\1user/"'
 ```
-
-### Done or almost done
 
 - [x] Flexible `boostrap.sh` for each Linux distrobution.
 
