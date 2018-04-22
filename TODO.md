@@ -9,6 +9,8 @@
 
 ### Uncomplete
 
+- [ ] Add `filter.home_user.smudge` and `filter.strip_git_user.smudge`
+
 ### Done or almost done
 
 - [x] Remove sensitive information
