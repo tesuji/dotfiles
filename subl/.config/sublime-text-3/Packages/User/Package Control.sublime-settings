@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"Autotools",
 		"INI",
 		"Markdown Table Formatter",
 		"MasmAssembly",

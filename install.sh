@@ -29,14 +29,14 @@ solve_stow_conflict() { # solve_stow_conflict path backup
       exit 127
     fi
     case "$backup" in
-      true )
+      (true)
         echo "[!] Backup $1 to ${BACKUP_PATH}" 2>&1
         mv "$error" -t "${BACKUP_PATH}"
         ;;
-      false )
+      (false)
         rm -f "$error"
         ;;
-      * )
+      (*)
         echo "[!] Error: Unknown option: ${backup}" 2>&1
         exit 11
         ;;
@@ -60,15 +60,15 @@ usage() { echo "Usage: $0 [-b]" 1>&2; exit 1; }
 handle_option() {
   while getopts ":b" opt; do
     case ${opt} in
-    b  ) BACKUP=true ;;
-    \? )
-      echo "Invalid option: -$OPTARG" >&2
-      usage
-      ;;
-    :  )
-      echo "Option -$OPTARG requires an argument." >&2
-      usage
-      ;;
+      (b) BACKUP=true ;;
+      (\?)
+        echo "Invalid option: -$OPTARG" >&2
+        usage
+        ;;
+      (:)
+        echo "Option -$OPTARG requires an argument." >&2
+        usage
+        ;;
     esac
   done
   shift $((OPTIND -1))

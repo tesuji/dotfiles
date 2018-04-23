@@ -40,19 +40,19 @@ extract() {
   if [[ -f "$1" ]]; then
     local lowername=$(printf "$1" | tr '[:upper:]' '[:lower:]')
     case "${lowername}" in
-    *.tar | *.x)        tar -xvf        "$1" ;;
-    *.tar.bz2 | *.tbz2) tar -jxvf       "$1" ;;
-    *.tar.xz)           tar -Jxvf       "$1" ;;
-    *.tar.gz | *.tgz)   tar -zxvf       "$1" ;;
-    *.tar.lzma)         tar --lzma -xvf "$1" ;;
-    *.bz2)              bunzip2         "$1" ;;
-    *.xz)               unxz            "$1" ;;
-    *.gz)               gunzip -k       "$1" ;;
-    *.zip)              unzip           "$1" ;;
-    *.rar)              unrar x         "$1" ;;
-    *.7z)               7z e            "$1" ;;
-    *.z)                uncompress      "$1" ;;
-    *)                  echo "'$1' cannot be extracted via extract()" ;;
+      (*.tar | *.x)        tar -xvf        "$1" ;;
+      (*.tar.bz2 | *.tbz2) tar -jxvf       "$1" ;;
+      (*.tar.xz)           tar -Jxvf       "$1" ;;
+      (*.tar.gz | *.tgz)   tar -zxvf       "$1" ;;
+      (*.tar.lzma)         tar --lzma -xvf "$1" ;;
+      (*.bz2)              bunzip2         "$1" ;;
+      (*.xz)               unxz            "$1" ;;
+      (*.gz)               gunzip -k       "$1" ;;
+      (*.zip)              unzip           "$1" ;;
+      (*.rar)              unrar x         "$1" ;;
+      (*.7z)               7z e            "$1" ;;
+      (*.z)                uncompress      "$1" ;;
+      (*)                  echo "'$1' cannot be extracted via extract()" ;;
     esac
   else
     echo "'$1' is not a valid file"
@@ -82,12 +82,12 @@ if ! alias which > /dev/null 2>&1; then
 fi
 
 case "$typeofshell" in
-*bash)
-  alias chi='history -c'
-  ;;
-*zsh)
-  alias help='run-help'
-  ;;
+  (*bash)
+    alias chi='history -c'
+    ;;
+  (*zsh)
+    alias help='run-help'
+    ;;
 esac
 
 alias ..='cd ..'
