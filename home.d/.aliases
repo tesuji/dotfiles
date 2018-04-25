@@ -31,6 +31,13 @@ man() {
   command man "$@"
 }
 
+if check_exist vmhgfs-fuse; then
+  vmmount() { # vmmount mount_point
+    local sharedir=$(vmware-hgfsclient)
+    vmhgfs-fuse -o allow_other -o auto_unmount .host:"$sharedir" "$1"
+  }
+fi
+
 # Usage: extract <file>
 # Description: extracts archived files / mounts disk images
 # Note: .dmg/hdiutil is macOS-specific.
@@ -200,11 +207,6 @@ fi
 if check_exist pngcheck; then
   alias pngcheck='pngcheck -vv'
 fi
-
-## For VMWare
-#if check_exist vmhgfs-fuse; then
-#  alias ctfmount='vmhgfs-fuse -o allow_other -o auto_unmount -o umask=0077 -o uid=1000 -o gid=1000 .host:/ctf /ctf'
-#fi
 
 ## for zathura
 if check_exist zathura; then

@@ -1,0 +1,7 @@
+/*
+ * Do not remove the @namespace line -- it's required for correct functioning
+ */
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+#context-sendlinktodevice, #context-sendpagetodevice, #context-sep-sendlinktodevice, #context-sep-sendpagetodevice, #context-selectall, #context-savelinktopocket, #context-pocket {
+    display: none !important
+}
