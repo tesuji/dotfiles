@@ -85,7 +85,10 @@ else
 fi
 
 if ! alias which > /dev/null 2>&1; then
-  alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot'
+  ## `which' on Debian-based lacks support for long options
+  if ! which -h > /dev/null 2>&1; then
+    alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot'
+  fi
 fi
 
 case "$typeofshell" in

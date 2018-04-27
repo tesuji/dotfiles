@@ -30,14 +30,14 @@ esac
 
 ## enable the keyring for applications run through the terminal, such as SSH
 if [[ -n "$DESKTOP_SESSION" ]];then
-    eval $(gnome-keyring-daemon --start)
+    eval "$(gnome-keyring-daemon --start)"
     export SSH_AUTH_SOCK
 fi
 
 ## Set less options
 if [[ -x /usr/bin/less ]]; then
-  export PAGER="less"
-  #export LESS="--line-numbers --RAW-CONTROL-CHARS"
+  #export PAGER="less"
+  export LESS="--line-numbers --RAW-CONTROL-CHARS"
   export LESSHISTFILE='-' # prevent less' history file
   [[ -x /usr/bin/lesspipe ]] && export LESSOPEN="| lesspipe %s"
 fi

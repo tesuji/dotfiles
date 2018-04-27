@@ -33,7 +33,7 @@ Use [Rufus](https://rufus.akeo.ie) to burn iso to installation media
 
 **Note**: Be sure to select **DD image** mode from the dropdown menu or the image will be transferred [incorrectly](https://wiki.archlinux.org/index.php/USB_flash_installation_media#Using_Rufus).
 
-#### On macOS
+#### On mac
 
 Plug usb into mac
 
@@ -63,9 +63,9 @@ The connection may be checked with:
 ping archlinux.org
 ```
 
-If no connection is available, stop the *dhcpcd* service with `systemctl stop dhcpcd@` and pressing `Tab`.
+If no connection is available, stop the *dhcpcd* service with `systemctl stop dhcpcd@` and press `Tab`.
 
-This command `ping www.google.com > /dev/null 2>&1 &` will keep internet from being interrupted by long unuse time.
+This command `ping www.google.com > /dev/null 2>&1 &` will keep internet from being interrupted by long unusing time.
 
 If you have an **authoried internet access**, use `elinks` with `javascript` to login:
 
@@ -119,7 +119,7 @@ then boot mode is `Legacy BIOS`.
 You will need to create an extra EFI partition as well. In this example, we will be
 creating a Root partition, a Swap partition, a Home partition, and an EFI partition
 
-* Start `cgdisk` by typing `cgdisk /dev/sda` and press `Enter`
+* Start `cgdisk` (or `cfdisk`) by typing `cgdisk /dev/sda` and press `Enter`
 
 * Select `New` and then press `Enter` to select first sector, type the size you
 want for Root partition, I recommend it as 25G. After that,
@@ -221,11 +221,6 @@ Type the following commands:
 mkdir -p /mnt/home
 mount /dev/sda1 /mnt
 mount /dev/sda5 /mnt/home
-#########################
-# Only for GPT partition
-#########################
-mkdir /mnt/boot
-mount /dev/sda7 /mnt/boot
 ```
 
 ## Installing Arch Linux
@@ -391,10 +386,19 @@ pacman -S os-prober
 ```
 
 #### Only UEFI
+Mount **efi** partition:
+```bash
+#########################
+# Only for GPT partition
+#########################
+mkdir /boot/EFI
+mount /dev/sda7 /boot/EFI
+```
+
 Type these commands:
 ```bash
 pacman -S grub efibootmgr
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch-grub --recheck /dev/sda
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck /dev/sda
 ```
 
 #### Only Legacy BIOS
