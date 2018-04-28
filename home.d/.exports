@@ -30,8 +30,10 @@ esac
 
 ## enable the keyring for applications run through the terminal, such as SSH
 if [[ -n "$DESKTOP_SESSION" ]];then
+  if command -v gnome-keyring-daemon > /dev/null 2>&1; then
     eval "$(gnome-keyring-daemon --start)"
     export SSH_AUTH_SOCK
+  fi
 fi
 
 ## Set less options

@@ -55,3 +55,7 @@
 	default = simple
 [pull]
 	rebase = true
+[user]
+	email = example@email.com
+	name = user
+	signingkey = DEAFBEEFCAFEBABE

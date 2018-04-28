@@ -4,6 +4,6 @@
 *.jpg binary
 
 ## Ref https://wiki.archlinux.org/index.php/Dotfiles#Confidential_information
-home.d/.gitconfig            filter=strip_git_user
-xfce4-keyboard-shortcuts.xml filter=home_user
-desktop.d/*.desktop          filter=home_user
+home.d/.gitconfig            filter=user_gitconfig
+xfce4-keyboard-shortcuts.xml filter=xfce_user
+desktop.d/*.desktop          filter=xfce_user
