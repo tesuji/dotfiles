@@ -5,13 +5,13 @@ BACKUP=false
 BACKUP_PATH=".backup"
 
 declare -a CORE_DIR=(
-    "compton"
+    #"compton"
     "config.d"
     "home.d"
     ## You will need Windows fonts if you wanna enable this fontconfig
-    #fontconfig
+    "fontconfig"
     "subl"
-    "xfce4"
+    #"xfce4"
     )
 
 ############
