@@ -7,6 +7,7 @@
 ## more in https://askubuntu.com/questions/844151/enable-disable-touchpad/844218
 ## or https://askubuntu.com/a/537031/565006
 function toggle_touchpad() {
+  ## fgrep and cut is still faster than sed
   local ID=$( xinput | fgrep TouchPad |cut -f2 |cut -d= -f2 )
   local STATE=$( xinput list-props "$ID" | grep "Device Enabled" | grep -o "[01]$" )
   local icon_enable=input-touchpad-symbolic
