@@ -1,6 +1,12 @@
 #!/usr/bin/env zsh
 ## Ref http://matt.blissett.me.uk/linux/zsh/zshrc
 
+compinit_age() {
+  local last_modified=$(stat -c "%Y" "${HOME}/.zcompdump")
+  local current=$(date +%s)
+  echo $(( current - last_modified ))
+}
+
 ## Skip all this for non-interactive shells
 [[ -z "$PS1" ]] && return
 
@@ -54,11 +60,20 @@ setopt HIST_VERIFY          # Don't execute immediately upon history expansion
 #############
 
 ## You may have to force rebuild zcompdump:
-##     rm -f ~/.zcompdump; compinit
+##     rm -f ~/.zcompdump; compinit or try rehash command
 ## Print fpath with (print -rl -- $fpath)
 fpath=(~/.zshfuncs $fpath)
-autoload -U compinit && compinit # Use modern completion system
 
+autoload -Uz compinit # Use modern completion system
+
+## If ~/.zcompdump is modified less than 24h
+if [[ compinit_age -le 86400 ]]; then
+  compinit -C
+else
+  compinit
+fi
+
+## Should be enable in /etc/zsh/newuser.zshrc.recommended
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
@@ -111,4 +126,4 @@ zle -N down-line-or-beginning-search
 for m_file in "${HOME}"/.{paths,zsh_prompt,exports,aliases,extra}; do
   [[ -r "$m_file" ]] && [[ -f "$m_file" ]] && source "$m_file"
 done
-unset m_file
+unset m_file compinit_age

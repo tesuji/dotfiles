@@ -65,8 +65,9 @@ git config --global user.email "example@email.com"
 | bin       | Script file expect to be in `${PATH}` like touchpad-toggling scripts                                 |
 | compton   | [compton][compton] configuration file                                                                |
 | desktop.d | Firefox desktop file used on Debian, Zathura PDF on Arch Linux.                                      |
-| icon.d    | Icon file for custome desktop file                                                                   |
 | home.d    | Dotfiles like `.bashrc`, `.zshrc`, etc that need linking to HOME                                     |
+| icon.d    | Icon file for custome desktop file                                                                   |
+| kwallet   | Autostart script to remember ssh passphrase                                                          |
 | docs      | Some documentations about setting up Arch Linux and using software like git, radare2, vim, ssh, etc. |
 | config.d  | All other non-important config files: elinks, qt4                                                    |
 | fonconfig | Font configurations                                                                                  |
