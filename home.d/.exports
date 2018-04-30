@@ -41,7 +41,7 @@ if [[ -x /usr/bin/less ]]; then
   #export PAGER="less"
   export LESS="--line-numbers --RAW-CONTROL-CHARS"
   export LESSHISTFILE='-' # prevent less' history file
-  [[ -x /usr/bin/lesspipe ]] && export LESSOPEN="| lesspipe %s"
+  #[[ -x /usr/bin/lesspipe ]] && export LESSOPEN="| lesspipe %s"
 fi
 
 ## Make vim the default editor.

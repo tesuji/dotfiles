@@ -42,7 +42,7 @@
 	## set line-ending behavior
 	autocrlf = input
 	editor = vim
-	pager = less -+F -+X
+	pager = less -F -X
 [diff]
 	tool = vimdiff
 [difftool]

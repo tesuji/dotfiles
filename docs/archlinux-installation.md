@@ -292,7 +292,7 @@ locale-gen
 
 Set the LANG variable in `locale.conf(5)` accordingly:
 ```bash
-echo -n 'LANG=en_US.UTF-8' > /etc/locale.conf
+echo -n 'LANG=en_US.UTF-8' | tee /etc/locale.conf
 ## alternative, run
 localectl set-locale LANG=en_US.UTF-8
 ```
@@ -476,7 +476,7 @@ We have chosen to install
 
 ##### 1) Install Intel GPU driver
 ```
-sudo pacman -S xorg xorg-server
+sudo pacman -S xorg xorg-xinit
 sudo pacman -S xf86-video-intel
 ```
 
@@ -523,11 +523,22 @@ $ sudo lightdm --test-mode --debug
 
 Then type `sudo systemctl enable lightdm`
 
-##### 3) Install desktop environment
-
-Install **XFCE4** desktop environment and sound server **ALSA**
+##### 3) Install audio service
+```bash
+sudo pacman -S pulseaudio pulseaudio-alsa
 ```
-sudo pacman -S xfce4 pulseaudio pavucontrol xfce4-pulseaudio-plugin alsa-utils
+
+##### 4) Install gstreamer
+```bash
+sudo pacman -S gstreamer gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly
+```
+
+##### 5) Install desktop environment
+
+Install **XFCE4** desktop environment
+```
+echo "exec startxfce4" >> ~/.xinitrc
+sudo pacman -S xfce4
 ```
 
 ### Finally, reboot system with `reboot`
