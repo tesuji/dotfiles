@@ -60,13 +60,13 @@ setopt HIST_VERIFY          # Don't execute immediately upon history expansion
 #############
 
 ## You may have to force rebuild zcompdump:
-##     rm -f ~/.zcompdump; compinit or try rehash command
+##     rm -f "$HOME/.zcompdump"; compinit or try rehash command
 ## Print fpath with (print -rl -- $fpath)
-fpath=(~/.zshfuncs $fpath)
+fpath=("$HOME/.zshfuncs" $fpath)
 
 autoload -Uz compinit # Use modern completion system
 
-## If ~/.zcompdump is modified less than 24h
+## If "$HOME/.zcompdump" is modified less than 24h
 if [[ compinit_age -le 86400 ]]; then
   compinit -C
 else
@@ -121,8 +121,8 @@ zle -N down-line-or-beginning-search
 ######################
 ## Load shell dotfiles
 ######################
-## * ~/.path can be used to extend `$PATH`.
-## * ~/.extra can be used for other settings you don't want to commit.
+## * "$HOME/.path" can be used to extend `$PATH`.
+## * "$HOME/.extra" can be used for other settings you don't want to commit.
 for m_file in "${HOME}"/.{paths,zsh_prompt,exports,aliases,extra}; do
   [[ -r "$m_file" ]] && [[ -f "$m_file" ]] && source "$m_file"
 done
