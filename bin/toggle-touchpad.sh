@@ -15,11 +15,11 @@ function toggle_touchpad() {
   if [[ "$STATE" -eq '1' ]]; then
     ## Should install Notification servers
     ## https://wiki.archlinux.org/index.php/Desktop_notifications#Notification_servers
-    notify-send "Disabled" "Touchpad has been disabled" --icon="$icon_disable"
-    xinput --disable "$ID"
+    xinput --disable "$ID" && \
+        notify-send "Disabled" "Touchpad has been disabled" --icon="$icon_disable"
   else
-    notify-send "Enabled " "Touchpad has been enabled" --icon="$icon_enable"
-    xinput --enable "$ID"
+    xinput --enable "$ID" && \
+        notify-send "Enabled " "Touchpad has been enabled" --icon="$icon_enable"
   fi
 }
 
