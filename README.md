@@ -55,26 +55,26 @@ git config --global user.email "example@email.com"
 
 ### Known issues
 
-- `fonconfig` may cause noised font rendering on [Fedora][Fedora].
+- `fontconfig` may cause noised font rendering on [Fedora][Fedora].
 
 ### Stuctures
 
-| Folder    | Purpose                                                                                              |
-|:----------|:-----------------------------------------------------------------------------------------------------|
-| .backup   | If enable, back up any old dotfiles to this folder                                                   |
-| bin       | Script file expect to be in `${PATH}` like touchpad-toggling scripts                                 |
-| compton   | [compton][compton] configuration file                                                                |
-| desktop.d | Firefox desktop file used on Debian, Zathura PDF on Arch Linux.                                      |
-| home.d    | Dotfiles like `.bashrc`, `.zshrc`, etc that need linking to HOME                                     |
-| icon.d    | Icon file for custome desktop file                                                                   |
-| kwallet   | Autostart script to remember ssh passphrase                                                          |
-| docs      | Some documentations about setting up Arch Linux and using software like git, radare2, vim, ssh, etc. |
-| config.d  | All other non-important config files: elinks, qt4                                                    |
-| fonconfig | Font configurations                                                                                  |
-| scripts   | Useful scripts for installing Firefox, getting distro name                                           |
-| subl      | SublimeText custom syntaxs and key bindings                                                          |
-| urxvt     | urxvt color config and urxvtd startup file                                                           |
-| xfce4     | terminal color and keyboard shortcuts config                                                         |
+| Folder     | Purpose                                                                                              |
+|:-----------|:-----------------------------------------------------------------------------------------------------|
+| .backup    | If enable, back up any old dotfiles to this folder                                                   |
+| bin        | Script file expect to be in `${PATH}` like touchpad-toggling scripts                                 |
+| compton    | [compton][compton] configuration file                                                                |
+| desktop.d  | Firefox desktop file used on Debian, Zathura PDF on Arch Linux.                                      |
+| home.d     | Dotfiles like `.bashrc`, `.zshrc`, etc that need linking to HOME                                     |
+| icon.d     | Icon file for custome desktop file                                                                   |
+| kwallet    | Autostart script to remember ssh passphrase                                                          |
+| docs       | Some documentations about setting up Arch Linux and using software like git, radare2, vim, ssh, etc. |
+| config.d   | All other non-important config files: elinks, qt4                                                    |
+| fontconfig | Font configurations                                                                                  |
+| scripts    | Useful scripts for installing Firefox, getting distro name                                           |
+| subl       | SublimeText custom syntaxs and key bindings                                                          |
+| urxvt      | urxvt color config and urxvtd startup file                                                           |
+| xfce4      | terminal color and keyboard shortcuts config                                                         |
 
 #### subl
 
