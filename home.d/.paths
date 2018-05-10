@@ -5,9 +5,9 @@
 ## Add python pip's local path
 [[ ( -x /usr/bin/pip ) && ( "$PATH" != *".local"* ) ]] && PATH="${PATH}:${HOME}/.local/bin"
 
-if [[ ( -x /usr/local/go/bin/go ) && ( "$PATH" != *"go"* ) ]]; then
+if command -v go >/dev/null 2>&1 || [[ ( -x /usr/local/go/bin/go ) && ( "$PATH" != *"go"* ) ]]; then
   PATH="${PATH}:/usr/local/go/bin"
-  #export GOPATH="${HOME}/work"
-  export GOPATH=/stor/work
+  #export GOPATH="${HOME}/go"
+  export GOPATH=/stor/go
   export GOBIN="${GOPATH}/bin"
 fi
