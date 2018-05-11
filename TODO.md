@@ -9,7 +9,7 @@
 
 ### Uncomplete
 
-- [ ] Add `filter.home_user.smudge` and `filter.strip_git_user.smudge`
+- [ ] Add `filter.home_user.smudge` and `filter.user_gitconfig.smudge`
 
 ### Done or almost done
 
@@ -20,8 +20,8 @@ Ref https://wiki.archlinux.org/index.php/Dotfiles#Confidential_information
 In `~/.gitconfig`:
 ```bash
 git config filter.user_gitconfig.clean 'sed "/^\[alias]/p" | sed "/^\[user]/,/^\[alias]/d"'
-## OR (Not worked)
-git config filter.strip_git_user.clean ./scripts/clean_user_gitconfig.sh
+## OR
+git config filter.user_gitconfig.clean ./scripts/clean_user_gitconfig.sh
 ```
 
 In `desktop.d/*.desktop` and `xfce4-keyboard-shortcuts.xml`:
