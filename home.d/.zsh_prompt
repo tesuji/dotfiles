@@ -27,7 +27,7 @@ esac
 
 ## Highlight the hostname when connected via SSH.
 host_style='%F{yellow}%M'
-if [[ -o login || -n "${SSH_TTY}" ]]; then
+if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
   host_style="${host_style} (remote)"
 fi
 

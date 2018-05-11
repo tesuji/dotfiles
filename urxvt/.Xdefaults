@@ -19,7 +19,7 @@ URxvt.geometry:110x53
 URxvt.cursorColor: #00aa00
 
 # set font type
-URxvt.font:xft:Monospace:size=8
+URxvt.font:xft:Monospace:size=10
 # using Bitmap font instead
 #URxvt.font:8x13
 # Bold font color
@@ -30,7 +30,7 @@ URxvt.colorBD: #f57900
 
 # reduce the spacing against too wide
 # disable cause using Bitmap font
-URxvt.letterSpace:-2
+URxvt.letterSpace:-1
 
 # enable the default extensions and simple tab support
 #URxvt.perl-ext-common:default,matcher,tabbed
@@ -94,7 +94,7 @@ URxvt.color5: #aa00aa
 URxvt.color13: #ff55ff
 
 # cyan & light cyan
-URxvt.color6: #0000aa
+URxvt.color6: #00aaaa
 URxvt.color14: #55ffff
 
 # ligth gray & white
