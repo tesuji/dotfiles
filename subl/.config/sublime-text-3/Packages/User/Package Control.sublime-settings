@@ -6,9 +6,11 @@
 	"installed_packages":
 	[
 		"Autotools",
+		"CMake",
 		"INI",
 		"Markdown Table Formatter",
 		"MasmAssembly",
+		"Meson",
 		"NASM x86 Assembly",
 		"Package Control"
 	]
