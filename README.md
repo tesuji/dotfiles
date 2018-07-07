@@ -3,12 +3,12 @@ Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
 
 ### Disclaimer
 
-- I do not take any responsibility for any data loss caused by this `dotfiles`.
+- I do not take any responsibility for any data loss caused by this **dotfiles** repo.
 - Release under [MIT License][license].
 - Please do NOT link any file in `~/.ssh/` or `~/.gnupg` to this dotfiles for the sake of information security.
 - If you want to backup your secret dotfiles:
   - Create a private repository called `secret_dotfiles` instead.
-  - Try [Gitlab][gitlab] for free private repo.
+  - Try [Gitlab] for free private repo.
   - I would recommend having passphrases to protect all your keys.
 - Currently only test for Debian-based and Arch-based distro.
 
@@ -55,15 +55,15 @@ git config --global user.email "example@email.com"
 
 ### Known issues
 
-- `fontconfig` may cause noised font rendering on [Fedora][Fedora].
+- `fontconfig` may cause noised font rendering on [Fedora].
 
-### Stuctures
+### Structures
 
 | Folder     | Purpose                                                                                              |
 |:-----------|:-----------------------------------------------------------------------------------------------------|
 | .backup    | If enable, back up any old dotfiles to this folder                                                   |
 | bin        | Script file expect to be in `${PATH}` like touchpad-toggling scripts                                 |
-| compton    | [compton][compton] configuration file                                                                |
+| compton    | [compton] configuration file                                                                |
 | desktop.d  | Firefox desktop file used on Debian, Zathura PDF on Arch Linux.                                      |
 | home.d     | Dotfiles like `.bashrc`, `.zshrc`, etc that need linking to HOME                                     |
 | icon.d     | Icon file for custome desktop file                                                                   |
@@ -85,26 +85,32 @@ git config --global user.email "example@email.com"
 | <kbd>Ctrl</kbd><kbd>K</kbd>,<kbd>Ctrl</kbd><kbd>P</kbd> | Title case     |
 | <kbd>Ctrl</kbd><kbd>0</kbd>                             | Reset fontsize |
 
-**Packages**: If installed Package Control in SublimeText, it will install the following packages:
+**Packages**: If installed Package Control in SublimeText,
+it will install the following packages:
 - INI
 - Markdown Table Formatter
 - MasmAssembly
 - NASM x86 Assembly
 
-**Custome syntax**: bash, c, c++, css, html, java, js, makefile, python, xml
+**Custom syntax**: bash, c, c++, css, html, java, js, makefile, python, xml.
 
 ### Contribution
 
-If you want to help out, there are two ways to do that. Either you can open an [issue][issue], or you can fork and [pull request][pull].
+If you want to help out,
+there are two ways to do that.
+Either you can open an [issue],
+or you can fork and [pull request][pull].
 
 ### Thanks to
 
-All other dotfiles that I stole from. I give references in the comment of many files. But I am too lazy to list all here.
+All other dotfiles that I stole from.
+I give references in the comment of many files.
+But I am too lazy to list all here.
 
 [Fedora]:https://getfedora.org
 [license]: LICENSE
 [issue]: https://github.com/lzutao/dotfiles/issues
 [pull]: https://github.com/lzutao/dotfiles/pulls
-[gitlab]: https://gitlab.com/
+[Gitlab]: https://gitlab.com/
 [compton]: https://wiki.archlinux.org/index.php/Compton
 [gpg_key]: https://help.github.com/articles/telling-git-about-your-gpg-key/
