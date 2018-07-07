@@ -1,7 +1,7 @@
 # dotfiles
 Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
 
-### Disclaimer
+## Disclaimer
 
 - I do not take any responsibility for any data loss caused by this **dotfiles** repo.
 - Release under [MIT License][license].
@@ -12,13 +12,13 @@ Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
   - I would recommend having passphrases to protect all your keys.
 - Currently only test for Debian-based and Arch-based distro.
 
-### General informations
+## General informations
 
 | Shell    | WM / DE | Editor   | Terminal       | Multiplexer | Compositor | Audio      | Monitor | Mail        | IRC |
 |:---------|:--------|:---------|:---------------|:------------|:-----------|:-----------|:--------|:------------|:----|
 | bash/zsh | xfce4   | vim/subl | terminal/urxvt |             | compton    | pulseaudio | custom  | thunderbird |     |
 
-### Installation
+## Installation
 
 We need GNU Stow to install this dotfiles.
 
@@ -53,11 +53,11 @@ git config --global user.email "example@email.com"
 
 [Tell git about your gpg key][gpg_key] if you have one.
 
-### Known issues
+## Known issues
 
 - `fontconfig` may cause noised font rendering on [Fedora].
 
-### Structures
+## Structures
 
 | Folder     | Purpose                                                                                              |
 |:-----------|:-----------------------------------------------------------------------------------------------------|
@@ -76,7 +76,7 @@ git config --global user.email "example@email.com"
 | urxvt      | urxvt color config and urxvtd startup file                                                           |
 | xfce4      | terminal color and keyboard shortcuts config                                                         |
 
-#### subl
+### subl
 
 **Keymap**:
 
@@ -94,14 +94,14 @@ it will install the following packages:
 
 **Custom syntax**: bash, c, c++, css, html, java, js, makefile, python, xml.
 
-### Contribution
+## Contribution
 
 If you want to help out,
 there are two ways to do that.
 Either you can open an [issue],
 or you can fork and [pull request][pull].
 
-### Thanks to
+## Thanks to
 
 All other dotfiles that I stole from.
 I give references in the comment of many files.
