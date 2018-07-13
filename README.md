@@ -63,7 +63,7 @@ git config --global user.email "example@email.com"
 |:-----------|:-----------------------------------------------------------------------------------------------------|
 | .backup    | If enable, back up any old dotfiles to this folder                                                   |
 | bin        | Script file expect to be in `${PATH}` like touchpad-toggling scripts                                 |
-| compton    | [compton] configuration file                                                                |
+| compton    | [compton] configuration file                                                                         |
 | desktop.d  | Firefox desktop file used on Debian, Zathura PDF on Arch Linux.                                      |
 | home.d     | Dotfiles like `.bashrc`, `.zshrc`, etc that need linking to HOME                                     |
 | icon.d     | Icon file for custome desktop file                                                                   |
