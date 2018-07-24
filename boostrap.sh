@@ -69,7 +69,7 @@ declare -a COMMON_APPS=(
 
 declare -a DEBIAN_APPS=(
     apt-transport-https firmware-linux gtk2-engines-murrine
-    python{,3}-pil
+    {gcc,g++}-multilib python{,3}-pil
     lcdf-typetools libavcodec-extra libgtk{2.0,-3}-dev
     libimage-exiftool-perl lm-sensors
     arc-theme wireshark tshark xinput
