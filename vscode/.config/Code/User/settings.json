@@ -10,4 +10,5 @@
     "workbench.colorTheme": "Monokai",
     "editor.minimap.enabled": false,
     "extensions.ignoreRecommendations": false,
+    "window.zoomLevel": 0,
 }
