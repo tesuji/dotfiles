@@ -42,7 +42,7 @@ fi
 # Description: extracts archived files / mounts disk images
 # Note: .dmg/hdiutil is macOS-specific.
 #
-# credit: http://nparikh.org/notes/zshrc.txt
+# Credit: http://nparikh.org/notes/zshrc.txt
 extract() {
   if [[ -f "$1" ]]; then
     local lowername=$(printf "$1" | tr '[:upper:]' '[:lower:]')

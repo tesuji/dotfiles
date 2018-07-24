@@ -35,7 +35,7 @@ ssh-keygen -T /etc/ssh/moduli.safe -f /etc/ssh/moduli.all
 mv /etc/ssh/moduli.safe /etc/ssh/moduli
 rm /etc/ssh/moduli.all
 ```
-This will take a while so continue while it’s running.
+This will take a while so continue while it's running.
 
 ### OpenSSH Server
 
