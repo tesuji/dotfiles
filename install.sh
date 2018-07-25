@@ -22,6 +22,9 @@ source scripts/stow.sh # load solve_stow_conflict()
 
 start() { # start backup
   cd "$SCRIPTPATH"
+
+  [[ ${BACKUP} != false ]] && mkdir ${BACKUP_PATH}
+
   for dir in ${CORE_DIR[@]}; do
     solve_stow_conflict "$dir" "$1"
   done
