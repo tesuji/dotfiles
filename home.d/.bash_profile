@@ -9,3 +9,5 @@
 ## The skeleton file /etc/skel/.bash_profile also sources ~/.bashrc
 
 [[ -n "$BASH_VERSION" ]] && [[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
+
+export PATH="$HOME/.cargo/bin:$PATH"
