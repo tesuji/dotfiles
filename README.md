@@ -12,7 +12,7 @@ Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
   - I would recommend having passphrases to protect all your keys.
 - Currently only test for Debian-based and Arch-based distro.
 
-## General informations
+## General information
 
 | Shell    | WM / DE | Editor   | Terminal       | Multiplexer | Compositor | Audio      | Monitor | Mail        | IRC |
 |:---------|:--------|:---------|:---------------|:------------|:-----------|:-----------|:--------|:------------|:----|
