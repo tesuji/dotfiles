@@ -14,9 +14,9 @@ Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
 
 ## General information
 
-| Shell    | WM / DE | Editor   | Terminal       | Multiplexer | Compositor | Audio      | Monitor | Mail        | IRC |
-|:---------|:--------|:---------|:---------------|:------------|:-----------|:-----------|:--------|:------------|:----|
-| bash/zsh | xfce4   | vim/subl | terminal/urxvt |             | compton    | pulseaudio | custom  | thunderbird |     |
+| Shell      | WM / DE | Editor     | Terminal         | Multiplexer | Compositor | Audio      | Monitor | Mail | IRC |
+|:-----------|:--------|:-----------|:-----------------|:------------|:-----------|:-----------|:--------|:-----|:----|
+| bash / zsh | XFCE    | VIM / Subl | terminal / urxvt |             | compton    | pulseaudio | custom  |      |     |
 
 ## Installation
 
@@ -57,24 +57,26 @@ git config --global user.email "example@email.com"
 
 - `fontconfig` may cause noised font rendering on [Fedora].
 
-## Structures
+## Structure
 
-| Folder     | Purpose                                                                                              |
-|:-----------|:-----------------------------------------------------------------------------------------------------|
-| .backup    | If enable, back up any old dotfiles to this folder                                                   |
-| bin        | Script file expect to be in `${PATH}` like touchpad-toggling scripts                                 |
-| compton    | [compton] configuration file                                                                         |
-| desktop.d  | Firefox desktop file used on Debian, Zathura PDF on Arch Linux.                                      |
-| home.d     | Dotfiles like `.bashrc`, `.zshrc`, etc that need linking to HOME                                     |
-| icon.d     | Icon file for custome desktop file                                                                   |
-| kwallet    | Autostart script to remember ssh passphrase                                                          |
-| docs       | Some documentations about setting up Arch Linux and using software like git, radare2, vim, ssh, etc. |
-| config.d   | All other non-important config files: elinks, qt4                                                    |
-| fontconfig | Font configurations                                                                                  |
-| scripts    | Useful scripts for installing Firefox, getting distro name                                           |
-| subl       | SublimeText custom syntaxs and key bindings                                                          |
-| urxvt      | urxvt color config and urxvtd startup file                                                           |
-| xfce4      | terminal color and keyboard shortcuts config                                                         |
+| Folder     | Purpose                                                                    |
+|:-----------|:---------------------------------------------------------------------------|
+| .backup    | If enable, back up any old dotfiles to this folder                         |
+| bin        | Script file expect to be in `${PATH}` like touchpad-toggling scripts       |
+| compton    | Configuration of `compton` - a compositor for X11                          |
+| config.d   | All other non-important config files: elinks, qt4                          |
+| desktop.d  | Firefox desktop file used on Debian, Zathura PDF in Arch Linux             |
+| docs       | Some guidances about setting up Arch Linux and git, radare2, vim, ssh, etc |
+| firefox    | Advanced settings to tweak and customize Firefox                           |
+| fontconfig | Font configuration helps dealing with Microsoft fonts                      |
+| home.d     | Dotfiles like `.bashrc`, `.zshrc`, etc that need to link to HOME           |
+| icon.d     | Icon file for custom desktop files                                         |
+| kdewallet  | Autostart script to remember ssh passphrase                                |
+| scripts    | Useful scripts for installing Firefox, getting distro name                 |
+| subl       | Sublime Text custom syntax and key bindings                                |
+| urxvt      | urxvt color config and urxvtd startup file                                 |
+| vscode     | Global settings of Visual Code                                             |
+| xfce4      | Terminal color and keyboard shortcuts                                      |
 
 ### subl
 
@@ -85,14 +87,26 @@ git config --global user.email "example@email.com"
 | <kbd>Ctrl</kbd><kbd>K</kbd>,<kbd>Ctrl</kbd><kbd>P</kbd> | Title case     |
 | <kbd>Ctrl</kbd><kbd>0</kbd>                             | Reset fontsize |
 
-**Packages**: If installed Package Control in SublimeText,
+**Installed package**:
+If installed Package Control in SublimeText,
 it will install the following packages:
+
+- Autotools
+- CMake
 - INI
 - Markdown Table Formatter
 - MasmAssembly
+- Meson
 - NASM x86 Assembly
 
 **Custom syntax**: bash, c, c++, css, html, java, js, makefile, python, xml.
+
+### Firefox
+
+Install tweaks by:
+```bash
+bash ./scripts/tweak_firefox.sh
+```
 
 ## Contribution
 
