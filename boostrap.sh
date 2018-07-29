@@ -33,13 +33,18 @@ subl_install() {
     sudo apt-get install apt-transport-https wget
     # Install GPG key
     wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-    echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+    echo "deb https://download.sublimetext.com/ apt/stable/" \
+    | sudo tee /etc/apt/sources.list.d/sublime-text.list
     # Update apt sources and install Sublime Text
     sudo apt-get update
     sudo apt-get install sublime-text
   elif check_exist pacman; then
-    wget https://download.sublimetext.com/sublimehq-pub.gpg && sudo pacman-key --add sublimehq-pub.gpg && sudo pacman-key --lsign-key 8A8F901A && rm sublimehq-pub.gpg
-    echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" | sudo tee -a /etc/pacman.conf
+    wget https://download.sublimetext.com/sublimehq-pub.gpg \
+    && sudo pacman-key --add sublimehq-pub.gpg \
+    && sudo pacman-key --lsign-key 8A8F901A \
+    && rm sublimehq-pub.gpg
+    echo -e "\n[sublime-text]\nServer = https://download.sublimetext.com/arch/stable/x86_64" \
+    | sudo tee -a /etc/pacman.conf
     sudo pacman -Syu sublime-text
   else
     echo "Not supported distro"
