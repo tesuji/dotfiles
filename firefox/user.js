@@ -85,11 +85,11 @@ user_pref("dom.gamepad.enabled",                                false);
 user_pref("dom.vr.enabled",                                     false);
 
 // PREF: Disable vibrator API
-user_pref("dom.vibrator.enabled",           false);
+user_pref("dom.vibrator.enabled",                               false);
 
 // PREF: Disable resource timing API
 // https://www.w3.org/TR/resource-timing/#privacy-security
-user_pref("dom.enable_resource_timing", false);
+user_pref("dom.enable_resource_timing",                         false);
 
 /******************************************************************************
  * SECTION: Misc                                                              *
@@ -115,7 +115,7 @@ user_pref("browser.search.geoSpecificDefaults",                 false);
 
 // PREF: Do not automatically send selection to clipboard on some Linux platforms
 // http://kb.mozillazine.org/Clipboard.autocopy
-user_pref("clipboard.autocopy",                                 false);
+//user_pref("clipboard.autocopy",                                 false);
 
 /******************************************************************************
  * SECTION: Extensions / plugins                                              *
