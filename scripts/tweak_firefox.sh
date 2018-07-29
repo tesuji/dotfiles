@@ -27,6 +27,9 @@ start_install()
 {
   if PROFILE_DIR=$( get_firefox_profile ); then
     (cd "$SCRIPTPATH/.." && stow -v -t "$PROFILE_DIR" firefox)
+  else
+    echo "[x] Cannot install firefox tweaks"
+    echo "[x] Firefox directory not found"
   fi
 }
 
