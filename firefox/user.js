@@ -246,6 +246,9 @@ user_pref("privacy.resistFingerprinting",                       true);
 user_pref("datareporting.healthreport.uploadEnabled",           false);
 user_pref("datareporting.policy.dataSubmissionEnabled",         false);
 
+// PREF: Disable introduce tour of Firefox when first use
+user_pref("browser.onboarding.enabled",                         false)
+
 // PREF: Disable Pocket
 // https://support.mozilla.org/en-US/kb/save-web-pages-later-pocket-firefox
 // https://github.com/pyllyukko/user.js/issues/143
