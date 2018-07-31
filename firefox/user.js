@@ -95,6 +95,9 @@ user_pref("dom.enable_resource_timing",                         false);
  * SECTION: Misc                                                              *
  ******************************************************************************/
 
+// PREF: Temporary fix for new YouTube's design on FireFox 57+
+user_pref("general.useragent.override.youtube.com", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/2010010");
+
 // PREF: Disable GeoIP lookup on your address to set default search engine region
 // https://trac.torproject.org/projects/tor/ticket/16254
 // https://support.mozilla.org/en-US/kb/how-stop-firefox-making-automatic-connections#w_geolocation-for-default-search-engine
