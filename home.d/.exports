@@ -2,20 +2,20 @@
 ## ~/.exports: Export environment vars for both bash and zsh
 
 ## If zsh or bash
-typeofshell=$(ps -p $$ --no-headers -o cmd)
+m_typeofshell="$(ps -p $$ --no-headers -o cmd)"
 
-case "$typeofshell" in
+case "$m_typeofshell" in
   (*bash)
-    ## for setting history length see HISTSIZE and HISTFILESIZE in bash
+    ## See HISTSIZE and HISTFILESIZE in bash for setting history length
     HISTSIZE=1000
     HISTFILESIZE=2000
-    ## don't put duplicate lines or lines starting with space in the history.
+    ## Do NOT put duplicate lines or lines starting with space in the history.
     HISTCONTROL=ignoreboth:erasedups
     ;;
   (*zsh)
     HISTSIZE=1000                 # 1000 lines of history within the shell
     SAVEHIST=1000                 # 1000 lines of history in $HISTFILE
-    HISTFILE=${HOME}/.zsh_history # Save history to ~/.zsh_history
+    HISTFILE="${HOME}/.zsh_history" # Save history to ~/.zsh_history
     ## Ignore saving in $HISTFILE, but still in the shell
     HISTORY_IGNORE='([bf]g|cd ..|l|l[alsh]|less *|vim *)'
 
@@ -28,7 +28,7 @@ case "$typeofshell" in
     ;;
 esac
 
-## enable the keyring for applications run through the terminal, such as SSH
+## Enable the keyring for applications run through the terminal, such as SSH
 if [[ -n "$DESKTOP_SESSION" ]];then
   if command -v gnome-keyring-daemon > /dev/null 2>&1; then
     eval "$(gnome-keyring-daemon --start)"
@@ -46,7 +46,7 @@ fi
 
 ## Make vim the default editor.
 export EDITOR='vim'
-export VISUAL=${EDITOR}
+export VISUAL="${EDITOR}"
 
 ## Prefer US English and use UTF-8.
 ## Ref https://wiki.archlinux.org/index.php/locale
@@ -59,10 +59,10 @@ export LANG='en_US.UTF-8'
 ## Please use it only when testing and never set it in a startup file.
 #export LC_ALL='en_US.UTF-8'
 
-export PYTHONSTARTUP=~/.pythonrc
+export PYTHONSTARTUP="${HOME}/.pythonrc"
 #export SYSTEMD_LESS='FRSMK'
 
 ## MySQL prompt
 #export MYSQL_PS1="\R|\m:\s \h.\d> "
 
-unset typeofshell
+unset m_typeofshell
