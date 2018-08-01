@@ -9,24 +9,24 @@
 ##    https://askubuntu.com/a/537031/565006
 ##    https://wiki.archlinux.org/index.php/Libinput#Disable_touchpad
 toggle_touchpad() {
-  local icon_enable=input-touchpad-symbolic
-  local icon_disable=touchpad-disabled-symbolic
+  m_icon_enable=input-touchpad-symbolic
+  m_icon_disable=touchpad-disabled-symbolic
 
-  local info_enable="Touchpad has been enabled"
-  local info_disable="Touchpad has been disabled"
+  m_info_enable="Touchpad has been enabled"
+  m_info_disable="Touchpad has been disabled"
 
   ## fgrep and cut is still faster than sed
-  local ID=$( xinput | fgrep TouchPad | cut -f2 | cut -d= -f2 )
-  local STATE=$( xinput list-props "$ID" | grep "Device Enabled" | grep -o "[01]$" )
+  mID="$( xinput | grep -F 'TouchPad' | cut -f2 | cut -d= -f2 )"
+  mSTATE="$( xinput list-props "$mID" | grep "Device Enabled" | grep -o "[01]$" )"
 
-  if [[ "$STATE" -eq '1' ]]; then
+  if [[ "$mSTATE" -eq '1' ]]; then
     ## Should install Notification servers
     ## https://wiki.archlinux.org/index.php/Desktop_notifications#Notification_servers
-    xinput --disable "$ID" \
-        && notify-send "Disabled" "$info_disable" --icon="$icon_disable"
+    xinput --disable "$mID" \
+        && notify-send "Disabled" "$m_info_disable" --icon="$m_icon_disable"
   else
     xinput --enable "$ID" \
-        && notify-send "Enabled " "$info_enable" --icon="$icon_enable"
+        && notify-send "Enabled " "$m_info_enable" --icon="$m_icon_enable"
   fi
 }
 
