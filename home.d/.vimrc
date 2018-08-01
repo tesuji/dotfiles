@@ -151,7 +151,7 @@
 " }}}
 
 " Automatic commands {{{
-  " Only do this part when compiled with support for autocommands.
+  " Only do this part when compiled with support for auto-commands.
   if has("autocmd")
     " Load indentation rules and
     " plugins according to the detected filetype.
