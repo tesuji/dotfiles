@@ -1,8 +1,6 @@
 #!/usr/bin/env zsh
 
-###############
-## Window title
-###############
+## Window title ##
 ## From: https://github.com/MrElendig/dotfiles-alice/blob/master/.zshrc
 case "$TERM" in
   (screen*|*xterm*|rxvt*|(dt|k|E)term)
@@ -18,28 +16,35 @@ case "$TERM" in
     ;;
 esac
 
-#################
-## Fancier prompt
-#################
-## user at host in /etc/zsh
-## [127]  1 19:18 %
-## Reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
-
-## Highlight the hostname when connected via SSH.
-host_style='%F{yellow}%M'
+## Add constant string (remote) when connected via SSH.
 if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
-  host_style="${host_style} (remote)"
+  m_host_style="%M (remote)"
+else
+  m_host_style="%M"
 fi
 
-user_at_host='%B%F{cyan}%n %F{white}at '${host_style}'%F{white} in %F{green}%~%k'
-error_prompt='%(?..%K{red}%F{white}[%?]%k )' # print exit code if exit code != 0
-job_prompt='%(1j.%K{blue} %j%k .)'  # print number of job if there are background jobs
-time_prompt='%F{white}%T%b%f'       # Time format -> hh:mm
-shell_state='%F{red}%#%f'
+## Set a fancy prompt (non-color if it is a dumb terminal)
+if [[ "$TERM" != "dumb" ]]; then
+  user_at_host='%B%F{cyan}%n %F{white}at '%F{yellow}${m_host_style}'%F{white} in %F{green}%~%k'
+  error_prompt='%(?..%K{red}%F{white}[%?]%k )' # Print exit code if exit code != 0
+  job_prompt='%(1j.%K{blue} %j%k .)'  # Print number of job if there are background jobs
+  time_prompt='%F{white}%T%b%f'       # Time format -> hh:mm
+  shell_state='%F{red}%#%f'
+else
+  user_at_host='%n at ${m_host_style} in %~'
+  error_prompt='%(?..[%?] )'
+  job_prompt='%(1j. %j .)'
+  time_prompt='%T'
+  shell_state='%#'
+fi
 
-PS1="$user_at_host
+## Sample result:
+##     user at host in ~/Documents
+##     9:39 $
+## Reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+PS1="${user_at_host}
 ${error_prompt}${job_prompt}${time_prompt} ${shell_state} "
 
 export PS1
 
-unset host_style user_at_host error_prompt job_prompt time_prompt shell_state
+unset m_host_style user_at_host error_prompt job_prompt time_prompt shell_state
