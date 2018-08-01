@@ -38,9 +38,10 @@ shopt -s cdspell
 ## Load the shell dotfiles, and then some:
 ##   * ~/.path can be used to extend $PATH.
 ##   * ~/.extra can be used for other settings you don’t want to commit.
-for m_file in "${HOME}"/.{paths,bash_prompt,exports,aliases,extra}; do
-  [[ -f "$m_file" ]] && source "$m_file"
-done
-unset m_file
+[[ -f "${HOME}/.paths" ]] && source "${HOME}/.paths"
+[[ -f "${HOME}/.bash_prompt" ]] && source "${HOME}/.bash_prompt"
+[[ -f "${HOME}/.exports" ]] && source "${HOME}/.exports"
+[[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
+[[ -f "${HOME}/.extra" ]] && source "${HOME}/.extra"
 
 ## end of file

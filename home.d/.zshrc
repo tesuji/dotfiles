@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 ## Ref http://matt.blissett.me.uk/linux/zsh/zshrc
 
-compinit_age() {
+m_compinit_age() {
   local last_modified=$(stat -c "%Y" "${HOME}/.zcompdump")
   local current=$(date +%s)
   echo $(( current - last_modified ))
@@ -67,7 +67,7 @@ fpath=("$HOME/.zshfuncs" $fpath)
 autoload -Uz compinit # Use modern completion system
 
 ## If "$HOME/.zcompdump" is modified less than 24h
-if [[ compinit_age -le 86400 ]]; then
+if [[ m_compinit_age -le 86400 ]]; then
   compinit -C
 else
   compinit
@@ -123,7 +123,10 @@ zle -N down-line-or-beginning-search
 ######################
 ## * "$HOME/.path" can be used to extend `$PATH`.
 ## * "$HOME/.extra" can be used for other settings you don't want to commit.
-for m_file in "${HOME}"/.{paths,zsh_prompt,exports,aliases,extra}; do
-  [[ -r "$m_file" ]] && [[ -f "$m_file" ]] && source "$m_file"
-done
-unset m_file compinit_age
+[[ -f "${HOME}/.paths" ]] && source "${HOME}/.paths"
+[[ -f "${HOME}/.bash_prompt" ]] && source "${HOME}/.bash_prompt"
+[[ -f "${HOME}/.exports" ]] && source "${HOME}/.exports"
+[[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
+[[ -f "${HOME}/.extra" ]] && source "${HOME}/.extra"
+
+unset m_compinit_age
