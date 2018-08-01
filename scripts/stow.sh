@@ -4,16 +4,16 @@ solve_stow_conflict() { # solve_stow_conflict path backup
   local path="$1"
   local backup="$2"
 
-  stow -nv -t "$HOME" "$path" 2>&1 | sed -n 's/^  \*.*: //p' | while read error; do
-    error="${HOME}/${error}"
-    if [[ ( -f "$error" ) || ( -L "$error" ) ]]; then
+  stow -nv -t "$HOME" "$path" 2>&1 | sed -n 's/^  \*.*: //p' | while read -r m_error; do
+    m_error="${HOME}/${m_error}"
+    if [[ ( -f "$m_error" ) || ( -L "$m_error" ) ]]; then
       case "$backup" in
         (true)
           echo "[!] Backup $1 to ${BACKUP_PATH}" 2>&1
-          mv "$error" -t "${BACKUP_PATH}"
+          mv "$m_error" -t "${BACKUP_PATH}"
           ;;
         (false)
-          rm -f "$error"
+          rm -f "$m_error"
           ;;
         (*)
           echo "[!] Error: Unknown option: ${backup}" 2>&1
@@ -21,11 +21,10 @@ solve_stow_conflict() { # solve_stow_conflict path backup
           ;;
       esac
     else
-      echo "\"$error\" is a folder. Exitting"
+      echo "\"$m_error\" is a folder. Exitting"
       exit 127
     fi
   done
 
   stow -t "$HOME" "$path"
 }
-
