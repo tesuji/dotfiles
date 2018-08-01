@@ -18,7 +18,7 @@ get_distro_info() {
   # Older Debian/Ubuntu/etc.
   elif [[ -r /etc/debian_version ]]; then
     os_name=Debian
-    os_ver=$(cat /etc/debian_version)
+    os_ver=$(</etc/debian_version)
   # Older SuSE/etc.
   elif [[ -r /etc/SuSE-release ]]; then
     os_name=$(head -n1 /etc/SuSE-release)
@@ -26,7 +26,7 @@ get_distro_info() {
   # Older Red Hat, CentOS, etc.
   elif [[ -r /etc/redhat-release ]]; then
     os_name="Red Hat"
-    os_ver=$(cat /etc/redhat-release | cut -d ' ' -f7)
+    os_ver=$(cut -d ' ' -f7 '/etc/redhat-release')
   # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
   else
     os_name=$(uname -s)
