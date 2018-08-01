@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+SCRIPTPATH="$( cd "$(dirname "$0")" || exit 1; pwd -P )"
 
 get_firefox_profile()
 {
