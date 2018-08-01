@@ -18,7 +18,7 @@ check_exist() { # check_exist name
 ## Ask for installing, default is No
 ask_install() { # ask_install question
   echo
-  read -p "$1 (y/N) " -n 1
+  read -r -p "$1 (y/N) " -n 1
   echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     return 1
@@ -98,26 +98,24 @@ declare -a ARCH_APPS=(
 
 apps_install() {
   echo "This script will install:"
-  echo "${COMMON_APPS[@]}"
+  echo "${COMMON_APPS[*]}"
   if check_exist pacman; then
-    echo "${ARCH_APPS[@]} ..."
+    echo "${ARCH_APPS[*]} ..."
   elif check_exist apt-get; then
-    echo "${DEBIAN_APPS[@]} ..."
+    echo "${DEBIAN_APPS[*]} ..."
   fi
 
-  ask_install "Do you want to install these apps ?"
-
-  if [[ $? -eq 0 ]]; then
+  if ask_install "Do you want to install these apps ?"; then
     echo "[+] Ignoring installing ..."
     return 0
   fi
 
   if check_exist pacman; then # Arch Linux
     sudo pacman --needed --noconfirm -Syu "${COMMON_APPS[@]}"
-    echo "Installing ${ARCH_APPS[@]} ..."
+    echo "Installing ${ARCH_APPS[*]} ..."
     sudo pacman --needed --noconfirm -S "${ARCH_APPS[@]}"
 
-    for lib in ${PYLIB[@]}; do
+    for lib in "${PYLIB[@]}"; do
       echo "    -> installing" python{,2}"-${lib}"
       sudo pacman --needed --noconfirm -S python{,2}"-${lib}"
     done
@@ -125,10 +123,10 @@ apps_install() {
   elif check_exist apt-get; then
     sudo apt-get update
     sudo apt-get  --yes install "${COMMON_APPS[@]}"
-    echo "Installing ${DEBIAN_APPS[@]} ..."
+    echo "Installing ${DEBIAN_APPS[*]} ..."
     sudo apt-get  --yes install "${DEBIAN_APPS[@]}"
 
-    for lib in ${PYLIB[@]}; do
+    for lib in "${PYLIB[@]}"; do
       echo "    -> installing " python{,3}"-${lib}"
       sudo apt-get --yes install python{,3}"-${lib}"
     done
@@ -139,8 +137,8 @@ apps_remove() {
   declare -a DEFAUTL_REMOVE_APPS=(bluez gedit nano reportbug vim-tiny xterm)
   echo "[+] Listing apps..."
   echo "${DEFAUTL_REMOVE_APPS[@]}"
-  ask_install "Do you want to remove these apps ?"
-  if [[ $? -eq 1 ]]; then
+
+  if ! ask_install "Do you want to remove these apps ?"; then
     echo "[+] Installing ..."
     apt-get autoremove --purge "${DEFAUTL_REMOVE_APPS[@]}"
   else
