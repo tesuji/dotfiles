@@ -8,35 +8,36 @@ _outfile=""
 
 ask_install() { # ask_install question
   printf "\n\n"
-  read -p "$1 (y/N) " -n 1
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
+  read -r -p "$1 (y/N) " -n 1
+  if [[ "$REPLY" =~ ^[Yy]$ ]]; then
     return 1
   else
     return 0
   fi
 }
 
+## Read Why does "local" sweep the return code of a command?
+##    https://stackoverflow.com/a/4421282/5456794
 download_firefox() {
   echo "Testing firefox download link ..."
-  local entry_url='https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'
-  local download_log=$(wget --spider "$entry_url" 2>&1)
-  local isSucess=$?
+  local entry_url
+  entry_url='https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'
+  local download_log
 
-  if [[ $isSucess -ne 0 ]]; then
+  if download_log=$(wget --spider "$entry_url" 2>&1); then
     echo 'Remote file does not exist -- broken link!!!'
     echo "Exiting ..."
-    exit $isSucess
+    exit 2
   fi
 
-  local firefox_url=$(echo "$download_log" | grep Location |cut -d ' ' -f2)
+  local firefox_url
+  firefox_url=$(echo "$download_log" | grep Location |cut -d ' ' -f2)
   _outfile=$(basename "$firefox_url")
 
   echo "[+] Download ${_outfile}"
 
   if [[ "${_outfile}" == "firefox"*".tar.bz2" ]]; then
-    ask_install "Download this version ?"
-
-    if [[ $? -eq 0 ]]; then
+    if ask_install "Download this version ?"; then
       echo "Exitting ..."
       return 1
     fi
@@ -51,9 +52,8 @@ download_firefox() {
 
 install_firefox() {
   local firefox_bin=/opt/firefox/firefox
-  ask_install "Do you want to install ?"
 
-  if [[ $? -eq 1 ]]; then
+  if ask_install "Do you want to install ?"; then
     echo "Unpacking firefox to /opt/ ..."
     sudo tar xjf --overwrite "${_outfile}" -C /opt/
 
@@ -81,13 +81,12 @@ remove_addons() {
       "firefox@getpocket.com.xpi"
       "screenshots@mozilla.org.xpi"
       )
-  echo "Disabling addons ${addons_list[@]} ..."
+  echo "Disabling addons ${addons_list[*]} ..."
 
-  ask_install "Do you want to diable ?"
-
-  if [[ $? -eq 1 ]]; then
+  if ask_install "Do you want to diable ?"; then
     for file in "${addons_list[@]}"; do
-      echo "[-] Disabling ${file} ...\n"
+      echo "[-] Disabling ${file} ..."
+      echo
       sudo chmod a-r "/opt/firefox/browser/features/${file}"
     done
   fi
