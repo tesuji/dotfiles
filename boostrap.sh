@@ -69,6 +69,7 @@ declare -a COMMON_APPS=(
     lshw nasm netcat nmap
     tree zsh
     radare2 gnome-keyring rsync smartmontools sqlite {l,s}trace
+    shellcheck
     xfce4-notifyd texstudio
   )
 
