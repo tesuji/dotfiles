@@ -20,9 +20,8 @@ ask_install() { # ask_install question
 ##    https://stackoverflow.com/a/4421282/5456794
 download_firefox() {
   echo "Testing firefox download link ..."
-  local entry_url
+  local entry_url download_log firefox_url
   entry_url='https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'
-  local download_log
 
   if download_log=$(wget --spider "$entry_url" 2>&1); then
     echo 'Remote file does not exist -- broken link!!!'
@@ -30,7 +29,6 @@ download_firefox() {
     exit 2
   fi
 
-  local firefox_url
   firefox_url=$(echo "$download_log" | grep Location |cut -d ' ' -f2)
   _outfile=$(basename "$firefox_url")
 

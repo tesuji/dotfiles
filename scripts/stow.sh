@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 solve_stow_conflict() { # solve_stow_conflict path backup
-  local path="$1"
-  local backup="$2"
+  local path="$1" backup="$2" m_error
 
-  stow -nv -t "$HOME" "$path" 2>&1 | sed -n 's/^  \*.*: //p' | while read -r m_error; do
+  stow -nv -t "$HOME" "$path" 2>&1 \
+  | sed -n 's/^  \*.*: //p' \
+  | while read -r m_error; do
     m_error="${HOME}/${m_error}"
     if [[ ( -f "$m_error" ) || ( -L "$m_error" ) ]]; then
       case "$backup" in

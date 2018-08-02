@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 get_distro_info() {
-  local os_name=''
-  local os_ver=''
+  local os_name os_ver
   # freedesktop.org and systemd
   if [[ -r /etc/os-release ]]; then
     os_name=$(grep '^NAME' /etc/os-release |cut -d '"' -f2)

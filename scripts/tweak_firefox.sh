@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
-SCRIPTPATH="$( cd "$(dirname "$0")" || exit 1; pwd -P )"
+readonly SCRIPTPATH="$( cd "$(dirname "$0")" || exit 1; pwd -P )"
 
 get_firefox_profile()
 {
-  local PARENT_FF_DIR="$HOME/.mozilla/firefox"
-  local PROFILE_INI="$PARENT_FF_DIR/profiles.ini"
+  readonly PARENT_FF_DIR="$HOME/.mozilla/firefox"
+  readonly PROFILE_INI="$PARENT_FF_DIR/profiles.ini"
 
   if [[ ! -f "$PROFILE_INI" ]]; then
     return 1
