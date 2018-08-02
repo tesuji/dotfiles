@@ -124,7 +124,7 @@ zle -N down-line-or-beginning-search
 ## * "$HOME/.path" can be used to extend `$PATH`.
 ## * "$HOME/.extra" can be used for other settings you don't want to commit.
 [[ -f "${HOME}/.paths" ]] && source "${HOME}/.paths"
-[[ -f "${HOME}/.bash_prompt" ]] && source "${HOME}/.bash_prompt"
+[[ -f "${HOME}/.zsh_prompt" ]] && source "${HOME}/.zsh_prompt"
 [[ -f "${HOME}/.exports" ]] && source "${HOME}/.exports"
 [[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
 [[ -f "${HOME}/.extra" ]] && source "${HOME}/.extra"
