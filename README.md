@@ -12,7 +12,7 @@ Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
   - I would recommend having passphrases to protect all your keys.
 - Currently only test for Debian-based and Arch-based distro.
 
-## General information
+## General Information
 
 | Shell      | WM / DE | Editor     | Terminal         | Multiplexer | Compositor | Audio      | Monitor | Mail | IRC |
 |:-----------|:--------|:-----------|:-----------------|:------------|:-----------|:-----------|:--------|:-----|:----|
@@ -53,11 +53,11 @@ git config --global user.email "example@email.com"
 
 [Tell git about your gpg key][gpg_key] if you have one.
 
-## Known issues
+## Known Issues
 
 - `fontconfig` may cause noised font rendering on [Fedora].
 
-## Structure
+## Directory Hierarchy
 
 | Folder     | Purpose                                                                    |
 |:-----------|:---------------------------------------------------------------------------|
@@ -115,7 +115,7 @@ there are two ways to do that.
 Either you can open an [issue],
 or you can fork and [pull request][pull].
 
-## Thanks to
+## Thanks To
 
 All other dotfiles that I stole from.
 I give references in the comment of many files.
