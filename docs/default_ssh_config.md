@@ -1,9 +1,8 @@
-Ref
-- https://cipherli.st/
-- https://stribika.github.io/2015/01/04/secure-secure-shell.html
+# How to configure ssh package
 
-To stop ssh server:
-```
+## First: Stop ssh server
+
+```bash
 systemctl stop ssh
 ```
 
@@ -21,14 +20,18 @@ OpenSSH supports 11 key exchange protocols:
 1. ecdh-sha2-nistp384: ECDH over NIST P-384 with SHA2
 1. ecdh-sha2-nistp521: ECDH over NIST P-521 with SHA2
 
-If you chose to enable 8, open /etc/ssh/moduli if exists, and delete lines where the 5th column is less than 2000.
+If you chose to enable 8,
+open `/etc/ssh/moduli` if exists,
+and delete lines where the 5th column is less than 2000.
+
 ```bash
 awk '$5 > 2000' /etc/ssh/moduli > "${HOME}/moduli"
 wc -l "${HOME}/moduli" # make sure there is something left
 mv "${HOME}/moduli" /etc/ssh/moduli
 ```
 
-If it does NOT exist, create it:
+If it does NOT exist,
+create it:
 ```bash
 ssh-keygen -G /etc/ssh/moduli.all -b 4096
 ssh-keygen -T /etc/ssh/moduli.safe -f /etc/ssh/moduli.all
@@ -37,9 +40,9 @@ rm /etc/ssh/moduli.all
 ```
 This will take a while so continue while it's running.
 
-### OpenSSH Server
+## OpenSSH Server
 
-```
+```sshdconfig
 Protocol 2
 HostKey /etc/ssh/ssh_host_ed25519_key
 HostKey /etc/ssh/ssh_host_rsa_key
@@ -67,9 +70,9 @@ IgnoreRhosts yes
 HostbasedAuthentication no
 ```
 
-### OpenSSH Client
+## OpenSSH Client
 
-```
+```sshconfig
 HashKnownHosts yes
 Host github.com
 	MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512
@@ -90,6 +93,14 @@ Host *
 	ControlPath ~/.ssh/socket-%r@%h:%p
 ```
 
-### Reload
+## End: Reload ssh server
 
-Reload the ssh server: `sudo systemctl reload ssh`
+Reload the ssh server:
+
+```bash
+sudo systemctl reload ssh
+```
+
+## References
+- https://cipherli.st/
+- https://stribika.github.io/2015/01/04/secure-secure-shell.html
