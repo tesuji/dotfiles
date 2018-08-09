@@ -89,10 +89,10 @@ git config --global user.email "example@email.com"
 
 **Keymap**:
 
-| Shortcut                                                | Bindings        |
-|:--------------------------------------------------------|:----------------|
-| <kbd>Ctrl</kbd><kbd>K</kbd>,<kbd>Ctrl</kbd><kbd>P</kbd> | Title case      |
-| <kbd>Ctrl</kbd><kbd>0</kbd>                             | Reset font size |
+| Shortcut                            | Bindings        |
+|:------------------------------------|:----------------|
+| <kbd>Ctrl+K</kbd>,<kbd>Ctrl+P</kbd> | Title case      |
+| <kbd>Ctrl+0</kbd>                   | Reset font size |
 
 **Installed package**:
 If installed Package Control in SublimeText,
