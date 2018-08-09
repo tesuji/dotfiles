@@ -1,20 +1,20 @@
 # Using Git
 
-### Global Settings
+## Global Settings
 
 Interactive Beginners Tutorial: http://try.github.io/
 
-### Setup
+## Setup
 
 See where Git is located: `which git`
 
 Get the version of Git: `git --version`
 
-### Help
+## Help
 
 Help: `git help`
 
-### Git Workflow
+## Git Workflow
 
 ![git_workflow](img/git_workflow.svg)
 
@@ -27,14 +27,15 @@ A Git project can be thought of as having three parts:
 The Git workflow consists of editing files in the working directory, adding files
 to the staging area, and saving changes to a Git repository. In Git, we save changes with a commit.
 
-### Configure tooling
+## Configure tooling
+
 Configure user information for all local repositories
 
 `git config --global user.name "[name]"`: Sets the name you want attached to your commit transactions
 
 `git config --global user.email "[email address]"`: Sets the email you want attached to your commit transactions
 
-### Create repositories
+## Create repositories
 
 Start a new repository or obtain one from an existing URL
 
@@ -42,7 +43,7 @@ Start a new repository or obtain one from an existing URL
 
 `git clone [url]`: Downloads a project and its entire version history
 
-### Make changes
+## Make changes
 Review edits and craft a commit transaction
 
 `git status`: inspects the contents of the working directory and staging area
@@ -63,7 +64,7 @@ Review edits and craft a commit transaction
 
 `git show [commit]`: Outputs metadata and content changes of the specified commit
 
-### Reset
+## Reset
 
 In Git, the commit you are currently on is known as the `HEAD` commit.
 
@@ -100,7 +101,7 @@ switching to the branch of the same name.
 
 `git mv [file-original] [file-renamed]`: Changes the file name and prepare it for commit
 
-### Save fragments
+## Save fragments
 
 Shelve and restore incomplete changes
 
@@ -112,7 +113,7 @@ Shelve and restore incomplete changes
 
 `git stash drop`: Discards the most recently stashed changeset
 
-### Branching
+## Branching
 Git *branching* allows users to experiment with different versions
 of a project by checking out separate branches to work on.
 
@@ -137,7 +138,7 @@ Git *fast forwards* master to be up to date with branch.
 
 `git branch -d branch_name`: delete the specified branch
 
-### Merge conflict
+## Merge conflict
 
 The merge is successful if `master` had not changed since we made a commit on `branch_name`.
 
@@ -162,7 +163,7 @@ Automatic merge failed; fix conflicts and then commit the result.
 - We must fix the merge conflict.
 
 In the code editor, look at `conflict_file.txt`. Git uses markings to indicate the `HEAD` (master) version of the file and the `branch_name` version of the file, like this:
-```
+```diff
 <<<<<<< HEAD
 master version of line
 =======
@@ -182,7 +183,17 @@ If any of Git's markings remain, for example, `>>>>>>>` and `=======`, the confl
 - Add `conflict_file.txt` to the staging area.
 - Make a commit. For your commit message like "Resolve merge conflict" to indicate the purpose of the commit.
 
-### Teamwork
+### NOTE
+
+After you finish with all branches in a particular module, you may want to run:
+
+```bash
+git gc --prune=now
+```
+
+This will remove all the dangling commits, trees, and blobs left over from the probably-large number of mismatched objects discarded when you deleted tmpbranch.
+
+## Teamwork
 
 - `git clone remote_location clone_name`
 
