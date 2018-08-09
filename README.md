@@ -11,7 +11,7 @@ Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
   - Create a private repository called `secret_dotfiles` instead.
   - Try [Gitlab] for free private repo.
   - I would recommend having passphrases to protect all your keys.
-- Currently only test for Debian-based and Arch-based distro.
+- Currently only tested for Debian-based and Arch-based distro.
 
 ## General Information
 
@@ -26,19 +26,18 @@ not full feature but at least good enough.
 
 **Preview**: ![preview][zsh_preview]
 
+## Dependencies
+
+GNU Stow is needed for installing this dotfiles,
+to install `stow`,
+use the following command in proper distribution.
+
+| Distro            | Command                          |
+|:------------------|:---------------------------------|
+| Debian and Ubuntu | `sudo apt-get install stow`      |
+| Arch Linux        | `sudo pacman -Syu --needed stow` |
+
 ## Installation
-
-We need GNU Stow to install this dotfiles.
-
-On Debian and Ubuntu
-```bash
-sudo apt-get install stow
-```
-
-On Arch Linux
-```bash
-sudo pacman -Syu --needed stow
-```
 
 Install with backup in `dotfiles/.backup`:
 ```bash
@@ -59,7 +58,7 @@ git config --global user.name "username"
 git config --global user.email "example@email.com"
 ```
 
-[Tell git about your gpg key][gpg_key] if you have one.
+[Tell git about your GPG key][gpg_key] if you have one.
 
 ## Known Issues
 
@@ -129,7 +128,7 @@ All other dotfiles that I stole from.
 I give references in the comment of many files.
 But I am too lazy to list all here.
 
-[Fedora]:https://getfedora.org
+[Fedora]: https://getfedora.org
 [license-mit]: LICENSE
 [issue]: https://github.com/lzutao/dotfiles/issues
 [pull]: https://github.com/lzutao/dotfiles/pulls
