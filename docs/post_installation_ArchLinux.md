@@ -1,11 +1,11 @@
 # Post installation note for Arch Linux and Debian Stretch (9)
 
-### avahi-daemon[519]: chroot.c: open() failed: No such file or directory
+## avahi-daemon[519]: chroot.c: open() failed: No such file or directory
 
 **References**:
 - https://bugzilla.redhat.com/show_bug.cgi?id=1356304#c23 (not work)
 
-### Disable ipv6
+## Disable ipv6
 
 > Ref https://wiki.archlinux.org/index.php/IPv6#Disable_functionality)
 
@@ -28,19 +28,19 @@ otherwise there could be some connection errors because hosts are resolved to th
 
 And https://github.com/zidarko/scrolls/wiki/Exim4-Port-problem
 
-### Parallel downloading
+## Parallel downloading
 ```
 apt install aria2c
 ```
 
-### No hardware encryption ath9k
+## No hardware encryption ath9k
 ```
 echo "options ath9k nohwcrypt=1" | sudo tee /etc/modprobe.d/ath9k.conf
 ```
 
 https://askubuntu.com/questions/673156/atheros-ar9485-wifi-disconnects-randomly
 
-### Blank screen after lock/sleep
+## Blank screen after lock/sleep
 **To debug**:
 - Install `accountsservice` and `xserver-xephyr`, where
   + `accountsservice` for *Enhanced user accounts handling*
@@ -71,7 +71,7 @@ sudo mv -v -i /etc/xdg/autostart/at-spi-dbus-bus.desktop /etc/xdg/autostart/at-s
 - https://bugs.launchpad.net/ubuntu/+source/light-locker/+bug/1320989 with comment #17
 - https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1617471 with comment #25
 
-### Reduce writing to SSD
+## Reduce writing to SSD
 
 ```bash
 $ cat /etc/fstab
@@ -81,7 +81,7 @@ $ cat /etc/fstab
 /dev/sda3              /home         ext4      defaults,noatime      0      2
 ```
 
-### Enable user list LightDM
+## Enable user list LightDM
 By default, `LightDM` is configured so that the user should enter login name
 and password. Login name is considered sensitive information.
 
@@ -91,7 +91,7 @@ To enable user list, place the following settings into `/usr/share/lightdm/light
 greeter-hide-users=false
 ```
 
-### Extracting fonts from a Windows ISO
+## Extracting fonts from a Windows ISO
 The fonts can also be found in a Windows ISO file.
 
 Extract the `sources/install.esd` or the `sources/install.wim` file in the ISO and look for a `Windows/Fonts` directory within this file. It can be extracted with p7zip:
@@ -101,8 +101,8 @@ cd /path/to/save/file
 7z e install.wim Windows/Fonts
 ```
 
-### Polkit requesting root password to suspend
-#### Using Polkit
+## Polkit requesting root password to suspend
+### Using Polkit
 - If PolKit version >= 0.106
 
 You can check version of Polkit by: `pkaction --version`
@@ -145,7 +145,7 @@ And: `sudo chmod 644 /var/lib/polkit-1/localauthority/50-local.d/50-enable-suspe
 
 Read [More about pklocalauthority](https://www.freedesktop.org/software/polkit/docs/0.105/pklocalauthority.8.html)
 
-#### Using Power Manager settings (not sure if it works)
+### Using Power Manager settings (not sure if it works)
 In XFCE Power Manager under the `Security` tab set: `Automatically lock the session` to *Never*
 
 Check `Lock the screen when the system is going for sleep`
@@ -155,7 +155,7 @@ and *Switch off* times appear to be disabled (greyed out).
 
 Under the `System` tab I still have system sleep mode going to *Suspend* after an hour.
 
-#### Else edit policy file
+### Else edit policy file
 In `usr/share/polkit-1/actions/org.freedesktop.login1.policy`, near line:
 
 ```xml
@@ -177,7 +177,7 @@ check these (but `before` that make a backup file)
 + [stintel's blog](https://stijn.tintel.eu/blog/2015/09/11/polkit-requesting-root-password-to-suspend-after-updating-version-0112-to-0113)
 + [bugs.launchpad.net](https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1605189/comments/7)
 
-### Change default UMASK in `/etc/login.defs`
+## Change default UMASK in `/etc/login.defs`
 Both Debian and Ubuntu ship with **pam_umask**. This allows you to configure umask in `/etc/login.defs` and have them apply system-wide, regardless of how a user logs in.
 
 To **enable** it, add a line to `/etc/pam.d/common-session`
@@ -198,7 +198,7 @@ umask in `/etc/profile` or `/etc/bash.bashrc`. (If there are, just remove them.)
 In Arch Linux, change it in `/etc/profile` or in the default shell configuration
 files, e.g. `/etc/bash.bashrc`
 
-### Adjust grub time
+## Adjust grub time
 In `/etc/default/grub` change **GRUB_TIMEOUT** from 5 to `2`
 
 Update grub by run:
@@ -213,10 +213,10 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 ```
 
-### Additional completion definitions for Zsh
+## Additional completion definitions for Zsh
 https://github.com/zsh-users/zsh-completions
 
-### Install compton to avoid screen tearing
+## Install compton to avoid screen tearing
 See more: [Use compton for a tear free in Xfce](https://wiki.manjaro.org/index.php?title=Using_Compton_for_a_tear-free_experience_in_Xfce)
 and [How to switch to compton for beautiful tear free compositing in XFCE](http://duncanlock.net/blog/2013/06/07/how-to-switch-to-compton-for-beautiful-tear-free-compositing-in-xfce/)
 
@@ -224,7 +224,7 @@ and [How to switch to compton for beautiful tear free compositing in XFCE](http:
 
 **Note**: Start `compton` with `compton --daemon` to fork it in the background
 
-### Password protection of GRUB menu (AND won't let people boot)
+## Password protection of GRUB menu (AND won't let people boot)
 If you want to secure GRUB so it is not possible for anyone to change boot
 parameters or use the command line, use `grub-mkpasswd-pbkdf2`, type
 password you want twice, it will output something like:
@@ -252,10 +252,10 @@ Remember to make these backup file no eXcutable with `chmod 644`
 
 Finally, update grub by `update-grub`
 
-### Disable hibernation for [SSD](https://wiki.debian.org/Suspend)
+## Disable hibernation for [SSD](https://wiki.debian.org/Suspend)
 `sudo systemctl mask hibernate.target hybrid-sleep.target`
 
-### Keep application state in RAM
+## Keep application state in RAM
 Some older kernels making machine become unresponsive when dealing with slower storage, such as USB drives or SD cards:
 
 ```bash
@@ -271,10 +271,10 @@ EOF
 
 ## For Debian
 
-### Before you start install any packages first:
+## Before you start install any packages first:
 `sudo apt install curl wget apt-transport-https dirmngr`
 
-### Disable downloading translations
+## Disable downloading translations
 Create a file named `/etc/apt/apt.conf.d/99translations` and put the following in it:
 ```bash
 Acquire::Languages "none"; # no newline
@@ -284,7 +284,7 @@ what to delete: `ls *i18n*`
 
 Type: `man apt.conf` for more info.
 
-### Install driver HD 8790M and avoid over heating
+## Install driver HD 8790M and avoid over heating
 ```
 apt install firmware-linux-nonfree firmware-amd-graphics
 apt install linux-cpupower cpufrequtils
@@ -294,7 +294,7 @@ apt install linux-cpupower cpufrequtils
 
 ## For Arch Linux
 
-### How to manually install AUR package
+## How to manually install AUR package
 ```bash
 mkdir ~/.aur/<pkg_name>
 git clone https://aur.archlinux.org/<pkg_name>.git
@@ -303,23 +303,23 @@ makepkg -sr PKGBUILD
 pacman -U $pkg.tar.gz
 ```
 
-### How to use zip to create archive
+## How to use zip to create archive
 `zip <file.zip> -0 <file list>`
 
-### Decompile python from .pyc
+## Decompile python from .pyc
 `pip2 install --user uncompyle6`
 
-### Update man page and whatis database after installing new package
+## Update man page and whatis database after installing new package
 ```
 mandb
 ```
 
-### Install eigen lib for matrix operations OR install python2-numpy
+## Install eigen lib for matrix operations OR install python2-numpy
 ```bash
 pacman -Ss eigen # for C++
 ```
 
-### Install necessary package
+## Install necessary package
 ```bash
 ibus-unikey audacious jre7-openjdk pngcheck binwalk spek
 tcpdump gvfs checksec foremost
@@ -327,14 +327,14 @@ gst-plugins-base gst-plugins-base-libs gst-plugins-good
 gst-plugins-bad gst-plugins-ugly gst-libav gstreamer-vaapi
 ```
 
-### Install pwntools
+## Install pwntools
 ```bash
 pacaur -S python2-pwntools
 python2
 >>> from pwn import *
 ```
 
-### Install peda
+## Install peda
 ```bash
 pacman -S peda
 ln -s /usr/share/peda/peda.py ~/

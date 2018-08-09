@@ -1,9 +1,10 @@
 # General recommendations to maintain your Arch Linux system
 
-### Check new keyring
+## Check new keyring
+
 `sudo pacman-key --populate archlinux`
 
-### Broken symlinks
+## Broken symlinks
 
 Old, broken symbolic links might be sitting around your system; you should remove them. Examples on achieving this can be found here and here.
 
@@ -16,7 +17,7 @@ sudo find / -not -path '/proc/*' -not -path '/run/*' -xtype l -print 2>/dev/null
 
 Then inspect and remove unnecessary entries from this list.
 
-### Removing unused packages (orphans)
+## Removing unused packages (orphans)
 
 For recursively removing orphans and their configuration files:
 
@@ -26,7 +27,7 @@ sudo pacman -Rns $(pacman -Qtdq)
 
 If no orphans were found, pacman errors with error: no targets specified. This is expected as no arguments were passed to `pacman -Rns`.
 
-### Database access speeds
+## Database access speeds
 
 Pacman stores all package information in a collection of small files, one for each package. Improving database access speeds reduces the time taken in database-related tasks, e.g. searching packages and resolving package dependencies. The safest and easiest method is to run as root:
 
