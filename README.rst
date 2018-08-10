@@ -3,6 +3,9 @@ dotfiles
 
 Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
 
+.. contents:: **Table of Contents**
+   :depth: 2
+
 Disclaimer
 ----------
 
