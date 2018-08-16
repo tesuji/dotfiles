@@ -106,8 +106,8 @@ alias dd='dd status=progress'
 alias df='df -h'
 ## Only diffutils v3.4+ includes the --color option
 ## CentOS 7 has diffutils 3.3
-if diff --color <(echo a) <(echo b) >/dev/null 2>&1; then
-  alias diff="diff ${gnu_color_flag}"
+if diff --color <(echo a) <(echo a) >/dev/null 2>&1; then
+  alias diff="diff --unified ${gnu_color_flag}"
 fi
 alias du='du -sch'
 alias fail='journalctl -p 3 -xb'
