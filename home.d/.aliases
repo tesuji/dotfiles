@@ -34,7 +34,8 @@ man() {
 
 if check_exist vmhgfs-fuse; then
   vmmount() { # vmmount mount_point
-    local sharedir=$(vmware-hgfsclient)
+    local sharedir
+    sharedir=$(vmware-hgfsclient)
     vmhgfs-fuse -o allow_other -o auto_unmount .host:"$sharedir" "$1"
   }
 fi
@@ -46,7 +47,8 @@ fi
 # Credit: http://nparikh.org/notes/zshrc.txt
 extract() {
   if [[ -f "$1" ]]; then
-    local lowername=$(printf "$1" | tr '[:upper:]' '[:lower:]')
+    local lowername
+    lowername=$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')
     case "${lowername}" in
       (*.tar | *.x)        tar -xvf        "$1" ;;
       (*.tar.bz2 | *.tbz2) tar -jxvf       "$1" ;;
@@ -198,8 +200,10 @@ fi
 
 ## Alias for fuser {{{
 if check_exist fuser; then
-  ## you could replace sed with `tail -n2`
-  alias findport='fuser --verbose --namespace tcp "$1"' # find pid base on tcp port
+  # find pid base on tcp port
+  findport() { # findport 123
+    fuser --verbose --namespace tcp "$1"
+  }
   alias lsport='ss --processes --all --tcp'
 fi
 ## }}}
