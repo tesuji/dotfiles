@@ -25,7 +25,7 @@ toggle_touchpad() {
     xinput --disable "$mID" \
         && notify-send "Disabled" "$m_info_disable" --icon="$m_icon_disable"
   else
-    xinput --enable "$ID" \
+    xinput --enable "$mID" \
         && notify-send "Enabled " "$m_info_enable" --icon="$m_icon_enable"
   fi
 }
