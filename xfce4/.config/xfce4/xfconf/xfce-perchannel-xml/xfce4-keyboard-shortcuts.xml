@@ -60,6 +60,7 @@
       <property name="&lt;Super&gt;l" type="string" value="xflock4"/>
       <property name="XF86TouchpadToggle" type="string" value="/home/user/dotfiles/bin/toggle-touchpad.sh"/>
       <property name="&lt;Primary&gt;Escape" type="string" value="xfce4-popup-whiskermenu"/>
+      <property name="&lt;Primary&gt;q" type="string" value="/bin/true"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
