@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 ## ~/.pythonrc: python startup file
-import atexit as _doatexit # avoid overrided atexit() in custome module
+import atexit as _doatexit # avoid overriding atexit function in custom module
 import os
 import sys
 
