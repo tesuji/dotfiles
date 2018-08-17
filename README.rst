@@ -37,7 +37,9 @@ zsh
 Manual configuration (no dependencies), not full feature but at least
 good enough.
 
-**Preview**: |preview|
+**Preview**:
+
+|preview|
 
 Dependencies
 ------------
