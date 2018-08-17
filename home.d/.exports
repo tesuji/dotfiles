@@ -21,7 +21,7 @@ case "$m_typeofshell" in
 
     ## Watch other user login/out
     watch=all   # watch all logins, just 'notme'
-    LOGCHECK=60 # check logins after 60 seconds
+    LOGCHECK=10 # check logins after 10 seconds
 
     ## Say how long a command took, if it took more than 10 seconds
     REPORTTIME=10
