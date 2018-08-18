@@ -17,14 +17,15 @@ net.ipv6.conf.default.disable_ipv6 = 1
 net.ipv6.conf.lo.disable_ipv6 = 1
 ```
 
-If disabling IPv6 by sysctl, you should comment out the IPv6 hosts in `/etc/hosts`:
+If disabling IPv6 by sysctl,
+you should comment out the IPv6 hosts in `/etc/hosts`:
 ```
 #<ip-address> <hostname.domain.org> <hostname>
 127.0.0.1 localhost.localdomain localhost
 #::1 localhost.localdomain localhost
 ```
 
-otherwise there could be some connection errors because hosts are resolved to their IPv6 address which is not reachable.
+Otherwise there could be some connection errors because hosts are resolved to their IPv6 address which is not reachable.
 
 And https://github.com/zidarko/scrolls/wiki/Exim4-Port-problem
 
@@ -42,7 +43,8 @@ https://askubuntu.com/questions/673156/atheros-ar9485-wifi-disconnects-randomly
 
 ## Blank screen after lock/sleep
 **To debug**:
-- Install `accountsservice` and `xserver-xephyr`, where
+- Install `accountsservice` and `xserver-xephyr`, where:
+
   + `accountsservice` for *Enhanced user accounts handling*
   + `xserver-xephyr` for *LightDM test mode*
 
@@ -54,14 +56,17 @@ Then run LightDM as an X application for debugging: `$ lightdm --test-mode --deb
 **List of workaround methods**:
 - Try to suspend and resume again
 
-Press <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>F1</kbd>, then login and type `systemctl suspend`. Press power button to resume and switch to `tty7` by <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>F7</kbd>. In my case, I did 2 times to escape the blank screen.
+  Press <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>F1</kbd>,
+  then login and type `systemctl suspend`.
+  Press power button to resume and switch to `tty7` by <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>F7</kbd>.
+  In my case, I did 2 times to escape the blank screen.
 
 - Use DRI2 instead of DRI3 may solve the problem: https://wiki.archlinux.org/index.php/intel_graphics#DRI3_issues
 - Disable `at-spi-dbus-bus.desktop` (may NOT work)
 
-```
-sudo mv -v -i /etc/xdg/autostart/at-spi-dbus-bus.desktop /etc/xdg/autostart/at-spi-dbus-bus.desktop.disabled
-```
+  ```
+  sudo mv -v -i /etc/xdg/autostart/at-spi-dbus-bus.desktop /etc/xdg/autostart/at-spi-dbus-bus.desktop.disabled
+  ```
 
 - Replace `light-locker` with `xscreensaver`, then reboot.
 
@@ -94,7 +99,9 @@ greeter-hide-users=false
 ## Extracting fonts from a Windows ISO
 The fonts can also be found in a Windows ISO file.
 
-Extract the `sources/install.esd` or the `sources/install.wim` file in the ISO and look for a `Windows/Fonts` directory within this file. It can be extracted with p7zip:
+Extract the `sources/install.esd` or the `sources/install.wim` file in the ISO and look for a `Windows/Fonts` directory within this file.
+It can be extracted with p7zip:
+
 ```bash
 cd /path/to/save/file
 7z e /path/to/windows-iso sources/install.wim
@@ -105,43 +112,43 @@ cd /path/to/save/file
 ### Using Polkit
 - If PolKit version >= 0.106
 
-You can check version of Polkit by: `pkaction --version`
+  You can check version of Polkit by: `pkaction --version`
 
-If PolKit version < 0.106, there are **NO** `.rules` files but only old
-`.pkla` and `.conf` files. Because Polkit versions < 0.106 doesn't have
-the Javascript interpreter.
+  If PolKit version < 0.106,
+  there are **NO** `.rules` files but only old `.pkla` and `.conf` files.
+  Because Polkit versions < 0.106 doesn't have the Javascript interpreter.
 
-Just adding a file `/etc/polkit-1/rules.d/85-suspend.rules` with:
-```js
-polkit.addRule(function(action, subject) {
-    if (action.id == "org.freedesktop.login1.suspend" &&
-        subject.isInGroup("users")) {
-        return polkit.Result.YES;
-    }
-});
-```
+  Just adding a file `/etc/polkit-1/rules.d/85-suspend.rules` with:
+  ```js
+  polkit.addRule(function(action, subject) {
+      if (action.id == "org.freedesktop.login1.suspend" &&
+          subject.isInGroup("users")) {
+          return polkit.Result.YES;
+      }
+  });
+  ```
 
-And:
-```bash
-sudo chmod 755 /etc/polkit-1/rules.d
-sudo chmod 644 /etc/polkit-1/rules.d/85-suspend.rules
-```
+  And:
+  ```bash
+  sudo chmod 755 /etc/polkit-1/rules.d
+  sudo chmod 644 /etc/polkit-1/rules.d/85-suspend.rules
+  ```
 
 - If PolKit version < 0.106
 
-In this case, adding a file `/var/lib/polkit-1/localauthority/50-local.d/50-enable-suspend-on-lockscreen.pkla` with:
-```bash
-[Allow suspending in lockscreen]
-Identity=unix-group:users;unix-user:user
-Action=org.freedesktop.login1.suspend
-ResultAny=yes
-ResultInactive=yes
-ResultActive=yes
-```
+  In this case, adding a file `/var/lib/polkit-1/localauthority/50-local.d/50-enable-suspend-on-lockscreen.pkla` with:
+  ```bash
+  [Allow suspending in lockscreen]
+  Identity=unix-group:users;unix-user:user
+  Action=org.freedesktop.login1.suspend
+  ResultAny=yes
+  ResultInactive=yes
+  ResultActive=yes
+  ```
 
-Replace `user` in `unix-user:user` with your own username.
+  Replace `user` in `unix-user:user` with your own username.
 
-And: `sudo chmod 644 /var/lib/polkit-1/localauthority/50-local.d/50-enable-suspend-on-lockscreen.pkla`
+  And: `sudo chmod 644 /var/lib/polkit-1/localauthority/50-local.d/50-enable-suspend-on-lockscreen.pkla`
 
 Read [More about pklocalauthority](https://www.freedesktop.org/software/polkit/docs/0.105/pklocalauthority.8.html)
 
@@ -178,7 +185,9 @@ check these (but `before` that make a backup file)
 + [bugs.launchpad.net](https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1605189/comments/7)
 
 ## Change default UMASK in `/etc/login.defs`
-Both Debian and Ubuntu ship with **pam_umask**. This allows you to configure umask in `/etc/login.defs` and have them apply system-wide, regardless of how a user logs in.
+Both Debian and Ubuntu ship with **pam_umask**.
+This allows you to configure umask in `/etc/login.defs` and have them apply system-wide,
+regardless of how a user logs in.
 
 To **enable** it, add a line to `/etc/pam.d/common-session`
 ```bash
