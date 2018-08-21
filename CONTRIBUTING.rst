@@ -19,11 +19,12 @@ Patches and bug reports
 
 Patches and bug reports are are encouraged, but please try to follow these guidelines:
 
-- Post bug reports and patches to the `gitter`_ discussion room,
+- Post bug reports and patches to the `pull request`_,
   this keeps things transparent and gives everyone a chance to comment.
 - The email subject line should be a specific and concise topic summary.
   Commonly accepted subject line prefixes such as ``[ANN]``, ``[PATCH]``
   and ``[SOLVED]`` are good.
+- Any other questions can be asked on `gitter`_ discussion room.
 
 Bug reports
 ~~~~~~~~~~~
