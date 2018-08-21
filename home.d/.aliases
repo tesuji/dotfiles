@@ -1,38 +1,42 @@
 #!/usr/bin/env bash
-## ~/.aliases
+# ~/.aliases
 
-## Functions ##
+# Functions
+#==========
 
-## Check if command exists
-check_exist() { # check_exist name
-  ## POSIX compatible, not with `hash', `type', etc.
+# Check if command exists
+check_exist ()
+{
+  # POSIX compatible, not with `hash', `type', etc.
   command -v "$1" > /dev/null
 }
 
 if check_exist pip; then
-  alias gpip='PIP_REQUIRE_VIRTUALENV= pip'
-  alias gpip3='PIP_REQUIRE_VIRTUALENV= pip3'
+  alias gpip='PIP_REQUIRE_VIRTUALENV= pip '
+  alias gpip3='PIP_REQUIRE_VIRTUALENV= pip3 '
 fi
 
-## If zsh or bash
+# If zsh or bash
 m_type_of_shell="$(ps -p $$ --no-headers -o cmd)"
 
-## Enable colored man
-##    https://wiki.archlinux.org/index.php/Color_output_in_console#Using_less
-## The end \ in the end of each line helps set environment variable
-## to command man.
-man() {
+# Enable colored man
+# The end \ in the end of each line helps set environment variable
+# to command man.
+#    https://wiki.archlinux.org/index.php/Color_output_in_console#Using_less
+man ()
+{
   LESS_TERMCAP_md=$'\e[01;31m' \
   LESS_TERMCAP_me=$'\e[0m' \
   LESS_TERMCAP_se=$'\e[0m' \
   LESS_TERMCAP_so=$'\e[01;44;33m' \
   LESS_TERMCAP_ue=$'\e[0m' \
   LESS_TERMCAP_us=$'\e[01;32m' \
-  command man "$@"
+  /usr/bin/man "$@"
 }
 
 if check_exist vmhgfs-fuse; then
-  vmmount() { # vmmount mount_point
+  vmmount ()
+  { # vmmount mount_point
     local sharedir
     sharedir=$(vmware-hgfsclient)
     vmhgfs-fuse -o allow_other -o auto_unmount .host:"$sharedir" "$1"
@@ -44,7 +48,8 @@ fi
 # Note: .dmg/hdiutil is macOS-specific.
 #
 # Credit: http://nparikh.org/notes/zshrc.txt
-extract() {
+extract ()
+{
   if [[ -f "$1" ]]; then
     local lowername
     lowername=$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')
@@ -68,20 +73,20 @@ extract() {
   fi
 }
 
-## Make path for each argument and cd into the last path
-mkcd() {
-  command mkdir -p "$@" && cd "$_"
+# Make path for each argument and cd into the last path
+mkcd ()
+{
+  /usr/bin/mkdir -p "$@" && cd "$_"
 }
 
-## Aliases ##
+# Aliases
+#========
 
-## Make colors to ls command
+# Make colors to ls command
 [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
 
-gnu_color_flag='--color=auto'
-
 if ! alias which > /dev/null 2>&1; then
-  ## `which' on Debian-based lacks support for long options
+  # `which' on Debian-based lacks support for long options
   if which -h > /dev/null 2>&1; then
     alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot'
   fi
@@ -105,10 +110,10 @@ alias cd..='cd ..'
 alias cp='cp -iv'
 alias dd='dd status=progress'
 alias df='df -h'
-## Only diffutils v3.4+ includes the --color option
-## CentOS 7 has diffutils 3.3
-if diff --color <(echo a) <(echo a) >/dev/null 2>&1; then
-  alias diff="diff --unified ${gnu_color_flag}"
+# Only diffutils v3.4+ includes the --color option
+# CentOS 7 has diffutils 3.3
+if diff --color 2>&1 | grep 'missing operand' >/dev/null 2>&1; then
+  alias diff="diff --unified --color"
 fi
 alias du='du -sch'
 alias fail='journalctl -p 3 -xb'
@@ -118,21 +123,19 @@ alias gcc='gcc -masm=intel'
 alias gccn='gcc -Wfatal-errors -std=gnu11 -Wall' # -pedantic -Wextra' # -Werror #-fno-stack-protector
 alias gccex='gcc -Wfatal-errors -m32 -fno-stack-protector -Wl,-z,norelro -z execstack -g'
 alias gdb='gdb -q'
-alias grep="grep ${gnu_color_flag}"
-alias egrep="egrep ${gnu_color_flag}"
-alias fgrep="fgrep ${gnu_color_flag}"
+alias grep="grep --color"
 check_exist hd || alias hd='hexdump -C'
 alias l='ls -CF'
 alias la='ls -AF'
 alias lh='ls -dF .??*'
 alias ll='ls -lF'
-## Detect which `ls` flavor is in use
+# Detect which `ls` flavor is in use
 if ls --color >/dev/null 2>&1; then # GNU ls support colors
-  alias ls="ls ${gnu_color_flag} -h --group-directories-first"
+  alias ls="ls --color -h --group-directories-first"
 else
   alias ls="ls -h --group-directories-first"
 fi
-alias lssh='ps -ef | command grep "[s]sh.*pts"'
+alias lssh='ps -ef | /usr/bin/grep "[s]sh.*pts"'
 alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
 alias ln='ln -iv'
 alias mkdir='mkdir -pv'
@@ -153,63 +156,62 @@ alias vi='vim'
 #alias wifipasswod='sudo grep -r "^psk" /etc/NetworkManager/system-connections/'
 #alias whois='whois -H --verbose'
 
-## I think I can forget
+# I think I can forget
 # ```bash
 # cmp -l file file2 | gawk '{printf "%08X %02X %02X\n", $1, strtonum(0$2), strtonum(0$3)}'
 # or
 # radiff2 file file2
 # ```
 
-uncompyle6_path=~/.local/bin/uncompyle6
-[[ -x "$uncompyle6_path" ]] && alias uncompyle6="$uncompyle6_path"
-unset uncompyle6_path
-
-checksecpath=~/checksec.sh/checksec
-[[ -x "$checksecpath" ]] && alias checksec="$checksecpath"
-unset checksecpath
-
 alias suspend='systemctl suspend'
 #if [[ -x /usr/bin/xflock4 ]]; then
 #  alias suspend='xflock4 && systemctl suspend'
 #fi
 
-## For shellcode building {{{
+# For shellcode building {{{
 if check_exist rasm2; then
   alias asm32='rasm2 -a x86 -b 32'
   alias asm64='rasm2 -a x86 -b 64'
   alias disasm32='asm32 -d'
   alias disasm64='asm64 -d'
 elif check_exist nasm; then
-  asm32() {
+  asm32 ()
+  {
     _assembly 32 "$1"
   }
-  asm64() {
+
+  asm64 ()
+  {
     _assembly 64 "$1"
   }
-  _assembly() { # _assembly(bits, asm)
+
+  _assembly ()
+  { # _assembly(bits, asm)
     local infile='.nasm.s'
     local outfile='.nasm.bin'
     local bits="$1"
     local asm="$2"
     printf 'BITS %d\n%s\n' "$bits" "$asm" > "$infile" && nasm "$infile" -o "$outfile" && ndisasm -b "$bits" "$outfile"
   }
+
   alias asm=asm32
 fi
-## }}}
+# }}}
 
-## Alias for fuser {{{
+# Alias for fuser {{{
 if check_exist fuser; then
   # find pid base on tcp port
-  findport() { # findport 123
+  findport ()
+  { # findport 123
     fuser --verbose --namespace tcp "$1"
   }
   alias lsport='ss --processes --all --tcp'
 fi
-## }}}
+# }}}
 
-## Alias when commands exist {{{
+# Alias when commands exist {{{
 
-## Terminal browser Elinks
+# Terminal browser Elinks
 if check_exist elinks; then
   alias elinks='elinks --no-connect'
 fi
@@ -218,93 +220,104 @@ if check_exist pngcheck; then
   alias pngcheck='pngcheck -vv'
 fi
 
-## for zathura
+# for zathura
 if check_exist zathura; then
   alias zathura='zathura --fork'
 fi
 
-## for evince
+# for evince
 if check_exist evince; then
-  evince() {
+  evince ()
+  {
     (command evince "$@" & )
   }
 fi
 
-## for audacious
+# for audacious
 if check_exist audacious; then
-  audacious() {
+  audacious ()
+  {
     (command audacious "$@" & )
   }
 fi
 
-## }}}
+# }}}
 
-## Alias for each distribution {{{
-## See more https://wiki.debian.org/ReduceDebian
-#clrdesktop() {
+# Alias for each distribution {{{
+# See more https://wiki.debian.org/ReduceDebian
+#clrdesktop ()
+#{
 #  echo "Clearing non English part in .desktop files ..."
 #  if [[ -d "/usr/share/help" ]]; then
 #    find /usr/share/applications/ -type f -iname '*\.desktop' -exec sudo sed -i "/]=/d" {} +
 #  fi
 #}
 
-#clrhelp() {
+#clrhelp ()
+#{
 #  echo "Clearing non-English help files ..."
 #  if [[ -d "/usr/share/help" ]]; then
 #    find "/usr/share/help" -maxdepth 1 $( echo "! -path /usr/share/help"{/C,/en_GB,} ) -type d -exec sudo rm -Irf {} +
 #  fi
 #}
 
-#clrlocale() {
+#clrlocale ()
+#{
 #  echo "Clearing non-English locale files ..."
 #  find "/usr/share/locale" -maxdepth 1 $( echo "! -path /usr/share/locale"{/en,/en_US,/en_GB,/en\@quot,} ) -type d -exec sudo rm -Ifr {} +
 #}
 
-#clrman() {
+#clrman()
+#{
 #  echo "Clearing non-standard man files ..."
 #  find "/usr/share/man" -maxdepth 1 $( echo "! -path /usr/share/man"{/man0,/man1,/man2,/man3,/man4,/man5,/man6,/man7,/man8,/mann,} ) -type d -exec sudo rm -Ifr {} +
 #}
 
-## Debian variants
+# Debian variants
 if check_exist dpkg; then
-  ## Perform a simulation of the whole process by:
+  # Perform a simulation of the whole process by:
   #apt-get clean --dry-run
 
+  alias aptshow='apt-cache show' # or `apt show` or `dpkg --print-avail`
   #alias apts='apt-cache search'
-  #alias showpackage='apt show' # dpkg --print-avail PACKAGE_NAME; apt-cache show PACKAGE_NAME
   #alias lsapt='apt list --installed'
 
-  clrapt() {
-    echo "Clearing apt cache ..."
-    sudo apt-get clean
-  }
-## Arch Linux
+  #clrapt()
+  #{
+  #  echo "Clearing apt cache ..."
+  #  sudo apt-get clean
+  #}
+# Arch Linux
 elif [[ -x /bin/pacman ]]; then
   #alias keepping='ping login.net.vn &> /dev/null &'
-  alias pacman="pacman ${gnu_color_flag}"
+  alias pacman="pacman --color=auto"
   alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
   alias wifioff='nmcli radio wifi off'
   alias wifion='nmcli radio wifi on'
-  clrjournal() {
+  clrjournal ()
+  {
     echo "Clearing journal files ..."
-    sudo rm -rf /var/log/journal
+    sudo /bin/rm -rf /var/log/journal
   }
-  clrpac() {
+
+  clrpac ()
+  {
     echo "Clearing pacman cache ..."
-    ## remove all packages except for the latest three package versions
+    # remove all packages except for the latest three package versions
     sudo paccache -rvk3
   }
-## for CentOS, RedHat, Fedora
+# for CentOS, RedHat, Fedora
 elif [[ -x /usr/bin/yum ]]; then
-  clryum() {
+  clryum ()
+  {
     echo "Clearing yum cache ..."
-    sudo rm -Ifr /var/cache/yum
+    sudo /bin/rm -Ifr /var/cache/yum
   }
 fi
 
-## Clean up ##
+# Clean up
+#=========
 unset check_exist m_type_of_shell
-unset gnu_color_flag
-## }}}
+# }}}
 
-## end of file
+# end of file
