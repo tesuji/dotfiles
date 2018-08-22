@@ -76,7 +76,7 @@ extract ()
 # Make path for each argument and cd into the last path
 mkcd ()
 {
-  /usr/bin/mkdir -p "$@" && cd "$_"
+  /bin/mkdir -p "$@" && cd "$_"
 }
 
 # Aliases
