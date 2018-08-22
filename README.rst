@@ -9,8 +9,8 @@ Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
 Disclaimer
 ----------
 
-- I do not take any responsibility for any data loss caused by this
-  **dotfiles** repo.
+- I do not take responsibility for any data loss caused by using
+  this **dotfiles**.
 - Please do NOT link any file in ``~/.ssh/`` or ``~/.gnupg`` to this
   dotfiles for the sake of information security.
 - If you want to backup your secret dotfiles:
@@ -146,7 +146,7 @@ See also the list of `contributors`_ who participated in this project.
 License
 -------
 
-This project is licensed under the MIT License - see the `<LICENSE>`__ file for details
+This project is licensed under the MIT License - see the `<LICENSE>`__ file for details.
 
 .. _Gitlab: https://gitlab.com
 .. _contributors: https://github.com/lzutao/dotfiles/graphs/contributors
