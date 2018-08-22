@@ -62,7 +62,7 @@ setopt HIST_VERIFY          # Don't execute immediately upon history expansion
 ## You may have to force rebuild zcompdump:
 ##     rm -f "$HOME/.zcompdump"; compinit or try rehash command
 ## Print fpath with (print -rl -- $fpath)
-fpath=("$HOME/.zshfuncs" $fpath)
+#fpath=("$HOME/.zshfuncs/" "$fpath")
 
 autoload -Uz compinit # Use modern completion system
 
