@@ -81,5 +81,10 @@ unset m_bold m_reset m_black m_red m_green m_orange m_blue \
       m_purple m_cyan m_violet m_white m_yellow TPUT_NCOLORS
 
 ## If this is an xterm set the title to dir
-( [[ "$TERM" = rxvt* ]] || [[ "$TERM" = xterm* ]] ) && PS1="\[\e]0;\w\a\]${PS1}"
+case "$TERM" in
+  rxvt*|*xterm* )
+    PS1="\[\e]0;\w\a\]${PS1}"
+    ;;
+esac
+
 export PS1
