@@ -20,7 +20,10 @@ m_compinit_age() {
 ###############
 ## Type Ctrl-V and key combination to get key code
 ## Type `bindkey' to show all keybindings
-bindkey -e        # Emacs keybindings
+
+# Emacs keybindings
+bindkey -e
+
 #bindkey '\e[2~'   overwrite-mode          # Insert
 bindkey '\e[3~'   delete-char             # Del
 bindkey '\e[1~'   beginning-of-line       # Home
