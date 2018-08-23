@@ -1,14 +1,15 @@
 #!/usr/bin/env zsh
 ## Ref http://matt.blissett.me.uk/linux/zsh/zshrc
 
-m_compinit_age() {
-  local last_modified=$(stat -c "%Y" "${HOME}/.zcompdump")
-  local current=$(date +%s)
-  echo $(( current - last_modified ))
-}
-
 ## Skip all this for non-interactive shells
 [[ -z "$PS1" ]] && return
+
+m_compinit_age() {
+  local last_modified current
+  last_modified=$(stat -c '%Y' "${HOME}/.zcompdump")
+  current=$(date '+%s')
+  echo $(( current - last_modified ))
+}
 
 ## FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
 ## http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26
