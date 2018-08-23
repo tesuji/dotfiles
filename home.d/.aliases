@@ -85,10 +85,11 @@ mkcd ()
 # Make colors to ls command
 [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
 
-unalias which
-# which command on Debian-based distros lack support for long options
-if which -h > /dev/null 2>&1; then
-  alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot'
+if alias which >/dev/null 2>&1; then
+  # which command on Debian-based distros lack support for long options
+  if which -h > /dev/null 2>&1; then
+    alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot'
+  fi
 fi
 
 case "$m_type_of_shell" in
@@ -98,7 +99,6 @@ case "$m_type_of_shell" in
   *zsh )
     # https://wiki.archlinux.org/index.php/zsh#Help_command
     autoload -Uz run-help
-    unalias run-help
     alias help='run-help'
     ;;
 esac
