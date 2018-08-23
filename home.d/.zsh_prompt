@@ -3,7 +3,7 @@
 ## Window title ##
 ## From: https://github.com/MrElendig/dotfiles-alice/blob/master/.zshrc
 case "$TERM" in
-  (screen*|*xterm*|rxvt*|(dt|k|E)term)
+  screen*|*xterm*|rxvt*|\(dt|k|E\)term)
     ## Ref https://wiki.archlinux.org/index.php/zsh#xterm_title
     ##     http://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h2-Operating-System-Commands
     precmd() {
@@ -31,7 +31,7 @@ if [[ "$TERM" != "dumb" ]]; then
   time_prompt='%F{white}%T%b%f'       # Time format -> hh:mm
   shell_state='%F{red}%#%f'
 else
-  user_at_host='%n at ${m_host_style} in %~'
+  user_at_host='%n at '"${m_host_style}"' in %~'
   error_prompt='%(?..[%?] )'
   job_prompt='%(1j. %j .)'
   time_prompt='%T'
@@ -44,7 +44,6 @@ fi
 ## Reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
 PROMPT="${user_at_host}
 ${error_prompt}${job_prompt}${time_prompt} ${shell_state} "
-
 export PROMPT
 
 unset m_host_style user_at_host error_prompt job_prompt time_prompt shell_state
