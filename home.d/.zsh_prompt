@@ -42,9 +42,9 @@ fi
 ##     user at host in ~/Documents
 ##     9:39 $
 ## Reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
-PS1="${user_at_host}
+PROMPT="${user_at_host}
 ${error_prompt}${job_prompt}${time_prompt} ${shell_state} "
 
-export PS1
+export PROMPT
 
 unset m_host_style user_at_host error_prompt job_prompt time_prompt shell_state
