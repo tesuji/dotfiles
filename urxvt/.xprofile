@@ -1,4 +1,4 @@
 #!/bin/sh
 # ~/.xprofile
 #xinput set-prop "AlpsPS/2 ALPS DualPoint TouchPad" "Synaptics Middle Button Timeout" 150
-urxvtd -q -f -o
+urxvtd --quiet --opendisplay --fork
