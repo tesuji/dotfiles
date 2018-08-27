@@ -122,7 +122,7 @@ alias fail='journalctl -p 3 -xb'
 alias free='free -h'
 alias g++='g++ -Wall -Wpedantic -Wextra -Weffc++ -masm=intel' #-fno-stack-protector
 alias gcc='gcc -masm=intel'
-alias gccn='gcc -Wfatal-errors -std=gnu11 -Wall' # -pedantic -Wextra' # -Werror #-fno-stack-protector
+alias gccn='gcc -Wfatal-errors -std=gnu11 -Wall -Wextra' # -pedantic #-fno-stack-protector
 alias gccex='gcc -Wfatal-errors -m32 -fno-stack-protector -Wl,-z,norelro -z execstack -g'
 alias gdb='gdb -q'
 alias grep="grep --color"
