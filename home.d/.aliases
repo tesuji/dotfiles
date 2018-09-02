@@ -151,6 +151,7 @@ alias py3='python3'
 alias rm='rm -I'
 alias shutdown='shutdown now'
 #alias ssh-keygen='ssh-keygen -E md5 -lf'
+alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 alias sudo='sudo '
 #alias synctime='ntpd -qg'  # install ntp package
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"'
