@@ -280,8 +280,8 @@ fi
 if check_exist dpkg; then
   # Perform a simulation of the whole process by:
   #apt-get clean --dry-run
-
   alias aptshow='apt-cache show' # or `apt show` or `dpkg --print-avail`
+  alias dpkglist='dpkg --listfiles' # List files from installed package
   #alias apts='apt-cache search'
   #alias lsapt='apt list --installed'
 
