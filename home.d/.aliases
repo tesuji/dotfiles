@@ -220,6 +220,8 @@ alias sudo='sudo '
 #alias synctime='ntpd -qg'  # install ntp package
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"'
 alias vi='vim'
+alias wifiscan='nmcli device wifi rescan'
+alias wifils='nmcli device wifi list'
 #alias wifipasswod='sudo grep -r "^psk" /etc/NetworkManager/system-connections/'
 #alias whois='whois -H --verbose'
 
