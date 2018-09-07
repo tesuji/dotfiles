@@ -11,14 +11,6 @@ check_exist ()
   command -v "$1" > /dev/null
 }
 
-if check_exist pip; then
-  alias gpip='PIP_REQUIRE_VIRTUALENV= pip '
-  alias gpip3='PIP_REQUIRE_VIRTUALENV= pip3 '
-fi
-
-# If zsh or bash
-m_type_of_shell="$(ps -p $$ --no-headers -o cmd)"
-
 # Enable colored man
 # The end \ in the end of each line helps set environment variable
 # to command man.
@@ -31,7 +23,7 @@ man ()
   LESS_TERMCAP_so=$'\e[01;44;33m' \
   LESS_TERMCAP_ue=$'\e[0m' \
   LESS_TERMCAP_us=$'\e[01;32m' \
-  /usr/bin/man "$@"
+  command man "$@"
 }
 
 if check_exist vmhgfs-fuse; then
@@ -82,7 +74,7 @@ extract ()
 #    b
 parse_colon ()
 {
-  local my_input_str=$1 my_output=()
+  local my_input_str="$1" my_output=()
 
   for P in $(tr ':' '\n' <<< "$my_input_str");do
     my_output+=( "$(realpath "${P}")" )
@@ -102,7 +94,7 @@ gccenv ()
 # Print specific variable of gcc
 parse_gcc_var ()
 {
-  local var_name=$1 my_paths
+  local var_name="$1" my_paths
   my_paths=$(gccenv | grep "${var_name}" | cut -d= -f2)
   parse_colon "${my_paths}" | sort | uniq
 }
@@ -125,11 +117,27 @@ gccinc ()
   echo | gcc -Wp,-v - -fsyntax-only
 }
 
+lssh ()
+{
+  ps -ef | command grep "[s]sh.*pts"
+}
+
 # Make path for each argument and cd into the last path
 mkcd ()
 {
-  /bin/mkdir -p "$@" && cd "$_"
+  command mkdir -p "$@" && cd "$_"
 }
+
+if alias which >/dev/null 2>&1; then
+  # which command on Debian-based distros lack support for long options
+  if which -h >/dev/null 2>&1; then
+    which ()
+    {
+      { alias; declare -f; } \
+      | command which --tty-only --read-alias --read-functions --show-tilde --show-dot
+    }
+  fi
+fi
 
 # Aliases
 #========
@@ -137,14 +145,12 @@ mkcd ()
 # Make colors to ls command
 [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
 
-if alias which >/dev/null 2>&1; then
-  # which command on Debian-based distros lack support for long options
-  if which -h > /dev/null 2>&1; then
-    alias which='(alias; declare -f) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot'
-  fi
-fi
+# Some shells have their own builtin version of ps
+# so we use `command` keyword to force the shell use
+# the external ps.
+my_shelltype="$(command ps -p $$ --no-headers -o cmd)"
 
-case "$m_type_of_shell" in
+case "$my_shelltype" in
   *bash )
     alias chi='history -c'
     ;;
@@ -183,19 +189,30 @@ alias l='ls -CF'
 alias la='ls -AF'
 alias lh='ls -dF .??*'
 alias ll='ls -lF'
+
 # Detect which `ls` flavor is in use
+my_ls="ls -h --group-directories-first"
 if ls --color >/dev/null 2>&1; then # GNU ls support colors
-  alias ls="ls --color -h --group-directories-first"
+  alias ls="$my_ls --color"
+elif ls --G >/dev/null 2>&1; then # BSD ls
+  alias ls="$my_ls -G"
 else
-  alias ls="ls -h --group-directories-first"
+  alias ls=$my_ls
 fi
-alias lssh='ps -ef | /bin/grep "[s]sh.*pts"'
+unset my_ls
+
 alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
 alias ln='ln -iv'
 alias mkdir='mkdir -pv'
 alias mv='mv -iv'
 alias nc='nc -v'
 alias objdump='objdump -M intel'
+
+if check_exist pip; then
+  alias gpip='PIP_REQUIRE_VIRTUALENV= pip '
+  alias gpip3='PIP_REQUIRE_VIRTUALENV= pip3 '
+fi
+
 alias py='python'
 alias py2='python2'
 alias py3='python3'
@@ -352,7 +369,7 @@ elif [[ -x /bin/pacman ]]; then
   clrjournal ()
   {
     echo "Clearing journal files ..."
-    sudo /bin/rm -rf /var/log/journal
+    command sudo rm -rf /var/log/journal
   }
 
   clrpac ()
@@ -366,13 +383,13 @@ elif [[ -x /usr/bin/yum ]]; then
   clryum ()
   {
     echo "Clearing yum cache ..."
-    sudo /bin/rm -Ifr /var/cache/yum
+    command sudo rm -Ifr /var/cache/yum
   }
 fi
 
 # Clean up
 #=========
-unset check_exist m_type_of_shell
+unset check_exist my_shelltype
 # }}}
 
 # end of file
