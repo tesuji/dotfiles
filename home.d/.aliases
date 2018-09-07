@@ -69,18 +69,13 @@ extract ()
 # each item on separated line
 #
 # Example:
-#    $ parse_colon a:b
+#    $ parse_path_colon_sep a:b
 #    a
 #    b
-parse_colon ()
+parse_path_colon_sep ()
 {
-  local my_input_str="$1" my_output=()
-
-  for P in $(tr ':' '\n' <<< "$my_input_str");do
-    my_output+=( "$(realpath "${P}")" )
-  done
-
-  printf "%s\n" "${my_output[@]}"
+  local IFS=$'\n' my_input_str="$1"
+  realpath $(tr ':' '\n' <<< "$my_input_str")
 }
 
 # List gcc environment variables
@@ -96,7 +91,7 @@ parse_gcc_var ()
 {
   local var_name="$1" my_paths
   my_paths=$(gccenv | grep "${var_name}" | cut -d= -f2)
-  parse_colon "${my_paths}" | sort | uniq
+  parse_path_colon_sep "${my_paths}" | sort | uniq
 }
 
 # Print LIBRARY_PATH of gcc
