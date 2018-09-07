@@ -1,14 +1,16 @@
 #!/usr/bin/env git
-## ~/.gitconfig: Config file and alias for git - the stupid content tracker
+# ~/.gitconfig: Config file and alias for git - the stupid content tracker
 [alias]
 	st = status
 	co = checkout
 
-	ci = commit
-	## commit and sign with gpg key
-	cis = commit -S
-	## Amend the currently staged files to the latest commit
-	amend = commit --amend --no-edit
+	# Commit and add Signed-off-by line at the end of the commit log
+	# by default
+	ci = commit -s
+	# Commit and sign with gpg key
+	ciS = commit -S
+	# Amend the currently staged files to the latest commit
+	amend = commit -s --amend
 
 	br = branch
 
@@ -19,7 +21,7 @@
 	logg = log --graph --decorate --oneline --abbrev-commit --all
 	stats = log -10 --dirstat=files,1,cumulative --ignore-blank-lines --abbrev-commit --oneline --graph --decorate
 
-	## Remove sensitive data from history, after a push
+	# Remove sensitive data from history, after a push
 	sensitive="!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch \"$1\"' --prune-empty --tag-name-filter cat -- --all && git push origin --force --all }; r"
 	pb = pull --rebase
 	root = rev-parse --show-toplevel
@@ -40,7 +42,7 @@
 	changed = yellow bold
 	untracked = red bold
 [core]
-	## set line-ending behavior
+	# set line-ending behavior
 	autocrlf = input
 	editor = subl -w
 	pager = less -F -X
@@ -51,8 +53,8 @@
 [merge]
 	tool = vimdiff
 [push]
-	## Push only the current branch
-	## more https://stackoverflow.com/a/21865319/5456794
+	# Push only the current branch
+	# more https://stackoverflow.com/a/21865319/5456794
 	default = simple
 [pull]
 	rebase = true
