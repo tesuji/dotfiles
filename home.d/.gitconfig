@@ -1,32 +1,58 @@
 #!/usr/bin/env git
-# ~/.gitconfig: Config file and alias for git - the stupid content tracker
+# ~/.gitconfig
+#
+# This is the config file, and a '#' or ';' character indicates a comment
+#
+[include]
+	# Include private information about user.user and user.email
+	path = ~/.gitconfig.local
 [alias]
-	st = status
-	co = checkout
-
-	# Commit and add Signed-off-by line at the end of the commit log
-	# by default
-	ci = commit -s
-	# Commit and sign with gpg key
-	ciS = commit -S
-	# Amend the currently staged files to the latest commit
-	amend = commit -s --amend
-
+	################################
 	br = branch
-
+	################################
+	cl = clone
+	cl1 = clone --depth 1
+	################################
+	ci = commit --signoff
+	ciS = commit --gpg-sign
+	amend = commit -s --amend  # Amend the currently staged files to the latest commit
+	################################
+	co = checkout
+	################################
 	df = diff
-	dfs = diff --staged # or --cached
-
+	#dfm = diff --color-moved=plain
+	#dfc = diff --cached       # Equivalent to below command
+	dfs = diff --staged
+	################################
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 	logg = log --graph --decorate --oneline --abbrev-commit --all
-	# Show commit history of filename
-	history = log --follow --
+	history = log --follow --  # Show commit history of filename
 	stats = log -10 --dirstat=files,1,cumulative --ignore-blank-lines --abbrev-commit --oneline --graph --decorate
-
+	################################
 	# Remove sensitive data from history, after a push
 	sensitive="!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch \"$1\"' --prune-empty --tag-name-filter cat -- --all && git push origin --force --all }; r"
-	pb = pull --rebase
+	################################
+	pr = prune --verbose      # Prune all unreachable objects from the object database
+	################################
+	#pl = pull
+	#pb = pull --rebase
+	################################
+	#ps = push                 # Update remote refs along with associated objects
+	#psf = push --force        # Overwrite remote refs with local associated objects
+	#psu = push --set-upstream # Add upstream (tracking) reference
+	#pst = push --tags         # Push all refs under refs/tags
+	################################
+	#rb = rebase
+	#rba = rebase --abort
+	#rbc = rebase --continue
+	#rbi = rebase --interactive
+	#rbs = rebase --skip
+	################################
 	root = rev-parse --show-toplevel
+	################################
+	author = shortlog --summary --numbered
+	################################
+	st = status
 [color]
 	ui = auto
 [color "branch"]
@@ -60,7 +86,3 @@
 	default = simple
 [pull]
 	rebase = true
-[user]
-	email = example@email.com
-	name = user
-	signingkey = DEAFBEEFCAFEBABE
