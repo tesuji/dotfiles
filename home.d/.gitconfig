@@ -56,6 +56,9 @@
 	committer = shortlog -summary --numbered --committer # Git 2.12 (Q1 2017)
 	################################
 	st = status
+	################################
+	# Add a subtree to your git project
+	sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
 [color]
 	ui = auto
 [color "branch"]
