@@ -76,7 +76,7 @@
   endif
 
   hi User1 ctermbg=Brown     ctermfg=White
-  hi User2 ctermbg=red       ctermfg=DarkRed
+  hi User2 ctermbg=Red       ctermfg=DarkRed
   hi User3 ctermbg=Blue      ctermfg=White
   hi User4 ctermbg=White     ctermfg=DarkMagenta
   hi User5 ctermbg=Green     ctermfg=DarkRed
