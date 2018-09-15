@@ -4,7 +4,7 @@
   if &compatible
   " Normally we use vim-extensions. If you want true vi-compatibility
   " remove the following line
-    set nocompatible  " Be iMproved
+    set nocompatible  " Be iMproved, required
   endif
 
   " If using a dark background within the editing area and syntax
@@ -107,17 +107,13 @@
   " Configure backspace so it acts as it should act
   set backspace=indent,eol,start " Allow backspacing over everything in insert mode
   set whichwrap=b,s,h,l,<,>,[,]  " backspace and cursor keys wrap to
+
   " Search for selected text, forwards or backwards.
-  vnoremap <silent> * :<C-U>
-    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-    \gvy/<C-R><C-R>=substitute(
-    \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-    \gV:call setreg('"', old_reg, old_regtype)<CR>
-  vnoremap <silent> # :<C-U>
-    \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-    \gvy?<C-R><C-R>=substitute(
-    \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-    \gV:call setreg('"', old_reg, old_regtype)<CR>
+  " NOTE:
+  "     <C-R>/ is the contents of the last search pattern
+  "            (see http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-R)
+  vnoremap <silent> * :<C-U>call GetVisualSelectedText('/')<CR>/<C-R>/<CR>
+  vnoremap <silent> # :<C-U>call GetVisualSelectedText('?')<CR>?<C-R>/<CR>
 " }}}
 
 " Color settings (if terminal/gui supports it) {{{
@@ -298,6 +294,10 @@ noremap XX "+x<cr>
 " }}}
 
 " Helper functions {{{
+  "
+  " Write a Vim script manual: http://vimdoc.sourceforge.net/htmldoc/usr_41.html
+  "
+
   " strips trailing whitespace at the end of all of lines. This
   " is called on Buffer Write Event in the autogroup above.
   fun! TrimTrailingWhiteSpace()
@@ -306,4 +306,17 @@ noremap XX "+x<cr>
     call winrestview(l:save)
   endfun
 
+  " Escape string in selected text
+  " http://vim.wikia.com/wiki/Search_for_visually_selected_text
+  fun! GetVisualSelectedText(cmd)
+    let l:old_reg=getreg('"')
+    let l:old_regtype=getregtype('"')
+    norm! gvy
+    let l:escape_range = '\.*$^~['
+    let l:pattern_esc = escape(@", a:cmd.l:escape_range)
+    let l:pattern = substitute(l:pattern_esc, '\_s\+', '\\_s\\+', 'g')
+    norm! gV
+    let @/ = l:pattern
+    call setreg('"', l:old_reg, l:old_regtype)
+  endfun
 " }}}
