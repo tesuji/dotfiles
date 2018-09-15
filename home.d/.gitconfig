@@ -19,6 +19,8 @@
 
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 	logg = log --graph --decorate --oneline --abbrev-commit --all
+	# Show commit history of filename
+	history = log --follow --
 	stats = log -10 --dirstat=files,1,cumulative --ignore-blank-lines --abbrev-commit --oneline --graph --decorate
 
 	# Remove sensitive data from history, after a push
