@@ -160,6 +160,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+alias buildtype='gcc -dumpmachine' # or make --version; bash --version; uname -o -m
 alias cd-='cd -'
 alias cd..='cd ..'
 alias cp='cp -iv'
