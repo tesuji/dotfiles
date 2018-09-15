@@ -26,7 +26,9 @@
 	################################
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 	logg = log --graph --decorate --oneline --abbrev-commit --all
-	history = log --follow --  # Show commit history of filename
+	lgf = log --pretty=full                  # Display additional committer name
+	lgc = log --pretty=full --committer      # Limit the commits output to match the specified committer
+	history = log --follow --                # Show commit history of filename
 	stats = log -10 --dirstat=files,1,cumulative --ignore-blank-lines --abbrev-commit --oneline --graph --decorate
 	################################
 	# Remove sensitive data from history, after a push
@@ -51,6 +53,7 @@
 	root = rev-parse --show-toplevel
 	################################
 	author = shortlog --summary --numbered
+	committer = shortlog -summary --numbered --committer # Git 2.12 (Q1 2017)
 	################################
 	st = status
 [color]
