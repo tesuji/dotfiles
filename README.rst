@@ -6,8 +6,7 @@ Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
 Disclaimer
 ----------
 
-- I do not take responsibility for any data loss caused by using
-  this **dotfiles**.
+- I do not take responsibility for data loss caused by this **dotfiles**.
 - Please do NOT link any file in ``~/.ssh/`` or ``~/.gnupg`` to this
   dotfiles for the sake of information security.
 - If you want to backup your secret dotfiles:
