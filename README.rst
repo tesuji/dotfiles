@@ -122,7 +122,7 @@ Now configure git:
     git config --global user.name "username"
     git config --global user.email "example@email.com"
 
-`Tell git about your GPG key`_ if you have one.
+`Telling Git about your signing key <https://help.github.com/articles/telling-git-about-your-signing-key/>`_ if you have one.
 
 Known Issues
 ------------
@@ -151,7 +151,6 @@ This project is licensed under the MIT License - see the `<LICENSE>`__ file for 
 
 .. _Gitlab: https://gitlab.com
 .. _contributors: https://github.com/lzutao/dotfiles/graphs/contributors
-.. _Tell git about your GPG key: https://help.github.com/articles/telling-git-about-your-gpg-key/
 .. _Fedora: https://getfedora.org
 .. _compton: https://wiki.archlinux.org/index.php/Compton
 .. |preview_shell| image:: docs/img/zsh_preview.png
