@@ -38,7 +38,8 @@ good enough.
 
 **Preview**:
 
-|preview|
+|preview_shell|
+|preview_vim|
 
 subl
 ~~~~
@@ -153,4 +154,5 @@ This project is licensed under the MIT License - see the `<LICENSE>`__ file for 
 .. _Tell git about your GPG key: https://help.github.com/articles/telling-git-about-your-gpg-key/
 .. _Fedora: https://getfedora.org
 .. _compton: https://wiki.archlinux.org/index.php/Compton
-.. |preview| image:: docs/img/zsh_preview.png
+.. |preview_shell| image:: docs/img/zsh_preview.png
+.. |preview_vim| image:: docs/img/zsh_vim_view.png
