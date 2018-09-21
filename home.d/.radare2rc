@@ -6,5 +6,3 @@ e scr.color = true
 # e asm.pseudo = true
 # Show comments at right of disassembly if they fit in screen (v2.4+)
 e asm.cmt.right=true
-# IF r2 < v2.4
-# e asm.cmtright=true
