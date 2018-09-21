@@ -41,7 +41,7 @@ shopt -s cdspell
 [[ -f "${HOME}/.paths" ]] && source "${HOME}/.paths"
 [[ -f "${HOME}/.bash_prompt" ]] && source "${HOME}/.bash_prompt"
 [[ -f "${HOME}/.exports" ]] && source "${HOME}/.exports"
-[[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
 [[ -f "${HOME}/.extra" ]] && source "${HOME}/.extra"
+[[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
 
 ## end of file

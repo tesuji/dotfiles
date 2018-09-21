@@ -130,7 +130,7 @@ zle -N down-line-or-beginning-search
 [[ -f "${HOME}/.paths" ]] && source "${HOME}/.paths"
 [[ -f "${HOME}/.zsh_prompt" ]] && source "${HOME}/.zsh_prompt"
 [[ -f "${HOME}/.exports" ]] && source "${HOME}/.exports"
-[[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
 [[ -f "${HOME}/.extra" ]] && source "${HOME}/.extra"
+[[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
 
 unset m_compinit_age
