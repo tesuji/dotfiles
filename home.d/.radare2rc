@@ -1,6 +1,10 @@
 e scr.utf8 = true
 e scr.color = true
 
+# Show only strings if any in the asm.emu output
+# Uncomment for resolve Obj-C file
+# e emu.str = true
+
 # Shows pseudocode in disassembly
 # E.x:    mov eax, str.ok    =>    eax = str.ok
 # e asm.pseudo = true
