@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # Restore home path in configuration file (default is /home/user)
 MY_USER=$(whoami)
 sed -E 's@(/home/)user@\1'"${MY_USER}"'@'

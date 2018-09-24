@@ -5,18 +5,18 @@ BACKUP=false
 BACKUP_PATH=".backup"
 
 declare -a CORE_DIR=(
-    #"compton"
-    "config.d"
-    "home.d"
-    ## You will need Windows fonts if you wanna enable this fontconfig
-    "fontconfig"
-    "subl"
-    #"xfce4"
-    )
+  #"compton"
+  "config.d"
+  "home.d"
+  # You will need Windows fonts if you wanna enable this fontconfig
+  "fontconfig"
+  "subl"
+  #"xfce4"
+)
 
-############
-## Functions
-############
+###########
+# Functions
+###########
 
 source scripts/stow.sh # load solve_stow_conflict()
 
@@ -33,7 +33,7 @@ start() { # start backup
 
 usage() { echo "Usage: $0 [-b]" 1>&2; exit 1; }
 
-## Ref https://stackoverflow.com/a/34531699/5456794
+# Ref https://stackoverflow.com/a/34531699/5456794
 handle_option() {
   while getopts ":b" opt; do
     case ${opt} in
@@ -51,9 +51,9 @@ handle_option() {
   shift $((OPTIND -1))
 }
 
-################
-## Starting here
-################
+###############
+# Starting here
+###############
 
 handle_option "$@"
 start "$BACKUP"

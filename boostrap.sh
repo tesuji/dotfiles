@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-########################################################
-## This script is used to installing some useful program
-## Only testing for Arch and Debian Linux
-## Use at your own risk!
-########################################################
+#######################################################
+# This script is used to installing some useful program
+# Only testing for Arch and Debian Linux
+# Use at your own risk!
+#######################################################
 
-############
-## Functions
-############
+###########
+# Functions
+###########
 
-## Check if command exists
+# Check if command exists
 check_exist() { # check_exist name
-  ## POSIX compatible, not with `hash', `type', etc.
+  # POSIX compatible, not with `hash', `type', etc.
   command -v "$1" > /dev/null
 }
 
@@ -27,7 +27,7 @@ ask_install() { # ask_install question
   fi
 }
 
-## Install sublime-text
+# Install sublime-text
 subl_install() {
   if check_exist apt-get; then
     sudo apt-get install apt-transport-https wget
@@ -51,9 +51,9 @@ subl_install() {
   fi
 }
 
-#############
-## Define var
-#############
+############
+# Define var
+############
 
 declare -a PYLIB=(
     future capstone crypto gmpy2 numpy requests pysocks pytest nose
@@ -150,6 +150,6 @@ apps_remove() {
 apps_install
 
 
-## Clean up
+# Clean up
 unset check_exist subl_install ask_install apps_install apps_remove
 unset PYLIB COMMON_APPS DEBIAN_APPS ARCH_APPS
