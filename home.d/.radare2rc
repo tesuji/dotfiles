@@ -1,5 +1,5 @@
 e scr.utf8 = true
-e scr.color = true
+e scr.color = 2
 
 # Show only strings if any in the asm.emu output
 # Uncomment for resolve Obj-C file
