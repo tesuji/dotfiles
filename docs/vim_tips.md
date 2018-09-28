@@ -1,6 +1,7 @@
 # Some useful keyboard shortcuts in VIM
 
 ## Navigation
+
 | Shortcuts          | Commmand                                  |
 |:-------------------|:------------------------------------------|
 | H, M, L            | go to **H**ighest, **M**iddle, **L**owest |
@@ -11,6 +12,7 @@
 | `{`/`}`            | jump to next/previous paragraph.          |
 
 ## Search and indentation
+
 | Shortcuts          | Commmand                                  |
 |:-------------------|:------------------------------------------|
 | /foo\c             | find ignore case, `\c` is the escape char |
@@ -37,6 +39,7 @@
 + `\1` inserts the text of the first backreference. `\2` inserts the second backreference, and so on.
 
 ## Selection and mode
+
 | Shortcuts  | Commmand                      |
 |:-----------|:------------------------------|
 | :x         | write and quit                |
@@ -50,6 +53,7 @@
 | :cd ..     | move to parent directory      |
 
 ## Editing
+
 | Shortcuts         | Commmand                                 |
 |:------------------|:-----------------------------------------|
 | :set paste        | paste without autoindent                 |
@@ -74,6 +78,7 @@
 | di\[              | to delete in \[\]                        |
 
 ## Clipboard and Register
+
 | Shortcuts | Commmand                                     |
 |:----------|:---------------------------------------------|
 | "a        | access register, `a` is name of a register   |
