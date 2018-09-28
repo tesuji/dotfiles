@@ -68,9 +68,9 @@ Firefox
 
 Install tweak by:
 
-.. code:: bash
+.. code:: sh
 
-    bash ./scripts/tweak_firefox.sh
+    sh ./scripts/tweak_firefox.sh
 
 Getting Started
 ---------------

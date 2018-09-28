@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 readonly SCRIPTPATH="$( cd "$(dirname "$0")" || exit 1; pwd -P )"
 
@@ -7,7 +7,7 @@ get_firefox_profile()
   readonly PARENT_FF_DIR="$HOME/.mozilla/firefox"
   readonly PROFILE_INI="$PARENT_FF_DIR/profiles.ini"
 
-  if [[ ! -f "$PROFILE_INI" ]]; then
+  if [ ! -f "$PROFILE_INI" ]; then
     return 1
   fi
 
