@@ -15,7 +15,7 @@ toggle_touchpad() {
   m_info_enable="Touchpad has been enabled"
   m_info_disable="Touchpad has been disabled"
 
-  ## fgrep and cut is still faster than sed
+  # fgrep and cut is still faster than sed
   mID="$( xinput | grep -F 'TouchPad' | cut -f2 | cut -d= -f2 )"
   mSTATE="$( xinput list-props "$mID" | grep "Device Enabled" | grep -o "[01]$" )"
 
