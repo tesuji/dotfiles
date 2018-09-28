@@ -1,15 +1,15 @@
 # Document list
 
-- [Adding SSH key to GitHub](adding-sshkeys-on-Github.md)
 - [How to install Arch Linux](archlinux-installation.md)
+- [How to maintain your Arch Linux system](maintain_your_Arch_system.md)
+- [Arch Linux post-installation](post_installation_ArchLinux.md)
 - [Beautify fonts by configuring fontconfig](beautify-fonts-with-fontconfig.md)
+- [Adding SSH key to GitHub](adding-sshkeys-on-Github.md)
 - [Defaul SSH config (/etc/ssh/sshd_config)](default_ssh_config.md)
 - [How to encrypt/decrypt file](encrypt_file.md)
 - [GDB power user](gdb-power-user.md)
 - [GIT user cheatsheet](git_cheatsheets.md)
-- [How to maintain your Arch Linux system](maintain_your_Arch_system.md)
 - [Make build references](make_refcard.rst)
 - [Order of arguments in Linux x86-64](orderOfArgumentsInX64Linux.md)
-- [Arch Linux post-installation](post_installation_ArchLinux.md)
 - [How to use Radare2](radare2-usage.md)
 - [VIM tips](vim_tips.md)
