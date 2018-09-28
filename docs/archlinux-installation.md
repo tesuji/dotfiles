@@ -21,6 +21,7 @@ sudo dd bs=4M if='path_to_iso' of='path_to_usb' status=progress oflag=sync
 ```
 
 Example: asume usb is in `/dev/sdb` and `iso` image in `home`, then type this
+
 ```bash
 sudo dd bs=4M if='/home/username/ArchLinux.iso' of='/dev/sdb' status=progress oflag=sync
 ```
@@ -58,7 +59,9 @@ be displayed on the screen during boot up.
 If you are booting in UEFI mode then choose `Archiso x86_64 UEFI`
 
 ### Connect to the Internet
+
 The connection may be checked with:
+
 ```bash
 ping archlinux.org
 ```
@@ -79,6 +82,7 @@ If you have an **authoried internet access**, use `elinks` with `javascript` to 
 ### Update the system clock
 
 Ensure the system clock is accurate:
+
 ```bash
 timedatectl set-ntp true
 ```
@@ -255,7 +259,9 @@ And wait until finishing. The waiting time depends on Internet speed.
 ## Configure the system
 
 ### Fstab
+
 Generate an fstab file (use `-U` or `-L` to define by UUID or labels, respectively):
+
 ```bash
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
@@ -263,6 +269,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 Check the resulting file in `/mnt/etc/fstab` afterwards, and edit it in case of errors.
 
 ### Chroot
+
 [Change root](https://wiki.archlinux.org/index.php/Change_root) into the new system:
 
 ```bash
@@ -270,7 +277,12 @@ arch-chroot /mnt
 ```
 
 ### Time zone
-Set the [time zone](https://wiki.archlinux.org/index.php/Time_zone) and run [hwclock(8)](https://jlk.fjfi.cvut.cz/arch/manpages/man/hwclock.8) to generate `/etc/adjtime` (assumes the hardware clock is set to UTC):
+
+Set the
+[time zone](https://wiki.archlinux.org/index.php/Time_zone)
+and run
+[hwclock(8)](https://jlk.fjfi.cvut.cz/arch/manpages/man/hwclock.8)
+to generate `/etc/adjtime` (assumes the hardware clock is set to UTC):
 
 ```bash
 ln -fs /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
@@ -278,19 +290,24 @@ hwclock --systohc
 ```
 
 ### Locale
+
 First, install `vim`:
+
 ```bash
 pacman -S vim git
 pacman -Rns vi
 alias vi=vim
 ```
 
-Type `vi /etc/locale.gen`. Uncomment `en_US.UTF-8 UTF-8`, `en_GB.UTF-8 UTF-8` in `/etc/locale.gen`, and generate them with:
+Type `vi /etc/locale.gen`.
+Uncomment `en_US.UTF-8 UTF-8`, `en_GB.UTF-8 UTF-8` in `/etc/locale.gen`, and generate them with:
+
 ```bash
 locale-gen
 ```
 
 Set the LANG variable in `locale.conf(5)` accordingly:
+
 ```bash
 echo -n 'LANG=en_US.UTF-8' | tee /etc/locale.conf
 ## alternative, run
@@ -333,6 +350,7 @@ the daemon without creating a configuration file.
 | Wicd               | Yes                                    | Yes          | No         | wicd-curses   | wicd.service                                       |
 
 Example:
+
 ```bash
 pacman -S networkmanager network-manager-applet
 systemctl enable NetworkManager
@@ -340,7 +358,9 @@ systemctl enable NetworkManager
 
 ##### 2. Wireless
 
-For Wireless configuration, install the `iw` and `wpa_supplicant` packages, as well as needed [firmware packages](https://wiki.archlinux.org/index.php/Wireless#Installing_driver.2Ffirmware).
+For Wireless configuration, install the `iw` and `wpa_supplicant` packages,
+as well as needed
+[firmware packages](https://wiki.archlinux.org/index.php/Wireless#Installing_driver.2Ffirmware).
 Optionally install `dialog` for usage of *wifi-menu*.
 
 ```bash
@@ -350,6 +370,7 @@ pacman -S iw wpa_supplicant
 ### Configure package manager
 
 Type `vi /etc/pacman.conf`. Scroll down and uncomment these line
+
 ```bash
 [multilib]
 Include = /etc/pacman.d/mirrorlist
@@ -364,6 +385,7 @@ Because being `root` user when using normal task is dangerous, you could destroy
 all system by mistake when you are `root` user.
 
 Replace myusername with username, type the following commands
+
 ```bash
 useradd -m -G power,storage,wheel myusername
 passwd myusername
@@ -371,6 +393,7 @@ passwd myusername
 
 Now install the `sudo` package, `sudo` will let you have `superuser` privilege
 when you need. Type these commands:
+
 ```bash
 pacman -S sudo --needed
 visudo
@@ -379,14 +402,18 @@ visudo
 Scroll down and uncomment this line: `%wheel ALL=(ALL) ALL`. Save and exit the editor.
 
 ### Configure the bootloader
+
 This is the software that loads the OS when computer starts.
 If you're doing **dual boot**, type this :
+
 ```bash
 pacman -S os-prober
 ```
 
 #### Only UEFI
+
 Mount **efi** partition:
+
 ```bash
 #########################
 # Only for GPT partition
@@ -396,19 +423,23 @@ mount /dev/sda7 /boot/EFI
 ```
 
 Type these commands:
+
 ```bash
 pacman -S grub efibootmgr
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck /dev/sda
 ```
 
 #### Only Legacy BIOS
+
 Type these commands:
+
 ```bash
 pacman -S grub-bios
 grub-install --target=i386-pc --recheck /dev/sda
 ```
 
 #### Both UEFI and BIOS
+
 Type these commands:
 ```bash
 cp /usr/share/locale/en\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo
@@ -419,6 +450,7 @@ If you have an **Intel CPU**, install the `intel-ucode` package in addition, and
 [enable microcode updates](https://wiki.archlinux.org/index.php/Microcode#Enabling_Intel_microcode_updates).
 
 ## Reboot computer
+
 Exit from chroot, unmount partitions and reboot you computer. Type:
 
 ```bash
@@ -437,34 +469,41 @@ Use the password you created as a normal user to log in.
 ### Install GUI : Get Desktop Up And Running (XFCE4 as default)
 
 #### Install `bash-completion`
+
 `sudo pacman -S bash-completion`
 
 #### Enable `AUR` reposity
+
 `AUR` is one of the best of Arch Linux with community maintain packages.
 
 ##### PacAUR (not maintained)
+
 > From http://cdavis.us/wiki/index.php/Arch_Linux_Install_Guide
 
 ##### General steps for others <aur helpers>
 
 + Now install `<aur_helpers>`
-```bash
-mkdir -p ~/.aur/aur_helpers && cd $_
-gpg --keyserver pgp.mit.edu --recv-keys <key_id>
-git clone https://aur.archlinux.org/<aur_helpers>.git
-cd <aur_helpers>
-makepkg -si PKGBUILD
-```
+
+  ```bash
+  mkdir -p ~/.aur/aur_helpers && cd $_
+  gpg --keyserver pgp.mit.edu --recv-keys <key_id>
+  git clone https://aur.archlinux.org/<aur_helpers>.git
+  cd <aur_helpers>
+  makepkg -si PKGBUILD
+  ```
 
 **More:** https://wiki.archlinux.org/index.php/makepkg#Improving_compile_times
 
 #### If you have trouble with `Wi-Fi`
+
 Google for install `wifi driver for arch`
 
 #### Disable `root` user account
+
 For safe, type `sudo passwd -dl root`
 
 #### Install XFCE4 Dekstop, Sreen locker and Sound Server
+
 We have chosen to install
 
 - `xorg` as display server (must be **manually** installed)
@@ -486,6 +525,7 @@ If Arch is in VMWare, just install `xf86-input-vmmouse`, `xf86-video-vmware`,
 ##### 2) Install display manager
 
 Choose either **a)** or **b)** for installing desktop manager
+
 ###### a) Install LXDM (Light X11 Desktop Manager)
 
 Install desktop manager **LXDM** and Sreen locker **XScreenSaver**
@@ -496,6 +536,7 @@ Then type `sudo vi /etc/lxdm/lxdm.conf` and change line `session=/usr/bin/startl
 to `session=/usr/bin/startxfce4`. Save change and exit.
 
 Then, type `sudo systemctl enable lxdm`
+
 ###### b) Install LightDM
 
 Install desktop manager **LightDM** and screen locker **light-locker**
@@ -504,6 +545,7 @@ Install desktop manager **LightDM** and screen locker **light-locker**
 sudo pacman -S xorg-server-xephyr accountsservice
 sudo pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings light-locker
 ```
+
 where:
 - `accountsservice` for *Enhanced user accounts handling*
 - `xorg-server-xephyr` for *LightDM test mode*
@@ -517,18 +559,21 @@ greeter-session=lightdm-gtk-greeter
 ```
 
 Then, run LightDM as an X application:
-```
-$ sudo lightdm --test-mode --debug
+
+```bash
+sudo lightdm --test-mode --debug
 ```
 
 Then type `sudo systemctl enable lightdm`
 
 ##### 3) Install audio service
+
 ```bash
 sudo pacman -S pulseaudio pulseaudio-alsa
 ```
 
 ##### 4) Install gstreamer
+
 ```bash
 sudo pacman -S gstreamer gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly
 ```
@@ -536,7 +581,8 @@ sudo pacman -S gstreamer gst-libav gst-plugins-bad gst-plugins-base gst-plugins-
 ##### 5) Install desktop environment
 
 Install **XFCE4** desktop environment
-```
+
+```bash
 echo "exec startxfce4" >> ~/.xinitrc
 sudo pacman -S xfce4
 ```

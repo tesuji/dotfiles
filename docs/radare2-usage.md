@@ -1,6 +1,7 @@
 # Radare2
 
 ## Command line options
+
 ```
 -L: List of supported IO plugins
 -q: Exit after processing commands
@@ -15,6 +16,7 @@
 ```
 
 ## Configuration properties
+
 They can be used in evaluations:`? ${asm.tabs}`
 
 ```
@@ -26,7 +28,10 @@ e <property>=<value>: Change property value
 e? help about a configuration property
 	e? cmd.stack
 ```
-You will want to set your favourite options in `~/.radare2rc` since every line there will be interpreted at the beginning of each session. Mine for reference:
+
+You will want to set your favourite options in `~/.radare2rc`
+since every line there will be interpreted at the beginning of each session.
+Mine for reference:
 
 ```
 # Show comments at right of disassembly if they fit in screen
@@ -45,40 +50,43 @@ e scr.utf8 = true
 There is an easier interface accessible from the Visual mode, just typing `Ve`
 
 ## Basic Commands
+
 Command syntax: `[.][times][cmd][~grep][@[@iter]addr!size][|>pipe]`
 * `;` Command chaining: `x 3;s+3;pi 3;s+3;pxo 4;`
 * `|` Pipe with shell commands: `pd | less`
 * `!` Run shell commands: `!cat /etc/passwd`
 * `!!` Escapes to shell, run command and pass output to radare buffer
-* Note: The double exclamation mark tells radare to skip the plugin list to find an IO plugin handling this command to launch it directly to the shell. A single one will walk through the io plugin list.
+* Note: The double exclamation mark tells radare to skip the plugin
+  list to find an IO plugin handling this command to launch it
+  directly to the shell. A single one will walk through the io plugin list.
 * `` ` `` Radare commands: `` wx `!ragg2 -i exec` ``
 * `~` grep
 * `~!` grep -v
 * `~[n]` grep by columns `afl~[0]`
 * `~:n` grep by rows `afl~:0`
-```
-	pi~mov,eax  		  ; lines with mov or eax
-	pi~mov&eax  		  ; lines with mov and eax
-	pi~mov,eax:6  		  ; 6 first lines with mov or eax
-	pd 20~call[0]:0       ; grep first column of the first row matching 'call'
-```
+  ```
+  	pi~mov,eax  		  ; lines with mov or eax
+  	pi~mov&eax  		  ; lines with mov and eax
+  	pi~mov,eax:6  		  ; 6 first lines with mov or eax
+  	pd 20~call[0]:0       ; grep first column of the first row matching 'call'
+  ```
 * `.cmd` Interprets command output
-```
-is* prints symbols
-.is* interprets output and define the symbols in radare (normally they are already loaded if r2 was not invoked with -n)
-```
+  ```
+  is* prints symbols
+  .is* interprets output and define the symbols in radare (normally they are already loaded if r2   was not invoked with -n)
+  ```
 * `..` repeats last commands (same as enter \n)
 * `(` Used to define and run macros
 * `$` Used to define alias
 * `$$`: Resolves to current address
 * Offsets (`@`) are absolute, we can use $$ for relative ones `@ $$+4`
 * `?` Evaluate expression
-```
-[0x00000000]> ? 33 +2
-35 0x23 043 0000:0023 35 00100011 35.0 0.000000
+  ```
+  [0x00000000]> ? 33 +2
+  35 0x23 043 0000:0023 35 00100011 35.0 0.000000
 
-Note: | and & need to be escaped
-```
+  Note: | and & need to be escaped
+  ```
 * `?$?` Help for variables used in expressions
 * `$$`: Here
 * `$s`: File size
@@ -94,19 +102,20 @@ Note: | and & need to be escaped
 * `?p`: Get physical address for given virtual address
 * `?P`: Get virtual address for given physical one
 * `?v` Show hex value of math expr
-```
-?v 0x1625d4ca ^ 0x72ca4247 = 0x64ef968d
-?v 0x4141414a - 0x41414140  = 0xa
-```
+  ```
+  ?v 0x1625d4ca ^ 0x72ca4247 = 0x64ef968d
+  ?v 0x4141414a - 0x41414140  = 0xa
+  ```
 * `?l str`: Returns the length of string
 * `@@`: Used for iterations
-```
-wx ff @@10 20 30      Writes ff at offsets 10, 20 and 30
-wx ff @@`?s  1 10 2`  Writes ff at offsets 1, 2 and 3
-wx 90 @@ sym.*        Writes a nop on every symbol
-```
+  ```
+  wx ff @@10 20 30      Writes ff at offsets 10, 20 and 30
+  wx ff @@`?s  1 10 2`  Writes ff at offsets 1, 2 and 3
+  wx 90 @@ sym.*        Writes a nop on every symbol
+  ```
 
 ## Positioning
+
 ```
 s address: Move cursor to address or symbol
 	s-5 (5 bytes backwards)
@@ -115,24 +124,35 @@ s address: Move cursor to address or symbol
 ```
 
 ## Block size
-The block size is the default view size for radare. All commands will work with this constraint, but you can always temporally change the block size just giving a numeric argument to the print commands for example (px 20)
+
+The block size is the default view size for radare.
+All commands will work with this constraint,
+but you can always temporally change the block size
+just giving a numeric argument to the print commands for example (px 20)
+
 ```
 b size: Change block size
 ```
 
 ## JSON Output
-Most of commands such as (i)nfo and (p)rint commands accept a `j` to print their output in `json`
+
+Most of commands such as (i)nfo and (p)rint commands accept a `j` to
+print their output in `json`
+
 ```
 [0x100000d78]> ij
 {"bin":{"type":"mach0","class":"MACH064","endian":"little","machine":"x86 64 all","arch":"x86","os":"osx","lang":"c","pic":true,"canary":false,"nx":false,"crypto":false,"va":true,"bits":64,"stripped":true,"static":false,"linenums":false,"syms":false,"relocs":false},"core":{"type":"Executable file","os":"osx","arch":"x86 64 all","bits":64,"endian":"little","file":"/bin/ls","fd":6,"size":34640,"mode":"r--","block":256,"uri":"/bin/ls","format":"mach064"}}
 ```
+
 ## Analyze
+
 ```
 aa: Analyze all (fcns + bbs) same that running r2 with -A
 ahl <length> <range>: fake opcode length for a range of bytes
 ad: Analyze data
 	ad@rsp (analyze the stack)
 ```
+
 Function analysis (normal mode)
 
 ```
@@ -165,6 +185,7 @@ a8 bytes: Analyze the instruction represented by specified bytes
 ```
 
 ## Information
+
 ```
 iI: File info
 iz: Strings in data section
@@ -177,6 +198,7 @@ il: Linked libraries
 ii: Imports
 ie: Entrypoint
 ```
+
 Mitigations:
 
 ```
@@ -189,7 +211,8 @@ Get function address in GOT table:
 `pd 1 @ sym.imp<funct>`
 Returns a `jmp [addr]` where `addr` is the address of function in the GOT. Similar to `objdump -R | grep <func>`
 
-# Print
+## Print
+
 ```
 psz n @ offset: Print n zero terminated String
 px n @ offset: Print hexdump (or just x) of n bytes
@@ -217,6 +240,7 @@ p=: Print entropy ascii graph
 ```
 
 ## Write
+
 ```
 wx: Write hex values in current offset
 	wx 123456
@@ -241,6 +265,7 @@ wopO 41424344 : get the index in the De Bruijn Pattern of the given word
 ```
 
 ## Flags
+
 Flags are labels for offsets. They can be grouped in namespaces as `sym` for symbols ...
 ```
 f: List flags
@@ -254,6 +279,7 @@ fs flagspace: Change to the specified flag space
 ```
 
 ## yank & paste
+
 ```
 y n: Copies n bytes from current position
 y: Shows yank buffer content with address and length where each entry was copied from
@@ -263,6 +289,7 @@ yt n target @ source: Yank to. Copy n bytes from source to target address
 ```
 
 ## Visual Mode:
+
 `V` enters visual mode
 
 ```
@@ -310,6 +337,7 @@ m<char>: Define a bookmark
 ```
 
 ## ROP
+
 ```
 /R opcodes: Search opcodes
 	/R pop,pop,ret
@@ -326,10 +354,12 @@ e search.roplen = 4  (change the depth of the search, to speed-up the hunt)
 ```
 
 ## Searching
+
 ```
 / bytes: Search bytes
 	\x7fELF
 ```
+
 Example: Searching function preludes:
 
 ```
@@ -348,6 +378,7 @@ Opcodes: 5589e5
 
 pi 5 @@hit* (Print 5 first instructions of every hit)
 ```
+
 Its possible to run a command for each hit. Use the `cmd.hit` property:
 
 ```
@@ -355,6 +386,7 @@ e cmd.hit=px
 ```
 
 ## Comments and defines
+
 ```
 Cd [size]: Define as data
 C- [size]: Define as code
@@ -368,16 +400,19 @@ CC: List all comments or add a new comment in console mode
 ```
 
 ## Magic files
+
 ```
 pm: Print Magic files analysis
 	[0x00000000]> pm
 	0x00000000 1 ELF 32-bit LSB executable, Intel 80386, version 1
 ```
+
 Search for magic numbers
 
 ```
 /m [magicfile]: Search magic number headers with libmagic
 ```
+
 Search can be controlled with following properties:
 
 ```
@@ -389,6 +424,7 @@ search.in
 ```
 
 ## Yara
+
 Yara can also be used for detecting file signatures to determine compiler types, shellcodes, protections and more.
 
 ```
@@ -396,7 +432,11 @@ Yara can also be used for detecting file signatures to determine compiler types,
 ```
 
 ## Zignatures
-Zignatures are useful when dealing with stripped binaries. We can take a non-stripped binary, run zignatures on it and apply it to a different binary that was compiled statically with the same libraries.
+
+Zignatures are useful when dealing with stripped binaries.
+We can take a non-stripped binary, run zignatures on it
+and apply it to a different binary that was compiled
+statically with the same libraries.
 
 ```
 zg <language> <output file>: Generate signatures
@@ -405,6 +445,7 @@ Run the generated script to load signatures
 	eg: . go.z
 z: To show signatures loaded:
 ```
+
 Zignatures are applied as comments:
 
 ```
@@ -416,6 +457,7 @@ r2-(pid2)> pd 35 @ 0x08049adb-10
 ```
 
 ## Compare files
+
 ```
 r2 -m 0xf0000 /etc/fstab	; Open source file
 o /etc/issue  				; Open file2 at offset 0
@@ -424,6 +466,7 @@ cc offset: Diff by columns between current offset address and "offset"
 ```
 
 ## Graphs
+
 Basic block graphs
 
 ```
@@ -431,6 +474,7 @@ af: Load function metadata
 ag $$ > a.dot: Dump basic block graph to file
 ag $$ | xdot -: Show current function basic block graph
 ```
+
 Call graphs
 
 ```
@@ -450,6 +494,7 @@ xdot /tmp/a
 ```
 
 ## Debugger
+
 Start r2 in debugger mode. r2 will fork and attach
 
 ```
@@ -457,6 +502,7 @@ r2 -d [pid|cmd|ptrace] (if command contains spaces use quotes: r2 -d "ls /")
 
 ptrace://pid (debug backend does not notice, only access to mapped memory)
 ```
+
 To pass arguments:
 
 ```
@@ -467,6 +513,7 @@ To pass stdin:
 ```
 r2 -d rarun2 program=/bin/ls stdin=$(python exploit.py)
 ```
+
 Commands
 
 ```
@@ -496,6 +543,7 @@ dm: Shows memory map (* indicates current section)
 	sys 0xb778b000 - 0xb778d000 s rw- /usr/lib/ld-2.17.so
 	sys 0xbfe5d000 - 0xbfe7e000 s rw- [stack]
 ```
+
 To follow child processes in forks (set-follow-fork-mode in gdb)
 
 ```
@@ -515,15 +563,20 @@ continue with F9
 ```
 
 ## WebGUI (Enyo)
+
 ```
 =h: Start the server
 =H: Start server and browser
 ```
 
 # Radare2 suite commands
+
 All suite commands include a `-r` flag to generate instructions for r2
 
-## rax2 - Base conversion
+## rax2
+
+Base conversion
+
 ```
 -e: Change endian
 -K: random ASCII art to represent a number/hash. Similar to how SSH represents keys
@@ -532,6 +585,7 @@ All suite commands include a `-r` flag to generate instructions for r2
 ```
 
 ## rahash2 - Entropy, hashes and checksums
+
 ```
 -a: Specify the algorithm
 -b XXX: Block size
@@ -540,6 +594,7 @@ All suite commands include a `-r` flag to generate instructions for r2
 ```
 
 ## radiff2 - File diffing
+
 ```
 -s: Calculate text distance from two files.
 -d: Delta diffing (For files with different sizes. Its not byte per byte)
@@ -570,13 +625,19 @@ Show differences between original and patched on x86_32
 -O filename: Write data to file
 ```
 
-## rafind2 - Search
+## rafind2
+
+Search
+
 ```
 -Z: Look for Zero terminated strings
 -s str: Look for specifc string
 ```
 
-## ragg2 - Shellcode generator, C/opcode compiler
+## ragg2
+
+Shellcode generator, C/opcode compiler
+
 ```
 -P: Generate De Bruijn patterns
 	ragg2 -P 300 -r
@@ -585,13 +646,18 @@ Show differences between original and patched on x86_32
 -i shellcode: Specify shellcode to generate
 -e encoder: Specify encoder
 ```
+
 Example:
+
 ```
 Generate a x86, 32 bits exec shellcode
 	ragg2 -a x86 -b 32 -i exec
 ```
 
-## rabin2 - Executable analysis: symbols, imports, strings ...
+## rabin2 -
+
+Executable analysis: symbols, imports, strings ...
+
 ```
 -I: Executable information
 -c: Returns classes. Useful to list Java Classes
@@ -600,11 +666,13 @@ Generate a x86, 32 bits exec shellcode
 -z: Strings
 ```
 
-## rarun2 - Launcher to run programs with different environments, args, stdin, permissions, fds
+## rarun2 -
+
+Launcher to run programs with different environments, args, stdin, permissions, fds
+
 Examples:
 
 ```
 r2 -b 32 -d rarun2 program=pwn1 arg1=$(ragg2 -P 300 -r) : runs pwn1 with a De Bruijn Pattern as first argument, inside radare2's debugger, and force 32 bits
 r2 -d rarun2 program=/bin/ls stdin=$(python exploit.py) : runs /bin/ls with the output of exploit.py directed to stdin
 ```
-

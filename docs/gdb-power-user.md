@@ -8,6 +8,7 @@ use `start` to run program until main function
 ```
 
 to run python within gdb
+
 ```gdb
 (gdb) python
 > print('hello world')
@@ -16,12 +17,14 @@ hello world
 ```
 
 another way
+
 ```gdb
 (gdb) python gdb.execute('start')
 (gdb) python gdb.parse\_and\_eval('next')
 ```
 
 type command for breakpoint
+
 ```gdb
 (gdb) command n
 > record
@@ -48,12 +51,15 @@ set print pretty on
 ```
 
 ## allow us to get rid of for loop
+
 until
 
 ## examine backstrace
+
 (gdb) bt
 
 ## use catch point to catch event in your program
+
 ```gdb
 (gdb) catch catch # to catch C++ exception
 (gdb) catch syscall sleep # to stop when calling sleep() syscall
@@ -61,12 +67,14 @@ until
 ```
 
 ## to save your breakpoints
+
 ```gdb
 (gdb) save breakpoint
 (gdb) info line * $pc # if gcc -g
 ```
 
 ## to run function by address
+
 ```gdb
 (gdb) call ((int*())*0x40154f)(10, 5)
 $1 = (int *) 0x5

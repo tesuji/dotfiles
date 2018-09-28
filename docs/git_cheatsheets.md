@@ -44,6 +44,7 @@ Start a new repository or obtain one from an existing URL
 `git clone [url]`: Downloads a project and its entire version history
 
 ## Make changes
+
 Review edits and craft a commit transaction
 
 `git status`: inspects the contents of the working directory and staging area
@@ -114,6 +115,7 @@ Shelve and restore incomplete changes
 `git stash drop`: Discards the most recently stashed changeset
 
 ## Branching
+
 Git *branching* allows users to experiment with different versions
 of a project by checking out separate branches to work on.
 
@@ -198,6 +200,7 @@ This will remove all the dangling commits, trees, and blobs left over from the p
 - `git clone remote_location clone_name`
 
 In this command:
+
 1. `remote_location` tells Git where to go to find the remote. This could be a web address, or a filepath, such as:
 2. `clone_name` is the name you give to the directory in which Git will clone the repository.
 
