@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2139
 # ~/.aliases
 
 # Functions
@@ -75,6 +76,7 @@ extract ()
 parse_path_colon_sep ()
 {
   local IFS=$'\n' my_input_str="$1"
+  # shellcheck disable=SC2046
   realpath $(tr ':' '\n' <<< "$my_input_str")
 }
 
@@ -120,6 +122,7 @@ lssh ()
 # Make path for each argument and cd into the last path
 mkcd ()
 {
+  # shellcheck disable=SC2164
   command mkdir -p "$@" && cd "$_"
 }
 
@@ -133,6 +136,38 @@ if alias which >/dev/null 2>&1; then
     }
   fi
 fi
+
+# A shortcut function that simplifies usage of xclip.
+# - Accepts input from either stdin (pipe), or params.
+# ------------------------------------------------
+copy()
+{
+  # If no tty, data should be available on stdin
+  if ! [[ "$( tty )" == /dev/* ]]; then
+    input="$(< /dev/stdin)"
+  # Else, fetch input from params
+  else
+    input="$*"
+  fi
+  if [ -z "$input" ]; then  # If no input, print usage message.
+    echo "Copies a string to the clipboard."
+    echo "Usage: cb <string>"
+    echo "       echo <string> | cb"
+    return 1
+  fi
+
+  local _scs_col="\e[0;32m" _wrn_col='\e[1;31m'
+
+  # Check user is not root (root doesn't have access to user xorg server)
+  if [[ "$USER" == "root" ]]; then
+    echo -e "$_wrn_col""Must be regular user (not root) to copy a file to the clipboard.\e[0m"
+    return 1
+  fi
+  # Copy input to clipboard
+  echo -n "$input" | xclip -selection c
+  # Print status.
+  echo -e "$_scs_col""Copied to clipboard:\e[0m"
+}
 
 # Aliases
 #========
@@ -193,7 +228,7 @@ if ls --color >/dev/null 2>&1; then # GNU ls support colors
 elif ls --G >/dev/null 2>&1; then # BSD ls
   alias ls="$my_ls -G"
 else
-  alias ls=$my_ls
+  alias ls="$my_ls"
 fi
 unset my_ls
 
