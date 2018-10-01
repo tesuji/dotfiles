@@ -10,3 +10,6 @@ e scr.color = 2
 # e asm.pseudo = true
 # Show comments at right of disassembly if they fit in screen (v2.4+)
 e asm.cmt.right=true
+
+# Do not show bytes with instruction
+e asm.bytes=false
