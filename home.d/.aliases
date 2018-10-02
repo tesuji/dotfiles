@@ -137,7 +137,7 @@ if alias which >/dev/null 2>&1; then
   fi
 fi
 
-if command -v xclip > /dev/null 2>1; then
+if check_exist xclip; then
   # A shortcut function that simplifies usage of xclip.
   # - Accepts input from either stdin (pipe), or params.
   # ------------------------------------------------
@@ -201,6 +201,11 @@ alias buildtype='gcc -dumpmachine' # or make --version; bash --version; uname -o
 alias cd-='cd -'
 alias cd..='cd ..'
 alias cp='cp -iv'
+
+if check_exist ctags; then
+  alias cproto='ctags -x --c-kinds=fp'
+fi
+
 alias dd='dd status=progress'
 alias df='df -h'
 # Only diffutils v3.4+ includes the --color option
