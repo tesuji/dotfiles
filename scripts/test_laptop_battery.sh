@@ -7,8 +7,8 @@
 # Ref:
 #    https://askubuntu.com/q/69556/565006
 get_battery_info() {
-  # fgrep and cut is still faster than sed
-  m_org_battery=$(upower --enumerate | grep -F "battery")
+  #m_org_battery=$(upower --enumerate | grep -F "battery")
+  m_org_battery=/org/freedesktop/UPower/devices/battery_BAT0
   upower --show-info "$m_org_battery"
 }
 
