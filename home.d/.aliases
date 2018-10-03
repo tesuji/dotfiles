@@ -203,6 +203,7 @@ alias cd..='cd ..'
 alias cp='cp -iv'
 
 if check_exist ctags; then
+  # Use "ctags --list-kinds=c" to list all kinds
   alias cproto='ctags -x --c-kinds=fp'
 fi
 
