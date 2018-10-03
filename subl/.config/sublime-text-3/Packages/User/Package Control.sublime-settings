@@ -12,6 +12,7 @@
 		"MasmAssembly",
 		"Meson",
 		"NASM x86 Assembly",
-		"Package Control"
+		"Package Control",
+		"TOML"
 	]
 }
