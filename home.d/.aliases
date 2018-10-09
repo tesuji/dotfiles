@@ -285,8 +285,8 @@ alias suspend='systemctl suspend'
 if check_exist rasm2; then
   alias asm32='rasm2 -a x86 -b 32'
   alias asm64='rasm2 -a x86 -b 64'
-  alias disasm32='asm32 -d'
-  alias disasm64='asm64 -d'
+  alias disasm32='asm32 -D'
+  alias disasm64='asm64 -D'
 elif check_exist nasm; then
   asm32 ()
   {
@@ -298,13 +298,15 @@ elif check_exist nasm; then
     _assembly 64 "$1"
   }
 
-  _assembly ()
-  { # _assembly(bits, asm)
+  _assembly () # _assembly(bits, asm)
+  {
     local infile='.nasm.s'
     local outfile='.nasm.bin'
     local bits="$1"
     local asm="$2"
-    printf 'BITS %d\n%s\n' "$bits" "$asm" > "$infile" && nasm "$infile" -o "$outfile" && ndisasm -b "$bits" "$outfile"
+    printf 'BITS %d\n%s\n' "$bits" "$asm" > "$infile" \
+    && nasm "$infile" -o "$outfile" \
+    && ndisasm -b "$bits" "$outfile"
   }
 
   alias asm=asm32
