@@ -86,6 +86,8 @@ If you add a new dotfile to this repo, please add it in appropriate directory.
 +-------------+--------------------------------------------------------------+
 | scripts     | Useful scripts for installing Firefox, getting distro name   |
 +-------------+--------------------------------------------------------------+
+| tmux        | tmux configuration and supporting scripts                    |
++-------------+--------------------------------------------------------------+
 | subl        | Sublime Text custom syntax and key bindings                  |
 +-------------+--------------------------------------------------------------+
 | urxvt       | urxvt color config and urxvtd startup file                   |
