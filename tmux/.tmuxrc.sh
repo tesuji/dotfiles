@@ -5,7 +5,7 @@
 # See https://repology.org/metapackage/tmux/badges
 
 # If tmux is not run, exit immediately
-[ -z "$TMUX" ] && return 0
+[ -z "$TMUX" ] && return
 
 TMUX_OS="$(uname)"
 TMUX_VERSION="$(tmux -V | cut -d' ' -f2)"
