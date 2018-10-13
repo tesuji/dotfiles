@@ -21,5 +21,5 @@ esac
 if [ "$TMUX_VERSION_MAJOR" -le 2 ] && [ "$TMUX_VERSION_MINOR" -le 3 ]; then
   tmux source-file ./.tmux-23.conf
 else
-  tmux source-file ./.tmux-24+.conf
+  tmux source-file ./.tmux-24_plus.conf
 fi
