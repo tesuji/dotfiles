@@ -19,7 +19,7 @@ case "$TMUX_OS" in
 esac
 
 if [ "$TMUX_VERSION_MAJOR" -le 2 ] && [ "$TMUX_VERSION_MINOR" -le 3 ]; then
-  tmux source-file ./.tmux-23.conf
+  tmux source-file "${HOME}/.tmux-23.conf"
 else
-  tmux source-file ./.tmux-24_plus.conf
+  tmux source-file "${HOME}/.tmux-24_plus.conf"
 fi
