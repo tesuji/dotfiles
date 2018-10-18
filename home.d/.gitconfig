@@ -32,7 +32,7 @@
 	stats = log -10 --dirstat=files,1,cumulative --ignore-blank-lines --abbrev-commit --oneline --graph --decorate
 	################################
 	# Remove sensitive data from history, after a push
-	sensitive="!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch \"$1\"' --prune-empty --tag-name-filter cat -- --all && git push origin --force --all }; r"
+	rm-sensitive="!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"\"$1\"" --prune-empty --tag-name-filter cat -- --all; }; r"
 	################################
 	pr = prune --verbose      # Prune all unreachable objects from the object database
 	################################
