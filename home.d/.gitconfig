@@ -1,8 +1,12 @@
 #!/usr/bin/env git
 # ~/.gitconfig
+# ************************************************************************
+# This is the config file, and a '#' or ';' character indicates a comment.
 #
-# This is the config file, and a '#' or ';' character indicates a comment
-#
+# Use GIT_TRACE=1 to enables general trace messages, e.g. alias expansion,
+# built-in command execution and external command execution.
+# ************************************************************************
+
 [include]
 	# Include private information about user.user and user.email
 	path = ~/.gitconfig.local
@@ -24,15 +28,20 @@
 	#dfc = diff --cached       # Equivalent to below command
 	dfs = diff --staged
 	################################
+	lc = log ORIG_HEAD.. --stat --no-merges  # See the fetched commits
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 	logg = log --graph --decorate --oneline --abbrev-commit --all
 	lgf = log --pretty=full                  # Display additional committer name
 	lgc = log --pretty=full --committer      # Limit the commits output to match the specified committer
 	history = log --follow --                # Show commit history of filename
 	stats = log -10 --dirstat=files,1,cumulative --ignore-blank-lines --abbrev-commit --oneline --graph --decorate
+	new = !sh -c 'git log $1@{1}..$1@{0} "$@"' # what new commits have been created by the last command (typically after a "git pull") :
 	################################
 	# Remove sensitive data from history, after a push
 	rm-sensitive="!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"\"$1\"" --prune-empty --tag-name-filter cat -- --all; }; r"
+	# After some time has passed and you're confident that git filter-branch had no unintended side effects,
+	# you can force all objects in your local repository to be dereferenced and garbage collected (Git 1.8.5+)
+	clean-up = "!f() { git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all; git gc --prune=now; }; f"
 	################################
 	pr = prune --verbose      # Prune all unreachable objects from the object database
 	################################
