@@ -200,6 +200,7 @@ alias .....='cd ../../../..'
 alias buildtype='gcc -dumpmachine' # or make --version; bash --version; uname -o -m
 alias cd-='cd -'
 alias cd..='cd ..'
+alias cdroot='cd "$(git root)"'
 alias cp='cp -iv'
 
 if check_exist ctags; then
