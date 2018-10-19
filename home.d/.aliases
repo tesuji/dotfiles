@@ -289,16 +289,6 @@ if check_exist rasm2; then
   alias disasm32='asm32 -D'
   alias disasm64='asm64 -D'
 elif check_exist nasm; then
-  asm32 ()
-  {
-    _assembly 32 "$1"
-  }
-
-  asm64 ()
-  {
-    _assembly 64 "$1"
-  }
-
   _assembly () # _assembly(bits, asm)
   {
     local infile='.nasm.s'
@@ -310,7 +300,8 @@ elif check_exist nasm; then
     && ndisasm -b "$bits" "$outfile"
   }
 
-  alias asm=asm32
+  alias asm32='_assembly 32'
+  alias asm64='_assembly 64'
 fi
 # }}}
 
