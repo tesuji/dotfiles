@@ -1,5 +1,5 @@
 [
-  { "keys": ["ctrl+k", "ctrl+p"], "command": "title_case" },
-  { "keys": ["ctrl+0"], "command": "reset_font_size" },
-  
+	{ "keys": ["ctrl+k", "ctrl+p"], "command": "title_case" },
+	{ "keys": ["ctrl+0"], "command": "reset_font_size" },
+	{ "keys": ["ctrl+t"], "command": "trim_trailing_white_space" },
 ]
