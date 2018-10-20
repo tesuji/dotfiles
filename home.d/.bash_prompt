@@ -51,7 +51,7 @@ elif [[ "$TPUT_NCOLORS" -ge 8 ]]; then
 fi
 
 ## Add constant string (remote) when connected via SSH.
-if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
+if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
   m_host_style="\h (remote)"
 else
   m_host_style="\h"

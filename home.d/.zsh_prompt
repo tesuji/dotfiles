@@ -17,7 +17,7 @@ case "$TERM" in
 esac
 
 ## Add constant string (remote) when connected via SSH.
-if [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]]; then
+if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
   m_host_style="%M (remote)"
 else
   m_host_style="%M"
