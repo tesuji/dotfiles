@@ -42,24 +42,25 @@ subl
 
 **Keymap**:
 
-+------------------------------+-------------------+
-| Shortcut                     | Bindings          |
-+==============================+===================+
-| :kbd:`Ctrl+K`, :kbd:`Ctrl+P` | Title case        |
-+------------------------------+-------------------+
-| :kbd:`Ctrl+0`                | Reset font size   |
-+------------------------------+-------------------+
++------------------------------+---------------------------+
+| Shortcut                     | Bindings                  |
++==============================+===========================+
+| :kbd:`Ctrl+K`, :kbd:`Ctrl+P` | Title case                |
++------------------------------+---------------------------+
+| :kbd:`Ctrl+0`                | Reset font size           |
++------------------------------+---------------------------+
+| :kbd:`Ctrl+T`                | Trim trailing whitespaces |
++------------------------------+---------------------------+
 
 **Installed package**: If installed Package Control in SublimeText, it
 will install the following packages:
 
--  Autotools
--  CMake
--  INI
--  Markdown Table Formatter
--  MasmAssembly
--  Meson
--  NASM x86 Assembly
+- Autotools
+- Markdown Table Formatter
+- MasmAssembly
+- NASM x86 Assembly
+- Package Control
+- TOML
 
 **Custom syntax**: bash, c, c++, css, html, java, js, makefile, python, xml.
 
