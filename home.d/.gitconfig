@@ -38,7 +38,11 @@
 	# what new commits have been created by the last command - typically after a "git pull"
 	# Invoke with:
 	#     git new HEAD
-	new = !sh -c 'git log $1@{1}.. "$@"'
+	# or maybe use
+	#     git whatchanged ..origin
+	# or:
+	#    git fetch && git log ..origin/master
+	new = "!f() { git log \"${1}\"@{1}.. ; }; f"
 	################################
 	# Remove sensitive data from history, after a push
 	rm-sensitive = "!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"\"$1\"" --prune-empty --tag-name-filter cat -- --all; }; r"
