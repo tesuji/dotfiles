@@ -33,9 +33,11 @@ shopt -s cdspell
 #shopt -s globstar
 
 # Tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && \
-  complete -o "default" -o "nospace" -W \
-    "$(grep "^Host" ${HOME}/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
+if [ -e "$HOME/.ssh/config" ]; then
+  m_hosts="$(grep "^Host\b" ${HOME}/.ssh/config | awk '{ print $2 }')"
+  complete -o "default" -o "nospace" -W "${m_hosts}" scp sftp ssh
+  unset m_hosts
+fi
 
 # -- Load shell dotfiles ---------------------------------------------------------
 
