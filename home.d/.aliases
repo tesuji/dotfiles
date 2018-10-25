@@ -340,8 +340,13 @@ fi
 #  find "/usr/share/man" -maxdepth 1 $( echo "! -path /usr/share/man"{/man0,/man1,/man2,/man3,/man4,/man5,/man6,/man7,/man8,/mann,} ) -type d -exec sudo rm -Ifr {} +
 #}
 
-# Debian variants
-if m_check_exist dpkg; then
+# Alias that depends on Linux distro
+# Note:
+#   Use [[ -x program ]] to test to assure that these programs are actually
+#   executable and are the wanted program.
+#
+# Test for Debian variants
+if [[ -x /usr/bin/dpkg ]]; then
   # Perform a simulation of the whole process by:
   #apt-get clean --dry-run
   alias aptshow='apt-cache show' # or `apt show` or `dpkg --print-avail`
@@ -354,7 +359,7 @@ if m_check_exist dpkg; then
   #  sudo apt-get clean
   #}
 # Arch Linux
-elif m_check_exist pacman; then
+elif [[ -x /bin/pacman ]]; then
   #alias keepping='ping login.net.vn &> /dev/null &'
   alias pacman="pacman --color=auto"
   alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
@@ -371,7 +376,7 @@ elif m_check_exist pacman; then
     sudo paccache -rvk3
   }
 # for CentOS, RedHat, Fedora
-elif m_check_exist yum; then
+elif [[ -x /usr/bin/yum ]]; then
   clryum() {
     echo "Clearing yum cache ..."
     command sudo rm -Ifr /var/cache/yum
