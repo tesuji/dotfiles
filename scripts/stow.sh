@@ -9,22 +9,22 @@ solve_stow_conflict() { # solve_stow_conflict path backup
   | sed -n 's/^  \*.*: //p' \
   | while read -r m_error; do
     m_error="${HOME}/${m_error}"
-    if [ -f "$m_error" ] || [ -L "$m_error" ]; then
+    if [ -f "${m_error}" ] || [ -L "${m_error}" ]; then
       case "$backup" in
       true)
-        echo "[!] Backup $1 to ${BACKUP_PATH}" 2>&1
-        mv "$m_error" -t "${BACKUP_PATH}"
+        >&2 printf '[!] Backup %s to %s' "$1" "${BACKUP_PATH}"
+        mv "${m_error}" -t "${BACKUP_PATH}"
         ;;
       false)
-        rm -f "$m_error"
+        rm -f "${m_error}"
         ;;
       *)
-        echo "[!] Error: Unknown option: ${backup}" 2>&1
+        >&2 printf '[!] Error: Unknown option: %s\n' "${backup}"
         exit 11
         ;;
       esac
     else
-      echo "\"$m_error\" is a folder. Exitting"
+      >&2 printf '[!] "%s" is a folder. Exitting ...\n' "${m_error}"
       exit 127
     fi
   done

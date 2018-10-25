@@ -37,22 +37,26 @@ extract() {
     local lowername
     lowername=$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')
     case "${lowername}" in
-    *.tar       | *.x     ) tar -xvf        "$1" ;;
-    *.tar.bz2   | *.tbz2  ) tar -jxvf       "$1" ;;
-    *.tar.xz              ) tar -Jxvf       "$1" ;;
-    *.tar.gz    | *.tgz   ) tar -zxvf       "$1" ;;
-    *.tar.lzma            ) tar --lzma -xvf "$1" ;;
-    *.bz2                 ) bunzip2         "$1" ;;
-    *.xz                  ) unxz            "$1" ;;
-    *.gz                  ) gunzip -k       "$1" ;;
-    *.zip                 ) unzip           "$1" ;;
-    *.rar                 ) unrar x         "$1" ;;
-    *.7z                  ) 7z e            "$1" ;;
-    *.z                   ) uncompress      "$1" ;;
-    *                     ) echo "'$1' cannot be extracted via extract()" ;;
+    *.tar     |*.x   ) tar -xvf        "$1" ;;
+    *.tar.bz2 |*.tbz2) tar -jxvf       "$1" ;;
+    *.tar.xz         ) tar -Jxvf       "$1" ;;
+    *.tar.gz  |*.tgz ) tar -zxvf       "$1" ;;
+    *.tar.lzma       ) tar --lzma -xvf "$1" ;;
+    *.bz2            ) bunzip2         "$1" ;;
+    *.xz             ) unxz            "$1" ;;
+    *.gz             ) gunzip -k       "$1" ;;
+    *.zip            ) unzip           "$1" ;;
+    *.rar            ) unrar x         "$1" ;;
+    *.7z             ) 7z e            "$1" ;;
+    *.z              ) uncompress      "$1" ;;
+    *                )
+      >&2 printf '"%s" cannot be extracted via extract()\n' "$1"
+      return 1
+      ;;
     esac
   else
-    echo "'$1' is not a valid file"
+    >&2 printf '"%s" is not a valid file\n' "$1"
+    return 1
   fi
 }
 
@@ -123,6 +127,7 @@ if m_check_exist xclip; then
   # - Accepts input from either stdin (pipe), or params.
   # ------------------------------------------------
   copy() {
+    local _scs_col _wrn_col _reset_col
     # If no tty, data should be available on stdin
     if ! [[ "$( tty )" == /dev/* ]]; then
       input="$(< /dev/stdin)"
@@ -131,23 +136,27 @@ if m_check_exist xclip; then
       input="$*"
     fi
     if [ -z "$input" ]; then  # If no input, print usage message.
-      echo "Copies a string to the clipboard."
-      echo "Usage: cb <string>"
-      echo "       echo <string> | cb"
+      >&2 cat << EOF
+Copies a string to the clipboard.
+Usage: copy <string>
+       echo <string> | copy
+EOF
       return 1
     fi
 
-    local _scs_col="\e[0;32m" _wrn_col='\e[1;31m'
+    _scs_col=$(tput setaf 2)
+    _wrn_col=$(tput setaf 1)
+    _reset_col=$(tput sgr0)
 
     # Check user is not root (root doesn't have access to user xorg server)
     if [[ "$USER" == "root" ]]; then
-      echo -e "$_wrn_col""Must be regular user (not root) to copy a file to the clipboard.\e[0m"
+      >&2 printf '%s\n' "${_wrn_col}Must be regular user (not root) to copy a file to the clipboard.${_reset_col}"
       return 1
     fi
     # Copy input to clipboard
-    echo -n "$input" | xclip -selection c
+    printf '%s' "$input" | xclip -selection c
     # Print status.
-    echo -e "$_scs_col""Copied to clipboard:\e[0m"
+    >&2 printf '%s\n' "${_scs_col}Copied to clipboard.${_reset_col}"
   }
 fi
 
@@ -317,26 +326,26 @@ fi
 # Alias for each distribution {{{
 # See more https://wiki.debian.org/ReduceDebian
 #clrdesktop() {
-#  echo "Clearing non English part in .desktop files ..."
+#  >&2 printf 'Clearing non English part in .desktop files ...\n'
 #  if [[ -d "/usr/share/help" ]]; then
 #    find /usr/share/applications/ -type f -iname '*\.desktop' -exec sudo sed -i "/]=/d" {} +
 #  fi
 #}
 
 #clrhelp() {
-#  echo "Clearing non-English help files ..."
+#  >&2 printf 'Clearing non-English help files ...\n'
 #  if [[ -d "/usr/share/help" ]]; then
 #    find "/usr/share/help" -maxdepth 1 $( echo "! -path /usr/share/help"{/C,/en_GB,} ) -type d -exec sudo rm -Irf {} +
 #  fi
 #}
 
 #clrlocale() {
-#  echo "Clearing non-English locale files ..."
+#  >&2 printf 'Clearing non-English locale files ...\n'
 #  find "/usr/share/locale" -maxdepth 1 $( echo "! -path /usr/share/locale"{/en,/en_US,/en_GB,/en\@quot,} ) -type d -exec sudo rm -Ifr {} +
 #}
 
 #clrman() {
-#  echo "Clearing non-standard man files ..."
+#  >&2 printf 'Clearing non-standard man files ...\n'
 #  find "/usr/share/man" -maxdepth 1 $( echo "! -path /usr/share/man"{/man0,/man1,/man2,/man3,/man4,/man5,/man6,/man7,/man8,/mann,} ) -type d -exec sudo rm -Ifr {} +
 #}
 
@@ -355,7 +364,7 @@ if [[ -x /usr/bin/dpkg ]]; then
   #alias lsapt='apt list --installed'
 
   #clrapt() {
-  #  echo "Clearing apt cache ..."
+  #  >&2 printf 'Clearing apt cache ...\n'
   #  sudo apt-get clean
   #}
 # Arch Linux
@@ -366,19 +375,19 @@ elif [[ -x /bin/pacman ]]; then
   alias wifioff='nmcli radio wifi off'
   alias wifion='nmcli radio wifi on'
   clrjournal() {
-    echo "Clearing journal files ..."
+    >&2 printf 'Clearing journal files ...\n'
     command sudo rm -rf /var/log/journal
   }
 
   clrpac() {
-    echo "Clearing pacman cache ..."
+    >&2 printf 'Clearing pacman cache ...\n'
     # remove all packages except for the latest three package versions
     sudo paccache -rvk3
   }
 # for CentOS, RedHat, Fedora
 elif [[ -x /usr/bin/yum ]]; then
   clryum() {
-    echo "Clearing yum cache ..."
+    >&2 printf 'Clearing yum cache ...\n'
     command sudo rm -Ifr /var/cache/yum
   }
 fi

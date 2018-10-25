@@ -18,7 +18,7 @@ screen*|*xterm*|rxvt*|\(dt|k|E\)term)
 esac
 
 # Add constant string (remote) when connected via SSH.
-if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]; then
+if m_check_ssh; then
   m_host_style="%M (remote)"
 else
   m_host_style="%M"

@@ -2,16 +2,16 @@
 
 # -- Functions -------------------------------------------------------------------
 
-# m_compinit_age -> time
+# Usage: m_compinit_age -> time
 # Return the string represents how long has "$HOME/.zcompdump" been modified
 m_compinit_age() {
   local last_modified current
   last_modified=$(stat -c '%Y' "${HOME}/.zcompdump")
   current=$(date '+%s')
-  echo $(( current - last_modified ))
+  printf '%s' "$(( current - last_modified ))"
 }
 
-# m_get_shell_type -> str
+# Usage: m_get_shell_type -> str
 # Return kind of shell: bash or zsh
 # NOTE:
 #   Some shells have their own builtin version of ps so we use `command`
@@ -23,9 +23,15 @@ m_get_shell_type() {
   command ps -p "$$" --no-headers -o cmd
 }
 
-# m_check_exist -> bool
+# Usage: m_check_exist -> bool
 # Check if program exists
 m_check_exist() {
   # POSIX compatible, not with `hash', `type', etc.
   command -v "$1" > /dev/null
+}
+
+# Usage: m_check_ssh -> bool
+# Check whether we are in SSH sessions
+m_check_ssh() {
+  [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]
 }
