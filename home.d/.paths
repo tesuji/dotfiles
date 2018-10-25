@@ -2,5 +2,5 @@
 
 [[ "$PATH" != *"/sbin:"* ]] && PATH="/usr/local/sbin:/usr/sbin:/sbin:${PATH}"
 
-## Add local bin path
+# Add local bin path
 [[ "$PATH" != *"${HOME}/.local/bin"* ]] && PATH="${PATH}:${HOME}/.local/bin"
