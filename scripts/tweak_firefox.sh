@@ -2,8 +2,7 @@
 #
 readonly SCRIPTPATH="$( cd "$(dirname "$0")" || exit 1; pwd -P )"
 
-get_firefox_profile()
-{
+get_firefox_profile() {
   readonly PARENT_FF_DIR="$HOME/.mozilla/firefox"
   readonly PROFILE_INI="$PARENT_FF_DIR/profiles.ini"
 
@@ -23,8 +22,7 @@ get_firefox_profile()
   echo "$PARENT_FF_DIR/$PROFILE_DIR"
 }
 
-start_install()
-{
+start_install() {
   if PROFILE_DIR=$( get_firefox_profile ); then
     (cd "$SCRIPTPATH/.." && stow -v -t "$PROFILE_DIR" firefox)
   else

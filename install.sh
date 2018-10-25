@@ -14,9 +14,7 @@ declare -a CORE_DIR=(
   #"xfce4"
 )
 
-###########
-# Functions
-###########
+#-- Functions -------------------------------------------------------------------
 
 source scripts/stow.sh # load solve_stow_conflict()
 
@@ -51,9 +49,7 @@ handle_option() {
   shift $((OPTIND -1))
 }
 
-###############
-# Starting here
-###############
+# -- Starting here ---------------------------------------------------------------
 
 handle_option "$@"
 start "$BACKUP"

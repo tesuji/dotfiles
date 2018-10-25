@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 ##################################################
-## This file is used to remember some commands for
-## Wireless Network
+# This file is used to remember some commands for
+# Wireless Network
 ##################################################
 
 sudo ifdown -a

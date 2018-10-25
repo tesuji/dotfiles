@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 ##########################################################
-## This script for installing Firefox Quantumn on Debian 9
-## EXPERIMENTAL! Use at your own risk!
+# This script for installing Firefox Quantumn on Debian 9
+# EXPERIMENTAL! Use at your own risk!
 ##########################################################
 
 _outfile=""
@@ -16,8 +16,8 @@ ask_install() { # ask_install question
   fi
 }
 
-## Read Why does "local" sweep the return code of a command?
-##    https://stackoverflow.com/a/4421282/5456794
+# Read Why does "local" sweep the return code of a command?
+#    https://stackoverflow.com/a/4421282/5456794
 download_firefox() {
   echo "Testing firefox download link ..."
   local entry_url download_log firefox_url
