@@ -3,6 +3,7 @@
 ## avahi-daemon[519]: chroot.c: open() failed: No such file or directory
 
 **References**:
+
 - https://bugzilla.redhat.com/show_bug.cgi?id=1356304#c23 (not work)
 
 ## Disable ipv6
@@ -25,23 +26,27 @@ you should comment out the IPv6 hosts in `/etc/hosts`:
 #::1 localhost.localdomain localhost
 ```
 
-Otherwise there could be some connection errors because hosts are resolved to their IPv6 address which is not reachable.
+Otherwise there could be some connection errors because hosts are resolved to
+their IPv6 address which is not reachable.
 
 And https://github.com/zidarko/scrolls/wiki/Exim4-Port-problem
 
 ## Parallel downloading
-```
+
+```bash
 apt install aria2c
 ```
 
 ## No hardware encryption ath9k
-```
+
+```bash
 echo "options ath9k nohwcrypt=1" | sudo tee /etc/modprobe.d/ath9k.conf
 ```
 
 https://askubuntu.com/questions/673156/atheros-ar9485-wifi-disconnects-randomly
 
 ## Blank screen after lock/sleep
+
 **To debug**:
 - Install `accountsservice` and `xserver-xephyr`, where:
 
@@ -64,7 +69,7 @@ Then run LightDM as an X application for debugging: `$ lightdm --test-mode --deb
 - Use DRI2 instead of DRI3 may solve the problem: https://wiki.archlinux.org/index.php/intel_graphics#DRI3_issues
 - Disable `at-spi-dbus-bus.desktop` (may NOT work)
 
-  ```
+  ```bash
   sudo mv -v -i /etc/xdg/autostart/at-spi-dbus-bus.desktop /etc/xdg/autostart/at-spi-dbus-bus.desktop.disabled
   ```
 
@@ -87,19 +92,23 @@ $ cat /etc/fstab
 ```
 
 ## Enable user list LightDM
+
 By default, `LightDM` is configured so that the user should enter login name
 and password. Login name is considered sensitive information.
 
 To enable user list, place the following settings into `/usr/share/lightdm/lightdm.conf.d/01_my.conf`:
+
 ```bash
 [Seat:*]
 greeter-hide-users=false
 ```
 
 ## Extracting fonts from a Windows ISO
+
 The fonts can also be found in a Windows ISO file.
 
-Extract the `sources/install.esd` or the `sources/install.wim` file in the ISO and look for a `Windows/Fonts` directory within this file.
+Extract the `sources/install.esd` or the `sources/install.wim` file in the ISO and
+look for a `Windows/Fonts` directory within this file.
 It can be extracted with p7zip:
 
 ```bash
@@ -109,7 +118,9 @@ cd /path/to/save/file
 ```
 
 ## Polkit requesting root password to suspend
+
 ### Using Polkit
+
 - If PolKit version >= 0.106
 
   You can check version of Polkit by: `pkaction --version`
@@ -119,6 +130,7 @@ cd /path/to/save/file
   Because Polkit versions < 0.106 doesn't have the Javascript interpreter.
 
   Just adding a file `/etc/polkit-1/rules.d/85-suspend.rules` with:
+
   ```js
   polkit.addRule(function(action, subject) {
       if (action.id == "org.freedesktop.login1.suspend" &&
@@ -129,6 +141,7 @@ cd /path/to/save/file
   ```
 
   And:
+
   ```bash
   sudo chmod 755 /etc/polkit-1/rules.d
   sudo chmod 644 /etc/polkit-1/rules.d/85-suspend.rules
@@ -137,6 +150,7 @@ cd /path/to/save/file
 - If PolKit version < 0.106
 
   In this case, adding a file `/var/lib/polkit-1/localauthority/50-local.d/50-enable-suspend-on-lockscreen.pkla` with:
+
   ```bash
   [Allow suspending in lockscreen]
   Identity=unix-group:users;unix-user:user
@@ -150,9 +164,12 @@ cd /path/to/save/file
 
   And: `sudo chmod 644 /var/lib/polkit-1/localauthority/50-local.d/50-enable-suspend-on-lockscreen.pkla`
 
-Read [More about pklocalauthority](https://www.freedesktop.org/software/polkit/docs/0.105/pklocalauthority.8.html)
+Read [More about pklocalauthority][freedesktop_pklocalauthority]
+
+[freedesktop_pklocalauthority]: https://www.freedesktop.org/software/polkit/docs/0.105/pklocalauthority.8.html
 
 ### Using Power Manager settings (not sure if it works)
+
 In XFCE Power Manager under the `Security` tab set: `Automatically lock the session` to *Never*
 
 Check `Lock the screen when the system is going for sleep`
@@ -163,6 +180,7 @@ and *Switch off* times appear to be disabled (greyed out).
 Under the `System` tab I still have system sleep mode going to *Suspend* after an hour.
 
 ### Else edit policy file
+
 In `usr/share/polkit-1/actions/org.freedesktop.login1.policy`, near line:
 
 ```xml
@@ -181,23 +199,31 @@ check these (but `before` that make a backup file)
 
 **References:**
 
-+ [stintel's blog](https://stijn.tintel.eu/blog/2015/09/11/polkit-requesting-root-password-to-suspend-after-updating-version-0112-to-0113)
-+ [bugs.launchpad.net](https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1605189/comments/7)
++ [stintel's blog][tintel_polkit]
++ [bugs.launchpad.net][launchpad_polkit]
+
+[tintel_polkit]: https://stijn.tintel.eu/blog/2015/09/11/polkit-requesting-root-password-to-suspend-after-updating-version-0112-to-0113
+[launchpad_polkit]: https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1605189/comments/7
 
 ## Change default UMASK in `/etc/login.defs`
+
 Both Debian and Ubuntu ship with **pam_umask**.
 This allows you to configure umask in `/etc/login.defs` and have them apply system-wide,
 regardless of how a user logs in.
 
 To **enable** it, add a line to `/etc/pam.d/common-session`
+
 ```bash
 # enable configure umask in /etc/login.defs
 session optional pam_umask.so
 ```
+
 or it may already be enabled. Then edit `/etc/login.defs` and change the `UMASK` line to
+
 ```bash
 UMASK           077
 ```
+
 , which means new file will be set to `rw-------` (the default is 022).
 
 Note that users may still override umask in their own `~/.profile` or `~/.bashrc` or similar,
@@ -208,9 +234,11 @@ In Arch Linux, change it in `/etc/profile` or in the default shell configuration
 files, e.g. `/etc/bash.bashrc`
 
 ## Adjust grub time
+
 In `/etc/default/grub` change **GRUB_TIMEOUT** from 5 to `2`
 
 Update grub by run:
+
 ```bash
 # on Debian
 sudo update-grub
@@ -223,48 +251,67 @@ grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 ```
 
 ## Additional completion definitions for Zsh
+
 https://github.com/zsh-users/zsh-completions
 
 ## Install compton to avoid screen tearing
-See more: [Use compton for a tear free in Xfce](https://wiki.manjaro.org/index.php?title=Using_Compton_for_a_tear-free_experience_in_Xfce)
-and [How to switch to compton for beautiful tear free compositing in XFCE](http://duncanlock.net/blog/2013/06/07/how-to-switch-to-compton-for-beautiful-tear-free-compositing-in-xfce/)
 
-[Manpage](https://github.com/chjj/compton/blob/master/man/compton.1.asciido)
+See more: [Use compton for a tear free in Xfce][manjaro_compton]
+and [How to switch to compton for beautiful tear free compositing in XFCE][duncan_xfce]
+
+[Manpage][man_compton]
+
+[man_compton]: https://github.com/chjj/compton/blob/master/man/compton.1.asciido
+[manjaro_compton]: https://wiki.manjaro.org/index.php?title=Using_Compton_for_a_tear-free_experience_in_Xfce
+[duncan_xfce]: http://duncanlock.net/blog/2013/06/07/how-to-switch-to-compton-for-beautiful-tear-free-compositing-in-xfce/
 
 **Note**: Start `compton` with `compton --daemon` to fork it in the background
 
 ## Password protection of GRUB menu (AND won't let people boot)
+
 If you want to secure GRUB so it is not possible for anyone to change boot
 parameters or use the command line, use `grub-mkpasswd-pbkdf2`, type
 password you want twice, it will output something like:
+
 ```bash
 Enter password:
 Reenter password:
 PBKDF2 hash of your password is grub.pbkdf2.sha512.10000.C8ABD3E...
 ```
-Then, add the following to `/etc/grub.d/40_custom` (only 40) (see more at [Password protection of GRUB edit and console options only](https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Password_protection_of_GRUB_edit_and_console_options_only)):
+
+Then, add the following to `/etc/grub.d/40_custom` (see more at [Password protection of GRUB edit and console options only][arch_pass_grub]):
+
 ```bash
 set superusers="username"
 password_pbkdf2 username <password>
 ```
-where **\<password>** is the string generated by `grub-mkpasswd-pbkdf2`.
 
-If you want people still boot: (see more at [Secure the grub boot loader](https://daniel-lange.com/archives/75-Securing-the-grub-boot-loader.html)). Edit `/etc/grub.d/10_linux` with content:
+where **\<password\>** is the string generated by `grub-mkpasswd-pbkdf2`.
+
+If you want people still boot: (see more at [Secure the grub boot loader][daniel_secure_grub]).
+Edit `/etc/grub.d/10_linux` with content:
+
 ```bash
   echo "menuentry '$(echo "$title" | grub_quote)' --unrestricted ${CLASS} \$menuentry_id_option 'gnulinux-$version-$type-$boot_device_id' {" | sed "s/^/$submenu_indentation/"
 else
   echo "menuentry '$(echo "$os" | grub_quote)' --unrestricted ${CLASS} \$menuentry_id_option 'gnulinux-simple-$boot_device_id' {" | sed "s/^/$submenu_indentation/"
 fi
 ```
+
 Make a backup of this file as it will be overwritten by grub updates.
 Remember to make these backup file no eXcutable with `chmod 644`
 
-Finally, update grub by `update-grub`
+Finally, update grub by `update-grub`.
+
+[arch_pass_grub]: https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Password_protection_of_GRUB_edit_and_console_options_only
+[daniel_secure_grub]: https://daniel-lange.com/archives/75-Securing-the-grub-boot-loader.html
 
 ## Disable hibernation for [SSD](https://wiki.debian.org/Suspend)
+
 `sudo systemctl mask hibernate.target hybrid-sleep.target`
 
 ## Keep application state in RAM
+
 Some older kernels making machine become unresponsive when dealing with slower storage, such as USB drives or SD cards:
 
 ```bash
@@ -280,21 +327,26 @@ EOF
 
 ## For Debian
 
-## Before you start install any packages first:
+## Before you start install any packages
+
 `sudo apt install curl wget apt-transport-https dirmngr`
 
 ## Disable downloading translations
+
 Create a file named `/etc/apt/apt.conf.d/99translations` and put the following in it:
+
 ```bash
 Acquire::Languages "none"; # no newline
 ```
+
 Remove any existing **i18n** files from `/var/lib/apt/lists/`, list and choose
 what to delete: `ls *i18n*`
 
 Type: `man apt.conf` for more info.
 
 ## Install driver HD 8790M and avoid over heating
-```
+
+```bash
 apt install firmware-linux-nonfree firmware-amd-graphics
 apt install linux-cpupower cpufrequtils
 ```
