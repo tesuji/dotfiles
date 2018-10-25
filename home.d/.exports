@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 # ~/.exports: Export environment vars for both bash and zsh
 
-# If zsh or bash
-m_typeofshell="$(ps -p $$ --no-headers -o cmd)"
-
-case "$m_typeofshell" in
+case "$(m_get_shell_type)" in
 bash)
   # See HISTSIZE and HISTFILESIZE in bash for setting history length
   HISTSIZE=1000
@@ -64,5 +61,3 @@ export PYTHONSTARTUP="${HOME}/.pythonrc"
 
 # MySQL prompt
 #export MYSQL_PS1="\R|\m:\s \h.\d> "
-
-unset m_typeofshell

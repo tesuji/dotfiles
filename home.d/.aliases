@@ -2,22 +2,13 @@
 # shellcheck disable=SC2139
 # ~/.aliases
 
-# Functions
-#==========
-
-# Check if command exists
-check_exist ()
-{
-  # POSIX compatible, not with `hash', `type', etc.
-  command -v "$1" > /dev/null
-}
+# -- Functions -------------------------------------------------------------------
 
 # Enable colored man
 # The end \ in the end of each line helps set environment variable
 # to command man.
 #    https://wiki.archlinux.org/index.php/Color_output_in_console#Using_less
-man ()
-{
+man() {
   LESS_TERMCAP_md=$'\e[01;31m' \
   LESS_TERMCAP_me=$'\e[0m' \
   LESS_TERMCAP_se=$'\e[0m' \
@@ -27,9 +18,9 @@ man ()
   command man "$@"
 }
 
-if check_exist vmhgfs-fuse; then
-  vmmount ()
-  { # vmmount mount_point
+if m_check_exist vmhgfs-fuse; then
+  # Usage: vmmount /path/to/mount/point
+  vmmount() {
     local sharedir
     sharedir=$(vmware-hgfsclient)
     vmhgfs-fuse -o allow_other -o auto_unmount .host:"$sharedir" "$1"
@@ -41,8 +32,7 @@ fi
 # Note: .dmg/hdiutil is macOS-specific.
 #
 # Credit: http://nparikh.org/notes/zshrc.txt
-extract ()
-{
+extract() {
   if [[ -f "$1" ]]; then
     local lowername
     lowername=$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')
@@ -73,8 +63,7 @@ extract ()
 #    $ parse_path_colon_sep a:b
 #    a
 #    b
-parse_path_colon_sep ()
-{
+parse_path_colon_sep() {
   local IFS=$'\n' my_input_str="$1"
   # shellcheck disable=SC2046
   realpath $(tr ':' '\n' <<< "$my_input_str")
@@ -83,45 +72,38 @@ parse_path_colon_sep ()
 # List gcc environment variables
 # NOTE:
 #    -v make gcc print on stderr
-gccenv ()
-{
+gccenv() {
   { echo | gcc -E -v - >/dev/null; } 2>&1
 }
 
 # Print specific variable of gcc
-parse_gcc_var ()
-{
+parse_gcc_var() {
   local var_name="$1" my_paths
   my_paths=$(gccenv | grep "${var_name}" | cut -d= -f2)
   parse_path_colon_sep "${my_paths}" | sort | uniq
 }
 
 # Print LIBRARY_PATH of gcc
-gcclib ()
-{
+gcclib() {
   parse_gcc_var LIBRARY_PATH
 }
 
 # Print COMPILER_PATH of gcc
-gccpath ()
-{
+gccpath() {
   parse_gcc_var COMPILER_PATH
 }
 
 # Print default include paths
-gccinc ()
-{
+gccinc() {
   echo | gcc -Wp,-v - -fsyntax-only
 }
 
-lssh ()
-{
+lssh() {
   ps -ef | command grep "[s]sh.*pts"
 }
 
 # Make path for each argument and cd into the last path
-mkcd ()
-{
+mkcd() {
   # shellcheck disable=SC2164
   command mkdir -p "$@" && cd "$_"
 }
@@ -129,20 +111,18 @@ mkcd ()
 if alias which >/dev/null 2>&1; then
   # which command on Debian-based distros lack support for long options
   if which -h >/dev/null 2>&1; then
-    which ()
-    {
+    which() {
       { alias; declare -f; } \
       | command which --tty-only --read-alias --read-functions --show-tilde --show-dot
     }
   fi
 fi
 
-if check_exist xclip; then
+if m_check_exist xclip; then
   # A shortcut function that simplifies usage of xclip.
   # - Accepts input from either stdin (pipe), or params.
   # ------------------------------------------------
-  copy()
-  {
+  copy() {
     # If no tty, data should be available on stdin
     if ! [[ "$( tty )" == /dev/* ]]; then
       input="$(< /dev/stdin)"
@@ -171,18 +151,12 @@ if check_exist xclip; then
   }
 fi
 
-# Aliases
-#========
+# -- Aliases ---------------------------------------------------------------------
 
 # Make colors to ls command
 [[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
 
-# Some shells have their own builtin version of ps
-# so we use `command` keyword to force the shell use
-# the external ps.
-my_shelltype="$(command ps -p $$ --no-headers -o cmd)"
-
-case "$my_shelltype" in
+case "$(m_get_shell_type)" in
 bash)
   alias chi='history -c'
   ;;
@@ -203,7 +177,7 @@ alias cd..='cd ..'
 alias cdroot='cd "$(git root)"'
 alias cp='cp -iv'
 
-if check_exist ctags; then
+if m_check_exist ctags; then
   # Use "ctags --list-kinds=c" to list all kinds
   alias cproto='ctags --sort=no -x --c-kinds=fp'
 fi
@@ -224,7 +198,7 @@ alias gccn='gcc -Wfatal-errors -std=gnu11 -Wall -Wextra' # -pedantic #-fno-stack
 alias gccex='gcc -Wfatal-errors -m32 -fno-stack-protector -Wl,-z,norelro -z execstack -g'
 alias gdb='gdb -q'
 alias grep="grep --color"
-check_exist hd || alias hd='hexdump -C'
+m_check_exist hd || alias hd='hexdump -C'
 alias l='ls -CF'
 alias la='ls -AF'
 alias lh='ls -dF .??*'
@@ -248,7 +222,7 @@ alias mv='mv -iv'
 alias nc='nc -v'
 alias objdump='objdump -M intel'
 
-if check_exist pip; then
+if m_check_exist pip; then
   alias gpip='PIP_REQUIRE_VIRTUALENV="" pip '
   alias gpip3='PIP_REQUIRE_VIRTUALENV="" pip3 '
 fi
@@ -282,15 +256,14 @@ alias suspend='systemctl suspend'
 #  alias suspend='xflock4 && systemctl suspend'
 #fi
 
-# For shellcode building {{{
-if check_exist rasm2; then
+if m_check_exist rasm2; then
   alias asm32='rasm2 -a x86 -b 32'
   alias asm64='rasm2 -a x86 -b 64'
   alias disasm32='asm32 -D'
   alias disasm64='asm64 -D'
-elif check_exist nasm; then
-  _assembly () # _assembly(bits, asm)
-  {
+elif m_check_exist nasm; then
+  # Usage: _assembly 32 'xor eax, eax; mov ebx, eax;'
+  _assembly() {
     local infile='.nasm.s'
     local outfile='.nasm.bin'
     local bits="$1"
@@ -303,85 +276,72 @@ elif check_exist nasm; then
   alias asm32='_assembly 32'
   alias asm64='_assembly 64'
 fi
-# }}}
 
-# Alias for fuser {{{
-if check_exist fuser; then
+if m_check_exist fuser; then
+  # Usage: findport 123
   # find pid base on tcp port
-  findport ()
-  { # findport 123
+  findport() {
     fuser --verbose --namespace tcp "$1"
   }
   alias lsport='ss --processes --all --tcp'
 fi
-# }}}
-
-# Alias when commands exist {{{
 
 # Terminal browser Elinks
-if check_exist elinks; then
+if m_check_exist elinks; then
   alias elinks='elinks --no-connect'
 fi
 
-if check_exist pngcheck; then
+if m_check_exist pngcheck; then
   alias pngcheck='pngcheck -vv'
 fi
 
 # for zathura
-if check_exist zathura; then
+if m_check_exist zathura; then
   alias zathura='zathura --fork'
 fi
 
 # for evince
-if check_exist evince; then
-  evince ()
-  {
+if m_check_exist evince; then
+  evince() {
     (command evince "$@" & )
   }
 fi
 
 # for audacious
-if check_exist audacious; then
-  audacious ()
-  {
+if m_check_exist audacious; then
+  audacious() {
     (command audacious "$@" & )
   }
 fi
 
-# }}}
-
 # Alias for each distribution {{{
 # See more https://wiki.debian.org/ReduceDebian
-#clrdesktop ()
-#{
+#clrdesktop() {
 #  echo "Clearing non English part in .desktop files ..."
 #  if [[ -d "/usr/share/help" ]]; then
 #    find /usr/share/applications/ -type f -iname '*\.desktop' -exec sudo sed -i "/]=/d" {} +
 #  fi
 #}
 
-#clrhelp ()
-#{
+#clrhelp() {
 #  echo "Clearing non-English help files ..."
 #  if [[ -d "/usr/share/help" ]]; then
 #    find "/usr/share/help" -maxdepth 1 $( echo "! -path /usr/share/help"{/C,/en_GB,} ) -type d -exec sudo rm -Irf {} +
 #  fi
 #}
 
-#clrlocale ()
-#{
+#clrlocale() {
 #  echo "Clearing non-English locale files ..."
 #  find "/usr/share/locale" -maxdepth 1 $( echo "! -path /usr/share/locale"{/en,/en_US,/en_GB,/en\@quot,} ) -type d -exec sudo rm -Ifr {} +
 #}
 
-#clrman()
-#{
+#clrman() {
 #  echo "Clearing non-standard man files ..."
 #  find "/usr/share/man" -maxdepth 1 $( echo "! -path /usr/share/man"{/man0,/man1,/man2,/man3,/man4,/man5,/man6,/man7,/man8,/mann,} ) -type d -exec sudo rm -Ifr {} +
 #}
 
 # Debian variants
-if check_exist dpkg; then
+if m_check_exist dpkg; then
   # Perform a simulation of the whole process by:
   #apt-get clean --dry-run
   alias aptshow='apt-cache show' # or `apt show` or `dpkg --print-avail`
@@ -389,42 +349,31 @@ if check_exist dpkg; then
   #alias apts='apt-cache search'
   #alias lsapt='apt list --installed'
 
-  #clrapt()
-  #{
+  #clrapt() {
   #  echo "Clearing apt cache ..."
   #  sudo apt-get clean
   #}
 # Arch Linux
-elif [[ -x /bin/pacman ]]; then
+elif m_check_exist pacman; then
   #alias keepping='ping login.net.vn &> /dev/null &'
   alias pacman="pacman --color=auto"
   alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
   alias wifioff='nmcli radio wifi off'
   alias wifion='nmcli radio wifi on'
-  clrjournal ()
-  {
+  clrjournal() {
     echo "Clearing journal files ..."
     command sudo rm -rf /var/log/journal
   }
 
-  clrpac ()
-  {
+  clrpac() {
     echo "Clearing pacman cache ..."
     # remove all packages except for the latest three package versions
     sudo paccache -rvk3
   }
 # for CentOS, RedHat, Fedora
-elif [[ -x /usr/bin/yum ]]; then
-  clryum ()
-  {
+elif m_check_exist yum; then
+  clryum() {
     echo "Clearing yum cache ..."
     command sudo rm -Ifr /var/cache/yum
   }
 fi
-
-# Clean up
-#=========
-unset check_exist my_shelltype
-# }}}
-
-# end of file

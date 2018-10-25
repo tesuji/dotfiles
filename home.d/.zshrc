@@ -1,25 +1,19 @@
 #!/usr/bin/env zsh
-## Ref http://matt.blissett.me.uk/linux/zsh/zshrc
+# Ref http://matt.blissett.me.uk/linux/zsh/zshrc
 
-## Skip all this for non-interactive shells
+# Skip all this for non-interactive shells
 [[ -z "$PS1" ]] && return
 
-m_compinit_age() {
-  local last_modified current
-  last_modified=$(stat -c '%Y' "${HOME}/.zcompdump")
-  current=$(date '+%s')
-  echo $(( current - last_modified ))
-}
+source "${HOME}/.bash_preinit.sh"
 
-## FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
-## http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26
+# FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
+# http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26
 #[[ $EMACS = t ]] && unsetopt zle
 
-###############
-## Key bindings
-###############
-## Type Ctrl-V and key combination to get key code
-## Type `bindkey' to show all keybindings
+# -- Key bindings ----------------------------------------------------------------
+
+# Type Ctrl-V and key combination to get key code
+# Type `bindkey' to show all keybindings
 
 # Emacs keybindings
 bindkey -e
@@ -46,12 +40,10 @@ bindkey '\e[1;5C' forward-word            # Ctrl-Left
 bindkey '\e[1;5D' backward-word           # Ctrl-Right
 bindkey '^U'      backward-kill-line      # Ctrl-U
 
-## Use bash's style for word
+# Use bash's style for word
 autoload -U select-word-style && select-word-style bash
 
-##########
-## History
-##########
+# -- History ---------------------------------------------------------------------
 
 setopt INC_APPEND_HISTORY   # Write immediately, not when the shell exits
 setopt HIST_IGNORE_ALL_DUPS # Delete old recorded entry if new entry is a duplicate
@@ -59,25 +51,23 @@ setopt HIST_IGNORE_SPACE    # Don't record an entry starting with a space
 setopt HIST_REDUCE_BLANKS   # Remove superfluous blanks before recording entry
 setopt HIST_VERIFY          # Don't execute immediately upon history expansion
 
-#############
-## Completion
-#############
+# -- Completion ------------------------------------------------------------------
 
-## You may have to force rebuild zcompdump:
-##     rm -f "$HOME/.zcompdump"; compinit or try rehash command
-## Print fpath with (print -rl -- $fpath)
+# You may have to force rebuild zcompdump:
+#     rm -f "$HOME/.zcompdump"; compinit or try rehash command
+# Print fpath with (print -rl -- $fpath)
 #fpath=("$HOME/.zshfuncs/" "$fpath")
 
 autoload -Uz compinit # Use modern completion system
 
-## If "$HOME/.zcompdump" is modified less than 24h
-if [[ m_compinit_age -le 86400 ]]; then
+# If "$HOME/.zcompdump" is modified less than 24h
+if [[ "$(m_compinit_age)" -le 86400 ]]; then
   compinit -C
 else
   compinit
 fi
 
-## Should be enable in /etc/zsh/newuser.zshrc.recommended
+# Should be enable in /etc/zsh/newuser.zshrc.recommended
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
@@ -96,25 +86,24 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-## Make the alias a distinct command for completion purposes
+# Make the alias a distinct command for completion purposes
 setopt COMPLETE_ALIASES
 
-## Prompts for confirmation after 'rm *' etc
-## Helps avoid mistakes like 'rm * o' when 'rm *.o' was intended
+# Prompts for confirmation after 'rm *' etc
+# Helps avoid mistakes like 'rm * o' when 'rm *.o' was intended
 setopt RM_STAR_WAIT
 
-## Background processes aren't killed on exit of shell
+# Background processes aren't killed on exit of shell
 #setopt AUTO_CONTINUE
 
-## Don’t write over existing files with >, use >! instead
+# Don't write over existing files with >, use >! instead
 #setopt NOCLOBBER
 
-## Don’t nice background processes
+# Don't nice background processes
 setopt NO_BG_NICE
 
-#################
-## History search
-#################
+# -- History search --------------------------------------------------------------
+
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
@@ -122,15 +111,7 @@ zle -N down-line-or-beginning-search
 [[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
 [[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
-######################
-## Load shell dotfiles
-######################
-## * "$HOME/.path" can be used to extend `$PATH`.
-## * "$HOME/.extra" can be used for other settings you don't want to commit.
-[[ -f "${HOME}/.paths" ]] && source "${HOME}/.paths"
-[[ -f "${HOME}/.zsh_prompt" ]] && source "${HOME}/.zsh_prompt"
-[[ -f "${HOME}/.exports" ]] && source "${HOME}/.exports"
-[[ -f "${HOME}/.extra" ]] && source "${HOME}/.extra"
-[[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
+# -- Load shell dotfiles ---------------------------------------------------------
 
-unset m_compinit_age
+[[ -f "${HOME}/.zsh_prompt" ]] && source "${HOME}/.zsh_prompt"
+source "${HOME}/.bash_postinit.sh"
