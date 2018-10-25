@@ -4,17 +4,17 @@
 
 # From: https://github.com/MrElendig/dotfiles-alice/blob/master/.zshrc
 case "$TERM" in
-  screen*|*xterm*|rxvt*|\(dt|k|E\)term)
-    # Ref https://wiki.archlinux.org/index.php/zsh#xterm_title
-    #     http://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h2-Operating-System-Commands
-    precmd() {
-      print -Pn '\e]2;%1~\a'
-    }
-    #preexec() {
-    #  print -Pn '\e]2;%n@%m %1~ %# '
-    #  print -n "${(q)1}\a"
-    #}
-    ;;
+screen*|*xterm*|rxvt*|\(dt|k|E\)term)
+  # Ref https://wiki.archlinux.org/index.php/zsh#xterm_title
+  #     http://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h2-Operating-System-Commands
+  precmd() {
+    print -Pn '\e]2;%1~\a'
+  }
+  #preexec() {
+  #  print -Pn '\e]2;%n@%m %1~ %# '
+  #  print -n "${(q)1}\a"
+  #}
+  ;;
 esac
 
 # Add constant string (remote) when connected via SSH.

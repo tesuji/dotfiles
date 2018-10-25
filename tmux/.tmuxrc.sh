@@ -13,7 +13,7 @@ TMUX_VERSION_MAJOR="$(echo "$TMUX_VERSION" | cut -d'.' -f1)"
 TMUX_VERSION_MINOR="$(echo "$TMUX_VERSION" | cut -d'.' -f2)"
 
 case "$TMUX_OS" in
-  Darwin ) tmux source-file "${HOME}/.tmux-macos.conf" ;;
+Darwin) tmux source-file "${HOME}/.tmux-macos.conf" ;;
   #FreeBSD ) tmux source-file "${HOME}/.tmux-freebsd.conf" ;;
   #*) tmux display -p "Unknown OS" ;;
 esac

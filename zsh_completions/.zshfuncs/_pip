@@ -51,33 +51,33 @@ if (( CURRENT == 1 )); then
 fi
 
 case "$words[1]" in
-  search)
-    _arguments \
-      '(--index)--index[base URL of Python Package Index]' ;;
-  freeze)
-    _arguments \
-      '(-l --local)'{-l,--local}'[report only virtualenv packages]' ;;
-  install)
-    _arguments \
-      '(-U --upgrade)'{-U,--upgrade}'[upgrade all packages to the newest available version]' \
-      '(--user)--user[install packages to user home]' \
-      '(-f --find-links)'{-f,--find-links}'[URL for finding packages]' \
-      '(-r --requirement)'{-r,--requirement}'[Requirements file for packages to install]:File:_files' \
-      '(--no-deps --no-dependencies)'{--no-deps,--no-dependencies}'[iIgnore package dependencies]' \
-      '(--no-install)--no-install[only download packages]' \
-      '(--no-download)--no-download[only install downloaded packages]' \
-      '(--install-option)--install-option[extra arguments to be supplied to the setup.py]' \
-      '(--single-version-externally-managed)--single-version-externally-managed[do not download/install dependencies. requires --record or --root]'\
-      '(--root)--root[treat this path as a fake chroot, installing into it. implies --single-version-externally-managed]'\
-      '(--record)--record[file to record all installed files to.]'\
-      '(-r --requirement)'{-r,--requirement}'[requirements file]: :_files'\
-      '(-e --editable)'{-e,--editable}'[path of or url to source to link to instead of installing.]: :_files -/'\
-      '1: :->packages' &&  return 0
-      ;;
-  uninstall)
-    _pip_installed
-    _wanted installed_pkgs expl 'installed packages' compadd -a installed_pkgs ;;
-  show)
-    _pip_installed
-    _wanted installed_pkgs expl 'installed packages' compadd -a installed_pkgs ;;
+search)
+  _arguments \
+    '(--index)--index[base URL of Python Package Index]' ;;
+freeze)
+  _arguments \
+    '(-l --local)'{-l,--local}'[report only virtualenv packages]' ;;
+install)
+  _arguments \
+    '(-U --upgrade)'{-U,--upgrade}'[upgrade all packages to the newest available version]' \
+    '(--user)--user[install packages to user home]' \
+    '(-f --find-links)'{-f,--find-links}'[URL for finding packages]' \
+    '(-r --requirement)'{-r,--requirement}'[Requirements file for packages to install]:File:_files' \
+    '(--no-deps --no-dependencies)'{--no-deps,--no-dependencies}'[iIgnore package dependencies]' \
+    '(--no-install)--no-install[only download packages]' \
+    '(--no-download)--no-download[only install downloaded packages]' \
+    '(--install-option)--install-option[extra arguments to be supplied to the setup.py]' \
+    '(--single-version-externally-managed)--single-version-externally-managed[do not download/install dependencies. requires --record or --root]'\
+    '(--root)--root[treat this path as a fake chroot, installing into it. implies --single-version-externally-managed]'\
+    '(--record)--record[file to record all installed files to.]'\
+    '(-r --requirement)'{-r,--requirement}'[requirements file]: :_files'\
+    '(-e --editable)'{-e,--editable}'[path of or url to source to link to instead of installing.]: :_files -/'\
+    '1: :->packages' &&  return 0
+    ;;
+uninstall)
+  _pip_installed
+  _wanted installed_pkgs expl 'installed packages' compadd -a installed_pkgs ;;
+show)
+  _pip_installed
+  _wanted installed_pkgs expl 'installed packages' compadd -a installed_pkgs ;;
 esac

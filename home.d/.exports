@@ -5,27 +5,27 @@
 m_typeofshell="$(ps -p $$ --no-headers -o cmd)"
 
 case "$m_typeofshell" in
-  (*bash)
-    # See HISTSIZE and HISTFILESIZE in bash for setting history length
-    HISTSIZE=1000
-    HISTFILESIZE=2000
-    # Do NOT put duplicate lines or lines starting with space in the history.
-    HISTCONTROL=ignoreboth:erasedups
-    ;;
-  (*zsh)
-    HISTSIZE=1000                 # 1000 lines of history within the shell
-    SAVEHIST=1000                 # 1000 lines of history in $HISTFILE
-    HISTFILE="${HOME}/.zsh_history" # Save history to ~/.zsh_history
-    # Ignore saving in $HISTFILE, but still in the shell
-    HISTORY_IGNORE='([bf]g|cd ..|l|l[alsh]|less *|vim *)'
+bash)
+  # See HISTSIZE and HISTFILESIZE in bash for setting history length
+  HISTSIZE=1000
+  HISTFILESIZE=2000
+  # Do NOT put duplicate lines or lines starting with space in the history.
+  HISTCONTROL=ignoreboth:erasedups
+  ;;
+zsh)
+  HISTSIZE=1000                 # 1000 lines of history within the shell
+  SAVEHIST=1000                 # 1000 lines of history in $HISTFILE
+  HISTFILE="${HOME}/.zsh_history" # Save history to ~/.zsh_history
+  # Ignore saving in $HISTFILE, but still in the shell
+  HISTORY_IGNORE='([bf]g|cd ..|l|l[alsh]|less *|vim *)'
 
-    # Watch other user login/out
-    watch=all   # watch all logins, just 'notme'
-    LOGCHECK=10 # check logins after 10 seconds
+  # Watch other user login/out
+  watch=all   # watch all logins, just 'notme'
+  LOGCHECK=10 # check logins after 10 seconds
 
-    # Say how long a command took, if it took more than 10 seconds
-    REPORTTIME=10
-    ;;
+  # Say how long a command took, if it took more than 10 seconds
+  REPORTTIME=10
+  ;;
 esac
 
 # Enable the keyring for applications run through the terminal, such as SSH

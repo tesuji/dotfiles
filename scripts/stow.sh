@@ -11,17 +11,17 @@ solve_stow_conflict() { # solve_stow_conflict path backup
     m_error="${HOME}/${m_error}"
     if [ -f "$m_error" ] || [ -L "$m_error" ]; then
       case "$backup" in
-        (true)
-          echo "[!] Backup $1 to ${BACKUP_PATH}" 2>&1
-          mv "$m_error" -t "${BACKUP_PATH}"
-          ;;
-        (false)
-          rm -f "$m_error"
-          ;;
-        (*)
-          echo "[!] Error: Unknown option: ${backup}" 2>&1
-          exit 11
-          ;;
+      true)
+        echo "[!] Backup $1 to ${BACKUP_PATH}" 2>&1
+        mv "$m_error" -t "${BACKUP_PATH}"
+        ;;
+      false)
+        rm -f "$m_error"
+        ;;
+      *)
+        echo "[!] Error: Unknown option: ${backup}" 2>&1
+        exit 11
+        ;;
       esac
     else
       echo "\"$m_error\" is a folder. Exitting"
