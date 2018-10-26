@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-SCRIPT_PATH="$( cd "$(dirname "$0")" || exit 1; pwd -P )"
+HERE_DIR="$( cd "$(dirname "$0")" && pwd -P )"
 BACKUP=0
 BACKUP_PATH=".backup"
 
@@ -43,7 +43,7 @@ handle_option() {
 }
 
 start() { # start backup
-  [ "${BACKUP}" -ne 0 ] && mkdir -p "${BACKUP_PATH}"
+  [ "${BACKUP}" -eq 1 ] && mkdir -p "${BACKUP_PATH}"
 
   for DIR in "${CORE_DIR[@]}"; do
     solve_stow_conflict "${DIR}" "$1"
@@ -55,6 +55,6 @@ start() { # start backup
 
 handle_option "$@"
 
-pushd "${SCRIPT_PATH}"
+pushd "${HERE_DIR}"
 ( start "$BACKUP" )
 popd

@@ -27,3 +27,13 @@ solve_stow_conflict() { # solve_stow_conflict path backup
 
   stow -t "$HOME" "$M_PATH"
 }
+
+HERE_DIR="$( cd "$(dirname "$0")" && pwd -P )"
+. "$HERE_DIR/ifmain.sh"
+
+if ifmain; then
+  solve_stow_conflict "$@"
+fi
+
+unset HERE_DIR
+unset ifmain

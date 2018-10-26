@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-readonly SCRIPTPATH="$( cd "$(dirname "$0")"; pwd -P )"
+HERE_DIR="$( cd "$(dirname "$0")" && pwd -P )"
 
 get_firefox_profile() {
   readonly PARENT_FF_DIR="$HOME/.mozilla/firefox"
@@ -25,9 +25,7 @@ get_firefox_profile() {
 
 start_install() {
   if PROFILE_DIR=$( get_firefox_profile ); then
-    pushd "${SCRIPTPATH}/.."
-    (stow -v -t "$PROFILE_DIR" firefox)
-    popd
+    (cd "${HERE_DIR}/.." && stow -v -t "$PROFILE_DIR" firefox)
   else
     >&2 cat << EOF
 [x] Cannot install firefox tweaks
