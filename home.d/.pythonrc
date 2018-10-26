@@ -8,11 +8,6 @@ try:
     import readline
 except ImportError:
     sys.stderr.write('Module readline not available.\n')
-else:
-    # On platforms without readline, the Completer class defined
-    # by this module can still be used for custom purposes.
-    import rlcompleter
-    readline.parse_and_bind('tab: complete')
 
 histfile = os.path.join(
     os.path.expanduser('~'),
@@ -27,6 +22,7 @@ except IOError:
     pass
 
 atexit.register(readline.write_history_file, histfile)
+readline.parse_and_bind('tab: complete')
 
 del histfile
-del readline, rlcompleter, os, sys
+del readline, os, sys
