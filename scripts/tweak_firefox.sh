@@ -1,6 +1,7 @@
 #!/bin/sh
-#
-readonly SCRIPTPATH="$( cd "$(dirname "$0")" || exit 1; pwd -P )"
+set -e
+
+readonly SCRIPTPATH="$( cd "$(dirname "$0")"; pwd -P )"
 
 get_firefox_profile() {
   readonly PARENT_FF_DIR="$HOME/.mozilla/firefox"
@@ -10,7 +11,7 @@ get_firefox_profile() {
     return 1
   fi
 
-  if grep --quiet '\[Profile[^0]\]' "$PROFILE_INI" ; then
+  if grep -q '\[Profile[^0]\]' "$PROFILE_INI" ; then
     PROFILE_DIR=$(\
         grep -E '^\[Profile|^Path|^Default' "$PROFILE_INI" \
         | grep -1 '^Default=1' \
@@ -19,15 +20,19 @@ get_firefox_profile() {
     PROFILE_DIR=$( grep 'Path=' "$PROFILE_INI" | cut -d= -f2 )
   fi
 
-  echo "$PARENT_FF_DIR/$PROFILE_DIR"
+  printf '%s' "$PARENT_FF_DIR/$PROFILE_DIR"
 }
 
 start_install() {
   if PROFILE_DIR=$( get_firefox_profile ); then
-    (cd "$SCRIPTPATH/.." && stow -v -t "$PROFILE_DIR" firefox)
+    pushd "${SCRIPTPATH}/.."
+    (stow -v -t "$PROFILE_DIR" firefox)
+    popd
   else
-    echo "[x] Cannot install firefox tweaks"
-    echo "[x] Firefox directory not found"
+    >&2 cat << EOF
+[x] Cannot install firefox tweaks
+[x] Firefox directory not found
+EOF
   fi
 }
 

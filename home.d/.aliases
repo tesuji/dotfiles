@@ -2,7 +2,7 @@
 # shellcheck disable=SC2139
 # ~/.aliases
 
-# -- Functions -------------------------------------------------------------------
+# -- Functions -----------------------------------------------------------------
 
 # Enable colored man
 # The end \ in the end of each line helps set environment variable
@@ -33,7 +33,7 @@ fi
 #
 # Credit: http://nparikh.org/notes/zshrc.txt
 extract() {
-  if [[ -f "$1" ]]; then
+  if [ -f "$1" ]; then
     local lowername
     lowername=$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')
     case "${lowername}" in
@@ -125,13 +125,12 @@ fi
 if m_check_exist xclip; then
   # A shortcut function that simplifies usage of xclip.
   # - Accepts input from either stdin (pipe), or params.
-  # ------------------------------------------------
   copy() {
     local _scs_col _wrn_col _reset_col
-    # If no tty, data should be available on stdin
-    if ! [[ "$( tty )" == /dev/* ]]; then
+    # if no tty, data should be available on stdin
+    if [ "$(tty)" != /dev/* ]; then
       input="$(< /dev/stdin)"
-    # Else, fetch input from params
+    # else, fetch input from params
     else
       input="$*"
     fi
@@ -149,7 +148,7 @@ EOF
     _reset_col=$(tput sgr0)
 
     # Check user is not root (root doesn't have access to user xorg server)
-    if [[ "$USER" == "root" ]]; then
+    if [ "$USER" = "root" ]; then
       >&2 printf '%s\n' "${_wrn_col}Must be regular user (not root) to copy a file to the clipboard.${_reset_col}"
       return 1
     fi
@@ -160,10 +159,10 @@ EOF
   }
 fi
 
-# -- Aliases ---------------------------------------------------------------------
+# -- Aliases -------------------------------------------------------------------
 
 # Make colors to ls command
-[[ -x /usr/bin/dircolors ]] && eval "$(dircolors -b)"
+[ -x '/usr/bin/dircolors' ] && eval "$(dircolors -b)"
 
 case "$(m_get_shell_type)" in
 bash)
@@ -214,15 +213,15 @@ alias lh='ls -dF .??*'
 alias ll='ls -lF'
 
 # Detect which `ls` flavor is in use
-my_ls="ls -h --group-directories-first"
+MY_LS="ls -h --group-directories-first"
 if ls --color >/dev/null 2>&1; then # GNU ls support colors
-  alias ls="$my_ls --color"
+  alias ls="${MY_LS} --color"
 elif ls --G >/dev/null 2>&1; then # BSD ls
-  alias ls="$my_ls -G"
+  alias ls="${MY_LS} -G"
 else
-  alias ls="$my_ls"
+  alias ls="${MY_LS}"
 fi
-unset my_ls
+unset MY_LS
 
 alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
 alias ln='ln -iv'
@@ -261,7 +260,7 @@ alias wifils='nmcli device wifi list'
 # ```
 
 alias suspend='systemctl suspend'
-#if [[ -x /usr/bin/xflock4 ]]; then
+# if [ -x '/usr/bin/xflock4' ]; then
 #  alias suspend='xflock4 && systemctl suspend'
 #fi
 
@@ -327,14 +326,14 @@ fi
 # See more https://wiki.debian.org/ReduceDebian
 #clrdesktop() {
 #  >&2 printf 'Clearing non English part in .desktop files ...\n'
-#  if [[ -d "/usr/share/help" ]]; then
+#  if [ -d "/usr/share/help" ]; then
 #    find /usr/share/applications/ -type f -iname '*\.desktop' -exec sudo sed -i "/]=/d" {} +
 #  fi
 #}
 
 #clrhelp() {
 #  >&2 printf 'Clearing non-English help files ...\n'
-#  if [[ -d "/usr/share/help" ]]; then
+#  if [ -d "/usr/share/help" ]; then
 #    find "/usr/share/help" -maxdepth 1 $( echo "! -path /usr/share/help"{/C,/en_GB,} ) -type d -exec sudo rm -Irf {} +
 #  fi
 #}
@@ -351,11 +350,11 @@ fi
 
 # Alias that depends on Linux distro
 # Note:
-#   Use [[ -x program ]] to test to assure that these programs are actually
+#   Use [ -x program ] to test to assure that these programs are actually
 #   executable and are the wanted program.
 #
 # Test for Debian variants
-if [[ -x /usr/bin/dpkg ]]; then
+if [ -x '/usr/bin/dpkg' ]; then
   # Perform a simulation of the whole process by:
   #apt-get clean --dry-run
   alias aptshow='apt-cache show' # or `apt show` or `dpkg --print-avail`
@@ -368,7 +367,7 @@ if [[ -x /usr/bin/dpkg ]]; then
   #  sudo apt-get clean
   #}
 # Arch Linux
-elif [[ -x /bin/pacman ]]; then
+elif [ -x '/bin/pacman' ]; then
   #alias keepping='ping login.net.vn &> /dev/null &'
   alias pacman="pacman --color=auto"
   alias update-grub='grub-mkconfig -o /boot/grub/grub.cfg'
@@ -382,10 +381,10 @@ elif [[ -x /bin/pacman ]]; then
   clrpac() {
     >&2 printf 'Clearing pacman cache ...\n'
     # remove all packages except for the latest three package versions
-    sudo paccache -rvk3
+    command sudo paccache -rvk3
   }
 # for CentOS, RedHat, Fedora
-elif [[ -x /usr/bin/yum ]]; then
+elif [ -x '/usr/bin/yum' ]; then
   clryum() {
     >&2 printf 'Clearing yum cache ...\n'
     command sudo rm -Ifr /var/cache/yum

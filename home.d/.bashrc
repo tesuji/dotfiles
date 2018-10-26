@@ -9,12 +9,12 @@
 # If using Putty, change xterm to xterm-256color in connection -> data
 
 # If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+[ "$-" != *i* ] && return
 
 source "${HOME}/.bash_preinit.sh"
 
 # Make less more friendly for non-text input files, see lesspipe(1)
-#[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)"
+#[ -x '/usr/bin/lesspipe' ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
@@ -34,12 +34,12 @@ shopt -s cdspell
 
 # Tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 if [ -e "$HOME/.ssh/config" ]; then
-  m_hosts="$(grep "^Host\b" ${HOME}/.ssh/config | awk '{ print $2 }')"
-  complete -o "default" -o "nospace" -W "${m_hosts}" scp sftp ssh
-  unset m_hosts
+  M_HOSTS="$(grep "^Host\b" "${HOME}/.ssh/config" | awk '{ print $2 }')"
+  complete -o "default" -o "nospace" -W "${M_HOSTS}" scp sftp ssh
+  unset M_HOSTS
 fi
 
-# -- Load shell dotfiles ---------------------------------------------------------
+# -- Load shell dotfiles -------------------------------------------------------
 
-[[ -f "${HOME}/.bash_prompt" ]] && source "${HOME}/.bash_prompt"
+[ -f "${HOME}/.bash_prompt" ] && source "${HOME}/.bash_prompt"
 source "${HOME}/.bash_postinit.sh"

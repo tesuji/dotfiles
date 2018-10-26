@@ -2,15 +2,15 @@
 # Ref http://matt.blissett.me.uk/linux/zsh/zshrc
 
 # Skip all this for non-interactive shells
-[[ -z "$PS1" ]] && return
+[ -z "$PS1" ] && return
 
 source "${HOME}/.bash_preinit.sh"
 
 # FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26
-#[[ $EMACS = t ]] && unsetopt zle
+#[ "$EMACS" = t ] && unsetopt zle
 
-# -- Key bindings ----------------------------------------------------------------
+# -- Key bindings --------------------------------------------------------------
 
 # Type Ctrl-V and key combination to get key code
 # Type `bindkey' to show all keybindings
@@ -43,7 +43,7 @@ bindkey '^U'      backward-kill-line      # Ctrl-U
 # Use bash's style for word
 autoload -U select-word-style && select-word-style bash
 
-# -- History ---------------------------------------------------------------------
+# -- History -------------------------------------------------------------------
 
 setopt INC_APPEND_HISTORY   # Write immediately, not when the shell exits
 setopt HIST_IGNORE_ALL_DUPS # Delete old recorded entry if new entry is a duplicate
@@ -51,7 +51,7 @@ setopt HIST_IGNORE_SPACE    # Don't record an entry starting with a space
 setopt HIST_REDUCE_BLANKS   # Remove superfluous blanks before recording entry
 setopt HIST_VERIFY          # Don't execute immediately upon history expansion
 
-# -- Completion ------------------------------------------------------------------
+# -- Completion ----------------------------------------------------------------
 
 # You may have to force rebuild zcompdump:
 #     rm -f "$HOME/.zcompdump"; compinit or try rehash command
@@ -61,7 +61,7 @@ setopt HIST_VERIFY          # Don't execute immediately upon history expansion
 autoload -Uz compinit # Use modern completion system
 
 # If "$HOME/.zcompdump" is modified less than 24h
-if [[ "$(m_compinit_age)" -le 86400 ]]; then
+if [ "$(m_compinit_age)" -le 86400 ]; then
   compinit -C
 else
   compinit
@@ -102,16 +102,16 @@ setopt RM_STAR_WAIT
 # Don't nice background processes
 setopt NO_BG_NICE
 
-# -- History search --------------------------------------------------------------
+# -- History search ------------------------------------------------------------
 
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-[[ -n "$key[Up]"   ]] && bindkey -- "$key[Up]"   up-line-or-beginning-search
-[[ -n "$key[Down]" ]] && bindkey -- "$key[Down]" down-line-or-beginning-search
+[ -n "$key[Up]"   ] && bindkey -- "$key[Up]"   up-line-or-beginning-search
+[ -n "$key[Down]" ] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
-# -- Load shell dotfiles ---------------------------------------------------------
+# -- Load shell dotfiles -------------------------------------------------------
 
-[[ -f "${HOME}/.zsh_prompt" ]] && source "${HOME}/.zsh_prompt"
+[ -f "${HOME}/.zsh_prompt" ] && source "${HOME}/.zsh_prompt"
 source "${HOME}/.bash_postinit.sh"

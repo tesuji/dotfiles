@@ -4,7 +4,7 @@
 exitstatus() {
   # Do NOT use local var, cause it hang bash when output
   RETVAL=$?
-  [[ "${RETVAL}" -ne 0 ]] && printf '[%s] ' "${RETVAL}"
+  [ "${RETVAL}" -ne 0 ] && printf '[%s] ' "${RETVAL}"
 }
 
 # Ref https://github.com/mathiasbynens/dotfiles/blob/master/.bash_prompt
@@ -22,63 +22,63 @@ exitstatus() {
 #
 TPUT_NCOLORS="$(tput colors 2>/dev/null)" # Number of supported colors in tput
 # If wanted Solarized colors, take it from http://git.io/solarized-colors.
-if [[ "$TPUT_NCOLORS" -eq 256 ]]; then
-  m_bold="\[$(tput bold)\]"
-  m_reset="\[$(tput sgr0)\]"
-  m_black="\[$(tput setaf 0)\]"
-  m_red="\[$(tput setaf 1)\]"
-  m_green="\[$(tput setaf 10)\]"
-  m_orange="\[$(tput setaf 166)\]"
-  m_blue="\[$(tput setaf 33)\]"
-  m_purple="\[$(tput setaf 13)\]"
-  m_cyan="\[$(tput setaf 14)\]"
-  m_violet="\[$(tput setaf 61)\]"
-  m_white="\[$(tput setaf 15)\]"
-  m_yellow="\[$(tput setaf 11)\]"
-elif [[ "$TPUT_NCOLORS" -ge 8 ]]; then
-  m_bold="\[$(tput bold)\]"
-  m_reset="\[$(tput sgr0)\]"
-  m_black="\[$(tput setaf 0)\]"
-  m_red="\[$(tput setaf 1)\]"
-  m_green="\[$(tput setaf 2)\]"
-  m_orange="\[$(tput setaf 3)\]"
-  m_blue="\[$(tput setaf 4)\]"
-  m_purple="\[$(tput setaf 5)\]"
-  m_cyan="\[$(tput setaf 6)\]"
-  m_violet="${m_bold}$m_purple" # Need ${m_reset} after using
-  m_white="\[$(tput setaf 7)\]"
-  m_yellow="\[$(tput setaf 3)\]"
+if [ "$TPUT_NCOLORS" -eq 256 ]; then
+  M_BOLD="\[$(tput bold)\]"
+  M_RESET="\[$(tput sgr0)\]"
+  M_BLACK="\[$(tput setaf 0)\]"
+  M_RED="\[$(tput setaf 1)\]"
+  M_GREEN="\[$(tput setaf 10)\]"
+  M_ORANGE="\[$(tput setaf 166)\]"
+  M_BLUE="\[$(tput setaf 33)\]"
+  M_PURPLE="\[$(tput setaf 13)\]"
+  M_CYAN="\[$(tput setaf 14)\]"
+  M_VIOLET="\[$(tput setaf 61)\]"
+  M_WHITE="\[$(tput setaf 15)\]"
+  M_YELLOW="\[$(tput setaf 11)\]"
+elif [ "$TPUT_NCOLORS" -ge 8 ]; then
+  M_BOLD="\[$(tput bold)\]"
+  M_RESET="\[$(tput sgr0)\]"
+  M_BLACK="\[$(tput setaf 0)\]"
+  M_RED="\[$(tput setaf 1)\]"
+  M_GREEN="\[$(tput setaf 2)\]"
+  M_ORANGE="\[$(tput setaf 3)\]"
+  M_BLUE="\[$(tput setaf 4)\]"
+  M_PURPLE="\[$(tput setaf 5)\]"
+  M_CYAN="\[$(tput setaf 6)\]"
+  M_VIOLET="${M_BOLD}${M_PURPLE}" # Need ${M_RESET} after using
+  M_WHITE="\[$(tput setaf 7)\]"
+  M_YELLOW="\[$(tput setaf 3)\]"
 fi
 
 # Add constant string (remote) when connected via SSH.
 if m_check_ssh; then
-  m_host_style="\h (remote)"
+  M_HOST_STYLE="\h (remote)"
 else
-  m_host_style="\h"
+  M_HOST_STYLE="\h"
 fi
 
 # Set a fancy prompt (non-color if it is a dumb terminal)
-if [[ "$TERM" != "dumb" ]]; then
-  user_at_host="${m_bold}${m_cyan}\u${m_white} at ${m_yellow}${m_host_style} ${m_white}in ${m_green}\w"
-  error_prompt="${m_red}\$(exitstatus)"
-  time_prompt="${m_white}\A ${m_reset}" # disable bold
-  shell_state="${m_red}\$ ${m_reset}"
+if [ "$TERM" != "dumb" ]; then
+  USER_AT_HOST="${M_BOLD}${M_CYAN}\u${M_WHITE} at ${M_YELLOW}${M_HOST_STYLE} ${M_WHITE}in ${M_GREEN}\w"
+  ERROR_PROMPT="${M_RED}\$(exitstatus)"
+  TIME_PROMPT="${M_WHITE}\A ${M_RESET}" # disable bold
+  SHELL_STATE="${M_RED}\$ ${M_RESET}"
 else
-  user_at_host="\u at ${m_host_style} in \w"
-  error_prompt="\$(exitstatus)"
-  time_prompt="\A " # disable bold
-  shell_state="\$ "
+  USER_AT_HOST="\u at ${M_HOST_STYLE} in \w"
+  ERROR_PROMPT="\$(exitstatus)"
+  TIME_PROMPT="\A " # disable bold
+  SHELL_STATE="\$ "
 fi
 
 # Sample result:
 #     user at host in ~/Documents
 #     9:39 $
-PS1="${user_at_host}\n${error_prompt}${time_prompt}${shell_state}"
+PS1="${USER_AT_HOST}\n${ERROR_PROMPT}${TIME_PROMPT}${SHELL_STATE}"
 
 # Unset things if source-ing manually .bashrc from terminal.
-unset m_host_style user_at_host error_prompt time_prompt shell_state
-unset m_bold m_reset m_black m_red m_green m_orange m_blue \
-      m_purple m_cyan m_violet m_white m_yellow TPUT_NCOLORS
+unset M_HOST_STYLE USER_AT_HOST ERROR_PROMPT TIME_PROMPT SHELL_STATE
+unset M_BOLD M_RESET M_BLACK M_RED M_GREEN M_ORANGE M_BLUE \
+      M_PURPLE M_CYAN M_VIOLET M_WHITE M_YELLOW TPUT_NCOLORS
 
 # If this is an xterm set the title to dir
 case "$TERM" in
