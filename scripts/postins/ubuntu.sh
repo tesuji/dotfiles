@@ -89,14 +89,14 @@ disable_download_apt_translation() {
   find /var/lib/apt/lists/ -name '*i18n*' -delete
 }
 
-remove_cups_and_snap() {
-  apt-get purge -y snapd cups
-}
-
 # Reduce boot time and unnecessary auto services.
+# Remove graphical package manager.
 # Do update manually.
+# Ref: https://askubuntu.com/a/880520/565006
 disable_auto_update() {
   systemctl is-enabled apt-daily.timer && return 0
+  apt-get purge -y appstream snapd cups
+  # or dpkg-divert --local --rename --divert '/etc/apt/apt.conf.d/#50appstream' /etc/apt/apt.conf.d/50appstream
   systemctl stop motd-news.timer apt-daily.timer apt-daily-upgrade.timer
   systemctl disable motd-news.timer apt-daily.timer apt-daily-upgrade.timer
 }
