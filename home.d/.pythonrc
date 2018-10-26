@@ -14,21 +14,19 @@ else:
     import rlcompleter
     readline.parse_and_bind('tab: complete')
 
-py2histfile = '.python2_history'
-py3histfile = '.python3_history'
 histfile = os.path.join(
     os.path.expanduser('~'),
-    py3histfile if sys.version_info.major >= 3 else py2histfile
+    '.py3hist' if sys.version_info.major >= 3 else '.pyhist'
 )
-del os, sys
-del py2histfile, py3histfile
 
 try:
     readline.read_history_file(histfile)
     # default history len is -1 (infinite), which may grow unruly
     readline.set_history_length(1000)
-except (IOError, FileNotFoundError):
+except IOError:
     pass
 
 atexit.register(readline.write_history_file, histfile)
-del histfile, readline, rlcompleter
+
+del histfile
+del readline, rlcompleter, os, sys
