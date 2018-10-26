@@ -9,7 +9,7 @@
 # If using Putty, change xterm to xterm-256color in connection -> data
 
 # If not running interactively, don't do anything
-[ "$-" != *i* ] && return
+[[ "$-" != *i* ]] && return
 
 . "${HOME}/.bash_preinit.sh"
 

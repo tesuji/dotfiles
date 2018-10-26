@@ -128,12 +128,10 @@ if m_check_exist xclip; then
   copy() {
     local _scs_col _wrn_col _reset_col
     # if no tty, data should be available on stdin
-    if [ "$(tty)" != /dev/* ]; then
-      input="$(< /dev/stdin)"
-    # else, fetch input from params
-    else
-      input="$*"
-    fi
+    case "$(tty)" in
+    /dev/* ) input="$(< /dev/stdin)" ;;
+    * ) input="$*";;
+    esac
     if [ -z "$input" ]; then  # If no input, print usage message.
       >&2 cat << EOF
 Copies a string to the clipboard.
