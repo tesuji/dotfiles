@@ -1,5 +1,4 @@
 #!/bin/sh
-set -x
 
 get_distro_info() {
   os_name=""
