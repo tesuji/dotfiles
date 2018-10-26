@@ -2,15 +2,6 @@
 
 # -- Functions -----------------------------------------------------------------
 
-# Usage: m_compinit_age -> time
-# Return the string represents how long has "$HOME/.zcompdump" been modified
-m_compinit_age() {
-  local LAST_MODIFIED CURRENT_TIME
-  LAST_MODIFIED=$(stat -c '%Y' "${HOME}/.zcompdump")
-  CURRENT_TIME=$(date '+%s')
-  printf '%s' "$(( CURRENT_TIME - LAST_MODIFIED ))"
-}
-
 # Usage: m_get_shell_type -> str
 # Return kind of shell: bash or zsh
 # NOTE:

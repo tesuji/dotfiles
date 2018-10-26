@@ -17,7 +17,7 @@ declare -a CORE_DIR=(
 
 #-- Functions -------------------------------------------------------------------
 
-source scripts/stow.sh # load solve_stow_conflict()
+. scripts/stow.sh # load solve_stow_conflict()
 
 usage() {
   >&2 printf 'Usage: %s [-b]\n' "$0"

@@ -8,4 +8,4 @@
 # ~/.bash_login and ~/.profile are checked in that order.
 # The skeleton file /etc/skel/.bash_profile also sources ~/.bashrc
 
-[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
+[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"

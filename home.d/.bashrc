@@ -11,7 +11,7 @@
 # If not running interactively, don't do anything
 [ "$-" != *i* ] && return
 
-source "${HOME}/.bash_preinit.sh"
+. "${HOME}/.bash_preinit.sh"
 
 # Make less more friendly for non-text input files, see lesspipe(1)
 #[ -x '/usr/bin/lesspipe' ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -41,5 +41,5 @@ fi
 
 # -- Load shell dotfiles -------------------------------------------------------
 
-[ -f "${HOME}/.bash_prompt" ] && source "${HOME}/.bash_prompt"
-source "${HOME}/.bash_postinit.sh"
+[ -f "${HOME}/.bash_prompt" ] && . "${HOME}/.bash_prompt"
+. "${HOME}/.bash_postinit.sh"

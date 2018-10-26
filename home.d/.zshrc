@@ -4,7 +4,7 @@
 # Skip all this for non-interactive shells
 [ -z "$PS1" ] && return
 
-source "${HOME}/.bash_preinit.sh"
+. "${HOME}/.bash_preinit.sh"
 
 # FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26
@@ -60,12 +60,23 @@ setopt HIST_VERIFY          # Don't execute immediately upon history expansion
 
 autoload -Uz compinit # Use modern completion system
 
+# Usage: m_compinit_age -> time
+# Return the string represents how long has "$HOME/.zcompdump" been modified
+m_compinit_age() {
+  local LAST_MODIFIED CURRENT_TIME
+  LAST_MODIFIED=$(stat -c '%Y' "${HOME}/.zcompdump")
+  CURRENT_TIME=$(date '+%s')
+  printf '%s' "$(( CURRENT_TIME - LAST_MODIFIED ))"
+}
+
 # If "$HOME/.zcompdump" is modified less than 24h
 if [ "$(m_compinit_age)" -le 86400 ]; then
   compinit -C
 else
   compinit
 fi
+
+unset m_compinit_age
 
 # Should be enable in /etc/zsh/newuser.zshrc.recommended
 zstyle ':completion:*' auto-description 'specify: %d'
@@ -113,5 +124,5 @@ zle -N down-line-or-beginning-search
 
 # -- Load shell dotfiles -------------------------------------------------------
 
-[ -f "${HOME}/.zsh_prompt" ] && source "${HOME}/.zsh_prompt"
-source "${HOME}/.bash_postinit.sh"
+[ -f "${HOME}/.zsh_prompt" ] && . "${HOME}/.zsh_prompt"
+. "${HOME}/.bash_postinit.sh"
