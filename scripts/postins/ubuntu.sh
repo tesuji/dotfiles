@@ -10,7 +10,7 @@ set -e
 if [ "$(id -u)" -eq 0 ]; then
   SUDO=""
 else
-  SUDO="sudo "
+  SUDO="sudo"
 fi
 
 do_disable_ipv6() {
@@ -87,4 +87,16 @@ disable_download_apt_translation() {
 
   printf 'Acquire::Languages "none";\n' >> "${config_file}"
   find /var/lib/apt/lists/ -name '*i18n*' -delete
+}
+
+remove_cups_and_snap() {
+  apt-get purge -y snapd cups
+}
+
+# Reduce boot time and unnecessary auto services.
+# Do update manually.
+disable_auto_update() {
+  systemctl is-enabled apt-daily.timer && return 0
+  systemctl stop motd-news.timer apt-daily.timer apt-daily-upgrade.timer
+  systemctl disable motd-news.timer apt-daily.timer apt-daily-upgrade.timer
 }
