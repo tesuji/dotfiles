@@ -10,4 +10,4 @@ done
 
 # -- Cleaning up ---------------------------------------------------------------
 
-unset m_get_shell_type m_check_exist m_check_ssh
+unset m_current_shell m_check_exist m_check_ssh

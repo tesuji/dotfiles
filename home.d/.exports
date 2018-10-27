@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # ~/.exports: Export environment vars for both bash and zsh
 
-case "$(m_get_shell_type)" in
+CURRENT_SHELL="$(m_current_shell)"
+export CURRENT_SHELL
+
+case "${CURRENT_SHELL}" in
 bash)
   # See HISTSIZE and HISTFILESIZE in bash for setting history length
   HISTSIZE=1000
@@ -34,30 +37,37 @@ if [ -n "$DESKTOP_SESSION" ];then
 fi
 
 # Set less options
-if [ -x /usr/bin/less ]; then
-  #export PAGER="less"
-  export LESS="--line-numbers --RAW-CONTROL-CHARS"
-  export LESSHISTFILE='-' # prevent less' history file
-  #[ -x /usr/bin/lesspipe ] && export LESSOPEN="| lesspipe %s"
-fi
+#export PAGER="less"
+LESS="--line-numbers --RAW-CONTROL-CHARS"
+LESSHISTFILE='-' # prevent less' history file
+export LESS LESSHISTFILE
+#[ -x /usr/bin/lesspipe ] && LESSOPEN="| lesspipe %s" && export LESSOPEN
 
 # Make vim the default editor.
-export EDITOR='vim'
-export VISUAL="${EDITOR}"
+EDITOR='vim'
+VISUAL="${EDITOR}"
 
 # Prefer US English and use UTF-8.
 # Ref https://wiki.archlinux.org/index.php/locale
-export LC_CTYPE='en_US.UTF-8'
-#export LC_TIME="en_GB.UTF-8"
-#export LC_PAPER="en_GB.UTF-8"
-#export LC_MEASUREMENT="en_GB.UTF-8"
-export LANG='en_US.UTF-8'
+LC_CTYPE='en_US.UTF-8'
+#LC_TIME="en_GB.UTF-8"
+#LC_PAPER="en_GB.UTF-8"
+#LC_MEASUREMENT="en_GB.UTF-8"
+LANG='en_US.UTF-8'
 # WARNING: Using LC_ALL is strongly discouraged as it overrides everything.
 # Please use it only when testing and never set it in a startup file.
-#export LC_ALL='en_US.UTF-8'
+#LC_ALL='en_US.UTF-8'
 
-export PYTHONSTARTUP="${HOME}/.pythonrc"
-#export SYSTEMD_LESS='FRSMK'
+PYTHONSTARTUP="${HOME}/.pythonrc"
+#SYSTEMD_LESS='FRSMK'
 
 # MySQL prompt
-#export MYSQL_PS1="\R|\m:\s \h.\d> "
+#MYSQL_PS1="\R|\m:\s \h.\d> "
+
+export EDITOR VISUAL LC_CTYPE LANG PYTHONSTARTUP
+#export LC_TIME
+#export LC_PAPER
+#export LC_MEASUREMENT
+#export LC_ALL
+#export SYSTEMD_LESS
+#export MYSQL_PS1

@@ -18,15 +18,6 @@ man() {
   command man "$@"
 }
 
-if m_check_exist vmhgfs-fuse; then
-  # Usage: vmmount /path/to/mount/point
-  vmmount() {
-    local sharedir
-    sharedir=$(vmware-hgfsclient)
-    vmhgfs-fuse -o allow_other -o auto_unmount .host:"$sharedir" "$1"
-  }
-fi
-
 # Usage: extract <file>
 # Description: extracts archived files / mounts disk images
 # Note: .dmg/hdiutil is macOS-specific.
@@ -68,9 +59,11 @@ extract() {
 #    a
 #    b
 parse_path_colon_sep() {
-  local IFS=$'\n' my_input_str="$1"
+  local IFS STR
+  IFS=$'\n'
+  STR="$1"
   # shellcheck disable=SC2046
-  realpath $(tr ':' '\n' <<< "$my_input_str")
+  realpath $(tr ':' '\n' <<< "$STR")
 }
 
 # List gcc environment variables
@@ -112,7 +105,17 @@ mkcd() {
   command mkdir -p "$@" && cd "$_"
 }
 
-if alias which >/dev/null 2>&1; then
+if m_check_exist vmhgfs-fuse; then
+  # Usage: vmmount /path/to/mount/point
+  vmmount() {
+    local sharedir
+    sharedir=$(vmware-hgfsclient)
+    vmhgfs-fuse -o allow_other -o auto_unmount .host:"$sharedir" "$1"
+  }
+fi
+
+# If "which" is not an alias and has "-h" option
+if ! alias which >/dev/null 2>&1; then
   # which command on Debian-based distros lack support for long options
   if which -h >/dev/null 2>&1; then
     which() {
@@ -126,7 +129,7 @@ if m_check_exist xclip; then
   # A shortcut function that simplifies usage of xclip.
   # - Accepts input from either stdin (pipe), or params.
   copy() {
-    local _scs_col _wrn_col _reset_col
+    local _SCS_COL _WRN_COL _RESET_COL
     # if no tty, data should be available on stdin
     case "$(tty)" in
     /dev/* ) input="$(< /dev/stdin)" ;;
@@ -141,28 +144,31 @@ EOF
       return 1
     fi
 
-    _scs_col=$(tput setaf 2)
-    _wrn_col=$(tput setaf 1)
-    _reset_col=$(tput sgr0)
+    _SCS_COL="$(tput setaf 2)"
+    _WRN_COL="$(tput setaf 1)"
+    _RESET_COL="$(tput sgr0)"
 
     # Check user is not root (root doesn't have access to user xorg server)
     if [ "$USER" = "root" ]; then
-      >&2 printf '%s\n' "${_wrn_col}Must be regular user (not root) to copy a file to the clipboard.${_reset_col}"
+      >&2 printf '%s\n' "${_WRN_COL}Must be regular user (not root) to copy a file to the clipboard.${_RESET_COL}"
       return 1
     fi
     # Copy input to clipboard
     printf '%s' "$input" | xclip -selection c
     # Print status.
-    >&2 printf '%s\n' "${_scs_col}Copied to clipboard.${_reset_col}"
+    >&2 printf '%s\n' "${_SCS_COL}Copied to clipboard.${_RESET_COL}"
   }
 fi
 
 # -- Aliases -------------------------------------------------------------------
 
 # Make colors to ls command
-[ -x '/usr/bin/dircolors' ] && eval "$(dircolors -b)"
+if [ ! -f "$HOME/.dircolors" ] && [ -x '/usr/bin/dircolors' ];then
+  dircolors -b > "$HOME/.dircolors"
+fi
+[ -f "$HOME/.dircolors" ] && . "$HOME/.dircolors"
 
-case "$(m_get_shell_type)" in
+case "${CURRENT_SHELL}" in
 bash)
   alias chi='history -c'
   ;;

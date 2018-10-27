@@ -2,7 +2,7 @@
 
 # -- Functions -----------------------------------------------------------------
 
-# Usage: m_get_shell_type -> str
+# Usage: m_current_shell -> str
 # Return kind of shell: bash or zsh
 # NOTE:
 #   Some shells have their own builtin version of ps so we use `command`
@@ -10,7 +10,7 @@
 # NOTE:
 #   "command" is a shell builtin, which means that it is followed by the
 #   external program you want to run
-m_get_shell_type() {
+m_current_shell() {
   command ps -p "$$" --no-headers -o cmd
 }
 
