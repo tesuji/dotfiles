@@ -5,14 +5,14 @@ CURRENT_SHELL="$(m_current_shell)"
 export CURRENT_SHELL
 
 case "${CURRENT_SHELL}" in
-bash)
+*bash )
   # See HISTSIZE and HISTFILESIZE in bash for setting history length
   HISTSIZE=1000
   HISTFILESIZE=2000
   # Do NOT put duplicate lines or lines starting with space in the history.
   HISTCONTROL=ignoreboth:erasedups
   ;;
-zsh)
+*zsh )
   HISTSIZE=1000                 # 1000 lines of history within the shell
   SAVEHIST=1000                 # 1000 lines of history in $HISTFILE
   HISTFILE="${HOME}/.zsh_history" # Save history to ~/.zsh_history

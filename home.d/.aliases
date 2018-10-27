@@ -169,10 +169,10 @@ fi
 [ -f "$HOME/.dircolors" ] && . "$HOME/.dircolors"
 
 case "${CURRENT_SHELL}" in
-bash)
+*bash )
   alias chi='history -c'
   ;;
-zsh)
+*zsh )
   # https://wiki.archlinux.org/index.php/zsh#Help_command
   autoload -Uz run-help
   alias help='run-help'
