@@ -97,7 +97,7 @@ disable_auto_update() {
   rs=$(systemctl is-enabled apt-daily.timer)
   code=$?
   [ "$rs" = disable ] && [ "$code" -gt 0 ] && return 0
-  apt-get purge -y appstream snapd cups
+  apt-get purge -y software-center appstream snapd cups
   # or dpkg-divert --local --rename --divert '/etc/apt/apt.conf.d/#50appstream' /etc/apt/apt.conf.d/50appstream
   systemctl stop motd-news.timer apt-daily.timer apt-daily-upgrade.timer
   systemctl disable motd-news.timer apt-daily.timer apt-daily-upgrade.timer
