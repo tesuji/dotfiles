@@ -56,8 +56,7 @@ set_passwd_grub() {
   GRUB_CUSTOM_CONF="$GRUB_CONF_DIR/40_custom"
   GRUB_LINUX_CONF="$GRUB_CONF_DIR/10_linux"
 
-  printf 'set superusers="root"\n' >> "$GRUB_CUSTOM_CONF"
-  printf 'password_pbkdf2 root %s\n' "${PBKDF2_HASH}" >> "$GRUB_CUSTOM_CONF"
+  printf 'set superusers="root"\npassword_pbkdf2 root %s\n' "${PBKDF2_HASH}" >> "$GRUB_CUSTOM_CONF"
 
   grep -q -- '--unrestricted' "$GRUB_LINUX_CONF" && return 0
 
@@ -69,13 +68,14 @@ set_passwd_grub() {
 keep_app_state_in_RAM() {
   [ "$(sysctl -n vm.swappiness)" -eq 1 ] && return 0
 
-  cat << EOF >> /etc/sysctl.d/99-sysctl.conf
+  SYSCTL_CONF=/etc/sysctl.d/99-sysctl.conf
+  cat << EOF >> "$SYSCTL_CONF"
 vm.swappiness=1
 vm.vfs_cache_pressure=50
 vm.dirty_background_bytes=16777216
 vm.dirty_bytes=50331648
 EOF
-  sysctl -p
+  sysctl -p "$SYSCTL_CONF"
 }
 
 disable_download_apt_translation() {
