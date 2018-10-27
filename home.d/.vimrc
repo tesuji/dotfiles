@@ -321,6 +321,6 @@ noremap XX "+x<cr>
   endfun
 " }}}
 
-if filereadable("~/.vim/vimrc")
+if filereadable(expand("~/.vim/vimrc"))
   source ~/.vim/vimrc
 endif
