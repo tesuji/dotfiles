@@ -38,7 +38,7 @@
   " http://items.sjbach.com/319/configuring-vim-right
   set hidden          " remember undo after quitting
 
-  "" Turn off swap files since most stuff is in SVN, git et.c anyway...
+  " Turn off swap files since most stuff is in SVN, git et.c anyway...
   set noswapfile
   set nobackup
   set nowritebackup
@@ -50,7 +50,7 @@
   " jump links, regs up to 500 lines'
   "set viminfo='20,\"500
   set guicursor=a:blinkon0 " Disable cursor blink
-  "" No annoying sound on errors
+  " No annoying sound on errors
   set noendofline
   set noerrorbells novisualbell t_vb=
 
@@ -253,12 +253,12 @@
   " search will center on the line it's found in.
   nnoremap n nzzzv
   nnoremap N Nzzzv
-  "" Tab back and forth between those files
+  " Tab back and forth between those files
   nnoremap <TAB> :bnext<cr>
   nnoremap <S-TAB> :bprevious<cr>
   " close only one buffer
   nnoremap <leader>c :bd<cr>
-  "" no one is really happy until you have this shortcuts
+  " no one is really happy until you have this shortcuts
   "cnoreabbrev W! w!
   "cnoreabbrev Q! q!
   "cnoreabbrev Qall! qall!
@@ -270,12 +270,12 @@
   "cnoreabbrev Q q
   "cnoreabbrev Qall qall
   "cmap Tabe tabe
-  "" Switching windows
+  " Switching windows
   noremap <C-j> <C-w>j
   noremap <C-k> <C-w>k
   noremap <C-l> <C-w>l
   noremap <C-h> <C-w>h
-  "" Vmap for maintain Visual Mode after shifting > and <
+  " Vmap for maintain Visual Mode after shifting > and <
   vnoremap < <gv
   vnoremap > >gv
   " Yank to the end of the line, to be consistent with C and D.
@@ -320,3 +320,7 @@ noremap XX "+x<cr>
     call setreg('"', l:old_reg, l:old_regtype)
   endfun
 " }}}
+
+if filereadable("~/.vim/vimrc")
+  source ~/.vim/vimrc
+endif
