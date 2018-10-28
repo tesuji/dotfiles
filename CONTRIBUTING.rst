@@ -66,7 +66,7 @@ If you add a new dotfile to this repo, please add it in appropriate directory.
     ├── docs                Some guidances about setting up Arch Linux and git, r2, vim,
     ├── firefox             Advanced settings to tweak and customize Firefox
     ├── fontconfig          Font configuration helps dealing with Microsoft fonts
-    ├── home.d              Dotfiles like ``.bashrc``, ``.zshrc``, etc that need to link to HOME
+    ├── home.d              Dotfiles like ".bashrc", ".zshrc", etc that need to link to HOME
     ├── icon.d              Icon file for custom desktop files
     ├── kdewallet           Autostart script to remember ssh passphrase
     ├── mercurial           Some experimental Mercurial SCV configurations
