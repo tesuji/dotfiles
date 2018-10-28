@@ -7,10 +7,25 @@
 # If tmux is not run, exit immediately
 [ -z "$TMUX" ] && return
 
+# -- Function -----------------------------------------------------------------
+
+# Ref https://stackoverflow.com/a/4024263/5456794
+verlte() {
+  [ "$1" = "$(printf '%s\n%s' "$1" "$2" | sort -V | head -n1)" ]
+}
+
+verlt() {
+  if [ "$1" = "$2" ]; then
+    return 1
+  else
+    verlte "$1" "$2"
+  fi
+}
+
+# -- Main ---------------------------------------------------------------------
+
 TMUX_OS="$(uname)"
 TMUX_VERSION="$(tmux -V | cut -d' ' -f2)"
-TMUX_VERSION_MAJOR="$(echo "$TMUX_VERSION" | cut -d'.' -f1)"
-TMUX_VERSION_MINOR="$(echo "$TMUX_VERSION" | cut -d'.' -f2)"
 
 case "$TMUX_OS" in
 Darwin) tmux source-file "${HOME}/.tmux-macos.conf" ;;
@@ -18,7 +33,7 @@ Darwin) tmux source-file "${HOME}/.tmux-macos.conf" ;;
   #*) tmux display -p "Unknown OS" ;;
 esac
 
-if [ "$TMUX_VERSION_MAJOR" -le 2 ] && [ "$TMUX_VERSION_MINOR" -le 3 ]; then
+if verlte "$TMUX_VERSION" 2.3; then
   tmux source-file "${HOME}/.tmux-23.conf"
 else
   tmux source-file "${HOME}/.tmux-24_plus.conf"
