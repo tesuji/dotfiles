@@ -33,6 +33,10 @@ Darwin) tmux source-file "${HOME}/.tmux-macos.conf" ;;
   #*) tmux display -p "Unknown OS" ;;
 esac
 
+if verlte "$TMUX_VERSION" 2.0; then
+  tmux source-file "${HOME}/.tmux-18.conf"
+fi
+
 if verlte "$TMUX_VERSION" 2.3; then
   tmux source-file "${HOME}/.tmux-23.conf"
 else
