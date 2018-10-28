@@ -8,9 +8,6 @@ When contributing to this repository,
 please first discuss the change you wish to make via `issue`_, email,
 or any other method with the owners of this repository before making a change.
 
-Note that we have a `code of conduct`_,
-please follow it in all your interactions with the project.
-
 Also note that there is a ``.editorconfig`` file, please follow coding style
 declared in that file.
 
@@ -24,7 +21,6 @@ Patches and bug reports are are encouraged, but please try to follow these guide
 - The email subject line should be a specific and concise topic summary.
   Commonly accepted subject line prefixes such as ``[ANN]``, ``[PATCH]``
   and ``[SOLVED]`` are good.
-- Any other questions can be asked on `gitter`_ discussion room.
 
 Bug reports
 ~~~~~~~~~~~
@@ -51,53 +47,39 @@ Patches
   comments at relevant places in the documentation.
 
 
+.. _issue: https://github.com/lzutao/dotfiles/issues
+.. _pull request: https://github.com/lzutao/dotfiles/pulls
+
 Directory Hierarchy
 -------------------
 
 If you add a new dotfile to this repo, please add it in appropriate directory.
 
-+-------------+--------------------------------------------------------------+
-| Folder      | Description                                                  |
-+=============+==============================================================+
-| .backup     | Contain any back-up dotfiles before installing this repo     |
-+-------------+--------------------------------------------------------------+
-| bin         | Some useful shell scripts such as touchpad-toggling          |
-+-------------+--------------------------------------------------------------+
-| compton     | Configuration of ``compton`` - a compositor for X11          |
-+-------------+--------------------------------------------------------------+
-| config.d    | All other non-important config files: elinks, qt4            |
-+-------------+--------------------------------------------------------------+
-| desktop.d   | Firefox desktop file used on Debian, Zathura PDF in Arch     |
-|             | Linux                                                        |
-+-------------+--------------------------------------------------------------+
-| docs        | Some guidances about setting up Arch Linux and git, r2, vim, |
-|             | ssh, etc                                                     |
-+-------------+--------------------------------------------------------------+
-| firefox     | Advanced settings to tweak and customize Firefox             |
-+-------------+--------------------------------------------------------------+
-| fontconfig  | Font configuration helps dealing with Microsoft fonts        |
-+-------------+--------------------------------------------------------------+
-| home.d      | Dotfiles like ``.bashrc``, ``.zshrc``, etc that need to link |
-|             | to HOME                                                      |
-+-------------+--------------------------------------------------------------+
-| icon.d      | Icon file for custom desktop files                           |
-+-------------+--------------------------------------------------------------+
-| kdewallet   | Autostart script to remember ssh passphrase                  |
-+-------------+--------------------------------------------------------------+
-| scripts     | Useful scripts for installing Firefox, getting distro name   |
-+-------------+--------------------------------------------------------------+
-| tmux        | tmux configuration and supporting scripts                    |
-+-------------+--------------------------------------------------------------+
-| subl        | Sublime Text custom syntax and key bindings                  |
-+-------------+--------------------------------------------------------------+
-| urxvt       | urxvt color config and urxvtd startup file                   |
-+-------------+--------------------------------------------------------------+
-| vscode      | Global settings of Visual Code                               |
-+-------------+--------------------------------------------------------------+
-| xfce4       | Terminal color and keyboard shortcuts                        |
-+-------------+--------------------------------------------------------------+
+.. code:: sh
 
-.. _gitter: https://gitter.im/lzutao-dotfiles/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link
-.. _issue: https://github.com/lzutao/dotfiles/issues
-.. _pull request: https://github.com/lzutao/dotfiles/pulls
-.. _code of conduct: CONTRIBUTING.rst
+    % tree -d
+    .
+    ├── bin                 Contain any back-up dotfiles before installing
+    ├── compton             Useful scripts: e.g. toggle-touchpad
+    ├── config.d            All other non-important config files: elinks, qt4
+    ├── desktop.d           Desktop files used on Debian, Zathura PDF in Arch Linux
+    ├── docs                Some guidances about setting up Arch Linux and git, r2, vim,
+    ├── firefox             Advanced settings to tweak and customize Firefox
+    ├── fontconfig          Font configuration helps dealing with Microsoft fonts
+    ├── home.d              Dotfiles like ``.bashrc``, ``.zshrc``, etc that need to link to HOME
+    ├── icon.d              Icon file for custom desktop files
+    ├── kdewallet           Autostart script to remember ssh passphrase
+    ├── mercurial           Some experimental Mercurial SCV configurations
+    ├── scripts             Useful scripts for installing Firefox, getting distro name
+    │   ├── git                 Filter for Git
+    │   └── postins             Post-installation script for Linux distributions (Ubuntu)
+    ├── src                 [WIP] Try to generate dotfiles from Python
+    │   └── home                Generate home dotfiles
+    ├── subl                Sublime Text custom syntax and key bindings
+    ├── tmux                tmux configuration and supporting scripts
+    ├── urxvt               urxvt color config and urxvtd startup file
+    ├── vscode              Global settings of Visual Code
+    ├── xfce4               Terminal color and keyboard shortcuts
+    └── zsh_completions     Additional zsh completion scripts (PIP)
+
+    26 directories
