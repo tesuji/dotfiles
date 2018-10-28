@@ -13,7 +13,7 @@ m_check_exist() {
 
 # Check whether we are in SSH sessions
 # https://unix.stackexchange.com/a/9607/178265
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_TTY" ]; then
   SESSION_TYPE=ssh
 else
   case "$(ps -o comm= -p "$PPID")" in
