@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # ------------------------------------------------------------------------------
 # WARNING:
 #   This script may destroy your disk and kick your dog.
@@ -10,11 +10,11 @@ set -e
 HERE_DIR="$( cd "$(dirname "$0")" && pwd -P )"
 
 do_disable_ipv6() {
-  for conf in 'net.ipv6.conf.all.disable_ipv6' \
+  for CONF in 'net.ipv6.conf.all.disable_ipv6' \
       'net.ipv6.conf.default.disable_ipv6' \
       'net.ipv6.conf.lo.disable_ipv6'; do
-    if [ "$(sysctl -n "${conf}")" -eq 0 ]; then
-      printf '%s = 1\n' "${conf}" >> '/etc/sysctl.conf'
+    if [ "$(sysctl -n "${CONF}")" -eq 0 ]; then
+      printf '%s = 1\n' "${CONF}" >> '/etc/sysctl.conf'
     fi
   done
 
@@ -33,15 +33,16 @@ set_no_enc_ath9k() {
 # NOTE:
 #   * Require sudo
 set_option_fstab() {
-  if grep -v '^#\S' /etc/fstab | grep '\s/\s' | grep -q 'noatime'; then
+  if [ "$(awk '!/^#/ && ($2=="/"){ print index($4, "noatime") }' /etc/fstab)" -eq 0 ]; then
     return 0
   fi
 
-  old_fstab="$(mktemp /tmp/fstab.XXXXXX)" \
-  && new_fstab="$(mktemp /tmp/fstab.new.XXXXXX)" \
-  && cp /etc/fstab "${old_fstab}" \
-  && awk '!/^#/ && ($2=="/"){ $4=$4",noatime" }{ print }' OFS='\t' /etc/fstab > "${new_fstab}" \
-  && cp "${new_fstab}" /etc/fstab
+  FSTAB=/etc/fstab
+  OLD_FSTAB="$(mktemp /tmp/fstab.XXXXXX)" \
+  && NEW_FSTAB="$(mktemp /tmp/fstab.new.XXXXXX)" \
+  && cp "$FSTAB" "${OLD_FSTAB}" \
+  && awk '!/^#/ && ($2=="/"){ $4=$4",noatime" }{ print }' OFS='\t' "$FSTAB" > "${NEW_FSTAB}" \
+  && cp "${NEW_FSTAB}" "$FSTAB"
 }
 
 # Usage: set_option_fstab <PBKDF2 hash>
@@ -58,11 +59,11 @@ set_passwd_grub() {
 
   printf 'set superusers="root"\npassword_pbkdf2 root %s\n' "${PBKDF2_HASH}" >> "$GRUB_CUSTOM_CONF"
 
-  grep -q -- '--unrestricted' "$GRUB_LINUX_CONF" && return 0
+  grep -q -F -- '--unrestricted' "$GRUB_LINUX_CONF" && return 0
 
-  search_template='echo "menuentry '"'"'\$\(echo "\$\w+" \| grub_quote\)'"'"
-  sed_cmd=$(printf 's@(%s)@\\1 --unrestricted@g' "${search_template}")
-  sed -i -E "${sed_cmd}" "$GRUB_LINUX_CONF"
+  TEMPLATE="$(printf 'echo "menuentry \x27%s\x27' '\$\(echo "\$\w+" \| grub_quote\)')"
+  SED_CMD="$(printf 's@(%s)@%s@g' "${TEMPLATE}" '\1 --unrestricted')"
+  sed -i -E "${SED_CMD}" "$GRUB_LINUX_CONF"
 }
 
 keep_app_state_in_RAM() {
@@ -83,7 +84,7 @@ disable_download_apt_translation() {
   APT_TRANS_CONF="${APT_CONF_DIR}/99translations"
   APT_LIST_DIR=/var/lib/apt/lists/
 
-  grep -qR 'Acquire::Languages "none"' "${APT_CONF_DIR}" && return 0
+  grep -qR '^Acquire::Languages\s+"none"' "${APT_CONF_DIR}" && return 0
 
   printf 'Acquire::Languages "none";\n' >> "${APT_TRANS_CONF}"
   find "$APT_LIST_DIR" -name '*i18n*' -delete
@@ -94,9 +95,9 @@ disable_download_apt_translation() {
 # Do update manually.
 # Ref: https://askubuntu.com/a/880520/565006
 disable_auto_update() {
-  rs=$(systemctl is-enabled apt-daily.timer)
-  code=$?
-  [ "$rs" = disable ] && [ "$code" -gt 0 ] && return 0
+  RS="$(systemctl is-enabled apt-daily.timer)"
+  CODE="$?"
+  [ "$RS" = disable ] && [ "$CODE" -gt 0 ] && return 0
   apt-get purge -y software-center appstream snapd cups
   # or dpkg-divert --local --rename --divert '/etc/apt/apt.conf.d/#50appstream' /etc/apt/apt.conf.d/50appstream
   systemctl stop motd-news.timer apt-daily.timer apt-daily-upgrade.timer
