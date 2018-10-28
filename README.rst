@@ -1,21 +1,9 @@
 dotfiles
 ========
 
-Collection of @lzutao dotfiles :lollipop: :sparkles: :gift:
+Collection of @lzutao dotfiles.
 
-Disclaimer
-----------
-
-- I do not take responsibility for data loss caused by this **dotfiles**.
-- Please do NOT link any file in ``~/.ssh/`` or ``~/.gnupg`` to this
-  dotfiles for the sake of information security.
-- If you want to backup your secret dotfiles:
-
-  * Create a private repository called ``secret_dotfiles`` instead.
-  * Try `Gitlab`_ for free private repo.
-  * I would recommend having passphrases to protect all your keys.
-
-- Currently only tested for Debian-based and Arch-based distro.
+Currently only tested for Debian-based and Arch-based distro.
 
 General Information
 -------------------
@@ -23,14 +11,19 @@ General Information
 +------------+---------+------------+------------------+-------------+------------+------------+---------+------+-----+
 | Shell      | WM / DE | Editor     | Terminal         | Multiplexer | Compositor | Audio      | Monitor | Mail | IRC |
 +============+=========+============+==================+=============+============+============+=========+======+=====+
-| bash / zsh | XFCE    | VIM / Subl | terminal / urxvt |             | compton    | pulseaudio | custom  |      |     |
+| bash / zsh | XFCE    | VIM / Subl | terminal / urxvt | tmux        | compton    | pulseaudio | custom  |      |     |
 +------------+---------+------------+------------------+-------------+------------+------------+---------+------+-----+
+
+tmux
+~~~~
+
+Try to be compatible with tmux 1.8 and 2.3+.
+Use :kbd:`Ctrl`-:kbd:`Space` as prefix key.
 
 zsh
 ~~~
 
-Manual configuration (no dependencies), not full feature but at least
-good enough.
+Manual configuration (no dependencies).
 
 **Preview**:
 
@@ -52,8 +45,8 @@ subl
 | :kbd:`Ctrl+T`                | Trim trailing whitespaces |
 +------------------------------+---------------------------+
 
-**Installed package**: If installed Package Control in SublimeText, it
-will install the following packages:
+**Installed package**: If already installed Package Control in Sublime Text,
+Package Control will install the following packages:
 
 - Autotools
 - Markdown Table Formatter
