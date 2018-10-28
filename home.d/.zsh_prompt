@@ -3,7 +3,7 @@
 # -- Window title --------------------------------------------------------------
 
 # From: https://github.com/MrElendig/dotfiles-alice/blob/master/.zshrc
-case "$TERM" in
+case "${TERM}" in
 screen*|*xterm*|rxvt*|\(dt|k|E\)term)
   # Ref:
   #   https://wiki.archlinux.org/index.php/zsh#xterm_title
@@ -19,7 +19,7 @@ screen*|*xterm*|rxvt*|\(dt|k|E\)term)
 esac
 
 # Add constant string (remote) when connected via SSH.
-if m_check_ssh; then
+if [ "$SESSION_TYPE" = "ssh" ]; then
   M_HOST_STYLE="%M (remote)"
 else
   M_HOST_STYLE="%M"

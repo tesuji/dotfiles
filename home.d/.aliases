@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2139
 # ~/.aliases
 
 # -- Functions -----------------------------------------------------------------
@@ -115,6 +114,7 @@ if m_check_exist vmhgfs-fuse; then
 fi
 
 # If "which" is not an alias and has "-h" option
+# shellcheck disable=SC2230
 if ! alias which >/dev/null 2>&1; then
   # which command on Debian-based distros lack support for long options
   if which -h >/dev/null 2>&1; then
@@ -163,9 +163,7 @@ fi
 # -- Aliases -------------------------------------------------------------------
 
 # Make colors to ls command
-if [ ! -f "$HOME/.dircolors" ] && [ -x '/usr/bin/dircolors' ];then
-  dircolors -b > "$HOME/.dircolors"
-fi
+[ ! -f "$HOME/.dircolors" ] && [ -x '/usr/bin/dircolors' ] && /usr/bin/dircolors -b > "$HOME/.dircolors"
 [ -f "$HOME/.dircolors" ] && . "$HOME/.dircolors"
 
 case "${CURRENT_SHELL}" in
@@ -198,7 +196,7 @@ alias dd='dd status=progress'
 alias df='df -h'
 # Only diffutils v3.4+ includes the --color option
 # CentOS 7 has diffutils 3.3
-if diff --color 2>&1 | grep 'missing operand' >/dev/null 2>&1; then
+if diff --color 2>&1 | grep -q 'missing operand'; then
   alias diff="diff --unified --color"
 fi
 alias du='du -sch'
@@ -210,7 +208,7 @@ alias gccn='gcc -Wfatal-errors -std=gnu11 -Wall -Wextra' # -pedantic #-fno-stack
 alias gccex='gcc -Wfatal-errors -m32 -fno-stack-protector -Wl,-z,norelro -z execstack -g'
 alias gdb='gdb -q'
 alias grep="grep --color"
-m_check_exist hd || alias hd='hexdump -C'
+alias hd='hexdump -C'
 alias l='ls -CF'
 alias la='ls -AF'
 alias lh='ls -dF .??*'
@@ -218,9 +216,10 @@ alias ll='ls -lF'
 
 # Detect which `ls` flavor is in use
 MY_LS="ls -h --group-directories-first"
-if ls --color >/dev/null 2>&1; then # GNU ls support colors
+# shellcheck disable=SC2139
+if ls --color > /dev/null 2>&1; then # GNU ls support colors
   alias ls="${MY_LS} --color"
-elif ls --G >/dev/null 2>&1; then # BSD ls
+elif ls --G > /dev/null 2>&1; then # BSD ls
   alias ls="${MY_LS} -G"
 else
   alias ls="${MY_LS}"
@@ -233,12 +232,8 @@ alias mkdir='mkdir -pv'
 alias mv='mv -iv'
 alias nc='nc -v'
 alias objdump='objdump -M intel'
-
-if m_check_exist pip; then
-  alias gpip='PIP_REQUIRE_VIRTUALENV="" pip '
-  alias gpip3='PIP_REQUIRE_VIRTUALENV="" pip3 '
-fi
-
+alias gpip='PIP_REQUIRE_VIRTUALENV="" pip '
+alias gpip3='PIP_REQUIRE_VIRTUALENV="" pip3 '
 alias py='python'
 alias py2='python2'
 alias py3='python3'

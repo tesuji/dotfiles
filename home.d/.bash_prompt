@@ -22,6 +22,7 @@ exitstatus() {
 #
 TPUT_NCOLORS="$(tput colors 2>/dev/null)" # Number of supported colors in tput
 # If wanted Solarized colors, take it from http://git.io/solarized-colors.
+# shellcheck disable=SC2034
 if [ "$TPUT_NCOLORS" -eq 256 ]; then
   M_BOLD="\[$(tput bold)\]"
   M_RESET="\[$(tput sgr0)\]"
@@ -51,7 +52,7 @@ elif [ "$TPUT_NCOLORS" -ge 8 ]; then
 fi
 
 # Add constant string (remote) when connected via SSH.
-if m_check_ssh; then
+if [ "$SESSION_TYPE" = "ssh" ]; then
   M_HOST_STYLE="\h (remote)"
 else
   M_HOST_STYLE="\h"
@@ -81,7 +82,7 @@ unset M_BOLD M_RESET M_BLACK M_RED M_GREEN M_ORANGE M_BLUE \
       M_PURPLE M_CYAN M_VIOLET M_WHITE M_YELLOW TPUT_NCOLORS
 
 # If this is an xterm set the title to dir
-case "$TERM" in
+case "${TERM}" in
 rxvt*|*xterm* )
   PS1="\[\e]0;\w\a\]${PS1}"
   ;;

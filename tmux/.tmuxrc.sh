@@ -27,7 +27,7 @@ verlt() {
 TMUX_OS="$(uname)"
 TMUX_VERSION="$(tmux -V | cut -d' ' -f2)"
 
-case "$TMUX_OS" in
+case "${TMUX_OS}" in
 Darwin) tmux source-file "${HOME}/.tmux-macos.conf" ;;
   #FreeBSD ) tmux source-file "${HOME}/.tmux-freebsd.conf" ;;
   #*) tmux display -p "Unknown OS" ;;
