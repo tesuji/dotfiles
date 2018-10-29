@@ -19,8 +19,9 @@
 	cl1 = clone --depth 1
 
 	# -- Commit --------------------------------------------------------------------
-	ci = commit --signoff
-	ciS = commit --gpg-sign
+	ci = commit
+	cis = commit --signoff
+	cig = commit --gpg-sign
 	amend = commit -s --amend  # Amend the currently staged files to the latest commit
 
 	# -- Checkout ------------------------------------------------------------------
