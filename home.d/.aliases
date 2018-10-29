@@ -262,9 +262,9 @@ alias wifils='nmcli device wifi list'
 # TODO: Use systemd to hook suspend events
 #       https://wiki.archlinux.org/index.php/Power_management#Suspend.2Fresume_service_files
 suspend() {
-  PROC_ACPI_WAKEUP=/proc/acpi/wakeup
-  for DEVICE in $(awk '(($1!~/^(LID|PB|PW)/) && ($3=="*enable")){print $1}' "$PROC_ACPI_WAKEUP"); do
-    printf '%s\n' "$DEVICE" | sudo tee "$PROC_ACPI_WAKEUP"
+  awk '(NR!=1 && $1!~/^(LID|PB|PW)/ && $3=="*enabled"){print $1}' /proc/acpi/wakeup \
+  | while IFS= read -r DEVICE; do
+    printf '%s\n' "$DEVICE" | sudo tee /proc/acpi/wakeup
   done
   systemctl suspend
 }
