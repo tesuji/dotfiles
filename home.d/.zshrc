@@ -11,11 +11,11 @@
 
 # If not running interactively, don't do anything
 case "$-" in
-*i*) ;;
+*i*) [[ ! -o login ]] && [[ -f "${HOME}/.zprofile" ]] && . "${HOME}/.zprofile";;
   *) return;;
 esac
 
-[[ ! -o login ]] && [[ -f "${HOME}/.zprofile" ]] && . "${HOME}/.zprofile"
+# if is interactive non
 
 # FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26

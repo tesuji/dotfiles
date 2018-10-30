@@ -14,7 +14,4 @@
 # The skeleton file /etc/skel/.bash_profile also sources ~/.bashrc
 
 [ -f "$HOME/.profile" ] && . "$HOME/.profile"
-
-# TODO: Remove this check if it is not needed by interactive shell
-# if running bash
-#[ -n "${BASH_VERSION}" ] && [ -f "${HOME}/.bashrc" ] && . "${HOME}/.bashrc"
+[ -f "${HOME}/.bashrc" ] && . "${HOME}/.bashrc"
