@@ -3,13 +3,6 @@
 
 # -- Functions -----------------------------------------------------------------
 
-# Usage: m_check_exist -> bool
-# Check if program exists
-m_check_exist() {
-  # POSIX compatible, not with `hash', `type', etc.
-  command -v "$1" > /dev/null
-}
-
 # Enable colored man
 # The end \ in the end of each line helps set environment variable
 # to command man.
@@ -21,7 +14,7 @@ man() {
   LESS_TERMCAP_so=$'\e[01;44;33m' \
   LESS_TERMCAP_ue=$'\e[0m' \
   LESS_TERMCAP_us=$'\e[01;32m' \
-  command man "$@"
+  command man "$@";
 }
 
 # Usage: extract <file>
@@ -31,59 +24,42 @@ man() {
 # Credit: http://nparikh.org/notes/zshrc.txt
 extract() {
   if [ -f "$1" ]; then
-    local lowername
-    lowername=$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')
-    case "${lowername}" in
-    *.tar     |*.x   ) tar -xvf        "$1" ;;
-    *.tar.bz2 |*.tbz2) tar -jxvf       "$1" ;;
-    *.tar.xz         ) tar -Jxvf       "$1" ;;
-    *.tar.gz  |*.tgz ) tar -zxvf       "$1" ;;
-    *.tar.lzma       ) tar --lzma -xvf "$1" ;;
-    *.bz2            ) bunzip2         "$1" ;;
-    *.xz             ) unxz            "$1" ;;
-    *.gz             ) gunzip -k       "$1" ;;
-    *.zip            ) unzip           "$1" ;;
-    *.rar            ) unrar x         "$1" ;;
-    *.7z             ) 7z e            "$1" ;;
-    *.z              ) uncompress      "$1" ;;
-    *                )
+    local lower_name
+    lower_name="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
+    case "${lower_name}" in
+    *.tar     | *.x    ) tar -xvf        "$1";;
+    *.tar.bz2 | *.tbz2 ) tar -jxvf       "$1";;
+    *.tar.xz           ) tar -Jxvf       "$1";;
+    *.tar.gz  | *.tgz  ) tar -zxvf       "$1";;
+    *.tar.lzma         ) tar --lzma -xvf "$1";;
+    *.bz2              ) bunzip2         "$1";;
+    *.xz               ) unxz            "$1";;
+    *.gz               ) gunzip -k       "$1";;
+    *.zip              ) unzip           "$1";;
+    *.rar              ) unrar x         "$1";;
+    *.7z               ) 7z e            "$1";;
+    *.z                ) uncompress      "$1";;
+    *                  )
       >&2 printf '"%s" cannot be extracted via extract()\n' "$1"
       return 1
       ;;
     esac
   else
     >&2 printf '"%s" is not a valid file\n' "$1"
-    return 1
+    return 2
   fi
-}
-
-# Parse colon separated string and print
-# each item on separated line
-#
-# Example:
-#    $ parse_path_colon_sep a:b
-#    a
-#    b
-parse_path_colon_sep() {
-  local IFS STR
-  IFS=$'\n'
-  STR="$1"
-  # shellcheck disable=SC2046
-  realpath $(tr ':' '\n' <<< "$STR")
-}
-
-# List gcc environment variables
-# NOTE:
-#    -v make gcc print on stderr
-gccenv() {
-  { echo | gcc -E -v - >/dev/null; } 2>&1
 }
 
 # Print specific variable of gcc
 parse_gcc_var() {
-  local var_name="$1" my_paths
-  my_paths=$(gccenv | grep "${var_name}" | cut -d= -f2)
-  parse_path_colon_sep "${my_paths}" | sort | uniq
+  [ "$#" -ne 1 ] && return
+  # List gcc environment variables
+  { printf '\n' | gcc -E -v - >/dev/null; } 2>&1 \
+  | awk -v FS='=' '/^'"$1"'/ { print $2; }' \
+  | awk -v RS=: '{ print }' \
+  | while IFS='' read -r line; do
+    [ -n "$line" ] && realpath "$line"
+  done | sort -u
 }
 
 # Print LIBRARY_PATH of gcc
@@ -98,11 +74,11 @@ gccpath() {
 
 # Print default include paths
 gccinc() {
-  echo | gcc -Wp,-v - -fsyntax-only
+  printf '\n' | gcc -Wp,-v - -fsyntax-only
 }
 
 lssh() {
-  ps -ef | command grep "[s]sh.*pts"
+  ps -ef | command grep '[s]sh.*pts'
 }
 
 # Make path for each argument and cd into the last path
@@ -111,11 +87,12 @@ mkcd() {
   command mkdir -p "$@" && cd "$_"
 }
 
-if m_check_exist vmhgfs-fuse; then
+if command_exist vmhgfs-fuse; then
   # Usage: vmmount /path/to/mount/point
   vmmount() {
+    [ "$#" -ne 1 ] && return
     local sharedir
-    sharedir=$(vmware-hgfsclient)
+    sharedir="$(vmware-hgfsclient)"
     vmhgfs-fuse -o allow_other -o auto_unmount .host:"$sharedir" "$1"
   }
 fi
@@ -132,11 +109,11 @@ if ! alias which >/dev/null 2>&1; then
   fi
 fi
 
-if m_check_exist xclip; then
+if command_exist xclip; then
   # A shortcut function that simplifies usage of xclip.
   # - Accepts input from either stdin (pipe), or params.
   copy() {
-    local _SCS_COL _WRN_COL _RESET_COL
+    local scs_col wrn_col reset_col
     # if no tty, data should be available on stdin
     case "$(tty)" in
     /dev/* ) input="$(< /dev/stdin)" ;;
@@ -151,19 +128,19 @@ EOF
       return 1
     fi
 
-    _SCS_COL="$(tput setaf 2)"
-    _WRN_COL="$(tput setaf 1)"
-    _RESET_COL="$(tput sgr0)"
+    scs_col="$(tput setaf 2)"
+    wrn_col="$(tput setaf 1)"
+    reset_col="$(tput sgr0)"
 
     # Check user is not root (root doesn't have access to user xorg server)
     if [ "$USER" = "root" ]; then
-      >&2 printf '%s\n' "${_WRN_COL}Must be regular user (not root) to copy a file to the clipboard.${_RESET_COL}"
+      >&2 printf '%s\n' "${wrn_col}Must be regular user (not root) to copy a file to the clipboard.${reset_col}"
       return 1
     fi
     # Copy input to clipboard
     printf '%s' "$input" | xclip -selection c
     # Print status.
-    >&2 printf '%s\n' "${_SCS_COL}Copied to clipboard.${_RESET_COL}"
+    >&2 printf '%s\n' "${scs_col}Copied to clipboard.${reset_col}"
   }
 fi
 
@@ -188,7 +165,7 @@ alias cd..='cd ..'
 alias cdroot='cd "$(git root)"'
 alias cp='cp -iv'
 
-if m_check_exist ctags; then
+if command_exist ctags; then
   # Use "ctags --list-kinds=c" to list all kinds
   alias cproto='ctags --sort=no -x --c-kinds=fp'
 fi
@@ -216,16 +193,16 @@ alias lh='ls -dF .??*'
 alias ll='ls -lF'
 
 # Detect which `ls` flavor is in use
-MY_LS="ls -h --group-directories-first"
+my_ls="ls -h --group-directories-first"
 # shellcheck disable=SC2139
 if ls --color > /dev/null 2>&1; then # GNU ls support colors
-  alias ls="${MY_LS} --color"
+  alias ls="${my_ls} --color"
 elif ls --G > /dev/null 2>&1; then # BSD ls
-  alias ls="${MY_LS} -G"
+  alias ls="${my_ls} -G"
 else
-  alias ls="${MY_LS}"
+  alias ls="${my_ls}"
 fi
-unset MY_LS
+unset my_ls
 
 alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
 alias ln='ln -iv'
@@ -264,8 +241,8 @@ alias wifils='nmcli device wifi list'
 #       https://wiki.archlinux.org/index.php/Power_management#Suspend.2Fresume_service_files
 suspend() {
   awk '(NR!=1 && $1!~/^(LID|PB|PW)/ && $3=="*enabled"){print $1}' /proc/acpi/wakeup \
-  | while IFS= read -r DEVICE; do
-    printf '%s\n' "$DEVICE" | sudo tee /proc/acpi/wakeup
+  | while IFS= read -r dev; do
+    printf '%s\n' "$dev" | sudo tee /proc/acpi/wakeup
   done
   systemctl suspend
 }
@@ -274,18 +251,20 @@ suspend() {
 #  alias suspend='xflock4 && systemctl suspend'
 #fi
 
-if m_check_exist rasm2; then
+if command_exist rasm2; then
   alias asm32='rasm2 -a x86 -b 32'
   alias asm64='rasm2 -a x86 -b 64'
   alias disasm32='asm32 -D'
   alias disasm64='asm64 -D'
-elif m_check_exist nasm; then
+elif command_exist nasm; then
   # Usage: _assembly 32 'xor eax, eax; mov ebx, eax;'
   _assembly() {
-    local infile='.nasm.s'
-    local outfile='.nasm.bin'
-    local bits="$1"
-    local asm="$2"
+    [ "$#" -ne 2 ] && return
+    local infile outfile bits asm
+    bits="$1"
+    asm="$2"
+    outfile='.nasm.bin'
+    infile='.nasm.s'
     printf 'BITS %d\n%s\n' "$bits" "$asm" > "$infile" \
     && nasm "$infile" -o "$outfile" \
     && ndisasm -b "$bits" "$outfile"
@@ -295,7 +274,7 @@ elif m_check_exist nasm; then
   alias asm64='_assembly 64'
 fi
 
-if m_check_exist fuser; then
+if command_exist fuser; then
   # Usage: findport 123
   # find pid base on tcp port
   findport() {
@@ -305,28 +284,28 @@ if m_check_exist fuser; then
 fi
 
 # Terminal browser Elinks
-if m_check_exist elinks; then
+if command_exist elinks; then
   alias elinks='elinks --no-connect'
 fi
 
-if m_check_exist pngcheck; then
+if command_exist pngcheck; then
   alias pngcheck='pngcheck -vv'
 fi
 
 # for zathura
-if m_check_exist zathura; then
+if command_exist zathura; then
   alias zathura='zathura --fork'
 fi
 
 # for evince
-if m_check_exist evince; then
+if command_exist evince; then
   evince() {
     (command evince "$@" & )
   }
 fi
 
 # for audacious
-if m_check_exist audacious; then
+if command_exist audacious; then
   audacious() {
     (command audacious "$@" & )
   }
@@ -400,7 +379,3 @@ elif [ -x '/usr/bin/yum' ]; then
     command sudo rm -Ifr /var/cache/yum
   }
 fi
-
-# -- Cleaning up ---------------------------------------------------------------
-
-unset m_check_exist

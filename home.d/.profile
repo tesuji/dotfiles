@@ -8,6 +8,34 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+# -- Helper functions ---------------------------------------------------------
+
+# Check if program exists
+command_exist() {
+  # POSIX compatible, not with `hash', `type', etc.
+  command -v "$1" > /dev/null
+}
+
+# Push path to begin
+path_push() {
+  [ ! -d "$1" ] && return
+  case ":${PATH}:" in
+  *":${1}:"* ) ;;
+  * ) PATH="${1}${PATH+:${PATH}}";;
+  esac
+}
+
+# Append path to end
+path_append() {
+  [ ! -d "$1" ] && return
+  case ":${PATH}:" in
+  *":${1}:"* ) ;;
+  * ) PATH="${PATH:+${PATH}:}${1}";;
+  esac
+}
+
+# -- Set PATH -----------------------------------------------------------------
+
 # Set PATH so it includes sbin program
 # NOTE: In zsh, read https://wiki.archlinux.org/index.php/zsh#Configuring_.24PATH
 case ":${PATH}:" in
@@ -16,9 +44,10 @@ case ":${PATH}:" in
 esac
 
 # Set PATH so it includes user's private bin if it exists
-[ -d "${HOME}/bin" ] && PATH="${PATH:+${PATH}:}${HOME}/bin"
-# Set PATH so it includes user's private bin if it exists
-[ -d "${HOME}/.local/bin" ] && PATH="${PATH:+${PATH}:}${HOME}/.local/bin"
+# and ~/.local/bin which is defined in FHS.
+for p in "${HOME}/bin" "${HOME}/.local/bin"; do
+  path_append "$p"
+done
 
 # -- Exported environment variable --------------------------------------------
 
