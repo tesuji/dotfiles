@@ -23,8 +23,10 @@ esac
 # -- Exported environment variable --------------------------------------------
 
 # Enable the keyring for applications run through the terminal, such as SSH
-[ -n "${DESKTOP_SESSION}" ] && [ -x /usr/bin/gnome-keyring-daemon ] \
-&& eval "$(/usr/bin/gnome-keyring-daemon --start)" && export SSH_AUTH_SOCK
+if [ -n "${DESKTOP_SESSION}" ] && [ -x /usr/bin/gnome-keyring-daemon ]; then
+  eval "$(/usr/bin/gnome-keyring-daemon --start)"
+  export SSH_AUTH_SOCK
+fi
 
 # Set less options
 #PAGER="less"
