@@ -3,8 +3,8 @@
 
 exitstatus() {
   # Do NOT use local var, cause it hang bash when output
-  RETVAL=$?
-  [ "${RETVAL}" -ne 0 ] && printf '[%s] ' "${RETVAL}"
+  retval=$?
+  [ "${retval}" -ne 0 ] && printf '[%s] ' "${retval}"
 }
 
 # Ref https://github.com/mathiasbynens/dotfiles/blob/master/.bash_prompt
@@ -20,66 +20,66 @@ exitstatus() {
 #    tput sgr0
 #    echo
 setprompt() {
-  local M_HOST_STYLE USER_AT_HOST ERROR_PROMPT TIME_PROMPT SHELL_STATE
-  local M_BOLD M_RESET M_BLACK M_RED M_GREEN M_ORANGE M_BLUE \
-        M_PURPLE M_CYAN M_VIOLET M_WHITE M_YELLOW TPUT_NCOLORS
+  local host_style user_at_host error_prompt time_prompt shell_state
+  local bold_col reset_col black_col red_col green_col orange_col blue_col \
+        purple_col cyan_col violet_col white_col yellow_col tput_ncolors
 
   [ -x /usr/bin/tput ] \
-  && TPUT_NCOLORS="$(tput colors 2>/dev/null)" # Number of supported colors
+  && tput_ncolors="$(tput colors 2>/dev/null)" # Number of supported colors
   # If wanted Solarized colors, take it from http://git.io/solarized-colors.
   # shellcheck disable=SC2034
-  if [ "$TPUT_NCOLORS" -eq 256 ]; then
-    M_BOLD="\[$(tput bold)\]"
-    M_RESET="\[$(tput sgr0)\]"
-    M_BLACK="\[$(tput setaf 0)\]"
-    M_RED="\[$(tput setaf 1)\]"
-    M_GREEN="\[$(tput setaf 10)\]"
-    M_ORANGE="\[$(tput setaf 166)\]"
-    M_BLUE="\[$(tput setaf 33)\]"
-    M_PURPLE="\[$(tput setaf 13)\]"
-    M_CYAN="\[$(tput setaf 14)\]"
-    M_VIOLET="\[$(tput setaf 61)\]"
-    M_WHITE="\[$(tput setaf 15)\]"
-    M_YELLOW="\[$(tput setaf 11)\]"
-  elif [ "$TPUT_NCOLORS" -ge 8 ]; then
-    M_BOLD="\[$(tput bold)\]"
-    M_RESET="\[$(tput sgr0)\]"
-    M_BLACK="\[$(tput setaf 0)\]"
-    M_RED="\[$(tput setaf 1)\]"
-    M_GREEN="\[$(tput setaf 2)\]"
-    M_ORANGE="\[$(tput setaf 3)\]"
-    M_BLUE="\[$(tput setaf 4)\]"
-    M_PURPLE="\[$(tput setaf 5)\]"
-    M_CYAN="\[$(tput setaf 6)\]"
-    M_VIOLET="${M_BOLD}${M_PURPLE}" # Need ${M_RESET} after using
-    M_WHITE="\[$(tput setaf 7)\]"
-    M_YELLOW="\[$(tput setaf 3)\]"
+  if [ "$tput_ncolors" -eq 256 ]; then
+    bold_col="\[$(tput bold)\]"
+    reset_col="\[$(tput sgr0)\]"
+    black_col="\[$(tput setaf 0)\]"
+    red_col="\[$(tput setaf 1)\]"
+    green_col="\[$(tput setaf 10)\]"
+    orange_col="\[$(tput setaf 166)\]"
+    blue_col="\[$(tput setaf 33)\]"
+    purple_col="\[$(tput setaf 13)\]"
+    cyan_col="\[$(tput setaf 14)\]"
+    violet_col="\[$(tput setaf 61)\]"
+    white_col="\[$(tput setaf 15)\]"
+    yellow_col="\[$(tput setaf 11)\]"
+  elif [ "$tput_ncolors" -ge 8 ]; then
+    bold_col="\[$(tput bold)\]"
+    reset_col="\[$(tput sgr0)\]"
+    black_col="\[$(tput setaf 0)\]"
+    red_col="\[$(tput setaf 1)\]"
+    green_col="\[$(tput setaf 2)\]"
+    orange_col="\[$(tput setaf 3)\]"
+    blue_col="\[$(tput setaf 4)\]"
+    purple_col="\[$(tput setaf 5)\]"
+    cyan_col="\[$(tput setaf 6)\]"
+    violet_col="${bold_col}${purple_col}" # Need ${reset_col} after using
+    white_col="\[$(tput setaf 7)\]"
+    yellow_col="\[$(tput setaf 3)\]"
   fi
 
   # Add constant string (remote) when connected via SSH.
   if [ "$SESSION_TYPE" = "ssh" ]; then
-    M_HOST_STYLE="\h (remote)"
+    host_style="\h (remote)"
   else
-    M_HOST_STYLE="\h"
+    host_style="\h"
   fi
 
   # Set a fancy prompt (non-color if it is a dumb terminal)
   if [ "$TERM" != "dumb" ]; then
-    USER_AT_HOST="${M_BOLD}${M_CYAN}\u${M_WHITE} at ${M_YELLOW}${M_HOST_STYLE} ${M_WHITE}in ${M_GREEN}\w"
-    ERROR_PROMPT="${M_RED}\$(exitstatus)"
-    TIME_PROMPT="${M_WHITE}\A ${M_RESET}" # disable bold
-    SHELL_STATE="${M_RED}\$ ${M_RESET}"
+    user_at_host="${bold_col}${cyan_col}\u${white_col} at ${yellow_col}${host_style} ${white_col}in ${green_col}\w"
+    error_prompt="${red_col}\$(exitstatus)"
+    time_prompt="${white_col}\A ${reset_col}" # disable bold
+    shell_state="${red_col}\$ ${reset_col}"
   else
-    USER_AT_HOST="\u at ${M_HOST_STYLE} in \w"
-    ERROR_PROMPT="\$(exitstatus)"
-    TIME_PROMPT="\A " # disable bold
-    SHELL_STATE="\$ "
+    user_at_host="\u at ${host_style} in \w"
+    error_prompt="\$(exitstatus)"
+    time_prompt="\A " # disable bold
+    shell_state="\$ "
   fi
 
   # Sample result:
   #     user at host in ~/Documents
   #     9:39 $
-  PS1="${USER_AT_HOST}\n${ERROR_PROMPT}${TIME_PROMPT}${SHELL_STATE}"
+  PS1="${user_at_host}\n${error_prompt}${time_prompt}${shell_state}"
 
   # If this is an xterm set the title to dir
   case "${TERM}" in

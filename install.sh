@@ -39,14 +39,14 @@ handle_option() {
       ;;
     esac
   done
-  shift $(( OPTIND -1 ))
+  shift $(( OPTIND - 1 ))
 }
 
 start() { # start backup
   [ "${BACKUP}" -eq 1 ] && mkdir -p "${BACKUP_PATH}"
 
-  for DIR in "${CORE_DIR[@]}"; do
-    solve_stow_conflict "${DIR}" "$1"
+  for d in "${CORE_DIR[@]}"; do
+    solve_stow_conflict "${d}" "$1"
   done
 
 }

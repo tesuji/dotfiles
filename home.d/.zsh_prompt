@@ -19,35 +19,35 @@ screen* | xterm* | rxvt* )
 esac
 
 setprompt() {
-  local M_HOST_STYLE USER_AT_HOST ERROR_PROMPT JOB_PROMPT TIME_PROMPT SHELL_STATE
+  local host_style user_at_host error_prompt job_prompt time_prompt shell_state
   # Add constant string (remote) when connected via SSH.
   if [ "$SESSION_TYPE" = "ssh" ]; then
-    M_HOST_STYLE="%M (remote)"
+    host_style="%M (remote)"
   else
-    M_HOST_STYLE="%M"
+    host_style="%M"
   fi
 
   # Set a fancy prompt (non-color if it is a dumb terminal)
   if [ "$TERM" != "dumb" ]; then
-    USER_AT_HOST='%B%F{cyan}%n %F{white}at '%F{yellow}${M_HOST_STYLE}'%F{white} in %F{green}%~%k'
-    ERROR_PROMPT='%(?..%K{red}%F{white}[%?]%k )' # Print exit code if exit code != 0
-    JOB_PROMPT='%(1j.%K{blue} %j%k .)'  # Print number of job if there are background jobs
-    TIME_PROMPT='%F{white}%T%b%f'       # Time format -> hh:mm
-    SHELL_STATE='%F{red}%#%f'
+    user_at_host='%B%F{cyan}%n %F{white}at '%F{yellow}${host_style}'%F{white} in %F{green}%~%k'
+    error_prompt='%(?..%K{red}%F{white}[%?]%k )' # Print exit code if exit code != 0
+    job_prompt='%(1j.%K{blue} %j%k .)'  # Print number of job if there are background jobs
+    time_prompt='%F{white}%T%b%f'       # Time format -> hh:mm
+    shell_state='%F{red}%#%f'
   else
-    USER_AT_HOST='%n at '"${M_HOST_STYLE}"' in %~'
-    ERROR_PROMPT='%(?..[%?] )'
-    JOB_PROMPT='%(1j. %j .)'
-    TIME_PROMPT='%T'
-    SHELL_STATE='%#'
+    user_at_host='%n at '"${host_style}"' in %~'
+    error_prompt='%(?..[%?] )'
+    job_prompt='%(1j. %j .)'
+    time_prompt='%T'
+    shell_state='%#'
   fi
 
   # Sample result:
   #     user at host in ~/Documents
   #     9:39 $
   # Reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
-  PROMPT="${USER_AT_HOST}
-${ERROR_PROMPT}${JOB_PROMPT}${TIME_PROMPT} ${SHELL_STATE} "
+  PROMPT="${user_at_host}
+${error_prompt}${job_prompt}${time_prompt} ${shell_state} "
   export PROMPT
 }
 

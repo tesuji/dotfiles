@@ -7,9 +7,9 @@
 # Ref:
 #    https://askubuntu.com/q/69556/565006
 get_battery_info() {
-  #m_org_battery=$(upower --enumerate | grep -F "battery")
-  m_org_battery=/org/freedesktop/UPower/devices/battery_BAT0
-  upower --show-info "$m_org_battery"
+  #org_battery=$(upower --enumerate | grep -F "battery")
+  org_battery=/org/freedesktop/UPower/devices/battery_BAT0
+  upower --show-info "$org_battery"
 }
 
 get_battery_info

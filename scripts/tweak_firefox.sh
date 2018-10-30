@@ -12,19 +12,19 @@ get_firefox_profile() {
   fi
 
   if grep -q '\[Profile[^0]\]' "$PROFILE_INI" ; then
-    PROFILE_DIR=$(\
-        grep -E '^\[Profile|^Path|^Default' "$PROFILE_INI" \
-        | grep -1 '^Default=1' \
-        | grep '^Path' | cut -d= -f2 )
+    profile_dir=$(\
+        grep -E '^(\[Profile|Path|Default)' "$PROFILE_INI" \
+        | grep -B1 '^Default=1' \
+        | awk -v FS='=' '/^Path=/{ print $2 }' )
   else
-    PROFILE_DIR=$( grep 'Path=' "$PROFILE_INI" | cut -d= -f2 )
+    profile_dir="$( awk -v FS='=' '/^Path=/{ print $2 }' "$PROFILE_INI" )"
   fi
 
-  printf '%s' "$PARENT_FF_DIR/$PROFILE_DIR"
+  printf '%s' "$PARENT_FF_DIR/$profile_dir"
 }
 
 start_install() {
-  if PROFILE_DIR=$( get_firefox_profile ); then
+  if PROFILE_DIR="$( get_firefox_profile )"; then
     (cd "${HERE_DIR}/.." && stow -v -t "$PROFILE_DIR" firefox)
   else
     >&2 cat << EOF

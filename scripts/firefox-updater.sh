@@ -4,7 +4,7 @@
 # EXPERIMENTAL! Use at your own risk!
 # ------------------------------------------------------------------------------
 
-M_OUTFILE=''
+dl_name=''
 
 ask_install() { # ask_install question
   printf '\n\n'
@@ -19,11 +19,11 @@ ask_install() { # ask_install question
 # Read Why does "local" sweep the return code of a command?
 #    https://stackoverflow.com/a/4421282/5456794
 download_firefox() {
-  local ENTRY_URL DOWNLOAD_LOG FIREFOX_URL
+  local entry_url dl_log firefox_url
   printf 'Testing firefox download link ...\n'
-  ENTRY_URL='https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'
+  entry_url='https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US'
 
-  if DOWNLOAD_LOG=$(wget --spider "${ENTRY_URL}" 2>&1); then
+  if dl_log=$(wget --spider "${entry_url}" 2>&1); then
     >&2 cat << EOF
 Remote file does not exist -- broken link!!!
 Exiting ...
@@ -31,19 +31,19 @@ EOF
     exit 2
   fi
 
-  FIREFOX_URL=$(printf '%s' "${DOWNLOAD_LOG}" | grep Location | cut -d ' ' -f2)
-  M_OUTFILE=$(basename "${FIREFOX_URL}")
+  firefox_url=$(printf '%s' "${dl_log}" | grep Location | cut -d ' ' -f2)
+  dl_name=$(basename "${firefox_url}")
 
-  >&2 printf '[+] Download %s\n' "${M_OUTFILE}"
+  >&2 printf '[+] Download %s\n' "${dl_name}"
 
-  case "${M_OUTFILE}" in
+  case "${dl_name}" in
   "firefox"*".tar.bz2" )
     if ask_install 'Download this version ?'; then
       >&2 printf '%s\n' "Exitting ..."
       return 1
     fi
 
-    wget --continue -O "${M_OUTFILE}" "${FIREFOX_URL}"
+    wget --continue -O "${dl_name}" "${firefox_url}"
     ;;
   * )
     >&2 cat << EOF
@@ -56,12 +56,11 @@ EOF
 }
 
 install_firefox() {
-  local FIREFOX_BIN
-  FIREFOX_BIN=/opt/firefox/firefox
+  readonly FIREFOX_BIN=/opt/firefox/firefox
 
   if ask_install 'Do you want to install ?'; then
     >&2 printf 'Unpacking firefox to /opt/ ...\n'
-    sudo tar xjf --overwrite "${M_OUTFILE}" -C /opt/
+    sudo tar xjf --overwrite "${dl_name}" -C /opt/
 
     >&2 printf 'Setting owner and permissions (only this %s user) ...\n' "${USER}"
     sudo find /opt/firefox -exec chown "$USER". {} +
@@ -101,9 +100,8 @@ EOF
   fi
 }
 
-
 download_firefox
 install_firefox
 remove_addons
 
-unset M_OUTFILE
+unset dl_name

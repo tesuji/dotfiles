@@ -10,11 +10,11 @@ set -e
 HERE_DIR="$( cd "$(dirname "$0")" && pwd -P )"
 
 do_disable_ipv6() {
-  for CONF in 'net.ipv6.conf.all.disable_ipv6' \
+  for conf in 'net.ipv6.conf.all.disable_ipv6' \
       'net.ipv6.conf.default.disable_ipv6' \
       'net.ipv6.conf.lo.disable_ipv6'; do
-    if [ "$(sysctl -n "${CONF}")" -eq 0 ]; then
-      printf '%s = 1\n' "${CONF}" >> '/etc/sysctl.conf'
+    if [ "$(sysctl -n "${conf}")" -eq 0 ]; then
+      printf '%s = 1\n' "${conf}" >> '/etc/sysctl.conf'
     fi
   done
 
@@ -52,7 +52,7 @@ set_option_fstab() {
 #   - Use "grub-mkpasswd-pbkdf2" to get PBKDF2 hash.
 set_passwd_grub() {
   [ "$#" -ne 1 ] && return 1
-  PBKDF2_HASH=$1
+  PBKDF2_HASH="$1"
   GRUB_CONF_DIR=/etc/grub.d
   GRUB_CUSTOM_CONF="$GRUB_CONF_DIR/40_custom"
   GRUB_LINUX_CONF="$GRUB_CONF_DIR/10_linux"
@@ -95,9 +95,9 @@ disable_download_apt_translation() {
 # Do update manually.
 # Ref: https://askubuntu.com/a/880520/565006
 disable_auto_update() {
-  RS="$(systemctl is-enabled apt-daily.timer)"
-  CODE="$?"
-  [ "$RS" = disable ] && [ "$CODE" -gt 0 ] && return 0
+  status="$(systemctl is-enabled apt-daily.timer)"
+  rt_code="$?"
+  [ "$status" = disable ] && [ "$rt_code" -gt 0 ] && return 0
   apt-get purge -y software-center appstream snapd cups
   # or dpkg-divert --local --rename --divert '/etc/apt/apt.conf.d/#50appstream' /etc/apt/apt.conf.d/50appstream
   systemctl stop motd-news.timer apt-daily.timer apt-daily-upgrade.timer
