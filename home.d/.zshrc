@@ -153,5 +153,5 @@ zle -N down-line-or-beginning-search
 
 # https://wiki.archlinux.org/index.php/zsh#Help_command
 autoload -Uz run-help
-unalias run-help
+unalias run-help 2>/dev/null
 alias help='run-help'
