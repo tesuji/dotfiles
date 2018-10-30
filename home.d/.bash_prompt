@@ -19,73 +19,74 @@ exitstatus() {
 #    done
 #    tput sgr0
 #    echo
-#
-TPUT_NCOLORS="$(tput colors 2>/dev/null)" # Number of supported colors in tput
-# If wanted Solarized colors, take it from http://git.io/solarized-colors.
-# shellcheck disable=SC2034
-if [ "$TPUT_NCOLORS" -eq 256 ]; then
-  M_BOLD="\[$(tput bold)\]"
-  M_RESET="\[$(tput sgr0)\]"
-  M_BLACK="\[$(tput setaf 0)\]"
-  M_RED="\[$(tput setaf 1)\]"
-  M_GREEN="\[$(tput setaf 10)\]"
-  M_ORANGE="\[$(tput setaf 166)\]"
-  M_BLUE="\[$(tput setaf 33)\]"
-  M_PURPLE="\[$(tput setaf 13)\]"
-  M_CYAN="\[$(tput setaf 14)\]"
-  M_VIOLET="\[$(tput setaf 61)\]"
-  M_WHITE="\[$(tput setaf 15)\]"
-  M_YELLOW="\[$(tput setaf 11)\]"
-elif [ "$TPUT_NCOLORS" -ge 8 ]; then
-  M_BOLD="\[$(tput bold)\]"
-  M_RESET="\[$(tput sgr0)\]"
-  M_BLACK="\[$(tput setaf 0)\]"
-  M_RED="\[$(tput setaf 1)\]"
-  M_GREEN="\[$(tput setaf 2)\]"
-  M_ORANGE="\[$(tput setaf 3)\]"
-  M_BLUE="\[$(tput setaf 4)\]"
-  M_PURPLE="\[$(tput setaf 5)\]"
-  M_CYAN="\[$(tput setaf 6)\]"
-  M_VIOLET="${M_BOLD}${M_PURPLE}" # Need ${M_RESET} after using
-  M_WHITE="\[$(tput setaf 7)\]"
-  M_YELLOW="\[$(tput setaf 3)\]"
-fi
+setprompt() {
+  local M_HOST_STYLE USER_AT_HOST ERROR_PROMPT TIME_PROMPT SHELL_STATE
+  local M_BOLD M_RESET M_BLACK M_RED M_GREEN M_ORANGE M_BLUE \
+        M_PURPLE M_CYAN M_VIOLET M_WHITE M_YELLOW TPUT_NCOLORS
 
-# Add constant string (remote) when connected via SSH.
-if [ "$SESSION_TYPE" = "ssh" ]; then
-  M_HOST_STYLE="\h (remote)"
-else
-  M_HOST_STYLE="\h"
-fi
+  [ -x /usr/bin/tput ] \
+  && TPUT_NCOLORS="$(tput colors 2>/dev/null)" # Number of supported colors
+  # If wanted Solarized colors, take it from http://git.io/solarized-colors.
+  # shellcheck disable=SC2034
+  if [ "$TPUT_NCOLORS" -eq 256 ]; then
+    M_BOLD="\[$(tput bold)\]"
+    M_RESET="\[$(tput sgr0)\]"
+    M_BLACK="\[$(tput setaf 0)\]"
+    M_RED="\[$(tput setaf 1)\]"
+    M_GREEN="\[$(tput setaf 10)\]"
+    M_ORANGE="\[$(tput setaf 166)\]"
+    M_BLUE="\[$(tput setaf 33)\]"
+    M_PURPLE="\[$(tput setaf 13)\]"
+    M_CYAN="\[$(tput setaf 14)\]"
+    M_VIOLET="\[$(tput setaf 61)\]"
+    M_WHITE="\[$(tput setaf 15)\]"
+    M_YELLOW="\[$(tput setaf 11)\]"
+  elif [ "$TPUT_NCOLORS" -ge 8 ]; then
+    M_BOLD="\[$(tput bold)\]"
+    M_RESET="\[$(tput sgr0)\]"
+    M_BLACK="\[$(tput setaf 0)\]"
+    M_RED="\[$(tput setaf 1)\]"
+    M_GREEN="\[$(tput setaf 2)\]"
+    M_ORANGE="\[$(tput setaf 3)\]"
+    M_BLUE="\[$(tput setaf 4)\]"
+    M_PURPLE="\[$(tput setaf 5)\]"
+    M_CYAN="\[$(tput setaf 6)\]"
+    M_VIOLET="${M_BOLD}${M_PURPLE}" # Need ${M_RESET} after using
+    M_WHITE="\[$(tput setaf 7)\]"
+    M_YELLOW="\[$(tput setaf 3)\]"
+  fi
 
-# Set a fancy prompt (non-color if it is a dumb terminal)
-if [ "$TERM" != "dumb" ]; then
-  USER_AT_HOST="${M_BOLD}${M_CYAN}\u${M_WHITE} at ${M_YELLOW}${M_HOST_STYLE} ${M_WHITE}in ${M_GREEN}\w"
-  ERROR_PROMPT="${M_RED}\$(exitstatus)"
-  TIME_PROMPT="${M_WHITE}\A ${M_RESET}" # disable bold
-  SHELL_STATE="${M_RED}\$ ${M_RESET}"
-else
-  USER_AT_HOST="\u at ${M_HOST_STYLE} in \w"
-  ERROR_PROMPT="\$(exitstatus)"
-  TIME_PROMPT="\A " # disable bold
-  SHELL_STATE="\$ "
-fi
+  # Add constant string (remote) when connected via SSH.
+  if [ "$SESSION_TYPE" = "ssh" ]; then
+    M_HOST_STYLE="\h (remote)"
+  else
+    M_HOST_STYLE="\h"
+  fi
 
-# Sample result:
-#     user at host in ~/Documents
-#     9:39 $
-PS1="${USER_AT_HOST}\n${ERROR_PROMPT}${TIME_PROMPT}${SHELL_STATE}"
+  # Set a fancy prompt (non-color if it is a dumb terminal)
+  if [ "$TERM" != "dumb" ]; then
+    USER_AT_HOST="${M_BOLD}${M_CYAN}\u${M_WHITE} at ${M_YELLOW}${M_HOST_STYLE} ${M_WHITE}in ${M_GREEN}\w"
+    ERROR_PROMPT="${M_RED}\$(exitstatus)"
+    TIME_PROMPT="${M_WHITE}\A ${M_RESET}" # disable bold
+    SHELL_STATE="${M_RED}\$ ${M_RESET}"
+  else
+    USER_AT_HOST="\u at ${M_HOST_STYLE} in \w"
+    ERROR_PROMPT="\$(exitstatus)"
+    TIME_PROMPT="\A " # disable bold
+    SHELL_STATE="\$ "
+  fi
 
-# Unset things if source-ing manually .bashrc from terminal.
-unset M_HOST_STYLE USER_AT_HOST ERROR_PROMPT TIME_PROMPT SHELL_STATE
-unset M_BOLD M_RESET M_BLACK M_RED M_GREEN M_ORANGE M_BLUE \
-      M_PURPLE M_CYAN M_VIOLET M_WHITE M_YELLOW TPUT_NCOLORS
+  # Sample result:
+  #     user at host in ~/Documents
+  #     9:39 $
+  PS1="${USER_AT_HOST}\n${ERROR_PROMPT}${TIME_PROMPT}${SHELL_STATE}"
 
-# If this is an xterm set the title to dir
-case "${TERM}" in
-rxvt*|*xterm* )
-  PS1="\[\e]0;\w\a\]${PS1}"
-  ;;
-esac
+  # If this is an xterm set the title to dir
+  case "${TERM}" in
+  rxvt*|*xterm* ) PS1="\[\e]0;\w\a\]${PS1}";;
+  esac
 
-export PS1
+  export PS1
+}
+
+setprompt

@@ -1,10 +1,19 @@
 #!/usr/bin/env zsh
+# ~/.zshrc: per-user .zshrc file for zsh(1).
+#
+# This file is sourced only for interactive shells. It
+# should contain commands to set up aliases, functions,
+# options, key bindings, etc.
+#
+# Global Order: zshenv, zprofile, zshrc, zlogin
+
 # Ref http://matt.blissett.me.uk/linux/zsh/zshrc
 
-# Skip all this for non-interactive shells
-[ -z "$PS1" ] && return
-
-. "${HOME}/.bash_preinit.sh"
+# If not running interactively, don't do anything
+case "$-" in
+*i*) ;;
+  *) return;;
+esac
 
 # FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26
@@ -51,6 +60,19 @@ setopt HIST_IGNORE_SPACE    # Don't record an entry starting with a space
 setopt HIST_REDUCE_BLANKS   # Remove superfluous blanks before recording entry
 setopt HIST_VERIFY          # Don't execute immediately upon history expansion
 
+HISTSIZE=1000                 # 1000 lines of history within the shell
+SAVEHIST=1000                 # 1000 lines of history in $HISTFILE
+HISTFILE="${HOME}/.zsh_history" # Save history to ~/.zsh_history
+# Ignore saving in $HISTFILE, but still in the shell
+HISTORY_IGNORE='([bf]g|cd ..|l|l[alsh]|less *|vim *)'
+
+# Watch other user login/out
+watch=all   # watch all logins, default "notme"
+LOGCHECK=10 # check logins after 10 seconds
+
+# Say how long a command took, if it took more than 10 seconds
+REPORTTIME=10
+
 # -- Completion ----------------------------------------------------------------
 
 # You may have to force rebuild zcompdump:
@@ -61,7 +83,7 @@ setopt HIST_VERIFY          # Don't execute immediately upon history expansion
 autoload -Uz compinit # Use modern completion system
 
 # Usage: m_compinit_age -> time
-# Return the string represents how long has "$HOME/.zcompdump" been modified
+# Return how long has "$HOME/.zcompdump" been modified
 m_compinit_age() {
   local LAST_MODIFIED CURRENT_TIME
   LAST_MODIFIED=$(stat -c '%Y' "${HOME}/.zcompdump")
@@ -125,4 +147,11 @@ zle -N down-line-or-beginning-search
 # -- Load shell dotfiles -------------------------------------------------------
 
 [ -f "${HOME}/.zsh_prompt" ] && . "${HOME}/.zsh_prompt"
-. "${HOME}/.bash_postinit.sh"
+# * "$HOME/.extra" can be used for other settings you don't want to commit.
+[ -f "${HOME}/.extra" ] && . "${HOME}/.extra"
+[ -f "${HOME}/.aliases" ] && . "${HOME}/.aliases"
+
+# https://wiki.archlinux.org/index.php/zsh#Help_command
+autoload -Uz run-help
+unalias run-help
+alias help='run-help'

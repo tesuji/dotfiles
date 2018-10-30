@@ -4,7 +4,7 @@
 
 # From: https://github.com/MrElendig/dotfiles-alice/blob/master/.zshrc
 case "${TERM}" in
-screen*|*xterm*|rxvt*|\(dt|k|E\)term)
+screen* | xterm* | rxvt* )
   # Ref:
   #   https://wiki.archlinux.org/index.php/zsh#xterm_title
   #   http://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h2-Operating-System-Commands
@@ -18,34 +18,38 @@ screen*|*xterm*|rxvt*|\(dt|k|E\)term)
   ;;
 esac
 
-# Add constant string (remote) when connected via SSH.
-if [ "$SESSION_TYPE" = "ssh" ]; then
-  M_HOST_STYLE="%M (remote)"
-else
-  M_HOST_STYLE="%M"
-fi
+setprompt() {
+  # Add constant string (remote) when connected via SSH.
+  if [ "$SESSION_TYPE" = "ssh" ]; then
+    M_HOST_STYLE="%M (remote)"
+  else
+    M_HOST_STYLE="%M"
+  fi
 
-# Set a fancy prompt (non-color if it is a dumb terminal)
-if [ "$TERM" != "dumb" ]; then
-  USER_AT_HOST='%B%F{cyan}%n %F{white}at '%F{yellow}${M_HOST_STYLE}'%F{white} in %F{green}%~%k'
-  ERROR_PROMPT='%(?..%K{red}%F{white}[%?]%k )' # Print exit code if exit code != 0
-  JOB_PROMPT='%(1j.%K{blue} %j%k .)'  # Print number of job if there are background jobs
-  TIME_PROMPT='%F{white}%T%b%f'       # Time format -> hh:mm
-  SHELL_STATE='%F{red}%#%f'
-else
-  USER_AT_HOST='%n at '"${M_HOST_STYLE}"' in %~'
-  ERROR_PROMPT='%(?..[%?] )'
-  JOB_PROMPT='%(1j. %j .)'
-  TIME_PROMPT='%T'
-  SHELL_STATE='%#'
-fi
+  # Set a fancy prompt (non-color if it is a dumb terminal)
+  if [ "$TERM" != "dumb" ]; then
+    USER_AT_HOST='%B%F{cyan}%n %F{white}at '%F{yellow}${M_HOST_STYLE}'%F{white} in %F{green}%~%k'
+    ERROR_PROMPT='%(?..%K{red}%F{white}[%?]%k )' # Print exit code if exit code != 0
+    JOB_PROMPT='%(1j.%K{blue} %j%k .)'  # Print number of job if there are background jobs
+    TIME_PROMPT='%F{white}%T%b%f'       # Time format -> hh:mm
+    SHELL_STATE='%F{red}%#%f'
+  else
+    USER_AT_HOST='%n at '"${M_HOST_STYLE}"' in %~'
+    ERROR_PROMPT='%(?..[%?] )'
+    JOB_PROMPT='%(1j. %j .)'
+    TIME_PROMPT='%T'
+    SHELL_STATE='%#'
+  fi
 
-# Sample result:
-#     user at host in ~/Documents
-#     9:39 $
-# Reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
-PROMPT="${USER_AT_HOST}
+  # Sample result:
+  #     user at host in ~/Documents
+  #     9:39 $
+  # Reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+  PROMPT="${USER_AT_HOST}
 ${ERROR_PROMPT}${JOB_PROMPT}${TIME_PROMPT} ${SHELL_STATE} "
-export PROMPT
+  export PROMPT
 
-unset M_HOST_STYLE USER_AT_HOST ERROR_PROMPT JOB_PROMPT TIME_PROMPT SHELL_STATE
+  unset M_HOST_STYLE USER_AT_HOST ERROR_PROMPT JOB_PROMPT TIME_PROMPT SHELL_STATE
+}
+
+setprompt

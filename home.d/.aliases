@@ -3,6 +3,13 @@
 
 # -- Functions -----------------------------------------------------------------
 
+# Usage: m_check_exist -> bool
+# Check if program exists
+m_check_exist() {
+  # POSIX compatible, not with `hash', `type', etc.
+  command -v "$1" > /dev/null
+}
+
 # Enable colored man
 # The end \ in the end of each line helps set environment variable
 # to command man.
@@ -162,20 +169,14 @@ fi
 
 # -- Aliases -------------------------------------------------------------------
 
-# Make colors to ls command
-[ ! -f "$HOME/.dircolors" ] && [ -x '/usr/bin/dircolors' ] && /usr/bin/dircolors -b > "$HOME/.dircolors"
-[ -f "$HOME/.dircolors" ] && . "$HOME/.dircolors"
-
-case "${CURRENT_SHELL}" in
-*bash )
-  alias chi='history -c'
-  ;;
-*zsh )
-  # https://wiki.archlinux.org/index.php/zsh#Help_command
-  autoload -Uz run-help
-  alias help='run-help'
-  ;;
-esac
+# Enable color support of ls
+if [ -x /usr/bin/dircolors ]; then
+  if [ -f "$HOME/.dircolors" ]; then
+    eval "$(dircolors -b "$HOME/.dircolors")"
+  else
+    eval "$(dircolors -b)"
+  fi
+fi
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -399,3 +400,7 @@ elif [ -x '/usr/bin/yum' ]; then
     command sudo rm -Ifr /var/cache/yum
   }
 fi
+
+# -- Cleaning up ---------------------------------------------------------------
+
+unset m_check_exist
