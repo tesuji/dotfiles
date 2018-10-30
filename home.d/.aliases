@@ -27,22 +27,22 @@ extract() {
     local lower_name
     lower_name="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
     case "${lower_name}" in
-    *.tar     | *.x    ) tar -xvf        "$1";;
-    *.tar.bz2 | *.tbz2 ) tar -jxvf       "$1";;
-    *.tar.xz           ) tar -Jxvf       "$1";;
-    *.tar.gz  | *.tgz  ) tar -zxvf       "$1";;
-    *.tar.lzma         ) tar --lzma -xvf "$1";;
-    *.bz2              ) bunzip2         "$1";;
-    *.xz               ) unxz            "$1";;
-    *.gz               ) gunzip -k       "$1";;
-    *.zip              ) unzip           "$1";;
-    *.rar              ) unrar x         "$1";;
-    *.7z               ) 7z e            "$1";;
-    *.z                ) uncompress      "$1";;
-    *                  )
-      >&2 printf '"%s" cannot be extracted via extract()\n' "$1"
-      return 1
-      ;;
+      *.tar     | *.x    ) tar -xvf        "$1";;
+      *.tar.bz2 | *.tbz2 ) tar -jxvf       "$1";;
+      *.tar.xz           ) tar -Jxvf       "$1";;
+      *.tar.gz  | *.tgz  ) tar -zxvf       "$1";;
+      *.tar.lzma         ) tar --lzma -xvf "$1";;
+      *.bz2              ) bunzip2         "$1";;
+      *.xz               ) unxz            "$1";;
+      *.gz               ) gunzip -k       "$1";;
+      *.zip              ) unzip           "$1";;
+      *.rar              ) unrar x         "$1";;
+      *.7z               ) 7z e            "$1";;
+      *.z                ) uncompress      "$1";;
+      *                  )
+        >&2 printf '"%s" cannot be extracted via extract()\n' "$1"
+        return 1
+        ;;
     esac
   else
     >&2 printf '"%s" is not a valid file\n' "$1"
@@ -116,8 +116,8 @@ if command_exist xclip; then
     local scs_col wrn_col reset_col
     # if no tty, data should be available on stdin
     case "$(tty)" in
-    /dev/* ) input="$(< /dev/stdin)" ;;
-    * ) input="$*";;
+      /dev/* ) input="$(< /dev/stdin)" ;;
+           * ) input="$*";;
     esac
     if [ -z "$input" ]; then  # If no input, print usage message.
       >&2 cat << EOF

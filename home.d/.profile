@@ -20,8 +20,8 @@ command_exist() {
 path_push() {
   [ ! -d "$1" ] && return
   case ":${PATH}:" in
-  *":${1}:"* ) ;;
-  * ) PATH="${1}${PATH+:${PATH}}";;
+    *":${1}:"* ) ;;
+    * ) PATH="${1}${PATH+:${PATH}}";;
   esac
 }
 
@@ -29,8 +29,8 @@ path_push() {
 path_append() {
   [ ! -d "$1" ] && return
   case ":${PATH}:" in
-  *":${1}:"* ) ;;
-  * ) PATH="${PATH:+${PATH}:}${1}";;
+    *":${1}:"* ) ;;
+    * ) PATH="${PATH:+${PATH}:}${1}";;
   esac
 }
 
@@ -39,8 +39,8 @@ path_append() {
 # Set PATH so it includes sbin program
 # NOTE: In zsh, read https://wiki.archlinux.org/index.php/zsh#Configuring_.24PATH
 case ":${PATH}:" in
-*":/sbin:"* ) ;;
-* ) PATH="/sbin/:/usr/sbin:/usr/local/sbin${PATH+:${PATH}}";;
+  *":/sbin:"* ) ;;
+  * ) PATH="/sbin/:/usr/sbin:/usr/local/sbin${PATH+:${PATH}}";;
 esac
 
 # Set PATH so it includes user's private bin if it exists
@@ -90,7 +90,7 @@ if [ -n "${SSH_CLIENT}" ] || [ -n "${SSH_CONNECTION}" ] || [ -n "${SSH_TTY}" ]; 
   SESSION_TYPE=ssh
 else
   case "/$(ps -o comm= -p "${PPID}")" in
-  *"/sshd") SESSION_TYPE=ssh;;
+    */sshd ) SESSION_TYPE=ssh;;
   esac
 fi
 

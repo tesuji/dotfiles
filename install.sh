@@ -28,15 +28,15 @@ usage() {
 handle_option() {
   while getopts ':b' opt; do
     case "${opt}" in
-    b ) BACKUP=true ;;
-    \? )
-      echo "Invalid option: -$OPTARG" >&2
-      usage
-      ;;
-    : )
-      echo "Option -$OPTARG requires an argument." >&2
-      usage
-      ;;
+      b ) BACKUP=true ;;
+      \? )
+        echo "Invalid option: -$OPTARG" >&2
+        usage
+        ;;
+      : )
+        echo "Option -$OPTARG requires an argument." >&2
+        usage
+        ;;
     esac
   done
   shift $(( OPTIND - 1 ))

@@ -37,21 +37,21 @@ EOF
   >&2 printf '[+] Download %s\n' "${dl_name}"
 
   case "${dl_name}" in
-  "firefox"*".tar.bz2" )
-    if ask_install 'Download this version ?'; then
-      >&2 printf '%s\n' "Exitting ..."
-      return 1
-    fi
+    "firefox"*".tar.bz2" )
+      if ask_install 'Download this version ?'; then
+        >&2 printf '%s\n' "Exitting ..."
+        return 1
+      fi
 
-    wget --continue -O "${dl_name}" "${firefox_url}"
-    ;;
-  * )
-    >&2 cat << EOF
+      wget --continue -O "${dl_name}" "${firefox_url}"
+      ;;
+    * )
+      >&2 cat << EOF
 It's NOT likely a tar.bz2 file ...
 Exitting ...
 EOF
-    exit 1
-    ;;
+      exit 1
+      ;;
   esac
 }
 
