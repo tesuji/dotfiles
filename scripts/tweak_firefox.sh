@@ -12,10 +12,9 @@ get_firefox_profile() {
   fi
 
   if grep -q '\[Profile[^0]\]' "$PROFILE_INI" ; then
-    profile_dir=$(\
-        grep -E '^(\[Profile|Path|Default)' "$PROFILE_INI" \
-        | grep -B1 '^Default=1' \
-        | awk -v FS='=' '/^Path=/{ print $2 }' )
+    profile_dir=$(grep -E '^(\[Profile|Path|Default)' "$PROFILE_INI" \
+                    | grep -B1 '^Default=1' \
+                    | awk -v FS='=' '/^Path=/{ print $2 }')
   else
     profile_dir="$( awk -v FS='=' '/^Path=/{ print $2 }' "$PROFILE_INI" )"
   fi
