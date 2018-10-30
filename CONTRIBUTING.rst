@@ -82,4 +82,87 @@ If you add a new dotfile to this repo, please add it in appropriate directory.
     ├── xfce4               Terminal color and keyboard shortcuts
     └── zsh_completions     Additional zsh completion scripts (PIP)
 
-    26 directories
+Zsh/Bash startup files loading order (.bashrc, .zshrc etc.)
+-----------------------------------------------------------
+
+If you have ever put something in a file like ``.bashrc`` and had it not work,
+or are confused by why there are so many different files --
+``.bashrc``, ``.bash_profile``, ``.bash_login``, ``.profile`` etc. --
+and what they do, this is for you.
+
+The issue is that Bash sources from a different file based on what kind of
+shell it thinks it is in. For an interactive **non-login** shell,
+it reads ``.bashrc``, but for an interactive **login** shell it reads from the
+first of ``.bash_profile``, ``.bash_login`` and ``.profile`` (only).
+There is no sane reason why this should be so; it's just historical.
+
+For Bash, they work as follows. Read down the appropriate column.
+Executes A, then B, then C, etc. The B1, B2, B3 means it executes only
+the first of those files found.
+
++----------------------+-------------------+-----------------------+--------+
+|                      | Interactive login | Interactive non-login | Script |
++======================+===================+=======================+========+
+| ``/etc/profile``     | A                 |                       |        |
++----------------------+-------------------+-----------------------+--------+
+| ``/etc/bash.bashrc`` |                   | A                     |        |
++----------------------+-------------------+-----------------------+--------+
+| ``~/.bashrc``        |                   | B                     |        |
++----------------------+-------------------+-----------------------+--------+
+| ``~/.bash_profile``  | B1                |                       |        |
++----------------------+-------------------+-----------------------+--------+
+| ``~/.bash_login``    | B2                |                       |        |
++----------------------+-------------------+-----------------------+--------+
+| ``~/.profile``       | B3                |                       |        |
++----------------------+-------------------+-----------------------+--------+
+| ``$BASH_ENV``        |                   |                       | A      |
++----------------------+-------------------+-----------------------+--------+
+| ``~/.bash_logout``   | C                 |                       |        |
++----------------------+-------------------+-----------------------+--------+
+
+For Zsh:
+
++-------------------+-------------------+-----------------------+--------+
+|                   | Interactive login | Interactive non-login | Script |
++===================+===================+=======================+========+
+| ``/etc/zshenv``   | A                 | A                     | A      |
++-------------------+-------------------+-----------------------+--------+
+| ``~/.zshenv``     | B                 | B                     | B      |
++-------------------+-------------------+-----------------------+--------+
+| ``/etc/zprofile`` | C                 |                       |        |
++-------------------+-------------------+-----------------------+--------+
+| ``~/.zprofile``   | D                 |                       |        |
++-------------------+-------------------+-----------------------+--------+
+| ``/etc/zshrc``    | E                 | C                     |        |
++-------------------+-------------------+-----------------------+--------+
+| ``~/.zshrc``      | F                 | D                     |        |
++-------------------+-------------------+-----------------------+--------+
+| ``/etc/zlogin``   | G                 |                       |        |
++-------------------+-------------------+-----------------------+--------+
+| ``~/.zlogin``     | H                 |                       |        |
++-------------------+-------------------+-----------------------+--------+
+| ``~/.zlogout``    | I                 |                       |        |
++-------------------+-------------------+-----------------------+--------+
+| ``/etc/zlogout``  | J                 |                       |        |
++-------------------+-------------------+-----------------------+--------+
+
+Note that Zsh reads ``~/.profile`` only if ``~/.zshrc`` is not present.
+
+References
+~~~~~~~~~~
+
+- [1]_ Difference between .bashrc and .bash_profile
+- [2]_ Startup files loading after bashrc and zshrc
+- [3]_ Explain non-login interactive shell
+- [4]_ Different between login and non-login shell
+- [5]_ All startup files of zsh
+- [6]_ Bash startup files
+- [7]_ Zsh not hitting ~/.profile
+
+.. [1] https://superuser.com/a/183980/510572
+.. [2] https://shreevatsa.wordpress.com/2008/03/30/zshbash-startup-files-loading-order-bashrc-zshrc-etc/
+.. [3] https://superuser.com/questions/657848/why-do-we-have-login-non-login-interactive-and-non-interactive-bash-shells
+.. [4] https://unix.stackexchange.com/questions/38175/difference-between-login-shell-and-non-login-shell?noredirect=1&lq=1
+.. [5] http://zsh.sourceforge.net/Guide/zshguide02.html
+.. [6] https://www.gnu.org/software/bash/manual/bashref.html#Bash-Startup-Files
+.. [7] https://superuser.com/a/892248/510572
