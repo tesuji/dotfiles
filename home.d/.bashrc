@@ -15,6 +15,10 @@ case "$-" in
   *) return;;
 esac
 
+if ! shopt -q login_shell; then
+  [ -f "$HOME/.bash_profile" ] && . "$HOME/.bash_profile"
+fi
+
 # See HISTSIZE and HISTFILESIZE in bash for setting history length
 HISTSIZE=1000
 HISTFILESIZE=2000

@@ -15,6 +15,8 @@ case "$-" in
   *) return;;
 esac
 
+[[ ! -o login ]] && [[ -f "${HOME}/.zprofile" ]] && . "${HOME}/.zprofile"
+
 # FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26
 #[ "$EMACS" = t ] && unsetopt zle
