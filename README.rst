@@ -8,17 +8,17 @@ Currently only tested for Debian-based and Arch-based distro.
 General Information
 -------------------
 
-+------------+---------+------------+------------------+-------------+------------+------------+---------+------+-----+
-| Shell      | WM / DE | Editor     | Terminal         | Multiplexer | Compositor | Audio      | Monitor | Mail | IRC |
-+============+=========+============+==================+=============+============+============+=========+======+=====+
-| bash / zsh | XFCE    | VIM / Subl | terminal / urxvt | tmux        | compton    | pulseaudio | custom  |      |     |
-+------------+---------+------------+------------------+-------------+------------+------------+---------+------+-----+
++------------+---------+------------+---------------+-------------+------------+------------+---------+------+-----+
+| Shell      | WM / DE | Editor     | Terminal      | Multiplexer | Compositor | Audio      | Monitor | Mail | IRC |
++============+=========+============+===============+=============+============+============+=========+======+=====+
+| bash / zsh | XFCE    | Vim / Subl | xfce4 / urxvt | tmux        | compton    | pulseaudio | custom  |      |     |
++------------+---------+------------+---------------+-------------+------------+------------+---------+------+-----+
 
 tmux
 ~~~~
 
 Try to be compatible with tmux 1.8 and 2.3+.
-Use :kbd:`Ctrl`-:kbd:`Space` as prefix key.
+Use :kbd:`Ctrl` + :kbd:`Space` as prefix key.
 
 zsh
 ~~~
@@ -35,15 +35,15 @@ subl
 
 **Keymap**:
 
-+------------------------------+---------------------------+
-| Shortcut                     | Bindings                  |
-+==============================+===========================+
-| :kbd:`Ctrl+K`, :kbd:`Ctrl+P` | Title case                |
-+------------------------------+---------------------------+
-| :kbd:`Ctrl+0`                | Reset font size           |
-+------------------------------+---------------------------+
-| :kbd:`Ctrl+T`                | Trim trailing whitespaces |
-+------------------------------+---------------------------+
++-----------------------------------------------+---------------------------+
+| Shortcut                                      | Bindings                  |
++===============================================+===========================+
+| :kbd:`Ctrl` + :kbd:`K`, :kbd:`Ctrl` + kbd:`P` | Title case                |
++-----------------------------------------------+---------------------------+
+| :kbd:`Ctrl` + kbd:`0`                         | Reset font size           |
++-----------------------------------------------+---------------------------+
+| :kbd:`Ctrl` + kbd:`T`                         | Trim trailing whitespaces |
++-----------------------------------------------+---------------------------+
 
 **Installed package**: If already installed Package Control in Sublime Text,
 Package Control will install the following packages:
@@ -113,6 +113,13 @@ Now configure git:
     git config --global user.email "example@email.com"
 
 `Telling Git about your signing key <https://help.github.com/articles/telling-git-about-your-signing-key/>`_ if you have one.
+
+Post-installation
+~~~~~~~~~~~~~~~~~
+
+- User should use ``stow --restow <folder>`` to update properly.
+- User should **log out** and log in again to use Gnome Keyring Daemon.
+  **Rationale**: This repo contains ``~/.profile`` file.
 
 Known Issues
 ------------
