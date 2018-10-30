@@ -1,7 +1,8 @@
 Contributing
 ============
 
-Please first discuss the change you wish to make via `issue`_.
+Please first reference the `Shell Style Guilde`_ of Google.
+Then discuss the change you wish to make via `issue`_.
 
 Also note that there is a ``.editorconfig`` file, please follow coding style
 declared in that file.
@@ -26,6 +27,7 @@ Bug reports
 
 .. _issue: https://github.com/lzutao/dotfiles/issues
 .. _pull request: https://github.com/lzutao/dotfiles/pulls
+.. _Shell Style Guilde: https://google.github.io/styleguide/shell.xml
 
 Directory Hierarchy
 -------------------
