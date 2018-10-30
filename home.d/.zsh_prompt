@@ -19,6 +19,7 @@ screen* | xterm* | rxvt* )
 esac
 
 setprompt() {
+  local M_HOST_STYLE USER_AT_HOST ERROR_PROMPT JOB_PROMPT TIME_PROMPT SHELL_STATE
   # Add constant string (remote) when connected via SSH.
   if [ "$SESSION_TYPE" = "ssh" ]; then
     M_HOST_STYLE="%M (remote)"
@@ -48,8 +49,6 @@ setprompt() {
   PROMPT="${USER_AT_HOST}
 ${ERROR_PROMPT}${JOB_PROMPT}${TIME_PROMPT} ${SHELL_STATE} "
   export PROMPT
-
-  unset M_HOST_STYLE USER_AT_HOST ERROR_PROMPT JOB_PROMPT TIME_PROMPT SHELL_STATE
 }
 
 setprompt
