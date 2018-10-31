@@ -107,6 +107,28 @@ disable_auto_update() {
   systemctl disable motd-news.timer apt-daily.timer apt-daily-upgrade.timer
 }
 
+# Remove English variant locale (not en_US)
+# Ref https://serverfault.com/a/606666/448787
+# https://www.linuxquestions.org/questions/blog/bittner-195120/remove-unwanted-locales-on-ubuntu-debian-3281/
+# NOTE: On Ubuntu 18, do purge language-pack-en-base is enough.
+purge_unneeded_locale() {
+  set -e
+  LC_ALL='C.UTF-8'
+  export LC_ALL
+
+  sudo apt-get purge -y language-pack-en-base
+
+  readonly prefer_lang='en_US.UTF-8'
+  readonly prefer_locale='en_US.UTF-8 UTF-8'
+
+  sudo find /usr/lib/locale -mindepth 1 -delete
+  printf 'LANG="%s"\n' "$prefer_lang" | sudo tee /etc/default/locale >/dev/null
+  sudo find /var/lib/locales/supported.d -type f ! -name 'local' -delete
+  printf '%s' "$prefer_locale" | sudo tee /var/lib/locales/supported.d/local >/dev/null
+  sudo locale-gen --purge
+  set +e
+}
+
 . "$HERE_DIR/../ifmain.sh"
 
 if ifmain; then
