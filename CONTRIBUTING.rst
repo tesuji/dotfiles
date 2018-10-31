@@ -38,8 +38,8 @@ If you add a new dotfile to this repo, please add it in appropriate directory.
 
     % tree -d
     .
-    ├── bin                 Contain any back-up dotfiles before installing
-    ├── compton             Useful scripts: e.g. toggle-touchpad
+    ├── bin                 Useful scripts: e.g. toggle-touchpad
+    ├── compton             Configuration of compton -- a compositor for X11
     ├── config.d            All other non-important config files: elinks, qt4
     ├── desktop.d           Desktop files used on Debian, Zathura PDF in Arch Linux
     ├── docs                Some guidances about setting up Arch Linux and git, r2, vim,
