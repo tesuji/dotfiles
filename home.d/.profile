@@ -1,12 +1,12 @@
 #! /bin/sh
-# ~/.profile: executed by the command interpreter for login shells.
+# ~/.profile: Executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
-
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
+# See /usr/share/doc/bash/examples/startup-files for examples.
+# The files are located in the bash-doc package.
+#
+# The default umask is set in /etc/profile; for setting the umask
+# For ssh logins, install and configure the libpam-umask package.
 #umask 022
 
 # -- Helper functions ---------------------------------------------------------
@@ -18,14 +18,13 @@ command_exist() {
 }
 
 path_merge_wrapper() {
-  [ ! -d "$1" ] && return
   case ":${PATH}:" in
-    *":${1}:"* ) ;;
+    *":${1}:"* ) return;;
     * )
-      if [ -z "$2" ]; then
-        PATH="${1}${PATH+:${PATH}}"
-      else
+      if [ -n "$2" ]; then
         PATH="${PATH:+${PATH}:}${1}"
+      else
+        PATH="${1}${PATH+:${PATH}}"
       fi
       ;;
   esac
@@ -38,7 +37,7 @@ path_prepend() {
 
 # Append path to end
 path_append() {
-  path_merge_wrapper "$1" 1
+  path_merge_wrapper "$1" 'append'
 }
 
 # -- Set PATH -----------------------------------------------------------------
@@ -53,7 +52,7 @@ esac
 # Set PATH so it includes user's private bin if it exists
 # and ~/.local/bin which is defined in FHS.
 for p in "${HOME}/bin" "${HOME}/.local/bin"; do
-  path_append "$p"
+  [ -d "$1" ] && path_append "$p"
 done
 
 # -- Exported environment variable --------------------------------------------

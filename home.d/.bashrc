@@ -12,7 +12,7 @@
 
 # If not running interactively, don't do anything
 case "$-" in
-  *i*)
+  *i* )
     if ! shopt -q login_shell; then
       [ -f "$HOME/.profile" ] && . "$HOME/.profile"
     fi
