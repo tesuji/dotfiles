@@ -1,3 +1,4 @@
+#! /usr/bin/env bash
 # ~/.bashrc: executed by bash(1) for interactive non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -45,7 +46,7 @@ complete \
   -W "$(awk '/^Host\s+/{ print $2 }' "${HOME}/.ssh/config" "${HOME}/.ssh/config.local")" \
   scp sftp ssh
 
-# -- Load shell dotfiles -------------------------------------------------------
+# -- Load shell dotfiles ------------------------------------------------------
 
 [ -f "${HOME}/.bash_prompt" ] && . "${HOME}/.bash_prompt"
 # * "$HOME/.extra" can be used for other settings you don't want to commit.

@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#! /usr/bin/env zsh
 # ~/.zshrc: per-user .zshrc file for zsh(1).
 #
 # This file is sourced only for interactive shells. It
@@ -11,17 +11,17 @@
 
 # If not running interactively, don't do anything
 case "$-" in
-  *i* ) [[ ! -o login ]] && [[ -f "${HOME}/.zprofile" ]] && . "${HOME}/.zprofile";;
+  *i* )
+    [[ ! -o login ]] && [[ -f "${HOME}/.zprofile" ]] && . "${HOME}/.zprofile"
+    ;;
   *) return;;
 esac
-
-# if is interactive non
 
 # FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
 # http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26
 #[ "$EMACS" = t ] && unsetopt zle
 
-# -- Key bindings --------------------------------------------------------------
+# -- Key bindings -------------------------------------------------------------
 
 # Type Ctrl-V and key combination to get key code
 # Type `bindkey' to show all keybindings
@@ -54,7 +54,7 @@ bindkey '^U'      backward-kill-line      # Ctrl-U
 # Use bash's style for word
 autoload -U select-word-style && select-word-style bash
 
-# -- History -------------------------------------------------------------------
+# -- History ------------------------------------------------------------------
 
 setopt INC_APPEND_HISTORY   # Write immediately, not when the shell exits
 setopt HIST_IGNORE_ALL_DUPS # Delete old recorded entry if new entry is a duplicate
@@ -75,7 +75,7 @@ LOGCHECK=10 # check logins after 10 seconds
 # Say how long a command took, if it took more than 10 seconds
 REPORTTIME=10
 
-# -- Completion ----------------------------------------------------------------
+# -- Completion ---------------------------------------------------------------
 
 # You may have to force rebuild zcompdump:
 #     rm -f "$HOME/.zcompdump"; compinit or try rehash command
@@ -84,23 +84,22 @@ REPORTTIME=10
 
 autoload -Uz compinit # Use modern completion system
 
-# Usage: m_compinit_age -> time
-# Return how long has "$HOME/.zcompdump" been modified
-m_compinit_age() {
-  local LAST_MODIFIED CURRENT_TIME
-  LAST_MODIFIED=$(stat -c '%Y' "${HOME}/.zcompdump")
-  CURRENT_TIME=$(date '+%s')
-  printf '%s' "$(( CURRENT_TIME - LAST_MODIFIED ))"
+# Return in seconds how long has ~/.zcompdump been modified
+zcompdump_seconds() {
+  local last_modified current_time
+  last_modified="$(stat -c '%Y' "${HOME}/.zcompdump")"
+  current_time="$(date '+%s')"
+  printf '%s' "$(( current_time - last_modified ))"
 }
 
-# If "$HOME/.zcompdump" is modified less than 24h
-if [ "$(m_compinit_age)" -le 86400 ]; then
+# if modified less than 24h
+if [ "$(zcompdump_seconds)" -le 86400 ]; then
   compinit -C
 else
   compinit
 fi
 
-unset m_compinit_age
+unset zcompdump_seconds
 
 # Should be enable in /etc/zsh/newuser.zshrc.recommended
 zstyle ':completion:*' auto-description 'specify: %d'
@@ -137,7 +136,7 @@ setopt RM_STAR_WAIT
 # Don't nice background processes
 setopt NO_BG_NICE
 
-# -- History search ------------------------------------------------------------
+# -- History search -----------------------------------------------------------
 
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
@@ -146,7 +145,7 @@ zle -N down-line-or-beginning-search
 [ -n "$key[Up]"   ] && bindkey -- "$key[Up]"   up-line-or-beginning-search
 [ -n "$key[Down]" ] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
-# -- Load shell dotfiles -------------------------------------------------------
+# -- Load shell dotfiles ------------------------------------------------------
 
 [ -f "${HOME}/.zsh_prompt" ] && . "${HOME}/.zsh_prompt"
 # * "$HOME/.extra" can be used for other settings you don't want to commit.

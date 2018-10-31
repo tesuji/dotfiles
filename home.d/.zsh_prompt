@@ -1,6 +1,6 @@
-#!/usr/bin/env zsh
+#! /usr/bin/env zsh
 
-# -- Window title --------------------------------------------------------------
+# -- Window title -------------------------------------------------------------
 
 # From: https://github.com/MrElendig/dotfiles-alice/blob/master/.zshrc
 case "${TERM}" in

@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#! /usr/bin/env zsh
 # ~/.zprofile: -user .zprofile file for zsh(1).
 #
 # This file is sourced only for login shells (i.e. shells

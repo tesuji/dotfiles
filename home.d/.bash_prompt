@@ -26,7 +26,8 @@ setprompt() {
 
   [ -x /usr/bin/tput ] \
   && tput_ncolors="$(tput colors 2>/dev/null)" # Number of supported colors
-  # If wanted Solarized colors, take it from http://git.io/solarized-colors.
+
+  # If you need Solarized theme, get it from http://git.io/solarized-colors
   # shellcheck disable=SC2034
   if [ "$tput_ncolors" -eq 256 ]; then
     bold_col="\[$(tput bold)\]"

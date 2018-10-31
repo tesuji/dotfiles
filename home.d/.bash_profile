@@ -1,3 +1,4 @@
+#! /usr/bin/env bash
 # ~/.bash_profile: executed by bash(1) when "login shell" starts.
 #
 # This file is sourced only for login shells. It

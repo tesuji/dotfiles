@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! /usr/bin/env python
 # ~/.pythonrc: python startup file
 import atexit
 import os

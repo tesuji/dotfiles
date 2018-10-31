@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ~/.aliases
 
-# -- Functions -----------------------------------------------------------------
+# -- Functions ----------------------------------------------------------------
 
 # Enable colored man
 # The end \ in the end of each line helps set environment variable
@@ -144,7 +144,7 @@ EOF
   }
 fi
 
-# -- Aliases -------------------------------------------------------------------
+# -- Aliases ------------------------------------------------------------------
 
 # Enable color support of ls
 if [ -x /usr/bin/dircolors ]; then
