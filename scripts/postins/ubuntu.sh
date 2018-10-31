@@ -82,12 +82,15 @@ EOF
 disable_download_apt_translation() {
   APT_CONF_DIR=/etc/apt/apt.conf.d
   APT_TRANS_CONF="${APT_CONF_DIR}/99translations"
+  UPDATE_NOTIFIER_CONF="${APT_CONF_DIR}/99update-notifier"
   APT_LIST_DIR=/var/lib/apt/lists/
 
-  grep -qR '^Acquire::Languages\s+"none"' "${APT_CONF_DIR}" && return 0
+  if ! grep -qR '^Acquire::Languages\s+"none"' "${APT_CONF_DIR}"; then
+    printf 'Acquire::Languages "none";\n' >> "${APT_TRANS_CONF}"
+    find "$APT_LIST_DIR" -name '*i18n*' -delete
+  fi
 
-  printf 'Acquire::Languages "none";\n' >> "${APT_TRANS_CONF}"
-  find "$APT_LIST_DIR" -name '*i18n*' -delete
+  sed -i -E 's@^(DPkg::Post-Invoke)@#\1@g' "${UPDATE_NOTIFIER_CONF}"
 }
 
 # Reduce boot time and unnecessary auto services.
