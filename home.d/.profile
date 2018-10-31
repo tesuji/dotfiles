@@ -1,3 +1,4 @@
+#! /bin/sh
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
@@ -16,22 +17,28 @@ command_exist() {
   command -v "$1" > /dev/null
 }
 
-# Push path to begin
-path_push() {
+path_merge_wrapper() {
   [ ! -d "$1" ] && return
   case ":${PATH}:" in
     *":${1}:"* ) ;;
-    * ) PATH="${1}${PATH+:${PATH}}";;
+    * )
+      if [ -z "$2" ]; then
+        PATH="${1}${PATH+:${PATH}}"
+      else
+        PATH="${PATH:+${PATH}:}${1}"
+      fi
+      ;;
   esac
+}
+
+# Prepend path to begin
+path_prepend() {
+  path_merge_wrapper "$1"
 }
 
 # Append path to end
 path_append() {
-  [ ! -d "$1" ] && return
-  case ":${PATH}:" in
-    *":${1}:"* ) ;;
-    * ) PATH="${PATH:+${PATH}:}${1}";;
-  esac
+  path_merge_wrapper "$1" 1
 }
 
 # -- Set PATH -----------------------------------------------------------------
@@ -39,7 +46,7 @@ path_append() {
 # Set PATH so it includes sbin program
 # NOTE: In zsh, read https://wiki.archlinux.org/index.php/zsh#Configuring_.24PATH
 case ":${PATH}:" in
-  *":/sbin:"* ) ;;
+  *":/sbin:"* ) :;;
   * ) PATH="/sbin/:/usr/sbin:/usr/local/sbin${PATH+:${PATH}}";;
 esac
 

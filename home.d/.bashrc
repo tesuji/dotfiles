@@ -11,11 +11,11 @@
 
 # If not running interactively, don't do anything
 case "$-" in
-*i*)
-  if ! shopt -q login_shell; then
-    [ -f "$HOME/.profile" ] && . "$HOME/.profile"
-  fi
-  ;;
+  *i*)
+    if ! shopt -q login_shell; then
+      [ -f "$HOME/.profile" ] && . "$HOME/.profile"
+    fi
+    ;;
   *) return;;
 esac
 

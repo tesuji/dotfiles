@@ -11,7 +11,7 @@
 
 # If not running interactively, don't do anything
 case "$-" in
-*i*) [[ ! -o login ]] && [[ -f "${HOME}/.zprofile" ]] && . "${HOME}/.zprofile";;
+  *i* ) [[ ! -o login ]] && [[ -f "${HOME}/.zprofile" ]] && . "${HOME}/.zprofile";;
   *) return;;
 esac
 
