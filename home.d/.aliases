@@ -55,7 +55,7 @@ parse_gcc_var() {
   [ "$#" -ne 1 ] && return
   # List gcc environment variables
   { printf '\n' | gcc -E -v - >/dev/null; } 2>&1 \
-    | awk -v FS='=' '/^'"$1"'/ { print $2; }' \
+    | awk -v VAR_NAME='^'"${1}" -v FS='=' '$0 ~ VAR_NAME { print $2; }' \
     | awk -v RS=: '{ print }' \
     | while IFS='' read -r line; do
       [ -n "$line" ] && realpath "$line"
