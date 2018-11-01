@@ -1,7 +1,5 @@
-#!/bin/sh
-# https://github.com/lzutao/dotfiles/
-#
-# Try to support ancient version of tmux
+#! /bin/sh
+# ~/.tmuxrc.sh: Executed by ~/.tmux.conf to support ancient versions of tmux
 # See https://repology.org/metapackage/tmux/badges
 
 # If tmux is not run, exit immediately
@@ -35,9 +33,7 @@ esac
 
 if verlte "$TMUX_VERSION" 2.0; then
   tmux source-file "${HOME}/.tmux-18.conf"
-fi
-
-if verlte "$TMUX_VERSION" 2.3; then
+elif verlte "$TMUX_VERSION" 2.3; then
   tmux source-file "${HOME}/.tmux-23.conf"
 else
   tmux source-file "${HOME}/.tmux-24_plus.conf"
