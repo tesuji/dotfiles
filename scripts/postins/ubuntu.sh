@@ -122,7 +122,7 @@ purge_unneeded_locale() {
   readonly prefer_locale='en_US.UTF-8 UTF-8'
 
   sudo find /usr/lib/locale -mindepth 1 -delete
-  printf 'LANG="%s"\n' "$prefer_lang" | sudo tee /etc/default/locale >/dev/null
+  sudo /usr/sbin/update-locale LANG="$prefer_lang"
   sudo find /var/lib/locales/supported.d -type f ! -name 'local' -delete
   printf '%s' "$prefer_locale" | sudo tee /var/lib/locales/supported.d/local >/dev/null
   sudo locale-gen --purge
