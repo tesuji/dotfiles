@@ -18,7 +18,7 @@ tmux
 ~~~~
 
 Try to be compatible with tmux 1.8 and 2.3+.
-Use :kbd:`Alt` + :kbd:`A` as prefix key.
+Use :kbd:`Alt`:kbd:`A` as prefix key.
 
 zsh
 ~~~
@@ -35,15 +35,16 @@ subl
 
 **Keymap**:
 
-+------------------------------------------------+---------------------------+
-| Shortcut                                       | Bindings                  |
-+================================================+===========================+
-| :kbd:`Ctrl` + :kbd:`K`, :kbd:`Ctrl` + :kbd:`P` | Title case                |
-+------------------------------------------------+---------------------------+
-| :kbd:`Ctrl` + :kbd:`0`                         | Reset font size           |
-+------------------------------------------------+---------------------------+
-| :kbd:`Ctrl` + :kbd:`T`                         | Trim trailing whitespaces |
-+------------------------------------------------+---------------------------+
+
++-----------------------------------------+---------------------------+
+| Shortcut                                | Bindings                  |
++=========================================+===========================+
+| :kbd:`Ctrl`:kbd:`K` :kbd:`Ctrl`:kbd:`P` | Title case                |
++-----------------------------------------+---------------------------+
+| :kbd:`Ctrl`:kbd:`0`                     | Reset font size           |
++-----------------------------------------+---------------------------+
+| :kbd:`Ctrl`:kbd:`T`                     | Trim trailing whitespaces |
++-----------------------------------------+---------------------------+
 
 **Installed package**: If already installed Package Control in Sublime Text,
 Package Control will install the following packages:
