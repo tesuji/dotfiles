@@ -56,10 +56,10 @@ parse_gcc_var() {
   # List gcc environment variables
   { printf '\n' | gcc -E -v - >/dev/null; } 2>&1 \
     | awk -v VAR_NAME='^'"${1}" -v FS='=' '$0 ~ VAR_NAME { print $2; }' \
-    | awk -v RS=: '{ print }' \
+    | awk -v FS=: '{for(i=1;i<NF;i++){print $i};}' \
     | while IFS='' read -r line; do
-      [ -n "$line" ] && realpath "$line"
-    done | sort -u
+        realpath "$line"
+      done | sort -u
 }
 
 # Print LIBRARY_PATH of gcc
