@@ -18,7 +18,7 @@ tmux
 ~~~~
 
 Try to be compatible with tmux 1.8 and 2.3+.
-Use :kbd:`Ctrl` + :kbd:`Space` as prefix key.
+Use :kbd:`Alt` + :kbd:`A` as prefix key.
 
 zsh
 ~~~
