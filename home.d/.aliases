@@ -83,8 +83,7 @@ lssh() {
 
 # Make path for each argument and cd into the last path
 mkcd() {
-  # shellcheck disable=SC2164
-  command mkdir -p "$@" && cd "$_"
+  /bin/mkdir -p "$@" && cd "$_" && printf '%s\n' "$PWD"
 }
 
 if command_exist vmhgfs-fuse; then
