@@ -52,7 +52,7 @@ esac
 # Set PATH so it includes user's private bin if it exists
 # and ~/.local/bin which is defined in FHS.
 for p in "${HOME}/bin" "${HOME}/.local/bin"; do
-  [ -d "$1" ] && path_append "$p"
+  [ -d "$p" ] && path_append "$p"
 done
 
 # -- Exported environment variable --------------------------------------------
