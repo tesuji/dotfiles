@@ -6,10 +6,10 @@
 # Use GIT_TRACE=1 to enables general trace messages, e.g. alias expansion,
 # built-in command execution and external command execution.
 # ************************************************************************
+#
+# USE ~/.gitconfig.local to store your personal settings. Please do NOT
+# write those directly here or open a pull request if you want.
 
-[include]
-	# Include private information about user.user and user.email
-	path = ~/.gitconfig.local
 [alias]
 	# -- Branch --------------------------------------------------------------------
 	br = branch
@@ -58,7 +58,7 @@
 	clean-up = "!f() { git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all; git gc --prune=now; }; f"
 
 	# -- Pull ----------------------------------------------------------------------
-	#pl = pull
+	pl = pull
 	#pb = pull --rebase
 
 	# -- Push ----------------------------------------------------------------------
@@ -68,11 +68,11 @@
 	#pst = push --tags         # Push all refs under refs/tags
 
 	# -- Rebase --------------------------------------------------------------------
-	#rb = rebase
-	#rba = rebase --abort
-	#rbc = rebase --continue
-	#rbi = rebase --interactive
-	#rbs = rebase --skip
+	rb = rebase
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbi = rebase --interactive
+	rbs = rebase --skip
 
 	# -- Utils ---------------------------------------------------------------------
 	forget = rm --cache
@@ -102,7 +102,10 @@
 [core]
 	# set line-ending behavior
 	autocrlf = input
-	editor = subl -w
+	editor = vim
+	#editor = subl --wait
+	; Don't trust file modes, useful on Windows or sharable storage.
+	filemode = false
 	pager = less -F -X
 [diff]
 	tool = vimdiff
@@ -116,3 +119,9 @@
 	default = simple
 [pull]
 	rebase = true
+
+# -- Include personal settings ------------------------------------------------
+
+[include]
+	# Include private information about user.user and user.email
+	path = ~/.gitconfig.local
