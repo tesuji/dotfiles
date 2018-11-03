@@ -1,8 +1,8 @@
 #! /bin/sh
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # WARNING:
 #   This script may destroy your disk and kick your dog.
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 # Exit immediately if fail
 set -e
@@ -14,18 +14,18 @@ do_disable_ipv6() {
       'net.ipv6.conf.default.disable_ipv6' \
       'net.ipv6.conf.lo.disable_ipv6'; do
     if [ "$(sysctl -n "${conf}")" -eq 0 ]; then
-      printf '%s = 1\n' "${conf}" >> '/etc/sysctl.conf'
+      printf '%s = 1\n' "${conf}" | sudo tee -a '/etc/sysctl.conf' > /dev/null
     fi
   done
 
-  if grep -q '^#::1' /etc/hosts; then
-    return 0
+  if ! grep -q '^#::1' /etc/hosts; then
+    sudo sed -i -E 's@^(::1)@#\1@g' /etc/hosts
   fi
-  sed -i -E 's@^(::1)@#\1@g' /etc/hosts
 }
 
 set_no_enc_ath9k() {
-  printf 'options ath9k nohwcrypt=1\n' >> /etc/modprobe.d/ath9k.conf
+  printf 'options ath9k nohwcrypt=1\n' \
+    | sudo tee -a /etc/modprobe.d/ath9k.conf > /dev/null
 }
 
 # Usage: set_option_fstab 'noatime'
@@ -39,10 +39,10 @@ set_option_fstab() {
 
   FSTAB=/etc/fstab
   OLD_FSTAB="$(mktemp /tmp/fstab.XXXXXX)" \
-  && NEW_FSTAB="$(mktemp /tmp/fstab.new.XXXXXX)" \
-  && cp "$FSTAB" "${OLD_FSTAB}" \
-  && awk '!/^#/ && ($2=="/"){ $4=$4",noatime" }{ print }' OFS='\t' "$FSTAB" > "${NEW_FSTAB}" \
-  && cp "${NEW_FSTAB}" "$FSTAB"
+    && NEW_FSTAB="$(mktemp /tmp/fstab.new.XXXXXX)" \
+    && cp "$FSTAB" "${OLD_FSTAB}" \
+    && awk '!/^#/ && ($2=="/"){ $4=$4",noatime" }{ print }' OFS='\t' "$FSTAB" > "${NEW_FSTAB}" \
+    && sudo cp -f "${NEW_FSTAB}" "$FSTAB"
 }
 
 # Usage: set_option_fstab <PBKDF2 hash>
@@ -57,26 +57,31 @@ set_passwd_grub() {
   GRUB_CUSTOM_CONF="$GRUB_CONF_DIR/40_custom"
   GRUB_LINUX_CONF="$GRUB_CONF_DIR/10_linux"
 
-  printf 'set superusers="root"\npassword_pbkdf2 root %s\n' "${PBKDF2_HASH}" >> "$GRUB_CUSTOM_CONF"
+  printf 'set superusers="root"\npassword_pbkdf2 root %s\n' "${PBKDF2_HASH}" \
+    | sudo tee -a "$GRUB_CUSTOM_CONF" > /dev/null
 
-  grep -q -F -- '--unrestricted' "$GRUB_LINUX_CONF" && return 0
-
-  TEMPLATE="$(printf 'echo "menuentry \x27%s\x27' '\$\(echo "\$\w+" \| grub_quote\)')"
-  SED_CMD="$(printf 's@(%s)@%s@g' "${TEMPLATE}" '\1 --unrestricted')"
-  sed -i -E "${SED_CMD}" "$GRUB_LINUX_CONF"
+  if ! grep -q -F -- '--unrestricted' "$GRUB_LINUX_CONF"; then
+    sudo sed -i -E \
+        's@^\s*(echo "menuentry \x27\$\(echo "\$\w+" \| grub_quote\))@\1 --unrestricted@g' \
+        "$GRUB_LINUX_CONF"
+  fi
 }
 
 keep_app_state_in_RAM() {
-  [ "$(sysctl -n vm.swappiness)" -eq 1 ] && return 0
-
   SYSCTL_CONF=/etc/sysctl.d/99-sysctl.conf
-  cat << EOF >> "$SYSCTL_CONF"
+
+  if [ "$(sysctl -n vm.swappiness)" -eq 1 ] \
+        || grep -q 'vm.swappiness=1' "$SYSCTL_CONF"; then
+    return 0
+  fi
+
+  sudo tee -a "$SYSCTL_CONF" << EOF > /dev/null
 vm.swappiness=1
 vm.vfs_cache_pressure=50
 vm.dirty_background_bytes=16777216
 vm.dirty_bytes=50331648
 EOF
-  sysctl -p "$SYSCTL_CONF"
+  sudo sysctl -p "$SYSCTL_CONF"
 }
 
 disable_download_apt_translation() {
@@ -86,7 +91,7 @@ disable_download_apt_translation() {
   APT_LIST_DIR=/var/lib/apt/lists/
 
   if ! grep -qR '^Acquire::Languages\s+"none"' "${APT_CONF_DIR}"; then
-    printf 'Acquire::Languages "none";\n' >> "${APT_TRANS_CONF}"
+    printf 'Acquire::Languages "none";\n' | sudo tee -a "${APT_TRANS_CONF}" > /dev/null
     find "$APT_LIST_DIR" -name '*i18n*' -delete
   fi
 
@@ -101,10 +106,10 @@ disable_auto_update() {
   status="$(systemctl is-enabled apt-daily.timer)"
   rt_code="$?"
   [ "$status" = disable ] && [ "$rt_code" -gt 0 ] && return 0
-  apt-get purge -y software-center appstream snapd cups
+  sudo apt-get purge -y software-center appstream snapd cups
   # or dpkg-divert --local --rename --divert '/etc/apt/apt.conf.d/#50appstream' /etc/apt/apt.conf.d/50appstream
-  systemctl stop motd-news.timer apt-daily.timer apt-daily-upgrade.timer
-  systemctl disable motd-news.timer apt-daily.timer apt-daily-upgrade.timer
+  sudo systemctl stop motd-news.timer apt-daily.timer apt-daily-upgrade.timer
+  sudo systemctl disable motd-news.timer apt-daily.timer apt-daily-upgrade.timer
 }
 
 # Remove English variant locale (not en_US)
@@ -124,7 +129,8 @@ purge_unneeded_locale() {
   sudo find /usr/lib/locale -mindepth 1 -delete
   sudo /usr/sbin/update-locale LANG="$prefer_lang"
   sudo find /var/lib/locales/supported.d -type f ! -name 'local' -delete
-  printf '%s' "$prefer_locale" | sudo tee /var/lib/locales/supported.d/local >/dev/null
+  printf '%s\n' "$prefer_locale" \
+    | sudo tee /var/lib/locales/supported.d/local > /dev/null
   sudo locale-gen --purge
   set +e
 }
