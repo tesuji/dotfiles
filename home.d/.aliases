@@ -243,7 +243,7 @@ suspend() {
   awk '(NR!=1 && $1!~/^(LID|PB|PW)/ && $3=="*enabled"){print $1}' /proc/acpi/wakeup \
     | while IFS='' read -r dev; do
         printf '%s' "$dev" | sudo tee /proc/acpi/wakeup
-      done
+      done > /dev/null
   systemctl suspend
 }
 
