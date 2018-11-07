@@ -75,16 +75,16 @@
     set showcmd                                         " Show (partial) command in the last line of the screen
   endif
 
-  hi User1 ctermbg=Brown     ctermfg=White
-  hi User2 ctermbg=Red       ctermfg=DarkRed
-  hi User3 ctermbg=Blue      ctermfg=White
-  hi User4 ctermbg=White     ctermfg=DarkMagenta
-  hi User5 ctermbg=Green     ctermfg=DarkRed
-  hi User6 ctermbg=White     ctermfg=Black
-  hi User7 ctermbg=Green     ctermfg=Red
-  hi User8 ctermbg=Cyan      ctermfg=LightRed
-  hi User9 ctermbg=Magenta   ctermfg=Yellow
-  hi User0 ctermbg=LightGray ctermfg=White
+  highlight User1 ctermbg=Brown     ctermfg=White
+  highlight User2 ctermbg=Red       ctermfg=DarkRed
+  highlight User3 ctermbg=Blue      ctermfg=White
+  highlight User4 ctermbg=White     ctermfg=DarkMagenta
+  highlight User5 ctermbg=Green     ctermfg=DarkRed
+  highlight User6 ctermbg=White     ctermfg=Black
+  highlight User7 ctermbg=Green     ctermfg=Red
+  highlight User8 ctermbg=Cyan      ctermfg=LightRed
+  highlight User9 ctermbg=Magenta   ctermfg=Yellow
+  highlight User0 ctermbg=LightGray ctermfg=White
 
   if has("statusline")
     set laststatus=2   " use 2 lines for the status bar
@@ -134,13 +134,13 @@
 " }}}
 
 " Indentation {{{
-  set nowrap           " don't wrap lines
+  set nowrap           " do not wrap lines
   set autoindent       " indent at the same level of the previous line
   set smartindent      " smart auto indenting
   set smarttab         " smart tab handling for indenting
   set shiftwidth=2     " operation >> indents 2 columns; << unindents 2 columns
   set softtabstop=2    " insert/delete 2 spaces when hitting a TAB/BACKSPACE
-  set tabstop=2        " a hard TAB displays as 2 columns
+  set tabstop=8        " a hard TAB displays as 8 columns
   set expandtab        " insert spaces when hitting TABs
 
   set pastetoggle=<F3> " paste mode to avoid autoindent
