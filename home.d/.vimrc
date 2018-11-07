@@ -240,7 +240,7 @@
   " Fast set wrapping
   nmap <leader>r :set wrap<cr>
   " sudo write when no have enough privilege
-  nmap <leader>s :w !sudo tee % > /dev/null 2>&1
+  nmap <leader>s :w !sudo tee % > /dev/null
   " turn off search highlight
   nnoremap <leader><space> :nohlsearch<cr>
   " turn on fold
@@ -280,7 +280,12 @@
   vnoremap > >gv
   " Yank to the end of the line, to be consistent with C and D.
   nnoremap Y y$
-
+  " Splitting pane {{{1
+  " split the current window horizontally
+  nmap <leader>- :sp<cr>
+  " split the current window vertically
+  nmap <leader>\| :vs<cr>
+  " 1}}}
 " }}}
 
 " Clipboard {{{
