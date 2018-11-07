@@ -23,7 +23,12 @@
 	ci = commit
 	cis = commit --signoff
 	cig = commit --gpg-sign
-	amend = commit --amend  # Amend the currently staged files to the latest commit
+	# Amend the currently staged files to the latest commit
+	# or commit --amend --date=""
+	# or commit --amend --reset-author
+	# but authorship of the resulting commit now belongs of
+	# the committer, also it renews the author timestamp.
+	amend = commit --amend --date=now  # as of v2.1.4
 
 	# -- Checkout ------------------------------------------------------------------
 	co = checkout
