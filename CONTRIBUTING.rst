@@ -29,6 +29,11 @@ Bug reports
 .. _pull request: https://github.com/lzutao/dotfiles/pulls
 .. _Shell Style Guilde: https://google.github.io/styleguide/shell.xml
 
+Autostarting
+------------
+
+Read more on `Arch Linux wiki <https://wiki.archlinux.org/index.php/Autostarting>`_.
+
 Directory Hierarchy
 -------------------
 
@@ -40,6 +45,8 @@ If you add a new dotfile to this repo, please add it in appropriate directory.
     .
     ├── bin                 Useful scripts: e.g. toggle-touchpad
     ├── compton             Configuration of compton -- a compositor for X11
+    │   └── .config
+    │       └── autostart       XFCE's autostart applications for compton
     ├── config.d            All other non-important config files: elinks, qt4
     ├── desktop.d           Desktop files used on Debian, Zathura PDF in Arch Linux
     ├── docs                Some guidances about setting up Arch Linux and git, r2, vim,
@@ -48,6 +55,8 @@ If you add a new dotfile to this repo, please add it in appropriate directory.
     ├── home.d              Dotfiles like ".bashrc", ".zshrc", etc that need to link to HOME
     ├── icon.d              Icon file for custom desktop files
     ├── kdewallet           Autostart script to remember ssh passphrase
+    │   └── .config
+    │       └── autostart-scripts       for executing scripts at login
     ├── mercurial           Some experimental Mercurial SCV configurations
     ├── scripts             Useful scripts for installing Firefox, getting distro name
     │   ├── git                 Filter for Git
