@@ -240,7 +240,9 @@
   " Fast set wrapping
   nmap <leader>r :set wrap<cr>
   " sudo write when no have enough privilege
-  nmap <leader>s :w !sudo tee % > /dev/null
+  nmap <leader>W :w !sudo tee % > /dev/null<cr>
+  " toggle spell-checking with F6 (same as Sublime Text)
+  nmap <F6> :setlocal spell! spelllang=en_us<cr>
   " turn off search highlight
   nnoremap <leader><space> :nohlsearch<cr>
   " turn on fold
