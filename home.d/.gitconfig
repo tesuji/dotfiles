@@ -82,9 +82,9 @@
 	# -- submodule -----------------------------------------------------------------
 	# Useful aliases when working with submodule
 	# taken from ProGit v2018, page 313
-	sdiff = '!'"git diff && git submodule foreach 'git diff'"
-	spush = 'push --recurse-submodules=on-demand'
-	supdate = 'submodule update --remote --merge'
+	sdiff = "!git diff && git submodule foreach 'git diff'"
+	spush = push --recurse-submodules=on-demand
+	supdate = submodule update --remote --merge
 
 	# -- Utils ---------------------------------------------------------------------
 	forget = rm --cache
