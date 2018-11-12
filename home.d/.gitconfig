@@ -89,6 +89,7 @@
 	sts = status --short --branch
 	# Add a subtree to your git project
 	sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
+	tagl = tag --sort=-creatordate  # as of v2.8 (2016)
 [color]
 	ui = auto
 [color "branch"]
