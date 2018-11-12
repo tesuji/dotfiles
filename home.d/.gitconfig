@@ -79,6 +79,13 @@
 	rbi = rebase --interactive
 	rbs = rebase --skip
 
+	# -- submodule -----------------------------------------------------------------
+	# Useful aliases when working with submodule
+	# taken from ProGit v2018, page 313
+	sdiff = '!'"git diff && git submodule foreach 'git diff'"
+	spush = 'push --recurse-submodules=on-demand'
+	supdate = 'submodule update --remote --merge'
+
 	# -- Utils ---------------------------------------------------------------------
 	forget = rm --cache
 	pr = prune --verbose      # Prune all unreachable objects from the object database
