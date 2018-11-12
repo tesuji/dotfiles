@@ -36,7 +36,7 @@
 	# -- Diff ----------------------------------------------------------------------
 	df = diff
 	#dfm = diff --color-moved=plain
-	dfc = diff --cached       # Equivalent to below command
+	dfc = diff --cached  # --staged is a synonym of --cached
 
 	# -- Log -----------------------------------------------------------------------
 	lc = log ORIG_HEAD.. --stat --no-merges  # See the fetched commits
@@ -86,6 +86,7 @@
 	author = shortlog --summary --numbered
 	committer = shortlog -summary --numbered --committer # Git 2.12 (Q1 2017)
 	st = status
+	sts = status --short --branch
 	# Add a subtree to your git project
 	sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
 [color]
