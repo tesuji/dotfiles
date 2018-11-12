@@ -36,8 +36,7 @@
 	# -- Diff ----------------------------------------------------------------------
 	df = diff
 	#dfm = diff --color-moved=plain
-	#dfc = diff --cached       # Equivalent to below command
-	dfs = diff --staged
+	dfc = diff --cached       # Equivalent to below command
 
 	# -- Log -----------------------------------------------------------------------
 	lc = log ORIG_HEAD.. --stat --no-merges  # See the fetched commits
