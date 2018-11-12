@@ -11,16 +11,21 @@
 # write those directly here or open a pull request if you want.
 
 [alias]
-	# -- Branch --------------------------------------------------------------------
-	br = branch
-
-	# -- Clone ---------------------------------------------------------------------
 	cl = clone
 	cl1 = clone --depth 1
 	cld = clone --depth
+	root = rev-parse --show-toplevel
 
-	# -- Commit --------------------------------------------------------------------
+	# -- Basic  ---------------------------------------------------------------
+	addu = add --update
+	addp = add --patch
+	st = status
+	sts = status --short --branch
+	df = diff
+	#dfm = diff --color-moved=plain
+	dfc = diff --cached  # --staged is a synonym of --cached
 	ci = commit
+	cip = commit --patch
 	cis = commit --signoff
 	cig = commit --gpg-sign
 	# Amend the currently staged files to the latest commit
@@ -29,16 +34,15 @@
 	# but authorship of the resulting commit now belongs of
 	# the committer, also it renews the author timestamp.
 	amend = commit --amend --date=now  # as of v2.1.4
+	unstage = reset HEAD
+	forget = rm --cache
 
-	# -- Checkout ------------------------------------------------------------------
+	# -- Branching, Merging and Patching --------------------------------------
+	br = branch
 	co = checkout
-
-	# -- Diff ----------------------------------------------------------------------
-	df = diff
-	#dfm = diff --color-moved=plain
-	dfc = diff --cached  # --staged is a synonym of --cached
-
-	# -- Log -----------------------------------------------------------------------
+	discard = checkout --
+	author = shortlog --summary --numbered
+	committer = shortlog -summary --numbered --committer  # as of v2.12 2017-02-24
 	lc = log ORIG_HEAD.. --stat --no-merges  # See the fetched commits
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 	logg = log --graph --decorate --oneline --abbrev-commit --all
@@ -54,49 +58,37 @@
 	# or:
 	#    git fetch && git log ..origin/master
 	new = "!f() { git log \"${1}\"@{1}.. ; }; f"
+	tagl = tag --sort=-creatordate  # as of v2.7 2015-09-11
 
-	# -- Filter-branch -------------------------------------------------------------
-	# Remove sensitive data from history, after a push
-	rm-sensitive = "!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"\"$1\"" --prune-empty --tag-name-filter cat -- --all; }; r"
-	# After some time has passed and you're confident that git filter-branch had no unintended side effects,
-	# you can force all objects in your local repository to be dereferenced and garbage collected (Git 1.8.5+)
-	clean-up = "!f() { git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all; git gc --prune=now; }; f"
-
-	# -- Pull ----------------------------------------------------------------------
+	# -- Sharing and Updating Projects ----------------------------------------
 	#pl = pull
 	#pb = pull --rebase
-
-	# -- Push ----------------------------------------------------------------------
 	#ps = push                 # Update remote refs along with associated objects
 	#psf = push --force        # Overwrite remote refs with local associated objects
 	#psu = push --set-upstream # Add upstream (tracking) reference
 	#pst = push --tags         # Push all refs under refs/tags
-
-	# -- Rebase --------------------------------------------------------------------
 	rb = rebase
 	rba = rebase --abort
 	rbc = rebase --continue
 	rbi = rebase --interactive
 	rbs = rebase --skip
-
-	# -- submodule -----------------------------------------------------------------
 	# Useful aliases when working with submodule
 	# taken from ProGit v2018, page 313
 	sdiff = "!git diff && git submodule foreach 'git diff'"
 	spush = push --recurse-submodules=on-demand
 	supdate = submodule update --remote --merge
-
-	# -- Utils ---------------------------------------------------------------------
-	forget = rm --cache
-	pr = prune --verbose      # Prune all unreachable objects from the object database
-	root = rev-parse --show-toplevel
-	author = shortlog --summary --numbered
-	committer = shortlog -summary --numbered --committer # Git 2.12 (Q1 2017)
-	st = status
-	sts = status --short --branch
 	# Add a subtree to your git project
 	sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
-	tagl = tag --sort=-creatordate  # as of v2.8 (2016)
+
+	# -- Administration -------------------------------------------------------
+	# Remove sensitive data from history, after a push
+	rm-sensitive = "!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"\"$1\"" --prune-empty --tag-name-filter cat -- --all; }; r"
+	# After some time has passed and you're confident that
+	# git filter-branch had no unintended side effects, you can
+	# force all objects in your local repository to be dereferenced
+	# and garbage collected (Git 1.8.5+)
+	clean-up = "!f() { git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all; git gc --prune=now; }; f"
+	pr = prune --verbose      # Prune all unreachable objects from the object database
 [color]
 	ui = auto
 [color "branch"]
@@ -118,7 +110,7 @@
 	autocrlf = input
 	editor = vim
 	#editor = subl --wait
-	; Don't trust file modes, useful on Windows or sharable storage.
+	# Don't trust file modes, useful on Windows or sharable storage.
 	filemode = false
 	pager = less -F -X
 [diff]
