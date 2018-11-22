@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 # ~/.tmuxrc.sh: Executed by ~/.tmux.conf to support ancient versions of tmux
 # See https://repology.org/metapackage/tmux/badges
 

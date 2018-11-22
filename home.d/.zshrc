@@ -1,4 +1,4 @@
-#! /usr/bin/env zsh
+#!/usr/bin/env zsh
 # ~/.zshrc: per-user .zshrc file for zsh(1).
 #
 # This file is sourced only for interactive shells. It

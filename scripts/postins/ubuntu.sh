@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 # -----------------------------------------------------------------------------
 # WARNING:
 #   This script may destroy your disk and kick your dog.
