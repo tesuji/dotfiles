@@ -1,15 +1,11 @@
-#!/usr/bin/env git
-# ~/.gitconfig
-# ************************************************************************
-# This is the config file, and a '#' or ';' character indicates a comment.
-#
-# Use GIT_TRACE=1 to enables general trace messages, e.g. alias expansion,
-# built-in command execution and external command execution.
-# ************************************************************************
-#
-# USE ~/.gitconfig.local to store your personal settings. Please do NOT
-# write those directly here or open a pull request if you want.
-
+# ~/.gitconfig: Git per-user settings
+# *****************************************************************************
+# * Use "#" or ";" character to comment.
+# * Use GIT_TRACE=1 to enables general trace messages, e.g. alias expansion,
+#   built-in command execution and external command execution.
+# * Use ~/.gitconfig.local to store your personal settings. Please do NOT
+#   write those directly here or open a pull request if you want.
+# *****************************************************************************
 [alias]
 	cl = clone
 	cl1 = clone --depth 1
