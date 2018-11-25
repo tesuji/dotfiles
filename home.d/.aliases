@@ -241,8 +241,8 @@ alias wifils='nmcli device wifi list'
 # NOTE: Each time only passes a device to /proc/acpi/wakeup, not all devices.
 suspend() {
   awk '(NR!=1 && $1!~/^(LID|PB|PW)/ && $3=="*enabled"){print $1}' /proc/acpi/wakeup \
-    | while IFS='' read -r dev; do
-        printf '%s' "$dev" | sudo tee /proc/acpi/wakeup
+    | while IFS='' read -r DEV; do
+        printf '%s' "${DEV}" | sudo tee /proc/acpi/wakeup
       done > /dev/null
   systemctl suspend
 }
