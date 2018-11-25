@@ -28,9 +28,9 @@ extract() {
     lower_name="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
     case "${lower_name}" in
       *.tar | *.x )        tar -xvf        "$1";;
-      *.tar.bz2 | *.tbz2 ) tar -jxvf       "$1";;
-      *.tar.xz )           tar -Jxvf       "$1";;
-      *.tar.gz | *.tgz )   tar -zxvf       "$1";;
+      *.tar.bz2 | *.tbz2 ) tar -xjvf       "$1";;
+      *.tar.xz )           tar -xJvf       "$1";;
+      *.tar.gz | *.tgz )   tar -xzvf       "$1";;
       *.tar.lzma )         tar --lzma -xvf "$1";;
       *.bz2 )              bunzip2         "$1";;
       *.xz )               unxz            "$1";;
