@@ -74,7 +74,7 @@ gccpath() {
 
 # Print default include paths
 gccinc() {
-  printf '\n' | gcc -Wp,-v - -fsyntax-only
+  printf '\n' | gcc -E -Wp,-v - -fsyntax-only > /dev/null
 }
 
 lssh() {
