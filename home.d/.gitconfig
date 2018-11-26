@@ -11,6 +11,10 @@
 	cl1 = clone --depth 1
 	cld = clone --depth
 	root = rev-parse --show-toplevel
+	# Fetch only one tag from remote
+	# usage:    git fetch-tag 2.4.0
+	fetch-tag = "!f() { git fetch --depth=1 --no-tags origin \"refs/tags/${1}:refs/tags/${1}\"; }; f"
+	fetch-tag-force = "!f() { git fetch --depth=1 --no-tags origin \"+refs/tags/${1}:refs/tags/${1}\"; }; f"
 
 	# -- Basic  ---------------------------------------------------------------
 	addu = add --update
