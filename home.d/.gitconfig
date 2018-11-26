@@ -13,8 +13,10 @@
 	root = rev-parse --show-toplevel
 	# Fetch only one tag from remote
 	# usage:    git fetch-tag 2.4.0
-	fetch-tag = "!f() { git fetch --depth=1 --no-tags origin \"refs/tags/${1}:refs/tags/${1}\"; }; f"
-	fetch-tag-force = "!f() { git fetch --depth=1 --no-tags origin \"+refs/tags/${1}:refs/tags/${1}\"; }; f"
+	fetch-tag = "!f() { git fetch --depth=1 --no-tags origin \"refs/tags/$1:refs/tags/$1\"; }; f"
+	fetch-tag-force = "!f() { git fetch --depth=1 --no-tags origin \"+refs/tags/$1:refs/tags/$1\"; }; f"
+	# Emulate bash alias
+	alias = "!f() { git config alias.\"$@\"; }; f"
 
 	# -- Basic  ---------------------------------------------------------------
 	addu = add --update
@@ -57,7 +59,7 @@
 	#     git whatchanged ..origin
 	# or:
 	#    git fetch && git log ..origin/master
-	new = "!f() { git log \"${1}\"@{1}.. ; }; f"
+	new = "!f() { git log \"$1\"@{1}.. ; }; f"
 	tagl = tag --sort=-creatordate  # as of v2.7 2015-09-11
 
 	# -- Sharing and Updating Projects ----------------------------------------
@@ -78,11 +80,11 @@
 	spush = push --recurse-submodules=on-demand
 	supdate = submodule update --remote --merge
 	# Add a subtree to your git project
-	sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
+	sba = "!f() { git subtree add --prefix \"$2\" \"$1\" master --squash; }; f"
 
 	# -- Administration -------------------------------------------------------
 	# Remove sensitive data from history, after a push
-	rm-sensitive = "!r() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"\"$1\"" --prune-empty --tag-name-filter cat -- --all; }; r"
+	rm-sensitive = "!f() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"\"$1\"" --prune-empty --tag-name-filter cat -- --all; }; f"
 	# After some time has passed and you're confident that
 	# git filter-branch had no unintended side effects, you can
 	# force all objects in your local repository to be dereferenced
