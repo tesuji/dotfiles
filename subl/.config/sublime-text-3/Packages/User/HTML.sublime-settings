@@ -1,5 +1,5 @@
 // These settings override both User and Default settings for the HTML syntax
 {
-	"tab_size": 2,
+	"tab_size": 8,
 	"translate_tabs_to_spaces": true,
 }
