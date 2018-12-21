@@ -348,6 +348,7 @@ fi
 if [ -x '/usr/bin/dpkg' ]; then
   # Perform a simulation of the whole process by:
   #apt-get clean --dry-run
+  alias apt4='apt -o Acquire::ForceIPv4=true'
   alias aptshow='apt-cache show' # or `apt show` or `dpkg --print-avail`
   alias dpkglist='dpkg --listfiles' # List files from installed package
   #alias apts='apt-cache search'
