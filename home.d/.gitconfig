@@ -114,7 +114,7 @@
 	#editor = subl --wait
 	# Don't trust file modes, useful on Windows or sharable storage.
 	filemode = false
-	pager = less -F -X
+	pager = less -F -R -X
 [diff]
 	tool = vimdiff
 [difftool]
