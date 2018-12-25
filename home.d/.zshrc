@@ -57,13 +57,15 @@ autoload -U select-word-style && select-word-style bash
 # -- History ------------------------------------------------------------------
 
 # These two options disable history sharing with tmux
-setopt NO_INC_APPEND_HISTORY   # Do not write immediately, only when the shell exits
-setopt NO_SHARE_HISTORY
+unsetopt INC_APPEND_HISTORY # Do not write immediately, only when the shell exits
+unsetopt SHARE_HISTORY
 
 setopt HIST_IGNORE_ALL_DUPS # Delete old recorded entry if new entry is a duplicate
 setopt HIST_IGNORE_SPACE    # Don't record an entry starting with a space
 setopt HIST_REDUCE_BLANKS   # Remove superfluous blanks before recording entry
 setopt HIST_VERIFY          # Don't execute immediately upon history expansion
+
+unsetopt FLOW_CONTROL       # Flow control via ^S/^Q
 
 HISTSIZE=1000                 # 1000 lines of history within the shell
 SAVEHIST=1000                 # 1000 lines of history in $HISTFILE
