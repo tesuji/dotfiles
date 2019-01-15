@@ -1,6 +1,6 @@
 #!/bin/sh
 # -----------------------------------------------------------------------------
-# This script is used to enabling / disabling Touchpad
+# This script is used to enable/disable touchpad
 # Use at your own risk!
 # -----------------------------------------------------------------------------
 
