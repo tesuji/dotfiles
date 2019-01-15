@@ -64,8 +64,8 @@
 	tagl = tag --sort=-creatordate  # as of v2.7 2015-09-11
 
 	# -- Sharing and Updating Projects ----------------------------------------
-	#pl = pull
-	#pb = pull --rebase
+	#pullr = pull --rebase
+	pullo = "!f() { git pull origin \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
 	#ps = push                 # Update remote refs along with associated objects
 	#psf = push --force        # Overwrite remote refs with local associated objects
 	#psu = push --set-upstream # Add upstream (tracking) reference
