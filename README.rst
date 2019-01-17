@@ -33,28 +33,9 @@ Manual configuration (no dependencies).
 subl
 ~~~~
 
-**Keymap**:
+**Keymap**: See `<subl/.config/sublime-text-3/Packages/User/Default%20(Linux).sublime-keymap>`__.
 
-
-+-----------------------------------------+---------------------------+
-| Shortcut                                | Bindings                  |
-+=========================================+===========================+
-| :kbd:`Ctrl`:kbd:`K` :kbd:`Ctrl`:kbd:`P` | Title case                |
-+-----------------------------------------+---------------------------+
-| :kbd:`Ctrl`:kbd:`0`                     | Reset font size           |
-+-----------------------------------------+---------------------------+
-| :kbd:`Ctrl`:kbd:`T`                     | Trim trailing whitespaces |
-+-----------------------------------------+---------------------------+
-
-**Installed package**: If already installed Package Control in Sublime Text,
-Package Control will install the following packages:
-
-- Autotools
-- Markdown Table Formatter
-- MasmAssembly
-- NASM x86 Assembly
-- Package Control
-- TOML
+**Installed package**: See `<subl/.config/sublime-text-3/Packages/User/Package%20Control.sublime-settings>`__.
 
 **Custom syntax**: bash, c, c++, css, html, java, js, makefile, python, xml.
 
@@ -125,7 +106,7 @@ Post-installation
 Known Issues
 ------------
 
--  ``fontconfig`` may cause noised font rendering on `Fedora`_.
+- ``fontconfig`` may cause noised font rendering on `Fedora`_.
 
 Contributing
 ------------
@@ -147,7 +128,6 @@ License
 
 This project is licensed under the MIT License - see the `<LICENSE>`__ file for details.
 
-.. _Gitlab: https://gitlab.com
 .. _contributors: https://github.com/lzutao/dotfiles/graphs/contributors
 .. _Fedora: https://getfedora.org
 .. _compton: https://wiki.archlinux.org/index.php/Compton
