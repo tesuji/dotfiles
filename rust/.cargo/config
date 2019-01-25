@@ -1,0 +1,5 @@
+[alias]
+br = "build --release"
+rr = "run --release"
+f = "fmt"
+# c = "check" # Builtin in 1.32
