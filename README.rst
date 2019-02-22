@@ -108,6 +108,26 @@ Known Issues
 
 - ``fontconfig`` may cause noised font rendering on `Fedora`_.
 
+amdgpu - Radeon HD 8790M causes crash when resuming with kernel 4.18+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Temporary fix**: Disable the ``radeon`` and ``amdgpu`` in file ``/etc/modprobe.d/blacklist.conf``.
+
+.. code:: bash
+
+    % sudo tee -a /etc/modprobe.d/blacklist.conf << EOF
+    blacklist amdgpu
+    blacklist radeon
+    EOF
+    % sudo update-initramfs -u -v
+
+**Tried methods -- Wrong fix**:
+
+* Disable ``dmp`` (Dynamic Power Management):
+
+  * Add ``amdgpu.dpm=0`` or ``radeon.dpm=0`` to ``GRUB_CMDLINE_LINUX_DEFAULT`` in ``/etc/default/grub``.
+  * Then run: ``sudo update-grub``.
+
 Contributing
 ------------
 
