@@ -97,7 +97,7 @@ user_pref("browser.onboarding.tour-type",                       "new");
 
 // Do not close with last tab and draw in title bar
 user_pref("browser.tabs.closeWindowWithLastTab",                false);
-user_pref("browser.tabs.drawInTitlebar",                        true);
+user_pref("browser.tabs.drawInTitlebar",                        false);
 
 // PREF: Disable smooth when scrolling
 user_pref("general.smoothScroll",                               false);
