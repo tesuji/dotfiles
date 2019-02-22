@@ -116,8 +116,8 @@ EOF
 
 ## Contributing
 
-Please read CONTRIBUTING.rst for details on our code
-of conduct, and the process for submitting pull requests to us.
+Please read CONTRIBUTING.md for details on our code of conduct,
+and the process for submitting pull requests to us.
 
 ## Thanks To
 
