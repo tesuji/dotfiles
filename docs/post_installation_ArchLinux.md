@@ -112,9 +112,11 @@ look for a `Windows/Fonts` directory within this file.
 It can be extracted with p7zip:
 
 ```bash
-cd /path/to/save/file
-7z e /path/to/windows-iso sources/install.wim
-7z e install.wim Windows/Fonts
+sudo apt install libxml2-utils p7zip-full
+7z e Win10_1809_English_x64.iso sources/install.wim
+7z e install.wim '[1].xml'
+xmllint --format '[1].xml' | grep -E 'INDEX|EDITIONID|<NAME>|DESCRIPTION|DISPLAYNAME|DISPLAYDESCRIPTION'
+7z e install.wim 10/Windows/{Fonts/"*".{ttf,ttc},System32/Licenses/neutral/"*"/"*"/license.rtf} -ofonts/
 ```
 
 ## Polkit requesting root password to suspend
