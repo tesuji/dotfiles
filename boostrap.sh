@@ -67,6 +67,7 @@ declare -a COMMON_APPS=(
 )
 
 declare -a DEBIAN_APPS=(
+  fonts-mathjax
   apt-transport-https firmware-linux gtk2-engines-murrine
   {gcc,g++}-multilib python{,3}-pil
   lcdf-typetools libavcodec-extra libgtk{2.0,-3}-dev
