@@ -6,6 +6,7 @@
 	"installed_packages":
 	[
 		"Autotools",
+		"EditorConfig",
 		"MasmAssembly",
 		"NASM x86 Assembly",
 		"Package Control",
