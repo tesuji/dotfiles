@@ -85,7 +85,7 @@
 
 	# -- Administration -------------------------------------------------------
 	# Remove sensitive data from history, after a push
-	rm-sensitive = "!f() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"\"$1\"" --prune-empty --tag-name-filter cat -- --all; }; f"
+	rm-sensitive = "!f() { git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch -r '"\"$1\"" --prune-empty --tag-name-filter cat -- --all; }; f"
 	# After some time has passed and you're confident that
 	# git filter-branch had no unintended side effects, you can
 	# force all objects in your local repository to be dereferenced
