@@ -65,26 +65,33 @@ fi
 
 # Set less options
 #PAGER="less"
-LESS="--line-numbers --RAW-CONTROL-CHARS"
-LESSHISTFILE='-' # prevent less' history file
+export LESS='--line-numbers --RAW-CONTROL-CHARS'
+export LESS_TERMCAP_mb=$'\e[1;36m'      # begin blink
+export LESS_TERMCAP_md=$'\e[1;31m'      # begin bold
+export LESS_TERMCAP_me=$'\e[0m'         # reset bold/blink
+export LESS_TERMCAP_so=$'\e[1;44;33m'   # begin reverse video
+export LESS_TERMCAP_se=$'\e[0m'         # reset reverse video
+export LESS_TERMCAP_us=$'\e[1;32m'      # begin underline
+export LESS_TERMCAP_ue=$'\e[0m'         # reset underline
+export LESSHISTFILE='-' # prevent less' history file
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Make vim the default editor.
-EDITOR='vim'
-VISUAL="${EDITOR}"
+export EDITOR='vim'
+export VISUAL="${EDITOR}"
 
 # Prefer US English and use UTF-8.
 # Ref https://wiki.archlinux.org/index.php/locale
-LC_CTYPE='en_US.UTF-8'
+export LC_CTYPE='en_US.UTF-8'
 #LC_TIME="en_GB.UTF-8"
 #LC_PAPER="en_GB.UTF-8"
 #LC_MEASUREMENT="en_GB.UTF-8"
-LANG='en_US.UTF-8'
+export LANG='en_US.UTF-8'
 # WARNING: Using LC_ALL is strongly discouraged as it overrides everything.
 # Please use it only when testing and never set it in a startup file.
 #LC_ALL='en_US.UTF-8'
 
-PYTHONSTARTUP="${HOME}/.pythonrc"
+export PYTHONSTARTUP="${HOME}/.pythonrc"
 #SYSTEMD_LESS='FRSMK'
 
 # MySQL prompt
@@ -100,6 +107,8 @@ else
   esac
 fi
 
+export SESSION_TYPE
+
 # NOTE:
 #   Some shells have their own builtin version of ps so we use `command`
 #   keyword to force the shell use the external ps.
@@ -107,5 +116,3 @@ fi
 #   "command" is a shell builtin, which means that it is followed by the
 #   external program you want to run
 #CURRENT_SHELL="$(command ps -p "$$" --no-headers -o cmd)"
-
-export LESS LESSHISTFILE EDITOR VISUAL LC_CTYPE LANG PYTHONSTARTUP SESSION_TYPE
