@@ -18,6 +18,7 @@
 	fetch-tag-force = "!f() { git fetch --depth=1 --no-tags origin \"+refs/tags/$1:refs/tags/$1\"; }; f"
 	# Emulate bash alias
 	alias = "!f() { git config alias.\"$@\"; }; f"
+	remotes = "remote -v"
 
 	# -- Basic  ---------------------------------------------------------------
 	addu = add --update
