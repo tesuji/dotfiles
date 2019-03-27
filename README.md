@@ -94,6 +94,16 @@ git config --global user.email "example@email.com"
 
 * `fontconfig` may cause noised font rendering on [Fedora](https://getfedora.org).
 
+### Xubuntu 18.04 desktop freezes with movable mouse
+
+Try kill `compton` daemon:
+* Press <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>F1</kbd> and login to the system.
+* Type
+  ```bash
+  kill $(pidof compton)
+  ```
+* Turn back to GUI: <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>F7</kbd>
+
 ### amdgpu - Radeon HD 8790M causes crash when resuming with kernel 4.18+
 
 #### Temporary fix
