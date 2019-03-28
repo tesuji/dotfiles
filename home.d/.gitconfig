@@ -76,6 +76,9 @@
 	rbc = rebase --continue
 	rbi = rebase --interactive
 	rbs = rebase --skip
+	cp = cherry-pick
+	cpa = cherry-pick --abort
+	cpc = cherry-pick --continue
 	# Useful aliases when working with submodule
 	# taken from ProGit v2018, page 313
 	sdiff = "!git diff && git submodule foreach 'git diff'"
