@@ -62,7 +62,7 @@
 	# or:
 	#    git fetch && git log ..origin/master
 	new = "!f() { git log \"$1\"@{1}.. ; }; f"
-	tagl = tag --sort=-creatordate  # as of v2.7 2015-09-11
+	tags = tag --sort=-creatordate  # as of v2.7 2015-09-11
 
 	# -- Sharing and Updating Projects ----------------------------------------
 	#pullr = pull --rebase
