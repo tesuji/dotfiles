@@ -24,7 +24,7 @@
 	addu = add --update
 	addp = add --patch
 	st = status
-	sts = status --short --branch
+	s = status --short --branch
 	df = diff
 	#dfm = diff --color-moved=plain
 	dfc = diff --cached  # --staged is a synonym of --cached
