@@ -19,6 +19,7 @@
 	# Emulate bash alias
 	alias = "!f() { git config alias.\"$@\"; }; f"
 	remotes = "remote -v"
+	stale = "remote prune"
 
 	# -- Basic  ---------------------------------------------------------------
 	addu = add --update
