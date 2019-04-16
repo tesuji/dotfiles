@@ -5,7 +5,8 @@
 	"font_face": "Consolas",
 	"ignored_packages":
 	[
-		"Vintage"
+		"Vintage",
+		"Rust"
 	],
 	"line_padding_bottom": 1,
 	"line_padding_top": 1,

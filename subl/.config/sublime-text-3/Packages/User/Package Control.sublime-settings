@@ -10,6 +10,7 @@
 		"MasmAssembly",
 		"NASM x86 Assembly",
 		"Package Control",
+		"Rust Enhanced",
 		"TOML"
 	]
 }
