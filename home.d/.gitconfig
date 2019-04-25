@@ -67,8 +67,8 @@
 
 	# -- Sharing and Updating Projects ----------------------------------------
 	#pullr = pull --rebase
-	pullb = "!f() { git pull \"${1:-origin}\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
-	pr = "!f() { git fetch -fu \"${2:-origin}\" +refs/pull/\"${1}\"/head:refs/remotes/\"${2:-origin}\"/pr/\"${1}\"; }; f"
+	pullb = "!f() { git pull \"${1:-upstream}\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
+	pr = "!f() { git fetch -fu \"${2:-upstream}\" +refs/pull/\"${1}\"/head:refs/remotes/\"${2:-upstream}\"/pr/\"${1}\"; }; f"
 	#ps = push                 # Update remote refs along with associated objects
 	#psf = push --force        # Overwrite remote refs with local associated objects
 	#psu = push --set-upstream # Add upstream (tracking) reference
