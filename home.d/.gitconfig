@@ -20,6 +20,8 @@
 	alias = "!f() { git config alias.\"$@\"; }; f"
 	remotes = "remote -v"
 	stale = "remote prune"
+	# usage: git co master; git chkconflict | sh -xs
+	chkconflict = "for-each-ref --shell --format='git merge --no-ff --no-commit %(refname); git merge --abort' refs/heads"
 
 	# -- Basic  ---------------------------------------------------------------
 	addu = add --update
