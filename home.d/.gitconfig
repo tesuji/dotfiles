@@ -69,7 +69,12 @@
 
 	# -- Sharing and Updating Projects ----------------------------------------
 	#pullr = pull --rebase
-	pullb = "!f() { git pull \"${1:-upstream}\" \"$(git rev-parse --abbrev-ref HEAD)\"; }; f"
+	pullb = "!f() { \
+		UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}'); \
+		BRANCH=$(echo \"${UPSTREAM}\" | cut -f2- -d/); \
+		UPSTREAM=$(echo \"${UPSTREAM}\" | cut -f1 -d/); \
+		git pull \"${UPSTREAM}\" \"${BRANCH}\"; \
+	}; f"
 	pr = "!f() { git fetch -fu \"${2:-upstream}\" +refs/pull/\"${1}\"/head:refs/remotes/\"${2:-upstream}\"/pr/\"${1}\"; }; f"
 	#ps = push                 # Update remote refs along with associated objects
 	#psf = push --force        # Overwrite remote refs with local associated objects
