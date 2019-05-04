@@ -83,9 +83,13 @@ REPORTTIME=10
 # -- Completion ---------------------------------------------------------------
 
 # You may have to force rebuild zcompdump:
-#     rm -f "$HOME/.zcompdump"; compinit or try rehash command
-# Print fpath with (print -rl -- $fpath)
-#fpath=("$HOME/.zshfuncs/" "$fpath")
+#    % rm -f ~/.zcompdump; compinit
+#
+# Print fpath with:
+#    % print -rl -- $fpath
+my_zsh_comp_dir="$HOME/.local/share/zsh_functions"
+[ -d "$my_zsh_comp_dir" ] && fpath+=$my_zsh_comp_dir
+unset my_zsh_comp_dir
 
 autoload -Uz compinit # Use modern completion system
 
