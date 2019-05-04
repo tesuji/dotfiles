@@ -31,6 +31,7 @@
 	sts = status --short --branch
 	df = diff
 	#dfm = diff --color-moved=plain
+	dfi = diff --ignore-all-space
 	dfc = diff --cached  # --staged is a synonym of --cached
 	ci = commit
 	cip = commit --patch
