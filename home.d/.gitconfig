@@ -151,12 +151,6 @@
 	default = simple
 [pull]
 	rebase = true
-
-# -- Include personal settings ------------------------------------------------
-
-[include]
-	# Include private information about user.user and user.email
-	path = ~/.gitconfig.local
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -167,3 +161,9 @@
 [grep]
 	lineNumber = true
 	extendedRegexp = true
+
+# -- Include personal settings ------------------------------------------------
+
+[include]
+	# Include private information about user.user and user.email
+	path = ~/.gitconfig.local
