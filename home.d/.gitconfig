@@ -46,6 +46,7 @@
 
 	# -- Branching, Merging and Patching --------------------------------------
 	br = branch
+	brv = branch -avv
 	co = checkout
 	discard = checkout --
 	author = shortlog --summary --numbered
@@ -76,10 +77,7 @@
 		git pull \"${UPSTREAM}\" \"${BRANCH}\"; \
 	}; f"
 	pr = "!f() { git fetch -fu \"${2:-upstream}\" +refs/pull/\"${1}\"/head:refs/remotes/\"${2:-upstream}\"/pr/\"${1}\"; }; f"
-	#ps = push                 # Update remote refs along with associated objects
-	#psf = push --force        # Overwrite remote refs with local associated objects
-	#psu = push --set-upstream # Add upstream (tracking) reference
-	#pst = push --tags         # Push all refs under refs/tags
+	pushf = push --force-with-lease
 	rb = rebase
 	rba = rebase --abort
 	rbc = rebase --continue
