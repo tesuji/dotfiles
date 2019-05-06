@@ -15,3 +15,6 @@
 # Load network GUI applet. Why? Xubuntu double nm-applet when
 # autostart in ~/.config/autostart
 /usr/bin/nm-applet &
+
+#xinput set-prop "AlpsPS/2 ALPS DualPoint TouchPad" "Synaptics Middle Button Timeout" 150
+urxvtd --quiet --opendisplay --fork
