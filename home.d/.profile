@@ -57,9 +57,17 @@ done
 
 # -- Exported environment variable --------------------------------------------
 
+# For `gpg-agent` to work correctly
+GPG_TTY=$(tty)
+export GPG_TTY
+unset SSH_AGENT_PID
+
 # Enable the keyring for applications run through the terminal, such as SSH
 if [ -n "${DESKTOP_SESSION}" ] && [ -x /usr/bin/gnome-keyring-daemon ]; then
   eval "$(/usr/bin/gnome-keyring-daemon --start)"
+  export SSH_AUTH_SOCK
+elif [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  SSH_AUTH_SOCK="$(/usr/bin/gpgconf --list-dirs agent-ssh-socket)"
   export SSH_AUTH_SOCK
 fi
 
