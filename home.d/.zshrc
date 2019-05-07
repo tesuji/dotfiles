@@ -83,7 +83,7 @@ REPORTTIME=10
 # -- Completion ---------------------------------------------------------------
 
 # You may have to force rebuild zcompdump:
-#    % rm -f ~/.zcompdump; compinit
+#    % exec zsh; rm -f ~/.zcompdump; compinit
 #
 # Print fpath with:
 #    % print -rl -- $fpath
