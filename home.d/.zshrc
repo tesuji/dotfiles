@@ -93,22 +93,10 @@ unset my_zsh_comp_dir
 
 autoload -Uz compinit # Use modern completion system
 
-# Return in seconds how long has ~/.zcompdump been modified
-zcompdump_seconds() {
-  local last_modified current_time
-  last_modified="$(stat -c '%Y' "${HOME}/.zcompdump")"
-  current_time="$(date '+%s')"
-  printf '%s' "$(( current_time - last_modified ))"
-}
-
-# if modified less than 24h
-if [ "$(zcompdump_seconds)" -le 86400 ]; then
-  compinit -C
-else
-  compinit
-fi
-
-unset zcompdump_seconds
+# HACK: To make it fast, don't know why.
+# Maybe because default ~/.zcompdump file is mean to something else.
+ZSH_COMPDUMP="${HOME}/.zcompdump_fast"
+compinit -d "${ZSH_COMPDUMP}"
 
 # Should be enable in /etc/zsh/newuser.zshrc.recommended
 zstyle ':completion:*' auto-description 'specify: %d'
