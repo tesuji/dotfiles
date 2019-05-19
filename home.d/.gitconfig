@@ -150,7 +150,7 @@
 [push]
 	# Push only the current branch
 	# more https://stackoverflow.com/a/21865319/5456794
-	default = simple
+	default = current
 [pull]
 	rebase = true
 [filter "lfs"]
