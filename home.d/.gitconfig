@@ -43,6 +43,7 @@
 	# but authorship of the resulting commit now belongs of
 	# the committer, also it renews the author timestamp.
 	amend = commit --amend --date=now  # as of v2.1.4
+	amendn = commit --amend --date=now --no-edit  # as of v2.1.4
 	unstage = reset HEAD
 	forget = rm --cache
 
@@ -80,7 +81,7 @@
 	}; f"
 	pr = "!f() { git fetch -fu \"${2:-upstream}\" +refs/pull/\"${1}\"/head:refs/remotes/\"${2:-upstream}\"/pr/\"${1}\"; }; f"
 	pushf = push --force-with-lease
-	rb = rebase
+	rb = rebase # --ignore-date
 	rba = rebase --abort
 	rbc = rebase --continue
 	rbi = rebase --interactive
