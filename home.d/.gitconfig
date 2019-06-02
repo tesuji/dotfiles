@@ -34,6 +34,7 @@
 	dfi = diff --ignore-all-space
 	dfc = diff --cached  # --staged is a synonym of --cached
 	ci = commit
+	cir = commit --reuse-message=HEAD
 	cip = commit --patch
 	cis = commit --signoff
 	cig = commit --gpg-sign
