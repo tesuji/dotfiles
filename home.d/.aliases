@@ -227,16 +227,8 @@ alias wifils='nmcli device wifi list'
 # radiff2 file file2
 # ```
 
-# Ref https://wiki.archlinux.org/index.php/Power_management/Suspend_and_hibernate#Instantaneous_wakeups_from_suspend
-# TODO: Use systemd to hook suspend events
-#       https://wiki.archlinux.org/index.php/Power_management#Suspend.2Fresume_service_files
-# NOTE: Each time only passes a device to /proc/acpi/wakeup, not all devices.
+# This works on par with bin/stop-wakeup.sh
 suspend() {
-  sudo -v \
-    && awk '(NR!=1 && $1!~/^(LID|PB|PW)/ && $3=="*enabled"){print $1}' /proc/acpi/wakeup \
-        | while IFS='' read -r DEV; do
-            sudo -n /usr/bin/tee /proc/acpi/wakeup <<< "${DEV}"
-          done > /dev/null
   systemctl suspend
 }
 
