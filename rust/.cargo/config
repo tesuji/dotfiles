@@ -3,3 +3,5 @@ br = "build --release"
 rr = "run --release"
 f = "fmt"
 # c = "check" # Builtin in 1.32
+[build]
+pipelining = true # since nightly-2019-05-17
