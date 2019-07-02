@@ -12,7 +12,8 @@
   set background=dark
 
   set history=50      " keep 50 lines of command history
-  set mouse=v         " use mouse in visual mode
+  set ttymouse=xterm2 " name of your terminal mouse codes: xterm, xterm2, netterm, dec, jsbterm, pterm
+  set mouse=n         " use mouse in normal mode
   "set mouse=a         " Enable mouse usage (all modes: normal,insert,command,help mode)
   "set autowrite       " Automatically save before commands like :next and :make
 
@@ -58,7 +59,7 @@
 
 " Encoding {{{
   set encoding=utf-8
-  set ttyfast
+  set ttyfast " send more characters for redraws
   set fileformat=unix       " file mode is unix
   "set fileformats=unix,dos  " only detect unix file format, displays that ^M with dos files
 " }}}
