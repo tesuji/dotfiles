@@ -22,9 +22,9 @@ setprompt() {
   local host_style user_at_host error_prompt job_prompt time_prompt shell_state
   # Add constant string (remote) when connected via SSH.
   if [ "$SESSION_TYPE" = "ssh" ]; then
-    host_style="%M (remote)"
+    host_style="%m (remote)"
   else
-    host_style="%M"
+    host_style="%m"
   fi
 
   # Set a fancy prompt (non-color if it is a dumb terminal)
