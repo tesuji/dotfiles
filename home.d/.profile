@@ -58,6 +58,8 @@ done
 # -- Exported environment variable --------------------------------------------
 
 # For `gpg-agent` to work correctly
+# For more, read https://wiki.archlinux.org/index.php/GnuPG#SSH_agent
+# ^~ set SSH_AUTH_SOCK so that SSH will use gpg-agent instead of ssh-agent
 GPG_TTY=$(tty)
 export GPG_TTY
 unset SSH_AGENT_PID
@@ -66,9 +68,15 @@ unset SSH_AGENT_PID
 if [ -n "${DESKTOP_SESSION}" ] && [ -x /usr/bin/gnome-keyring-daemon ]; then
   eval "$(/usr/bin/gnome-keyring-daemon --start)"
   export SSH_AUTH_SOCK
-elif [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-  SSH_AUTH_SOCK="$(/usr/bin/gpgconf --list-dirs agent-ssh-socket)"
-  export SSH_AUTH_SOCK
+elif [ -x /usr/bin/ssh-agent ]; then
+  if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    mkdir -p ~/.cache/my-ssh
+    (umask 066; ssh-agent > ~/.cache/my-ssh/environment)
+  fi
+
+  if [ -z "$SSH_AUTH_SOCK" ]; then
+    eval "$(< ~/.cache/my-ssh/environment)"
+  fi
 fi
 
 # Set less options
