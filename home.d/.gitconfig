@@ -91,11 +91,6 @@
 	cp = cherry-pick
 	cpa = cherry-pick --abort
 	cpc = cherry-pick --continue
-	# Useful aliases when working with submodule
-	# taken from ProGit v2018, page 313
-	sdiff = "!git diff && git submodule foreach 'git diff'"
-	spush = push --recurse-submodules=on-demand
-	supdate = submodule update --remote --merge
 	# Add a subtree to your git project
 	sba = "!f() { git subtree add --prefix \"$2\" \"$1\" master --squash; }; f"
 
