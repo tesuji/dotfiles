@@ -211,6 +211,7 @@ alias mkdir='mkdir -pv'
 alias mv='mv -iv'
 alias nc='nc -v'
 alias objdump='objdump -M intel'
+alias patch='patch -p1' # or use `git apply -3`
 alias py='python'
 alias py2='python2'
 alias py3='python3'
