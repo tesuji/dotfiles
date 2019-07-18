@@ -42,6 +42,14 @@ extract() {
   fi
 }
 
+tarball() {
+  if [ -z "$1" ]; then
+    >&2 printf '"%s" is not a valid file\n' "$1"
+    return 2
+  fi
+  find usr ! -type d | fakeroot tar -cJvf "$1" -T -
+}
+
 # Print specific variable of gcc
 parse_gcc_var() {
   [ "$#" -ne 1 ] && return
