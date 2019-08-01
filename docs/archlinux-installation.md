@@ -504,10 +504,13 @@ For safe, type `sudo passwd -dl root`
 
 #### Install XFCE4 Dekstop, Sreen locker and Sound Server
 
+> See also: https://wiki.archlinux.org/index.php/Xorg#Driver_installation
+
 We have chosen to install
 
 - `xorg` as display server (must be **manually** installed)
-- Intel GPU driver (`xf86-video-intel`) as graphics driver
+- Intel GPU driver (`xf86-video-intel`) as graphics driver (Often not recommended, see note
+https://wiki.archlinux.org/index.php/Intel_graphics#Installation)
 	+ If you use Nvidia (latest card): `nvidia nvidia-libgl`
 	+ For ATI/AMD: `xf86-video-ati lib32-mesa-libgl`
 - `lightdm` or `lxdm` as display manager
@@ -516,7 +519,7 @@ We have chosen to install
 ##### 1) Install Intel GPU driver
 ```
 sudo pacman -S xorg xorg-xinit
-sudo pacman -S xf86-video-intel
+sudo pacman -S vulkan-intel xf86-video-intel
 ```
 
 If Arch is in VMWare, just install `xf86-input-vmmouse`, `xf86-video-vmware`,
