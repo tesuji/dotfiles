@@ -567,7 +567,13 @@ Then, run LightDM as an X application:
 sudo lightdm --test-mode --debug
 ```
 
-Then type `sudo systemctl enable lightdm`
+Then type `sudo systemctl enable lightdm`.
+
+xfce in Arch Linux doesn't have `light-locker-command` in `xflock4`, use this command to override that:
+
+```bash
+xfconf-query -c xfce4-session -p /general/LockCommand -s "light-locker-command -l" --create -t string
+```
 
 ##### 3) Install audio service
 
@@ -586,9 +592,9 @@ sudo pacman -S gstreamer gst-libav gst-plugins-bad gst-plugins-base gst-plugins-
 Install **XFCE4** desktop environment
 
 ```bash
-echo "exec startxfce4" >> ~/.xinitrc
 sudo pacman -S xfce4
 ```
 
 ### Finally, reboot system with `reboot`
+
 If it does not work, type `reboot -f` to force it to reboot.
