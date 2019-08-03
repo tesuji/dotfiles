@@ -595,6 +595,16 @@ Install **XFCE4** desktop environment
 sudo pacman -S xfce4
 ```
 
+##### 6) Install cursor theme
+
+Use defautl Ubuntu cursor theme:
+
+```bash
+pacman -S xcursor-vanilla-dmz xcursor-vanilla-dmz-aa
+```
+
+For more, read https://wiki.archlinux.org/index.php/Cursor_themes
+
 ### Finally, reboot system with `reboot`
 
 If it does not work, type `reboot -f` to force it to reboot.
