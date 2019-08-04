@@ -39,12 +39,8 @@ bindkey "\e0H"    beginning-of-line       # Home
 bindkey "\e0F"    end-of-line             # End
 bindkey '\e[5~'   history-search-backward # PgUp
 bindkey '\e[6~'   history-search-forward  # PgDn
-bindkey '\e[A'    up-line-or-history      # Up
-bindkey '\e[B'    down-line-or-history    # Down
 bindkey '\e[C'    forward-char            # Left
 bindkey '\e[D'    backward-char           # Right
-bindkey '\eOA'    up-line-or-history      # Up
-bindkey '\eOB'    down-line-or-history    # Down
 bindkey '\eOC'    forward-char            # Left
 bindkey '\eOD'    backward-char           # Right
 bindkey '\e[1;5C' forward-word            # Ctrl-Left
@@ -53,6 +49,17 @@ bindkey '^U'      backward-kill-line      # Ctrl-U
 
 # Use bash's style for word
 autoload -U select-word-style && select-word-style bash
+
+# -- History search -----------------------------------------------------------
+
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+bindkey '\e[A'    up-line-or-beginning-search       # Up
+bindkey '\e[B'    down-line-or-beginning-search     # Down
+bindkey '\eOA'    up-line-or-beginning-search       # Up
+bindkey '\eOB'    down-line-or-beginning-search     # Down
 
 # -- History ------------------------------------------------------------------
 
@@ -132,15 +139,6 @@ setopt RM_STAR_WAIT
 
 # Don't nice background processes
 setopt NO_BG_NICE
-
-# -- History search -----------------------------------------------------------
-
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-
-[ -n "$key[Up]"   ] && bindkey -- "$key[Up]"   up-line-or-beginning-search
-[ -n "$key[Down]" ] && bindkey -- "$key[Down]" down-line-or-beginning-search
 
 # -- Load shell dotfiles ------------------------------------------------------
 
