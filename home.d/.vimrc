@@ -14,6 +14,7 @@
   set history=50      " keep 50 lines of command history
   set ttymouse=xterm2 " name of your terminal mouse codes: xterm, xterm2, netterm, dec, jsbterm, pterm
   set mouse=n         " use mouse in normal mode
+  set mousemodel=popup " do not change cursor when right click
   "set mouse=a         " Enable mouse usage (all modes: normal,insert,command,help mode)
   "set autowrite       " Automatically save before commands like :next and :make
 
