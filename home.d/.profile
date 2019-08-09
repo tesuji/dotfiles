@@ -44,10 +44,9 @@ path_append() {
 
 # Set PATH so it includes sbin program
 # NOTE: In zsh, read https://wiki.archlinux.org/index.php/zsh#Configuring_.24PATH
-case ":${PATH}:" in
-  *":/sbin:"* ) :;;
-  * ) PATH="/sbin/:/usr/sbin:/usr/local/sbin${PATH+:${PATH}}";;
-esac
+#for p in /sbin /usr/sbin /usr/local/sbin; do
+#  path_prepend "$p"
+#done
 
 # Set PATH so it includes user's private bin if it exists
 # and ~/.local/bin which is defined in FHS.
