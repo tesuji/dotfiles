@@ -3,24 +3,22 @@
 <channel name="xsettings" version="1.0">
   <property name="Net" type="empty">
     <property name="ThemeName" type="string" value="Arc-Darker"/>
-    <property name="IconThemeName" type="string" value="elementary-xfce-dark"/>
-    <property name="DoubleClickTime" type="int" value="250"/>
-    <property name="DoubleClickDistance" type="int" value="2"/>
+    <property name="IconThemeName" type="string" value="Adwaita"/>
+    <property name="DoubleClickTime" type="int" value="200"/>
+    <property name="DoubleClickDistance" type="empty"/>
     <property name="DndDragThreshold" type="empty"/>
     <property name="CursorBlink" type="empty"/>
     <property name="CursorBlinkTime" type="empty"/>
     <property name="SoundThemeName" type="empty"/>
     <property name="EnableEventSounds" type="empty"/>
     <property name="EnableInputFeedbackSounds" type="empty"/>
-    <property name="FallbackIconTheme" type="empty"/>
   </property>
   <property name="Xft" type="empty">
-    <property name="DPI" type="empty"/>
-    <property name="Antialias" type="empty"/>
-    <property name="Hinting" type="empty"/>
-    <property name="HintStyle" type="empty"/>
-    <property name="RGBA" type="empty"/>
-    <property name="Lcdfilter" type="empty"/>
+    <property name="DPI" type="int" value="-1"/>
+    <property name="Antialias" type="int" value="1"/>
+    <property name="Hinting" type="int" value="1"/>
+    <property name="HintStyle" type="string" value="hintslight"/>
+    <property name="RGBA" type="string" value="rgb"/>
   </property>
   <property name="Gtk" type="empty">
     <property name="CanChangeAccels" type="empty"/>
@@ -34,8 +32,11 @@
     <property name="MenuImages" type="empty"/>
     <property name="ButtonImages" type="empty"/>
     <property name="MenuBarAccel" type="empty"/>
-    <property name="CursorThemeName" type="empty"/>
+    <property name="CursorThemeName" type="string" value="Vanilla-DMZ"/>
     <property name="CursorThemeSize" type="empty"/>
-    <property name="DecorationLayout" type="string" value="menu:minimize,maximize,close"/>
+    <property name="DecorationLayout" type="empty"/>
+  </property>
+  <property name="Xfce" type="empty">
+    <property name="LastCustomDPI" type="int" value="96"/>
   </property>
 </channel>

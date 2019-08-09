@@ -44,7 +44,27 @@
           <property name="last-image" type="string" value="/usr/share/xfce4/backdrops/xubuntu-wallpaper.png"/>
         </property>
       </property>
+      <property name="monitoreDP1" type="empty">
+        <property name="workspace0" type="empty">
+          <property name="color-style" type="int" value="0"/>
+          <property name="image-style" type="int" value="0"/>
+          <property name="last-image" type="string" value="/usr/share/backgrounds/xfce/xfce-teal.jpg"/>
+          <property name="rgba1" type="array">
+            <value type="double" value="0.000000"/>
+            <value type="double" value="0.000000"/>
+            <value type="double" value="0.000000"/>
+            <value type="double" value="1.000000"/>
+          </property>
+        </property>
+        <property name="workspace1" type="empty">
+          <property name="color-style" type="int" value="0"/>
+          <property name="image-style" type="int" value="5"/>
+          <property name="last-image" type="string" value="/usr/share/backgrounds/xfce/xfce-teal.jpg"/>
+        </property>
+      </property>
     </property>
+    <property name="single-workspace-mode" type="bool" value="true"/>
+    <property name="single-workspace-number" type="int" value="0"/>
   </property>
   <property name="desktop-menu" type="empty">
     <property name="show" type="bool" value="false"/>
@@ -53,7 +73,7 @@
     <property name="show" type="bool" value="false"/>
   </property>
   <property name="last" type="empty">
-    <property name="window-width" type="int" value="575"/>
-    <property name="window-height" type="int" value="511"/>
+    <property name="window-width" type="int" value="587"/>
+    <property name="window-height" type="int" value="619"/>
   </property>
 </channel>

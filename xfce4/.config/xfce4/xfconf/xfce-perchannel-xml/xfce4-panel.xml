@@ -10,18 +10,15 @@
       <property name="enter-opacity" type="uint" value="100"/>
       <property name="leave-opacity" type="uint" value="100"/>
       <property name="length" type="uint" value="100"/>
-      <property name="length-adjust" type="bool" value="false"/>
+      <property name="length-adjust" type="bool" value="true"/>
       <property name="mode" type="uint" value="0"/>
       <property name="plugin-ids" type="array">
         <value type="int" value="1"/>
         <value type="int" value="2"/>
         <value type="int" value="3"/>
         <value type="int" value="13"/>
-        <value type="int" value="4"/>
-        <value type="int" value="5"/>
-        <value type="int" value="6"/>
-        <value type="int" value="7"/>
         <value type="int" value="9"/>
+        <value type="int" value="4"/>
         <value type="int" value="8"/>
         <value type="int" value="10"/>
         <value type="int" value="11"/>
@@ -29,7 +26,7 @@
       </property>
       <property name="position" type="string" value="p=8;x=960;y=1067"/>
       <property name="position-locked" type="bool" value="true"/>
-      <property name="size" type="uint" value="30"/>
+      <property name="size" type="uint" value="32"/>
       <property name="span-monitors" type="bool" value="false"/>
     </property>
   </property>
@@ -41,6 +38,7 @@
     </property>
     <property name="plugin-11" type="string" value="clock">
       <property name="digital-format" type="string" value="%R"/>
+      <property name="tooltip-format" type="string" value="%A %d %B %Y"/>
     </property>
     <property name="plugin-12" type="string" value="showdesktop"/>
     <property name="plugin-13" type="string" value="pager">
@@ -49,12 +47,13 @@
       <property name="workspace-scrolling" type="bool" value="false"/>
     </property>
     <property name="plugin-2" type="string" value="tasklist">
-      <property name="flat-buttons" type="bool" value="false"/>
+      <property name="flat-buttons" type="bool" value="true"/>
       <property name="include-all-monitors" type="bool" value="true"/>
       <property name="show-labels" type="bool" value="true"/>
       <property name="sort-order" type="uint" value="4"/>
       <property name="window-scrolling" type="bool" value="false"/>
       <property name="include-all-workspaces" type="bool" value="false"/>
+      <property name="show-handle" type="bool" value="false"/>
     </property>
     <property name="plugin-3" type="string" value="separator">
       <property name="expand" type="bool" value="true"/>
@@ -64,12 +63,13 @@
       <property name="names-hidden" type="array">
       </property>
       <property name="names-visible" type="array">
-        <value type="string" value="gigolo"/>
         <value type="string" value="networkmanager applet"/>
         <value type="string" value="xfce4-power-manager"/>
+        <value type="string" value="gigolo"/>
         <value type="string" value="network"/>
-        <value type="string" value="thunar"/>
         <value type="string" value="vmware-tray"/>
+        <value type="string" value="thunar"/>
+        <value type="string" value="vlc"/>
       </property>
       <property name="show-frame" type="bool" value="false"/>
       <property name="size-max" type="uint" value="22"/>
@@ -104,8 +104,8 @@
     <property name="plugin-9" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
       <property name="enable-mpris" type="bool" value="true"/>
-      <property name="mixer-command" type="string" value="pavucontrol"/>
-      <property name="mpris-players" type="string" value="parole;vlc"/>
+      <property name="mixer-command" type="string" value="pavucontrol-qt"/>
+      <property name="mpris-players" type="string" value="chromium.instance22099;parole;vlc"/>
       <property name="show-notifications" type="bool" value="true"/>
     </property>
   </property>
