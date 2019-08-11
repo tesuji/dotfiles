@@ -364,10 +364,10 @@ systemctl enable NetworkManager
 For Wireless configuration, install the `iw` and `wpa_supplicant` packages,
 as well as needed
 [firmware packages](https://wiki.archlinux.org/index.php/Wireless#Installing_driver.2Ffirmware).
-Optionally install `dialog` for usage of *wifi-menu*.
+Install `dialog` for *wifi-menu*.
 
 ```bash
-pacman -S iw wpa_supplicant
+pacman -S dialog iw wpa_supplicant
 ```
 
 ### Configure package manager
