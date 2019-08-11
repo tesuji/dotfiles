@@ -26,7 +26,10 @@ Example: asume usb is in `/dev/sdb` and `iso` image in `home`, then type this
 sudo dd bs=4M if='/home/username/ArchLinux.iso' of='/dev/sdb' status=progress oflag=sync
 ```
 
-**Note**: To restore the USB drive as an empty, usable storage device after using the Arch ISO image, the iso9660 filesystem signature needs to be removed by running `wipefs --all /dev/sdx` as root, before [repartitioning](https://wiki.archlinux.org/index.php/Repartition) and [reformating](https://wiki.archlinux.org/index.php/Reformat) the USB drive.
+**Note**: To restore the USB drive as an empty, usable storage device after using the Arch ISO image, the iso9660
+filesystem signature needs to be removed by running `wipefs --all /dev/sdx` as root, before
+[repartitioning](https://wiki.archlinux.org/index.php/Repartition) and
+[reformating](https://wiki.archlinux.org/index.php/Reformat) the USB drive.
 
 #### On Windows
 
@@ -426,7 +429,7 @@ Type these commands:
 
 ```bash
 pacman -S grub efibootmgr
-grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck /dev/sda
+grub-install --target=x86_64-efi --bootloader-id=archlinux --recheck /dev/sda
 ```
 
 #### Only Legacy BIOS
