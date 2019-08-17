@@ -509,34 +509,49 @@ For safe, type `sudo passwd -dl root`
 
 > See also: https://wiki.archlinux.org/index.php/Xorg#Driver_installation
 
-We have chosen to install
-
-- `xorg` as display server (must be **manually** installed)
-- Intel GPU driver (`xf86-video-intel`) as graphics driver (Often not recommended, see note
-https://wiki.archlinux.org/index.php/Intel_graphics#Installation)
-	+ If you use Nvidia (latest card): `nvidia nvidia-libgl`
-	+ For ATI/AMD: `xf86-video-ati lib32-mesa-libgl`
-- `lightdm` or `lxdm` as display manager
-- and `xfce4` as desktop environment
-
-##### 1) Install Intel GPU driver
-```
-sudo pacman -S xorg xorg-xinit
-sudo pacman -S vulkan-intel xf86-video-intel
-```
+##### 1) Install your graphics driver
 
 If Arch is in VMWare, just install `xf86-input-vmmouse`, `xf86-video-vmware`,
 `open-vm-tools` and enable `vmtoolsd` by `sudo systemctl enable vmtoolsd`
 
-##### 2) Install display manager
+###### Intel
 
-Choose either **a)** or **b)** for installing desktop manager
+Intel GPU driver (`xf86-video-intel`) as graphics driver (Often not recommended, see note
+https://wiki.archlinux.org/index.php/Intel_graphics#Installation)
+
+```
+sudo pacman -S vulkan-intel xf86-video-intel mesa
+```
+
+###### AMD
+
+```
+sudo pacman -S xf86-video-amdgpu mesa xf86-video-ati lib32-mesa-libgl
+```
+
+###### NVIDIA
+
+```
+sudo pacman -S nvidia nvidia-libgl nvidia-utils
+```
+
+##### 2) Install Xorg display server
+
+```
+sudo pacman -S xorg xorg-xinit
+```
+
+##### 3) Install display manager
+
+Choose either **a)**, **b)** or **c)** for installing desktop manager
 
 ###### a) Install LXDM (Light X11 Desktop Manager)
 
 Install desktop manager **LXDM** and Sreen locker **XScreenSaver**
 
-`sudo pacman -S lxdm xscreensaver`
+```
+sudo pacman -S lxdm xscreensaver
+```
 
 Then type `sudo vi /etc/lxdm/lxdm.conf` and change line `session=/usr/bin/startlxde`
 to `session=/usr/bin/startxfce4`. Save change and exit.
@@ -578,19 +593,34 @@ xfce in Arch Linux doesn't have `light-locker-command` in `xflock4`, use this co
 xfconf-query -c xfce4-session -p /general/LockCommand -s "light-locker-command -l" --create -t string
 ```
 
-##### 3) Install audio service
+###### b) Install LightDM and xfce4-screensaver
+
+Install desktop manager **LightDM** and screen locker **light-locker**
+
+```
+sudo pacman -S xorg-server-xephyr accountsservice
+sudo pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings xfce4-screensaver
+```
+
+xfce in Arch Linux doesn't have `xfce4-screensaver-command` in `xflock4`, use this command to override that:
+
+```bash
+xfconf-query -c xfce4-session -p /general/LockCommand -s "xfce4-screensaver-command -l" --create -t string
+```
+
+##### 4) Install audio service
 
 ```bash
 sudo pacman -S pulseaudio pulseaudio-alsa
 ```
 
-##### 4) Install gstreamer
+##### 5) Install gstreamer
 
 ```bash
 sudo pacman -S gstreamer gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly
 ```
 
-##### 5) Install desktop environment
+##### 6) Install desktop environment
 
 Install **XFCE4** desktop environment
 
@@ -598,7 +628,7 @@ Install **XFCE4** desktop environment
 sudo pacman -S xfce4
 ```
 
-##### 6) Install cursor theme
+##### 7) Install cursor theme
 
 Use defautl Ubuntu cursor theme:
 
