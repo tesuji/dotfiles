@@ -17,6 +17,12 @@
 # Use systemd to hook suspend events https://wiki.archlinux.org/index.php/Power_management#Suspend.2Fresume_service_files
 
 # NOTE: Each time only passes a device to /proc/acpi/wakeup, not all devices.
+#
+# Filter out those devices:
+#       LID     - Laptop lid
+#       PB|PW   - Power button
+#
+# See <https://unix.stackexchange.com/questions/236127/acpi-wakeup-4-letters-code-meaning> for more device meanings.
 awk '(NR!=1 && $1!~/^(LID|PB|PW)/ && $3=="*enabled"){print $1}' /proc/acpi/wakeup | \
 while IFS='' read -r dev; do
   echo "$dev" | tee /proc/acpi/wakeup
