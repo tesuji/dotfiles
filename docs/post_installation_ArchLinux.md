@@ -1,5 +1,7 @@
 # Post installation note for Arch Linux and Debian Stretch (9)
 
+https://wiki.archlinux.org/index.php/Improving_performance#Watchdogs
+
 ## avahi-daemon[519]: chroot.c: open() failed: No such file or directory
 
 **References**:
