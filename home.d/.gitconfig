@@ -47,6 +47,7 @@
 	amendn = commit --amend --date=now --no-edit  # as of v2.1.4
 	unstage = reset HEAD
 	forget = rm --cache
+	showi = show --ignore-all-space
 
 	# -- Branching, Merging and Patching --------------------------------------
 	br = branch
