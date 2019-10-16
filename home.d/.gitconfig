@@ -33,6 +33,7 @@
 	#dfm = diff --color-moved=plain
 	dfi = diff --ignore-all-space
 	dfc = diff --cached  # --staged is a synonym of --cached
+	dfci = diff --cached --ignore-all-space
 	ci = commit
 	cir = commit --reuse-message=HEAD
 	cip = commit --patch
