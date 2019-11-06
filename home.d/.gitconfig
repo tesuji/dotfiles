@@ -34,6 +34,8 @@
 	dfi = diff --ignore-all-space
 	dfc = diff --cached  # --staged is a synonym of --cached
 	dfci = diff --cached --ignore-all-space
+	dfu = diff @{upstream}
+	dfui = diff --ignore-all-space @{upstream}
 	ci = commit
 	cir = commit --reuse-message=HEAD
 	cip = commit --patch
