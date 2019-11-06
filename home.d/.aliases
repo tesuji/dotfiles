@@ -234,6 +234,8 @@ alias wifils='nmcli device wifi list'
 # cmp -l file file2 | gawk '{printf "%08X %02X %02X\n", $1, strtonum(0$2), strtonum(0$3)}'
 # or
 # radiff2 file file2
+#
+# sdiff -o merged.txt file1.txt file2.txt
 # ```
 
 # This works on par with bin/stop-wakeup.sh
