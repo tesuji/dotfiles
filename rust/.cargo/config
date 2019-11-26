@@ -2,3 +2,4 @@
 br = 'build --release'
 rr = 'run --release'
 f = 'fmt'
+lto = 'rustc --release -- -C lto -C codegen-units=1'
