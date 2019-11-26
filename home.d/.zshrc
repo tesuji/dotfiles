@@ -94,9 +94,8 @@ REPORTTIME=10
 #
 # Print fpath with:
 #    % print -rl -- $fpath
-my_zsh_comp_dir="$HOME/.local/share/zsh_functions"
-[ -d "$my_zsh_comp_dir" ] && fpath+=$my_zsh_comp_dir
-unset my_zsh_comp_dir
+fpath+="$HOME/.local/share/zsh_functions"
+fpath+="$HOME/.zfunc"
 
 autoload -Uz compinit # Use modern completion system
 
