@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+set -u
+set -o pipefail
+
+if [[ $1 == lto ]]; then
+    shift
+fi
+
+ARGUMENTS=()
+while [[ $# -gt 0 ]]; do
+    arg=$1
+    shift
+    if [[ "$arg" == '--' ]]; then
+        break
+    fi
+    ARGUMENTS+=("$arg")
+done
+
+cargo rustc --release "${ARGUMENTS[@]}" -- -C lto -C codegen-units=1 "$@"
