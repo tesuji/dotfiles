@@ -179,7 +179,7 @@ if diff --color 2>&1 | grep -q 'missing operand'; then
   alias diff="diff --unified --color"
 fi
 alias du='du -sch'
-alias fail='journalctl -p 3 -xb'
+alias fails='journalctl -p 3 -xb'
 alias free='free -h'
 alias g++='g++ -Wall -Wpedantic -Wextra -Weffc++ -masm=intel' #-fno-stack-protector
 alias gcc='gcc -masm=intel'
