@@ -23,6 +23,7 @@
 	# usage: git co master; git chkconflict | sh -xs
 	chkconflict = "for-each-ref --shell --format='git merge --no-ff --no-commit %(refname); git merge --abort' refs/heads"
 	conflicts = diff --name-only --diff-filter=U
+	touch = "!f() { git ls-files -z \"*.$1\" | xargs -0 touch; }; f"
 
 	# -- Basic  ---------------------------------------------------------------
 	addu = add --update
