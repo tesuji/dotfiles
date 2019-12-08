@@ -3,7 +3,7 @@
 # * Use "#" or ";" character to comment.
 # * Use GIT_TRACE=1 to enables general trace messages, e.g. alias expansion,
 #   built-in command execution and external command execution.
-# * Use ~/.gitconfig.local to store your personal settings. Please do NOT
+# * Use ~/.config/git/config.local to store your personal settings. Please do NOT
 #   write those directly here or open a pull request if you want.
 # *****************************************************************************
 [alias]
@@ -174,4 +174,4 @@
 
 [include]
 	# Include private information about user.user and user.email
-	path = ~/.gitconfig.local
+	path = ~/.config/git/config.local
