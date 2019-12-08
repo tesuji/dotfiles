@@ -2,8 +2,13 @@
 # ~/.tmuxrc.sh: Executed by ~/.tmux.conf to support ancient versions of tmux
 # See https://repology.org/metapackage/tmux/badges
 
+set -eu
+
 # If tmux is not run, exit immediately
 [ -z "$TMUX" ] && return
+
+XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-"$HOME"/.config}
+TMUX_CONFIG_DIR="${XDG_CONFIG_HOME}/tmux"
 
 # -- Function -----------------------------------------------------------------
 
@@ -26,15 +31,15 @@ TMUX_OS="$(uname)"
 TMUX_VERSION="$(tmux -V | cut -d' ' -f2)"
 
 case "${TMUX_OS}" in
-  Darwin ) tmux source-file "${HOME}/.tmux-macos.conf";;
-  #FreeBSD ) tmux source-file "${HOME}/.tmux-freebsd.conf";;
+  Darwin ) tmux source-file "${TMUX_CONFIG_DIR}/macos.conf";;
+  #FreeBSD ) tmux source-file "${TMUX_CONFIG_DIR}/freebsd.conf";;
   #*) tmux display -p "Unknown OS";;
 esac
 
 if verlte "$TMUX_VERSION" 2.0; then
-  tmux source-file "${HOME}/.tmux-18.conf"
+  tmux source-file "${TMUX_CONFIG_DIR}/18.conf"
 elif verlte "$TMUX_VERSION" 2.3; then
-  tmux source-file "${HOME}/.tmux-23.conf"
+  tmux source-file "${TMUX_CONFIG_DIR}/23.conf"
 else
-  tmux source-file "${HOME}/.tmux-24_plus.conf"
+  tmux source-file "${TMUX_CONFIG_DIR}/24_plus.conf"
 fi
