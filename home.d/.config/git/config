@@ -149,6 +149,7 @@
 	pager = less -F -R -X
 [diff]
 	tool = vimdiff
+	algorithm = histogram
 [difftool]
 	prompt = false
 [merge]
