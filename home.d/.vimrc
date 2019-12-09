@@ -186,15 +186,12 @@
 "let python_highlight_all = 1
 
 " Folds {{{
+  set foldmethod=indent " fold based on indent
+  "set foldnestmax=3     " deepest fold is 3 levels
+  "set foldcolumn=1      " Add a bit extra margin to the left
+  " Use space to open/closes folds
+  nnoremap <space> za
   set nofoldenable        " dont fold by default
-  if &foldenable
-    set foldmethod=indent " fold based on indent
-    set foldnestmax=3     " deepest fold is 3 levels
-    " Add a bit extra margin to the left
-    "set foldcolumn=1
-    " space open/closes folds
-    nnoremap <space> za
-  endif
 " }}}
 
 " Completion {{{
