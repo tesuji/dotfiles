@@ -174,7 +174,7 @@
     autocmd FileType python setlocal wrap formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
     autocmd FileType perl setlocal wrap
     autocmd FileType ruby setlocal wrap
-    autocmd FileType rust setlocal formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
+    autocmd FileType rust setlocal foldmethod=syntax formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
     autocmd FileType vim setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
     autocmd FileType xml setlocal noexpandtab shiftwidth=4
   endif
