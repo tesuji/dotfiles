@@ -6,3 +6,4 @@
 ## Ref https://wiki.archlinux.org/index.php/Dotfiles#Confidential_information
 xfce4-keyboard-shortcuts.xml filter=xfce_user
 desktop.d/*.desktop          filter=xfce_user
+subl/.config/sublime-text-3/Packages/User/Preferences.sublime-settings filter=subl_dict

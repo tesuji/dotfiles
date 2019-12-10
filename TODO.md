@@ -18,6 +18,7 @@
   ```bash
   git config filter.xfce_user.clean  ./scripts/git/filter/xfce_user/clean.sh
   git config filter.xfce_user.smudge ./scripts/git/filter/xfce_user/smudge.sh
+  git config filter.subl_dict.clean ./scripts/git/filter/subl_dict/clean.sh
   ```
 
 - [x] Flexible `boostrap.sh` for each Linux distribution.
