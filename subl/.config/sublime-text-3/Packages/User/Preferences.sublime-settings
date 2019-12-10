@@ -15,5 +15,5 @@
 	"show_git_status": false,
 	"spell_check": true,
 	"theme": "Adaptive.sublime-theme",
-	"trim_trailing_white_space_on_save": true
+	"trim_trailing_white_space_on_save": false
 }
