@@ -62,6 +62,7 @@
 	committer = author --committer           # as of v2.12 2017-02-24
 	lc = log ORIG_HEAD.. --stat --no-merges  # See the fetched commits
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+	lgu = lg @{upstream}..
 	logg = log --graph --decorate --oneline --abbrev-commit --all
 	lgf = log --pretty=full                  # Display additional committer name
 	lgc = lgf --committer                    # Limit the commits output to match the specified committer
