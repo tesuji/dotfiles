@@ -55,7 +55,6 @@
   " No annoying sound on errors
   set noendofline
   set noerrorbells novisualbell t_vb=
-
 " }}}
 
 " Encoding {{{
@@ -160,7 +159,7 @@
     "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
     " remove whitespaces on save
-    autocmd BufWritePre *.php,*.md,*.vim,*.txt,*.js,*.py,*.sh,*.c,*.cpp,*.h,*.hpp,*.java,*.sh :call TrimTrailingWhiteSpace()
+    "autocmd BufWritePre *.php,*.md,*.vim,*.txt,*.js,*.py,*.sh,*.c,*.cpp,*.h,*.hpp,*.java,*.sh :call TrimTrailingWhiteSpace()
     " Disable visualbell
     autocmd GUIEnter * set visualbell t_vb=
 
@@ -283,21 +282,23 @@
   " Yank to the end of the line, to be consistent with C and D.
   nnoremap Y y$
   " Splitting pane {{{1
-  " split the current window horizontally
-  nmap <leader>- :sp<cr>
-  " split the current window vertically
-  nmap <leader>\| :vs<cr>
+    " split the current window horizontally
+    nmap <leader>- :sp<cr>
+    " split the current window vertically
+    nmap <leader>\| :vs<cr>
   " 1}}}
+  nnoremap <F5>     :call TrimTrailingWhiteSpace()<CR>
+  vnoremap <F5>     :call TrimTrailingWhiteSpace()<CR>
 " }}}
 
 " Clipboard {{{
-if has("unnamedplus")
-  set clipboard=unnamed,unnamedplus
-endif
+  if has("unnamedplus")
+    set clipboard=unnamed,unnamedplus
+  endif
 
-noremap YY "+y<cr>
-noremap <leader>p "+gP<cr>
-noremap XX "+x<cr>
+  noremap YY "+y<cr>
+  noremap <leader>p "+gP<cr>
+  noremap XX "+x<cr>
 " }}}
 
 " Helper functions {{{
