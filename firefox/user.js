@@ -25,9 +25,6 @@ user_pref("browser.search.countryCode",                         "US");
 user_pref("browser.search.region",                              "US");
 user_pref("browser.search.suggest.enabled",                     false);
 
-// PREF: Temporary fix for new YouTube's design on FireFox 57+
-user_pref("general.useragent.override.youtube.com", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/2010010");
-
 /******************************************************************************
  * SECTION: Extensions / plugins                                              *
  ******************************************************************************/
