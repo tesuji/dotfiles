@@ -3,5 +3,5 @@
     { "keys": ["ctrl+0"], "command": "reset_font_size" },
     { "keys": ["ctrl+t"], "command": "trim_trailing_white_space" },
     { "keys": ["ctrl+shift+x"], "command": "close_all" },
-    { "keys": ["ctrl+k", "ctrl+a"], "command": "fold_by_level", "args": {"level": 1} },
+    { "keys": ["ctrl+shift+a"], "command": "fold_by_level", "args": {"level": 1} },
 ]
