@@ -8,8 +8,8 @@
 # *****************************************************************************
 [alias]
 	cl = clone
-	cl1 = clone --depth 1
 	cld = clone --depth
+	cl1 = cld 1
 	root = rev-parse --show-toplevel
 	parent = cat-file -p
 	# Fetch only one tag from remote
@@ -29,42 +29,42 @@
 	addu = add --update
 	addp = add --patch
 	st = status
-	sts = status --short --branch
+	sts = st --short --branch
 	df = diff
-	#dfm = diff --color-moved=plain
-	dfi = diff --ignore-all-space
-	dfc = diff --cached  # --staged is a synonym of --cached
-	dfci = diff --cached --ignore-all-space
+	#dfm = df --color-moved=plain
+	dfi = df --ignore-all-space
+	dfc = df --cached  # --staged is a synonym of --cached
+	dfci = dfc --ignore-all-space
 	dfu = diff @{upstream}
-	dfui = diff --ignore-all-space @{upstream}
+	dfui = dfi @{upstream}
 	ci = commit
-	cir = commit --reuse-message=HEAD
-	cip = commit --patch
-	cis = commit --signoff
-	cig = commit --gpg-sign
+	cir = ci --reuse-message=HEAD
+	cip = ci --patch
+	cis = ci --signoff
+	cig = ci --gpg-sign
 	# Amend the currently staged files to the latest commit
 	# or commit --amend --date=""
 	# or commit --amend --reset-author
 	# but authorship of the resulting commit now belongs of
 	# the committer, also it renews the author timestamp.
-	amend = commit --amend --date=now  # as of v2.1.4
-	amendn = commit --amend --date=now --no-edit  # as of v2.1.4
+	amend = ci --amend --date=now        # as of v2.1.4
+	amendn = amend --no-edit                 # as of v2.1.4
 	unstage = reset HEAD
 	forget = rm --cache
 	showi = show --ignore-all-space
 
 	# -- Branching, Merging and Patching --------------------------------------
 	br = branch
-	brv = branch -avv
+	brv = br -avv
 	co = checkout
-	restore = checkout --
+	restore = co --
 	author = shortlog --summary --numbered
-	committer = shortlog -summary --numbered --committer  # as of v2.12 2017-02-24
+	committer = author --committer           # as of v2.12 2017-02-24
 	lc = log ORIG_HEAD.. --stat --no-merges  # See the fetched commits
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 	logg = log --graph --decorate --oneline --abbrev-commit --all
 	lgf = log --pretty=full                  # Display additional committer name
-	lgc = log --pretty=full --committer      # Limit the commits output to match the specified committer
+	lgc = lgf --committer                    # Limit the commits output to match the specified committer
 	history = log --follow --                # Show commit history of filename
 	stats = log -10 --dirstat=files,1,cumulative --ignore-blank-lines --abbrev-commit --oneline --graph --decorate
 	# what new commits have been created by the last command - typically after a "git pull"
@@ -92,13 +92,13 @@
 	ma = merge --abort
 	mc = merge --continue
 	rb = rebase # --ignore-date
-	rba = rebase --abort
-	rbc = rebase --continue
-	rbi = rebase --interactive
-	rbs = rebase --skip
+	rba = rb --abort
+	rbc = rb --continue
+	rbi = rb --interactive
+	rbs = rb --skip
 	cp = cherry-pick
-	cpa = cherry-pick --abort
-	cpc = cherry-pick --continue
+	cpa = cp --abort
+	cpc = cp --continue
 	# Add a subtree to your git project
 	sba = "!f() { git subtree add --prefix \"$2\" \"$1\" master --squash; }; f"
 
