@@ -306,8 +306,7 @@
   " Write a Vim script manual: http://vimdoc.sourceforge.net/htmldoc/usr_41.html
   "
 
-  " strips trailing whitespace at the end of all of lines. This
-  " is called on Buffer Write Event in the autogroup above.
+  " strips trailing whitespace at the end of all of lines
   fun! TrimTrailingWhiteSpace()
     let l:save = winsaveview()
     %s/\s\+$//e
