@@ -97,6 +97,8 @@
 	rbc = rb --continue
 	rbi = rb --interactive
 	rbs = rb --skip
+	rbroot = rb --root
+	rbiroot = rbi --root
 	cp = cherry-pick
 	cpa = cp --abort
 	cpc = cp --continue
