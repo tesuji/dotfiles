@@ -52,8 +52,10 @@
   " jump links, regs up to 500 lines'
   "set viminfo='20,\"500
   set guicursor=a:blinkon0 " Disable cursor blink
+  " Disable auto append EOL on save in binary files
+  set noeol
+  set nofixeol
   " No annoying sound on errors
-  set noendofline
   set noerrorbells novisualbell t_vb=
 " }}}
 
