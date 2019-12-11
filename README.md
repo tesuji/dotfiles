@@ -74,8 +74,16 @@ Or without backup:
 Now configure git:
 
 ```bash
-git config --global user.name "username"
-git config --global user.email "example@email.com"
+USER_NAME="foo"
+USER_EMAIL="foo@bar.com"
+# I recommend you to do this step, because sometimes if you
+# need to rebase the dotfiles, the global git config would go off
+# and stay in your way
+git config user.name "$USER_NAME"
+git config user.email "$USER_EMAIL"
+#
+git config --global user.name "$USER_NAME"
+git config --global user.email "$USER_EMAIL"
 ```
 
 [Telling Git about your signing key][git_gpg] if you have one.
