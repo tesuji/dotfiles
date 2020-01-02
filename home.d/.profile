@@ -56,26 +56,27 @@ done
 
 # -- Exported environment variable --------------------------------------------
 
-# For `gpg-agent` to work correctly
-# For more, read https://wiki.archlinux.org/index.php/GnuPG#SSH_agent
-# ^~ set SSH_AUTH_SOCK so that SSH will use gpg-agent instead of ssh-agent
+# Enable the keyring for applications run through the terminal, such as SSH.
+#
+# We want to prefer `gpg-agent` when possible (because it has nice UI) and
+# fallback to use `ssh-agent`.
+#
+# For more info, read:
+# * https://wiki.archlinux.org/index.php/SSH_keys#ssh-agent
+# * https://wiki.archlinux.org/index.php/GnuPG#SSH_agent
+
+# For `gpg-agent` to work correctly.
 GPG_TTY=$(tty)
 export GPG_TTY
-unset SSH_AGENT_PID
+if command_exist gpg-connect-agent; then
+  gpg-connect-agent updatestartuptty /bye > /dev/null
+fi
 
-# Enable the keyring for applications run through the terminal, such as SSH
-if [ -n "${DESKTOP_SESSION}" ] && [ -x /usr/bin/gnome-keyring-daemon ]; then
-  eval "$(/usr/bin/gnome-keyring-daemon --start)"
-  export SSH_AUTH_SOCK
-elif [ -x /usr/bin/ssh-agent ]; then
+if [ -z "$SSH_AUTH_SOCK" ] && command_exist ssh-agent; then
   if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    mkdir -p ~/.cache/my-ssh
-    (umask 066; ssh-agent > ~/.cache/my-ssh/environment)
+    ssh-agent -s > "$XDG_RUNTIME_DIR/ssh-agent.env"
   fi
-
-  if [ -z "$SSH_AUTH_SOCK" ]; then
-    eval "$(< ~/.cache/my-ssh/environment)"
-  fi
+  . "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
 fi
 
 # Set less options
