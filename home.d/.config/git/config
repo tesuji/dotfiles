@@ -52,6 +52,8 @@
 	unstage = reset HEAD
 	forget = rm --cache
 	showi = show --ignore-all-space
+	showv = show --reverse
+	showvi = show --reverse --ignore-all-space
 
 	# -- Branching, Merging and Patching --------------------------------------
 	br = branch
