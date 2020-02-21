@@ -186,6 +186,7 @@ alias gcc='gcc -masm=intel'
 alias gccn='gcc -Wfatal-errors -std=gnu11 -Wall -Wextra' # -pedantic #-fno-stack-protector
 alias gccex='gcc -Wfatal-errors -m32 -fno-stack-protector -Wl,-z,norelro -z execstack -g'
 alias gdb='gdb -q'
+alias rust-gdb='rust-gdb -q'
 alias grep="grep --color"
 alias hd='hexdump -C'
 alias l='ls -CF'
