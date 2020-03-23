@@ -6,6 +6,8 @@
 # * Use ~/.config/git/config.local to store your personal settings. Please do NOT
 #   write those directly here or open a pull request if you want.
 # *****************************************************************************
+[protocol]
+	version = 2
 [alias]
 	cl = clone
 	cld = clone --depth
