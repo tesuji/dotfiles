@@ -17,4 +17,4 @@ while [[ $# -gt 0 ]]; do
     ARGUMENTS+=("$arg")
 done
 
-cargo rustc --release "${ARGUMENTS[@]}" -- -C lto -C codegen-units=1 "$@"
+cargo rustc --release "${ARGUMENTS[@]}" -- -C lto -C codegen-units=1 -C panic=abort "$@"
