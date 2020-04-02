@@ -1,5 +1,6 @@
-# Ensure each process can find your `gpg-agent`
-SSH_AGENT_PID	DEFAULT=
-SSH_AUTH_SOCK	DEFAULT="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
+# gpg-agent is not better than ssh-agent: https://unix.stackexchange.com/a/371910/178265
+# # Ensure each process can find your `gpg-agent`
+# SSH_AGENT_PID	DEFAULT=
+# SSH_AUTH_SOCK	DEFAULT="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
 # Disable keyring daemon components to use `gpg-agent`
 GSM_SKIP_SSH_AGENT_WORKAROUND DEFAULT=1

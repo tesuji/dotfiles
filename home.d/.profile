@@ -65,18 +65,21 @@ done
 # * https://wiki.archlinux.org/index.php/SSH_keys#ssh-agent
 # * https://wiki.archlinux.org/index.php/GnuPG#SSH_agent
 
+# Disabled, see <https://unix.stackexchange.com/a/371910/178265>
 # For `gpg-agent` to work correctly.
-GPG_TTY=$(tty)
-export GPG_TTY
-if command_exist gpg-connect-agent; then
-  gpg-connect-agent updatestartuptty /bye > /dev/null
-fi
+# GPG_TTY=$(tty)
+# export GPG_TTY
+# if command_exist gpg-connect-agent; then
+#   gpg-connect-agent updatestartuptty /bye > /dev/null
+# fi
 
-if [ -z "$SSH_AUTH_SOCK" ] && command_exist ssh-agent; then
+if command_exist ssh-agent; then
   if ! pgrep -u "$USER" ssh-agent > /dev/null; then
     ssh-agent -s > "$XDG_RUNTIME_DIR/ssh-agent.env"
   fi
-  . "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
+  if [ -z "$SSH_AUTH_SOCK" ]; then
+    . "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
+  fi
 fi
 
 # Set less options
