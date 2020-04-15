@@ -2,6 +2,13 @@
 
 ## Uncomplete
 
+- [ ] Use vi-style editing mode for both bash and zsh
+
+  Read more:
+  - https://dougblack.io/words/zsh-vi-mode.html
+  - https://www.reddit.com/r/vim/comments/akc9dk/a_more_native_look_for_zsh_vimode/
+  - https://stratus3d.com/blog/2017/10/26/better-vi-mode-in-zshell/
+
 ## Done or almost done
 
 - [x] Remove [sensitive information][2].
