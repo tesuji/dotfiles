@@ -2,13 +2,6 @@
 
 ## Uncomplete
 
-- [ ] Use vi-style editing mode for both bash and zsh
-
-  Read more:
-  - https://dougblack.io/words/zsh-vi-mode.html
-  - https://www.reddit.com/r/vim/comments/akc9dk/a_more_native_look_for_zsh_vimode/
-  - https://stratus3d.com/blog/2017/10/26/better-vi-mode-in-zshell/
-
 ## Done or almost done
 
 - [x] Remove [sensitive information][2].
@@ -37,6 +30,12 @@
 - [x] Fix error makes cursor cannot jumps to beginning of the line.
 
   **Fixed**: non-printing escape sequences have to be enclosed in `\[\e[` and `\]`.
+
+- [x] Use vi-style editing mode for both bash and zsh
+
+  Read more:
+  - https://dougblack.io/words/zsh-vi-mode.html
+  - https://stratus3d.com/blog/2017/10/26/better-vi-mode-in-zshell/
 
 [1]: https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes#Keyword-Expansion
 [2]: https://wiki.archlinux.org/index.php/Dotfiles#Confidential_information
