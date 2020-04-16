@@ -17,49 +17,63 @@ case "$-" in
   *) return;;
 esac
 
-# FAQ 3.10: Why does zsh not work in an Emacs shell mode any more?
-# http://zsh.sourceforge.net/FAQ/zshfaq03.html#l26
-#[ "$EMACS" = t ] && unsetopt zle
-
 # -- Key bindings -------------------------------------------------------------
 
 # Type Ctrl-V and key combination to get key code
 # Type `bindkey' to show all keybindings
 
-# Emacs keybindings
-bindkey -e
+# Select editing-style (emacs or vi)
+# Read more:
+#  - https://jlk.fjfi.cvut.cz/arch/manpages/man/zshzle.1
+#  - http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Zle-Builtins
+bindkey -v
 
-#bindkey '\e[2~'   overwrite-mode          # Insert
-bindkey '\e[3~'   delete-char             # Del
-bindkey '\e[1~'   beginning-of-line       # Home
-bindkey '\e[4~'   end-of-line             # End
-bindkey "\e[H"    beginning-of-line       # Home
-bindkey "\e[F"    end-of-line             # End
-bindkey "\e0H"    beginning-of-line       # Home
-bindkey "\e0F"    end-of-line             # End
-bindkey '\e[5~'   history-search-backward # PgUp
-bindkey '\e[6~'   history-search-forward  # PgDn
-bindkey '\e[C'    forward-char            # Left
-bindkey '\e[D'    backward-char           # Right
-bindkey '\eOC'    forward-char            # Left
-bindkey '\eOD'    backward-char           # Right
-bindkey '\e[1;5C' forward-word            # Ctrl-Left
-bindkey '\e[1;5D' backward-word           # Ctrl-Right
-bindkey '^U'      backward-kill-line      # Ctrl-U
+#bindkey '^[2~'          overwrite-mode          # Insert
+bindkey '^[3~'          delete-char             # Del
+
+bindkey '^[H'           beginning-of-line       # Home
+bindkey '^[F'           end-of-line             # End
+bindkey '^A'            beginning-of-line
+bindkey '^E'            end-of-line
+
+bindkey '^[D'           backward-char           # Left
+bindkey '^[C'           forward-char            # Right
+
+bindkey '^[1;5C'        forward-word            # Ctrl-Left
+bindkey '^[1;5D'        backward-word           # Ctrl-Right
+
+# Emacs compatible keymaps in vi-mode
+bindkey '^K'            kill-line               # Ctrl-K
+bindkey '^U'            backward-kill-line      # Ctrl-U
 
 # Use bash's style for word
 autoload -U select-word-style && select-word-style bash
 
-# -- History search -----------------------------------------------------------
+bindkey '^[5~'          history-search-backward # PgUp
+bindkey '^[6~'          history-search-forward  # PgDn
+
+# Better searching in vi command mode
+bindkey '^R'            history-incremental-search-backward
+bindkey -M vicmd '?'    history-incremental-search-backward
+bindkey -M vicmd '/'    history-incremental-search-forward
 
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-bindkey '\e[A'    up-line-or-beginning-search       # Up
-bindkey '\e[B'    down-line-or-beginning-search     # Down
-bindkey '\eOA'    up-line-or-beginning-search       # Up
-bindkey '\eOB'    down-line-or-beginning-search     # Down
+bindkey '^[A'           up-line-or-beginning-search     # Up
+bindkey '^[B'           down-line-or-beginning-search   # Down
+bindkey -M vicmd "k"    up-line-or-beginning-search
+bindkey -M vicmd "j"    down-line-or-beginning-search
+
+# Putty xterm broken hacks
+# Read about putty keymaps: <https://www.emacswiki.org/emacs/PuTTY#toc9>
+bindkey '^[1~'          beginning-of-line               # Home
+bindkey '^[4~'          end-of-line                     # End
+bindkey '^OD'           backward-char                   # Left
+bindkey '^OC'           forward-char                    # Right
+bindkey '^OA'           up-line-or-beginning-search     # Up
+bindkey '^OB'           down-line-or-beginning-search   # Down
 
 # -- History ------------------------------------------------------------------
 
@@ -86,6 +100,9 @@ LOGCHECK=10 # check logins after 10 seconds
 
 # Say how long a command took, if it took more than 10 seconds
 REPORTTIME=10
+
+# Make vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
+KEYTIMEOUT=1
 
 # -- Completion ---------------------------------------------------------------
 
