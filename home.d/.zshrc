@@ -46,6 +46,8 @@ bindkey '^[1;5D'        backward-word           # Ctrl-Right
 bindkey '^K'            kill-line               # Ctrl-K
 bindkey '^U'            backward-kill-line      # Ctrl-U
 
+bindkey '^Y'            yank
+
 # Use bash's style for word
 autoload -U select-word-style && select-word-style bash
 
