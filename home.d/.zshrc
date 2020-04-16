@@ -28,19 +28,19 @@ esac
 #  - http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Zle-Builtins
 bindkey -v
 
-#bindkey '^[2~'          overwrite-mode          # Insert
-bindkey '^[3~'          delete-char             # Del
+#bindkey '^[[2~'          overwrite-mode         # Insert
+bindkey '^[[3~'         delete-char             # Del
 
-bindkey '^[H'           beginning-of-line       # Home
-bindkey '^[F'           end-of-line             # End
+bindkey '^[[H'          beginning-of-line       # Home
+bindkey '^[[F'          end-of-line             # End
 bindkey '^A'            beginning-of-line
 bindkey '^E'            end-of-line
 
-bindkey '^[D'           backward-char           # Left
-bindkey '^[C'           forward-char            # Right
+bindkey '^[[D'          backward-char           # Left
+bindkey '^[[C'          forward-char            # Right
 
-bindkey '^[1;5C'        forward-word            # Ctrl-Left
-bindkey '^[1;5D'        backward-word           # Ctrl-Right
+bindkey '^[[1;5D'       backward-word           # Ctrl-Left
+bindkey '^[[1;5C'       forward-word            # Ctrl-Right
 
 # Emacs compatible keymaps in vi-mode
 bindkey '^K'            kill-line               # Ctrl-K
@@ -51,8 +51,8 @@ bindkey '^Y'            yank
 # Use bash's style for word
 autoload -U select-word-style && select-word-style bash
 
-bindkey '^[5~'          history-search-backward # PgUp
-bindkey '^[6~'          history-search-forward  # PgDn
+bindkey '^[[5~'         history-search-backward # PgUp
+bindkey '^[[6~'         history-search-forward  # PgDn
 
 # Better searching in vi command mode
 bindkey '^R'            history-incremental-search-backward
@@ -63,15 +63,15 @@ autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-bindkey '^[A'           up-line-or-beginning-search     # Up
-bindkey '^[B'           down-line-or-beginning-search   # Down
+bindkey '^[[A'          up-line-or-beginning-search     # Up
+bindkey '^[[B'          down-line-or-beginning-search   # Down
 bindkey -M vicmd "k"    up-line-or-beginning-search
 bindkey -M vicmd "j"    down-line-or-beginning-search
 
 # Putty xterm broken hacks
 # Read about putty keymaps: <https://www.emacswiki.org/emacs/PuTTY#toc9>
-bindkey '^[1~'          beginning-of-line               # Home
-bindkey '^[4~'          end-of-line                     # End
+bindkey '^[[1~'         beginning-of-line               # Home
+bindkey '^[[4~'         end-of-line                     # End
 bindkey '^OD'           backward-char                   # Left
 bindkey '^OC'           forward-char                    # Right
 bindkey '^OA'           up-line-or-beginning-search     # Up
