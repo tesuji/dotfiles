@@ -48,6 +48,7 @@ bindkey '^U'            backward-kill-line      # Ctrl-U
 
 bindkey '^Y'            yank
 
+bindkey '^W'            backward-kill-word
 bindkey '^[d'           kill-word               # Alt-D
 
 # Use bash's style for word
