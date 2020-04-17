@@ -48,6 +48,8 @@ bindkey '^U'            backward-kill-line      # Ctrl-U
 
 bindkey '^Y'            yank
 
+bindkey '^[d'           kill-word               # Alt-D
+
 # Use bash's style for word
 autoload -U select-word-style && select-word-style bash
 
