@@ -75,10 +75,10 @@ bindkey -M vicmd "j"    down-line-or-beginning-search
 # Read about putty keymaps: <https://www.emacswiki.org/emacs/PuTTY#toc9>
 bindkey '^[[1~'         beginning-of-line               # Home
 bindkey '^[[4~'         end-of-line                     # End
-bindkey '^OD'           backward-char                   # Left
-bindkey '^OC'           forward-char                    # Right
-bindkey '^OA'           up-line-or-beginning-search     # Up
-bindkey '^OB'           down-line-or-beginning-search   # Down
+bindkey '^[OD'           backward-char                   # Left
+bindkey '^[OC'           forward-char                    # Right
+bindkey '^[OA'           up-line-or-beginning-search     # Up
+bindkey '^[OB'           down-line-or-beginning-search   # Down
 
 # -- History ------------------------------------------------------------------
 
