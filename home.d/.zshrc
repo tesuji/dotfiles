@@ -22,29 +22,49 @@ esac
 # Type Ctrl-V and key combination to get key code
 # Type `bindkey' to show all keybindings
 
+# create a zkbd compatible hash;
+# to add other keys to this hash, see: man 5 terminfo
+typeset -g -A key
+
+key[Home]="${terminfo[khome]}"
+key[End]="${terminfo[kend]}"
+key[Insert]="${terminfo[kich1]}"
+key[Backspace]="${terminfo[kbs]}"
+key[Delete]="${terminfo[kdch1]}"
+key[Up]="${terminfo[kcuu1]}"
+key[Down]="${terminfo[kcud1]}"
+key[Left]="${terminfo[kcub1]}"
+key[Right]="${terminfo[kcuf1]}"
+key[PageUp]="${terminfo[kpp]}"
+key[PageDown]="${terminfo[knp]}"
+key[Control-Left]="${terminfo[kLFT5]}"
+key[Control-Right]="${terminfo[kRIT5]}"
+
 # Select editing-style (emacs or vi)
 # Read more:
+#  - https://wiki.archlinux.org/index.php/zsh#Key_bindings
 #  - https://jlk.fjfi.cvut.cz/arch/manpages/man/zshzle.1
 #  - http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Zle-Builtins
 bindkey -v
 
-#bindkey '^[[2~'          overwrite-mode         # Insert
-bindkey '^[[3~'         delete-char             # Del
+[[ -n "${key[Insert]}"    ]] && bindkey -- "${key[Insert]}"     overwrite-mode
+[[ -n "${key[Delete]}"    ]] && bindkey -- "${key[Delete]}"     delete-char
+[[ -n "${key[Backspace]}" ]] && bindkey -- "${key[Backspace]}"  backward-delete-char
 
-bindkey '^[[H'          beginning-of-line       # Home
-bindkey '^[[F'          end-of-line             # End
-bindkey '^A'            beginning-of-line
-bindkey '^E'            end-of-line
+[[ -n "${key[Home]}"      ]] && bindkey -- "${key[Home]}"       beginning-of-line
+[[ -n "${key[End]}"       ]] && bindkey -- "${key[End]}"        end-of-line
+bindkey '^A'                                                    beginning-of-line
+bindkey '^E'                                                    end-of-line
 
-bindkey '^[[D'          backward-char           # Left
-bindkey '^[[C'          forward-char            # Right
+[[ -n "${key[Left]}"      ]] && bindkey -- "${key[Left]}"       backward-char
+[[ -n "${key[Right]}"     ]] && bindkey -- "${key[Right]}"      forward-char
 
-bindkey '^[[1;5D'       backward-word           # Ctrl-Left
-bindkey '^[[1;5C'       forward-word            # Ctrl-Right
+[[ -n "${key[Control-Left]}"  ]] && bindkey -- "${key[Control-Left]}"   backward-word
+[[ -n "${key[Control-Right]}" ]] && bindkey -- "${key[Control-Right]}"  forward-word
 
 # Emacs compatible keymaps in vi-mode
-bindkey '^K'            kill-line               # Ctrl-K
-bindkey '^U'            backward-kill-line      # Ctrl-U
+bindkey '^K'            kill-line
+bindkey '^U'            backward-kill-line
 
 bindkey '^Y'            yank
 
@@ -54,8 +74,8 @@ bindkey '^[d'           kill-word               # Alt-D
 # Use bash's style for word
 autoload -U select-word-style && select-word-style bash
 
-bindkey '^[[5~'         history-search-backward # PgUp
-bindkey '^[[6~'         history-search-forward  # PgDn
+[[ -n "${key[PageUp]}"    ]] && bindkey -- "${key[PageUp]}"     history-search-backward
+[[ -n "${key[PageDown]}"  ]] && bindkey -- "${key[PageDown]}"   history-search-forward
 
 # Better searching in vi command mode
 bindkey '^R'            history-incremental-search-backward
@@ -66,18 +86,22 @@ autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-bindkey '^[[A'          up-line-or-beginning-search     # Up
-bindkey '^[[B'          down-line-or-beginning-search   # Down
+
+[[ -n "${key[Up]}"        ]] && bindkey -- "${key[Up]}"         up-line-or-beginning-search
+[[ -n "${key[Down]}"      ]] && bindkey -- "${key[Down]}"       down-line-or-beginning-search
+
 bindkey -M vicmd "k"    up-line-or-beginning-search
 bindkey -M vicmd "j"    down-line-or-beginning-search
 
-# Remote SSH servers accept these keycodes
-bindkey '^[[1~'         beginning-of-line               # Home
-bindkey '^[[4~'         end-of-line                     # End
-bindkey '^[OD'          backward-char                   # Left
-bindkey '^[OC'          forward-char                    # Right
-bindkey '^[OA'          up-line-or-beginning-search     # Up
-bindkey '^[OB'          down-line-or-beginning-search   # Down
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
+    autoload -Uz add-zle-hook-widget
+    function zle_application_mode_start { echoti smkx }
+    function zle_application_mode_stop { echoti rmkx }
+    add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+    add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+fi
 
 # -- History ------------------------------------------------------------------
 
