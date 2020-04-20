@@ -8,3 +8,7 @@ f = 'fmt'
 opt-level = 0
 [profile.bench.build-override]
 opt-level = 0
+
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+linker = "clang"
