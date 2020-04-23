@@ -1,9 +1,11 @@
 " ~/.vimrc file
 
-" Normally we use vim-extensions. If you want true vi-compatibility
-" remove the following line.
-" Place it first as it changes any settings below.
-set nocompatible
+if !has('nvim')
+  " Normally we use vim-extensions. If you want true vi-compatibility
+  " remove the following line.
+  " Place it first as it changes any settings below.
+  set nocompatible
+endif
 
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
@@ -14,16 +16,27 @@ Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
 Plug 'bogado/file-line'
 
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
+if has('nvim')
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
+
 " Initialize plugin system
 call plug#end()
 
 " Environment {{{
   " If using a dark background within the editing area and syntax
   " highlighting turn on this option as well
-  set background=dark
+  if !has('nvim')
+    set background=dark
+  endif
 
-  set history=50      " keep 50 lines of command history
-  set ttymouse=xterm2 " name of your terminal mouse codes: xterm, xterm2, netterm, dec, jsbterm, pterm
+  if !has('nvim')
+    set history=10000   " maximum of command history
+    set ttymouse=xterm2 " name of your terminal mouse codes: xterm, xterm2, netterm, dec, jsbterm, pterm
+  endif
   set mouse=n         " use mouse in normal mode
   set mousemodel=popup " do not change cursor when right click
   "set mouse=a         " Enable mouse usage (all modes: normal,insert,command,help mode)
@@ -32,7 +45,9 @@ call plug#end()
   set timeout          " time out for mappings
   set timeoutlen=1000  " wait up to 1000ms after <mapleader>
   set ttimeout         " time out for key codes
-  set ttimeoutlen=1000 " wait up to 1000ms after Esc for special key
+  if !has('nvim')
+    set ttimeoutlen=50 " time to wait after ESC for special key
+  endif
 
   " modelines have historically been a source of security/resource
   " vulnerabilities -- disable by default, even when 'nocompatible' is set
@@ -71,8 +86,10 @@ call plug#end()
 " }}}
 
 " Encoding {{{
-  set encoding=utf-8
-  set ttyfast " send more characters for redraws
+  if !has('nvim')
+    set encoding=utf-8
+    set ttyfast " send more characters for redraws
+  endif
   set fileformat=unix       " file mode is unix
   "set fileformats=unix,dos  " only detect unix file format, displays that ^M with dos files
 " }}}
@@ -83,10 +100,15 @@ call plug#end()
   set cmdheight=2                                       " Height of the command bar
   set showmode                                          " Show mode: normal,insert,command,help mode
   set title                                             " Show file in titlebar
+  if !has('nvim')
+    set nostartofline
+  endif
   if has("cmdline_info")
-    set ruler                                           " Always show current position in status bar
-    "set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
-    set showcmd                                         " Show (partial) command in the last line of the screen
+    if has('nvim')
+      set ruler                                           " Always show current position in status bar
+      "set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
+      set showcmd                                         " Show (partial) command in the last line of the screen
+    endif
   endif
 
   highlight User1 ctermbg=Brown     ctermfg=White
@@ -101,7 +123,10 @@ call plug#end()
   highlight User0 ctermbg=LightGray ctermfg=White
 
   if has("statusline")
-    set laststatus=2   " use 2 lines for the status bar
+    if !has('nvim')
+      set laststatus=2   " use 2 lines for the status bar
+      set listchars="tab:> ,trail:-,nbsp:+"
+    endif
     " Format the status line
     set statusline=
     set statusline+=%1*\[%n]                              " buffer number
@@ -117,9 +142,12 @@ call plug#end()
 
   " Show as much as possible of the last line in the window rather
   " than a column of "@", which is the default behavior.
-  set display+=lastline
+  if !has('nvim')
+    set display="lastline,msgsep"
   " Configure backspace so it acts as it should act
-  set backspace=indent,eol,start " Allow backspacing over everything in insert mode
+    set backspace=indent,eol,start " Allow backspacing over everything in insert mode
+    set shortmess="filnxtToOF"
+  endif
   set whichwrap=b,s,h,l,<,>,[,]  " backspace and cursor keys wrap to
 
   " Search for selected text, forwards or backwards.
@@ -151,7 +179,9 @@ call plug#end()
   set nowrap           " do not wrap lines
   set autoindent       " indent at the same level of the previous line
   set smartindent      " smart auto indenting
-  set smarttab         " smart tab handling for indenting
+  if has('nvim')
+    set smarttab         " smart tab handling for indenting
+  endif
   set shiftwidth=2     " operation >> indents 2 columns; << unindents 2 columns
   set softtabstop=2    " insert/delete 2 spaces when hitting a TAB/BACKSPACE
   set tabstop=8        " a hard TAB displays as 8 columns
@@ -165,8 +195,10 @@ call plug#end()
   if has("autocmd")
     " Load indentation rules and
     " plugins according to the detected filetype.
-    filetype indent on
-    filetype plugin on
+    if !has('nvim')
+      filetype plugin indent on
+      set formatoptions=tcqj
+    endif
 
     " Jump to the last position when reopening a file
     "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -177,12 +209,12 @@ call plug#end()
     autocmd GUIEnter * set visualbell t_vb=
 
     " But do wrap on these types of files...
-    autocmd FileType java setlocal noexpandtab listchars=tab:+\ ,eol:-
+    autocmd FileType java setlocal noexpandtab
     autocmd FileType html setlocal wrap
     autocmd BufEnter Makefile setlocal noexpandtab shiftwidth=4
     autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
     autocmd FileType markdown setlocal wrap
-    autocmd FileType php setlocal listchars=tab:+\ ,eol:-
+    autocmd FileType php setlocal
     autocmd FileType python setlocal wrap formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
     autocmd FileType perl setlocal wrap
     autocmd FileType ruby setlocal wrap
@@ -209,8 +241,10 @@ call plug#end()
 " }}}
 
 " Completion {{{
+  if !has('nvim')
+    set wildmenu            " enable CTRL-N and CTRL-P to scroll through matches
+  endif
   set wildmode=list:longest
-  set wildmenu            " enable ctrl-n and ctrl-p to scroll thru matches
   " Ignore compiled files
   set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,.svn
 " }}}
@@ -223,9 +257,10 @@ call plug#end()
 " }}}
 
 " Search {{{
-  set esckeys         " map missed escape sequences (enables keypad keys)
-  set hlsearch        " highlight search (very useful!)
-  set incsearch       " search incremently (search while typing)
+  if !has('nvim')
+    set hlsearch        " highlight search (very useful!)
+    set incsearch       " search incremently (search while typing)
+  endif
   set ignorecase      " Do case insensitive matching
   set smartcase       " but do case sensitive if you type uppercase characters
   set gdefault        " /g flag on :s substitutions by default
@@ -341,6 +376,12 @@ call plug#end()
   endfun
 " }}}
 
-if filereadable(expand("~/.vim/vimrc.local"))
-  source ~/.vim/vimrc.local
+if has('nvim')
+  if filereadable(stdpath('config') . '/local.vim')
+    exe 'source ' . stdpath('config') . '/local.vim'
+  endif
+else
+  if filereadable(expand("~/.vim/vimrc.local"))
+    source ~/.vim/vimrc.local
+  endif
 endif
