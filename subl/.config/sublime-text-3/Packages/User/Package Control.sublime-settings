@@ -9,6 +9,7 @@
 		"NASM x86 Assembly",
 		"Package Control",
 		"Rust Enhanced",
-		"TOML"
+		"TOML",
+		"VimL"
 	]
 }
