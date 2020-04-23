@@ -5,6 +5,19 @@
 " Place it first as it changes any settings below.
 set nocompatible
 
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+Plug 'cespare/vim-toml'
+Plug 'rust-lang/rust.vim'
+Plug 'bogado/file-line'
+
+" Initialize plugin system
+call plug#end()
+
+" Environment {{{
   " If using a dark background within the editing area and syntax
   " highlighting turn on this option as well
   set background=dark
