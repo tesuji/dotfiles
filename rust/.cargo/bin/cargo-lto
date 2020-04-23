@@ -17,4 +17,9 @@ while [[ $# -gt 0 ]]; do
     ARGUMENTS+=("$arg")
 done
 
-cargo rustc --release "${ARGUMENTS[@]}" -- -C lto -C codegen-units=1 -C panic=abort "$@"
+export RUSTFLAGS='-C bitcode-in-rlib=yes'
+cargo rustc --release "${ARGUMENTS[@]}" -- \
+    -C lto \
+    -C codegen-units=1 \
+    -C panic=abort \
+    "$@"
