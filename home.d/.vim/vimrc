@@ -207,6 +207,8 @@ call plug#end()
     "autocmd BufWritePre *.php,*.md,*.vim,*.txt,*.js,*.py,*.sh,*.c,*.cpp,*.h,*.hpp,*.java,*.sh :call TrimTrailingWhiteSpace()
     " Disable visualbell
     autocmd GUIEnter * set visualbell t_vb=
+    " Run checktime in buffers, but avoiding the "Command Line" (q:) window
+    autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
 
     " But do wrap on these types of files...
     autocmd FileType java setlocal noexpandtab
