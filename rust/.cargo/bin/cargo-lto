@@ -20,6 +20,7 @@ if [[ -e .cargo/config ]]; then
 #     }
 #     trap cleanup EXIT
 fi
+# FIXME: abort for panicking doesn't work in cargo-expand. As it unwraps somewhere.
 cat > "$CONFIG_PATH" << EOF
 [profile.release]
 lto = true
