@@ -1,4 +1,6 @@
 #!/bin/bash
+# TODO: Use [`named-profiles`] when it is stabilized.
+# [`named-profiles`]: https://doc.rust-lang.org/nightly/cargo/reference/unstable.html#custom-named-profiles
 set -e
 set -u
 set -o pipefail
@@ -7,19 +9,22 @@ if [[ $1 == lto ]]; then
     shift
 fi
 
-ARGUMENTS=()
-while [[ $# -gt 0 ]]; do
-    arg=$1
-    shift
-    if [[ "$arg" == '--' ]]; then
-        break
-    fi
-    ARGUMENTS+=("$arg")
-done
+mkdir -p .cargo
+CONFIG_PATH=.cargo/config.toml
+if [[ -e .cargo/config ]]; then
+    CONFIG_PATH=.cargo/config
+# FIXME: Don't use trap as it may surprises while debugging cargo errors.
+# elif [[ ! -e "$CONFIG_PATH" ]]; then
+#     function cleanup {
+#         rm -rf "$CONFIG_PATH"
+#     }
+#     trap cleanup EXIT
+fi
+cat > "$CONFIG_PATH" << EOF
+[profile.release]
+lto = true
+codegen-units = 1
+panic = 'abort'
+EOF
 
-export RUSTFLAGS='-C bitcode-in-rlib=yes'
-cargo rustc --release "${ARGUMENTS[@]}" -- \
-    -C lto \
-    -C codegen-units=1 \
-    -C panic=abort \
-    "$@"
+cargo build --release "$@"
