@@ -187,11 +187,11 @@ call plug#end()
   if has('nvim')
     set smarttab         " smart tab handling for indenting
   endif
-  set shiftwidth=2     " operation >> indents 2 columns; << unindents 2 columns
-  set softtabstop=2    " insert/delete 2 spaces when hitting a TAB/BACKSPACE
-  set tabstop=8        " a hard TAB displays as 8 columns
-  set expandtab        " insert spaces when hitting TABs
-
+  " FIXME: Honors plugin choices instead of overriding them
+  "set shiftwidth=2     " operation >> indents 2 columns; << unindents 2 columns
+  "set softtabstop=2    " insert/delete 2 spaces when hitting a TAB/BACKSPACE
+  "set tabstop=8        " a hard TAB displays as 8 columns
+  "set expandtab        " insert spaces when hitting TABs
   set pastetoggle=<F3> " paste mode to avoid autoindent
 " }}}
 
