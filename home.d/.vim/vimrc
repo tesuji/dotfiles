@@ -111,6 +111,11 @@ call plug#end()
     endif
   endif
 
+  if has('nvim')
+    " FIXME: Without this setting the CocFloating color is unreadable
+    " See <https://users.rust-lang.org/t/coc-nvim-completion-pane-is-hard-to-read/41466>
+    highlight link CocFloating markdown
+  endif
   highlight User1 ctermbg=Brown     ctermfg=White
   highlight User2 ctermbg=Red       ctermfg=DarkRed
   highlight User3 ctermbg=Blue      ctermfg=White
