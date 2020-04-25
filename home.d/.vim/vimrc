@@ -106,7 +106,7 @@ call plug#end()
     set nostartofline
   endif
   if has("cmdline_info")
-    if has('nvim')
+    if !has('nvim')
       set ruler                                           " Always show current position in status bar
       "set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
       set showcmd                                         " Show (partial) command in the last line of the screen
