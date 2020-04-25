@@ -99,7 +99,9 @@ call plug#end()
   "set cursorline                                        " highlight current line
   set cmdheight=2                                       " Height of the command bar
   set showmode                                          " Show mode: normal,insert,command,help mode
-  set title                                             " Show file in titlebar
+  " Show file in Terminal titlebar but restore old one when quitting
+  set title
+  set titleold=
   if !has('nvim')
     set nostartofline
   endif
