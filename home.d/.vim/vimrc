@@ -394,6 +394,49 @@ call plug#end()
   endfun
 " }}}
 
+" Comments {{{
+  map gcc :call CommentLines()<cr>
+  map gcu :call UncommentLines()<cr>
+
+  " Improved from https://github.com/BurntSushi/dotfiles/blob/e5c72a924e0d163e130692d46ff7f4d9188307bf/.config/nvim/include/comment.vim
+  let g:my_comment = get({
+    \ 'javascript':     '//',
+    \ 'c':              '//',
+    \ 'cpp':            '//',
+    \ 'java':           '//',
+    \ 'objc':           '//',
+    \ 'scala':          '//',
+    \ 'go':             '//',
+    \ 'rust':           '//',
+    \
+    \ 'php':            '#',
+    \ 'ruby':           '#',
+    \ 'sh':             '#',
+    \ 'make':           '#',
+    \ 'python':         '#',
+    \ 'perl':           '#',
+    \
+    \ 'tex':            '%',
+    \
+    \ 'vim':            '"'},
+    \ &filetype,
+    \ '')
+
+  fun! RegexLiteral(str)
+      return escape(a:str, '*$.^/')
+  endfun
+
+  fun! CommentLines()
+    if g:my_comment != ""
+      exe ':s/^\(\s*\)/\1' . escape(g:my_comment, '/') . ' /e'
+    endif
+  endfun
+
+  fun! UncommentLines()
+    exe ':s/^\(\s*\)' . RegexLiteral(g:my_comment) . '\s*/\1/e'
+  endfun
+" }}}
+
 if has('nvim')
   if filereadable(stdpath('config') . '/local.vim')
     exe 'source ' . stdpath('config') . '/local.vim'
