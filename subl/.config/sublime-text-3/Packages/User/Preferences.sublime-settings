@@ -12,6 +12,7 @@
 	"line_padding_top": 1,
 	"mini_diff": false,
 	"shift_tab_unindent": true,
+	"show_encoding": true,
 	"show_git_status": false,
 	"spell_check": true,
 	"theme": "Adaptive.sublime-theme",
