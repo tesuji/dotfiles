@@ -7,6 +7,9 @@ if !has('nvim')
   set nocompatible
 endif
 
+" Use `vim "+runtime syntax/colortest.vim"` to test vim color
+set t_Co=256
+
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
