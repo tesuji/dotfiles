@@ -14,8 +14,8 @@ set t_Co=256
 " like <leader>w saves the current file
 " The mapleader has to be set before vundle starts loading all
 " the plugins.
-let mapleader   = ","
-let g:mapleader = ","
+let mapleader   = ','
+let g:mapleader = ','
 
 " vim-plug {{{
   " Specify a directory for plugins
