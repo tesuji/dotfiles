@@ -4,7 +4,7 @@
         "diagnostic.checkCurrentLine": true,
         "diagnostic.messageTarget": "float",
         "diagnostic.level": "information",
-        "suggest.autoTrigger": "none",
+        "suggest.autoTrigger": "trigger",
         "signature.enable": false,
         "coc.preferences.snippets.enable": false,
         "rust-analyzer.diagnostics.enable": false,
