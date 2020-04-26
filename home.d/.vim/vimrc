@@ -10,24 +10,33 @@ endif
 " Use `vim "+runtime syntax/colortest.vim"` to test vim color
 set t_Co=256
 
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
+" With a map leader it is possible to do extra key combinations
+" like <leader>w saves the current file
+" The mapleader has to be set before vundle starts loading all
+" the plugins.
+let mapleader   = ","
+let g:mapleader = ","
 
-Plug 'cespare/vim-toml'
-Plug 'rust-lang/rust.vim'
-Plug 'bogado/file-line'
+" vim-plug {{{
+  " Specify a directory for plugins
+  " - For Neovim: stdpath('data') . '/plugged'
+  " - Avoid using standard Vim directory names like 'plugin'
+  call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+  Plug 'cespare/vim-toml'
+  Plug 'rust-lang/rust.vim'
+  Plug 'bogado/file-line'
 
-if has('nvim')
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-endif
+  Plug 'junegunn/fzf'
+  Plug 'junegunn/fzf.vim'
 
-" Initialize plugin system
-call plug#end()
+  if has('nvim')
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  endif
+
+  " Initialize plugin system
+  call plug#end()
+" }}}
 
 " Environment {{{
   " If using a dark background within the editing area and syntax
@@ -38,11 +47,7 @@ call plug#end()
 
   if !has('nvim')
     set history=10000   " maximum of command history
-    set ttymouse=xterm2 " name of your terminal mouse codes: xterm, xterm2, netterm, dec, jsbterm, pterm
   endif
-  set mouse=n         " use mouse in normal mode
-  set mousemodel=popup " do not change cursor when right click
-  "set mouse=a         " Enable mouse usage (all modes: normal,insert,command,help mode)
   "set autowrite       " Automatically save before commands like :next and :make
 
   set timeout          " time out for mappings
@@ -97,33 +102,15 @@ call plug#end()
   "set fileformats=unix,dos  " only detect unix file format, displays that ^M with dos files
 " }}}
 
-" Vim UI {{{
-  "set number                                            " Show line numbers
-  "set cursorline                                        " highlight current line
-  set cmdheight=2                                       " Height of the command bar
-  set showmode                                          " Show mode: normal,insert,command,help mode
-  " Show file in Terminal titlebar but restore old one when quitting
-  set title
-  set titleold=
-  if !has('nvim')
-    set nostartofline
-  endif
-  if has("cmdline_info")
-    if !has('nvim')
-      set ruler                                           " Always show current position in status bar
-      "set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
-      set showcmd                                         " Show (partial) command in the last line of the screen
-    endif
-  endif
-
+" Colors {{{
+  " Popup menu
+  highlight       Pmenu           ctermbg=Black     ctermfg=Gray
+  highlight       PmenuSel        ctermbg=DarkGray  ctermfg=Yellow
+  highlight       PmenuSbar       ctermbg=Blue      ctermfg=DarkGray
   if has('nvim')
-    " Popup menu
-    highlight       Pmenu           ctermbg=Black     ctermfg=Gray
-    highlight       PmenuSel        ctermbg=DarkGray  ctermfg=Yellow
-    highlight       PmenuSbar       ctermbg=Blue      ctermfg=DarkGray
     " FIXME: Without this setting the CocFloating color is unreadable
     " See <https://users.rust-lang.org/t/coc-nvim-completion-pane-is-hard-to-read/41466>
-    highlight link  CocFloating   markdown
+    highlight link  CocFloating     markdown
   endif
   highlight User1 ctermbg=Brown     ctermfg=White
   highlight User2 ctermbg=Red       ctermfg=DarkRed
@@ -135,6 +122,24 @@ call plug#end()
   highlight User8 ctermbg=Cyan      ctermfg=LightRed
   highlight User9 ctermbg=Magenta   ctermfg=Yellow
   highlight User0 ctermbg=LightGray ctermfg=White
+" }}}
+
+" Vim UI {{{
+  "set number                                            " Show line numbers
+  "set cursorline                                        " highlight current line
+  set cmdheight=2                                       " Height of the command bar
+  set showmode                                          " Show mode: normal,insert,command,help mode
+  " Show file in Terminal titlebar but restore old one when quitting
+  set title
+  set titleold=
+  if !has('nvim')
+    set nostartofline
+    if has("cmdline_info")
+      set ruler                                           " Always show current position in status bar
+      "set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
+      set showcmd                                         " Show (partial) command in the last line of the screen
+    endif
+  endif
 
   if has("statusline")
     if !has('nvim')
@@ -163,13 +168,6 @@ call plug#end()
     set shortmess="filnxtToOF"
   endif
   set whichwrap=b,s,h,l,<,>,[,]  " backspace and cursor keys wrap to
-
-  " Search for selected text, forwards or backwards.
-  " NOTE:
-  "     <C-R>/ is the contents of the last search pattern
-  "            (see http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-R)
-  vnoremap <silent> * :<C-U>call GetVisualSelectedText('/')<cr>/<C-R>/<cr>
-  vnoremap <silent> # :<C-U>call GetVisualSelectedText('?')<cr>?<C-R>/<cr>
 " }}}
 
 " Color settings (if terminal/gui supports it) {{{
@@ -266,7 +264,13 @@ call plug#end()
   set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,.svn
 " }}}
 
-" Scrolling {{{
+" Mouse and scrolling {{{
+  if !has('nvim')
+    set ttymouse=xterm2 " name of your terminal mouse codes: xterm, xterm2, netterm, dec, jsbterm, pterm
+  endif
+  set mouse=n         " use mouse in normal mode
+  set mousemodel=popup " do not change cursor when right click
+  "set mouse=a         " Enable mouse usage (all modes: normal,insert,command,help mode)
   " 7 lines to the cursor - when moving using j/k
   set scrolloff=7
   set sidescrolloff=15
@@ -289,12 +293,6 @@ call plug#end()
 " }}}
 
 " Key mappings {{{
-  " With a map leader it is s possible to do extra key combinations
-  " like <leader>w saves the current file
-  " The mapleader has to be set before vundle starts loading all
-  " the plugins.
-  let mapleader   = ","
-  let g:mapleader = ","
   " Making it so ; works like : for commands. Saves typing and
   " eliminates :W style typos due to lazy holding shift.
   nnoremap ; :
@@ -347,17 +345,24 @@ call plug#end()
   vnoremap > >gv
   " Yank to the end of the line, to be consistent with C and D.
   nnoremap Y y$
+
   " Splitting pane {{{1
     " split the current window horizontally
     nmap <leader>- :sp<cr>
     " split the current window vertically
     nmap <leader>\| :vs<cr>
   " 1}}}
+
   nnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
   vnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
-" }}}
 
-" Clipboard {{{
+  " Search for selected text, forwards or backwards.
+  " NOTE:
+  "     <C-R>/ is the contents of the last search pattern
+  "            (see http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-R)
+  vnoremap <silent> * :<C-U>call GetVisualSelectedText('/')<cr>/<C-R>/<cr>
+  vnoremap <silent> # :<C-U>call GetVisualSelectedText('?')<cr>?<C-R>/<cr>
+
   if has("unnamedplus")
     set clipboard=unnamed,unnamedplus
   endif
