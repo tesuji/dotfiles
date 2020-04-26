@@ -168,8 +168,8 @@ call plug#end()
   " NOTE:
   "     <C-R>/ is the contents of the last search pattern
   "            (see http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-R)
-  vnoremap <silent> * :<C-U>call GetVisualSelectedText('/')<CR>/<C-R>/<CR>
-  vnoremap <silent> # :<C-U>call GetVisualSelectedText('?')<CR>?<C-R>/<CR>
+  vnoremap <silent> * :<C-U>call GetVisualSelectedText('/')<cr>/<C-R>/<cr>
+  vnoremap <silent> # :<C-U>call GetVisualSelectedText('?')<cr>?<C-R>/<cr>
 " }}}
 
 " Color settings (if terminal/gui supports it) {{{
@@ -276,7 +276,7 @@ call plug#end()
 " Search {{{
   if !has('nvim')
     set hlsearch        " highlight search (very useful!)
-    set incsearch       " search incremently (search while typing)
+    set incsearch       " search incrementally (search while typing)
   endif
   set ignorecase      " Do case insensitive matching
   set smartcase       " but do case sensitive if you type uppercase characters
@@ -353,8 +353,8 @@ call plug#end()
     " split the current window vertically
     nmap <leader>\| :vs<cr>
   " 1}}}
-  nnoremap <F5>     :call TrimTrailingWhiteSpace()<CR>
-  vnoremap <F5>     :call TrimTrailingWhiteSpace()<CR>
+  nnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
+  vnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
 " }}}
 
 " Clipboard {{{
