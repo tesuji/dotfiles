@@ -114,9 +114,13 @@ call plug#end()
   endif
 
   if has('nvim')
+    " Popup menu
+    highlight       Pmenu           ctermbg=Black     ctermfg=Gray
+    highlight       PmenuSel        ctermbg=DarkGray  ctermfg=Yellow
+    highlight       PmenuSbar       ctermbg=Blue      ctermfg=DarkGray
     " FIXME: Without this setting the CocFloating color is unreadable
     " See <https://users.rust-lang.org/t/coc-nvim-completion-pane-is-hard-to-read/41466>
-    highlight link CocFloating markdown
+    highlight link  CocFloating   markdown
   endif
   highlight User1 ctermbg=Brown     ctermfg=White
   highlight User2 ctermbg=Red       ctermfg=DarkRed
