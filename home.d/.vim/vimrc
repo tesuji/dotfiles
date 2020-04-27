@@ -349,9 +349,9 @@ let g:mapleader = ','
 
   " Splitting pane {{{1
     " split the current window horizontally
-    nmap <leader>- :sp<cr>
+    nnoremap <leader>- :sp<cr>
     " split the current window vertically
-    nmap <leader>\| :vs<cr>
+    nnoremap <leader>\| :vs<cr>
   " 1}}}
 
   nnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
