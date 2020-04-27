@@ -365,6 +365,9 @@ let g:mapleader = ','
   nnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
   vnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
 
+  inoremap <C-a>	<Home>
+  inoremap <C-e>	<End>
+
   " Search for selected text, forwards or backwards.
   " NOTE:
   "     <C-R>/ is the contents of the last search pattern
