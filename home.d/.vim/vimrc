@@ -125,8 +125,8 @@ let g:mapleader = ','
 " }}}
 
 " Vim UI {{{
-  "set number                                            " Show line numbers
-  set relativenumber
+  set number                                            " Show line numbers
+  "set relativenumber
   "set cursorline                                        " highlight current line
   set cmdheight=2                                       " Height of the command bar
   set showmode                                          " Show mode: normal,insert,command,help mode
