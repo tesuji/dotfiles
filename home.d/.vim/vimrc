@@ -412,6 +412,7 @@ let g:mapleader = ','
 " }}}
 
 " Comments {{{
+  " FIXME: use autoread to change my_comment on load
   map gcc :call CommentLines()<cr>
   map gcu :call UncommentLines()<cr>
 
@@ -444,7 +445,7 @@ let g:mapleader = ','
   endfun
 
   fun! CommentLines()
-    if g:my_comment != ""
+    if g:my_comment != ''
       exe ':s/^\(\s*\)/\1' . escape(g:my_comment, '/') . ' /e'
     endif
   endfun
