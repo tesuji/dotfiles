@@ -293,7 +293,7 @@ let g:mapleader = ','
   set matchpairs+=<:> " specially for html
 " }}}
 
-" Key mappings {{{
+" Key mappings/bindings {{{
   " Making it so ; works like : for commands. Saves typing and
   " eliminates :W style typos due to lazy holding shift.
   nnoremap ; :
@@ -353,6 +353,14 @@ let g:mapleader = ','
     " split the current window vertically
     nnoremap <leader>\| :vs<cr>
   " 1}}}
+
+  inoremap " ""<left>
+  inoremap ' ''<left>
+  inoremap ( ()<left>
+  inoremap [ []<left>
+  inoremap { {}<left>
+  inoremap {<cr> {<cr>}<ESC>O
+  inoremap {;<cr> {<cr>};<ESC>O
 
   nnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
   vnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
