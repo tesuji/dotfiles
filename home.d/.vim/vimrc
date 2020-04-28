@@ -358,9 +358,16 @@ let g:mapleader = ','
   vnoremap <silent> * :<C-U>call GetVisualSelectedText('/')<cr>/<C-R>/<cr>
   vnoremap <silent> # :<C-U>call GetVisualSelectedText('?')<cr>?<C-R>/<cr>
 
-  noremap YY "+y<cr>
-  noremap <leader>p "+gP<cr>
-  noremap XX "+x<cr>
+  " Use ":reg" to view content of all vim registers
+  if executable('xsel')
+    nnoremap <leader>y     :w !xsel -i -b<cr><cr>
+    vnoremap <leader>y     :'<,'>w !xsel -i -b<cr><cr>
+     noremap <leader>p     :r !xsel -o -b<cr><cr>
+    nnoremap <leader>d     :d<cr>""w !xsel -i -b <cr><cr>
+    vnoremap <leader>d     :'<,'>d<cr>""w !xsel -i -b <cr><cr>
+    nnoremap <leader>x     :x<cr>""w !xsel -i -b <cr><cr>
+    vnoremap <leader>x     :'<,'>x<cr>""w !xsel -i -b <cr><cr>
+  endif
 " }}}
 
 " Helper functions {{{
