@@ -23,6 +23,17 @@ if exists('+termguicolors')
   endif
 endif
 
+" Switch syntax highlighting on when the terminal has colors or when using the
+" GUI (which always has colors).
+if &t_Co > 2 || has("gui_running")
+  syntax enable      " enable syntax highlighting
+endif
+
+" For Win32 GUI, remove 't' flag from 'guioptions': no tearoff menu entries.
+if has('win32')
+  set guioptions-=t
+endif
+
 " With a map leader it is possible to do extra key combinations
 " like <leader>w saves the current file
 " The mapleader has to be set before vundle starts loading all
@@ -184,23 +195,6 @@ let g:mapleader = ','
   set whichwrap=b,s,h,l,<,>,[,]  " backspace and cursor keys wrap to
 " }}}
 
-" Color settings (if terminal/gui supports it) {{{
-  " Switch syntax highlighting on when the terminal has colors or when using the
-  " GUI (which always has colors).
-  if &t_Co > 2 || has("gui_running")
-    syntax enable      " enable syntax highlighting
-
-    " I like highlighting strings inside C comments.
-    " Revert with ":unlet c_comment_strings".
-    "let c_comment_strings=1
-  endif
-
-  " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries.
-  if has('win32')
-    set guioptions-=t
-  endif
-" }}}
-
 " Indentation {{{
   set nowrap           " do not wrap lines
   set autoindent       " indent at the same level of the previous line
@@ -314,6 +308,10 @@ let g:mapleader = ','
   nmap <leader>w :w!<cr> " fast saving
   nmap <leader>q :q<cr>  " quit file
   nmap <leader>Q :q!<cr> " quit anyway
+  " split the current window horizontally
+  nnoremap <leader>- :sp<cr>
+  " split the current window vertically
+  nnoremap <leader>\| :vs<cr>
   " Fast set wrapping
   nmap <leader>r :set wrap<cr>
   " sudo write when no have enough privilege
@@ -357,13 +355,6 @@ let g:mapleader = ','
   vnoremap > >gv
   " Yank to the end of the line, to be consistent with C and D.
   nnoremap Y y$
-
-  " Splitting pane {{{1
-    " split the current window horizontally
-    nnoremap <leader>- :sp<cr>
-    " split the current window vertically
-    nnoremap <leader>\| :vs<cr>
-  " 1}}}
 
   inoremap " ""<left>
   inoremap ' ''<left>
