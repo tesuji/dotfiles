@@ -65,21 +65,14 @@ let g:mapleader = ','
 " Environment {{{
   " If using a dark background within the editing area and syntax
   " highlighting turn on this option as well
-  if !has('nvim')
-    set background=dark
-  endif
-
-  if !has('nvim')
-    set history=10000   " maximum of command history
-  endif
+  set background=dark
+  set history=10000   " maximum of command history
   "set autowrite       " Automatically save before commands like :next and :make
 
   set timeout          " time out for mappings
   set timeoutlen=1000  " wait up to 1000ms after <mapleader>
   set ttimeout         " time out for key codes
-  if !has('nvim')
-    set ttimeoutlen=50 " time to wait after ESC for special key
-  endif
+  set ttimeoutlen=50 " time to wait after ESC for special key
 
   " modelines have historically been a source of security/resource
   " vulnerabilities -- disable by default, even when 'nocompatible' is set
@@ -118,10 +111,8 @@ let g:mapleader = ','
 " }}}
 
 " Encoding {{{
-  if !has('nvim')
-    set encoding=utf-8
-    set ttyfast " send more characters for redraws
-  endif
+  set encoding=utf-8
+  set ttyfast " send more characters for redraws
   set fileformat=unix       " file mode is unix
   "set fileformats=unix,dos  " only detect unix file format, displays that ^M with dos files
 " }}}
@@ -157,20 +148,16 @@ let g:mapleader = ','
   " Show file in Terminal titlebar but restore old one when quitting
   set title
   set titleold=
-  if !has('nvim')
-    set nostartofline
-    if has("cmdline_info")
-      set ruler                                           " Always show current position in status bar
-      "set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
-      set showcmd                                         " Show (partial) command in the last line of the screen
-    endif
+  set nostartofline
+  if has("cmdline_info")
+    set ruler                                           " Always show current position in status bar
+    "set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
+    set showcmd                                         " Show (partial) command in the last line of the screen
   endif
 
   if has("statusline")
-    if !has('nvim')
-      set laststatus=2   " use 2 lines for the status bar
-      set listchars="tab:> ,trail:-,nbsp:+"
-    endif
+    set laststatus=2   " use 2 lines for the status bar
+    set listchars="tab:> ,trail:-,nbsp:+"
     " Format the status line
     set statusline=
     set statusline+=%1*\[%n]                              " buffer number
@@ -186,12 +173,10 @@ let g:mapleader = ','
 
   " Show as much as possible of the last line in the window rather
   " than a column of "@", which is the default behavior.
-  if !has('nvim')
-    set display="lastline,msgsep"
+  set display="lastline,msgsep"
   " Configure backspace so it acts as it should act
-    set backspace=indent,eol,start " Allow backspacing over everything in insert mode
-    set shortmess="filnxtToOF"
-  endif
+  set backspace=indent,eol,start " Allow backspacing over everything in insert mode
+  set shortmess="filnxtToOF"
   set whichwrap=b,s,h,l,<,>,[,]  " backspace and cursor keys wrap to
 " }}}
 
@@ -199,9 +184,7 @@ let g:mapleader = ','
   set nowrap           " do not wrap lines
   set autoindent       " indent at the same level of the previous line
   set smartindent      " smart auto indenting
-  if has('nvim')
-    set smarttab         " smart tab handling for indenting
-  endif
+  set smarttab         " smart tab handling for indenting
   " FIXME: Honors plugin choices instead of overriding them
   "set shiftwidth=2     " operation >> indents 2 columns; << unindents 2 columns
   "set softtabstop=2    " insert/delete 2 spaces when hitting a TAB/BACKSPACE
@@ -215,10 +198,8 @@ let g:mapleader = ','
   if has("autocmd")
     " Load indentation rules and
     " plugins according to the detected filetype.
-    if !has('nvim')
-      filetype plugin indent on
-      set formatoptions=tcqj
-    endif
+    filetype plugin indent on
+    set formatoptions=tcqj
 
     " Jump to the last position when reopening a file
     "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -281,10 +262,8 @@ let g:mapleader = ','
 " }}}
 
 " Search {{{
-  if !has('nvim')
-    set hlsearch        " highlight search (very useful!)
-    set incsearch       " search incrementally (search while typing)
-  endif
+  set hlsearch        " highlight search (very useful!)
+  set incsearch       " search incrementally (search while typing)
   set ignorecase      " Do case insensitive matching
   set smartcase       " but do case sensitive if you type uppercase characters
   set gdefault        " /g flag on :s substitutions by default
@@ -373,10 +352,6 @@ let g:mapleader = ','
   "            (see http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-R)
   vnoremap <silent> * :<C-U>call GetVisualSelectedText('/')<cr>/<C-R>/<cr>
   vnoremap <silent> # :<C-U>call GetVisualSelectedText('?')<cr>?<C-R>/<cr>
-
-  if has("unnamedplus")
-    set clipboard=unnamed,unnamedplus
-  endif
 
   noremap YY "+y<cr>
   noremap <leader>p "+gP<cr>
