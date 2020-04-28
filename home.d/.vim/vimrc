@@ -88,7 +88,7 @@ let g:mapleader = ','
   set guicursor=a:blinkon0 " Disable cursor blink
   " Disable auto append EOL on save in binary files
   set noeol
-  set nofixeol
+  "set nofixeol
   " No annoying sound on errors
   set noerrorbells novisualbell t_vb=
 " }}}
