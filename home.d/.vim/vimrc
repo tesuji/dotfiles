@@ -41,10 +41,9 @@ endif
 let mapleader   = ','
 let g:mapleader = ','
 
+" NOTE: plugins/themes/colorschemes are not activated before `plug#end`.
 " vim-plug {{{
   " Specify a directory for plugins
-  " - For Neovim: stdpath('data') . '/plugged'
-  " - Avoid using standard Vim directory names like 'plugin'
   call plug#begin('~/.vim/plugged')
 
   Plug 'cespare/vim-toml'
@@ -387,7 +386,7 @@ let g:mapleader = ','
 " }}}
 
 " Comments {{{
-  " FIXME: use autoread to change my_comment on load
+  " FIXME: use autocmd to change my_comment on load
   map gcc :call CommentLines()<cr>
   map gcu :call UncommentLines()<cr>
 
