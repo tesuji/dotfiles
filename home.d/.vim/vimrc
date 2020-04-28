@@ -257,9 +257,7 @@ let g:mapleader = ','
 " }}}
 
 " Completion {{{
-  if !has('nvim')
-    set wildmenu            " enable CTRL-N and CTRL-P to scroll through matches
-  endif
+  set wildmenu            " enable CTRL-N and CTRL-P to scroll command-line completions
   set wildmode=list:longest
   " Ignore compiled files
   set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,.svn
