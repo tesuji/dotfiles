@@ -7,6 +7,11 @@ if !has('nvim')
   set nocompatible
 endif
 
+" vim-plug doesn't work with fish shell
+if !executable('zsh')
+  set shell=/bin/bash
+endif
+
 " Use `vim "+runtime syntax/colortest.vim"` to test vim color
 "set t_Co=256
 
