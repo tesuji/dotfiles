@@ -271,9 +271,6 @@ let g:mapleader = ','
 " }}}
 
 " Mouse and scrolling {{{
-  if !has('nvim')
-    set ttymouse=xterm2 " name of your terminal mouse codes: xterm, xterm2, netterm, dec, jsbterm, pterm
-  endif
   set mouse=n         " use mouse in normal mode
   set mousemodel=popup " do not change cursor when right click
   "set mouse=a         " Enable mouse usage (all modes: normal,insert,command,help mode)
