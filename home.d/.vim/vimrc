@@ -53,6 +53,7 @@ let g:mapleader = ','
 
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
+  Plug 'tpope/vim-sleuth'
 
   if has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
