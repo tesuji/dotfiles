@@ -142,16 +142,37 @@ let g:mapleader = ','
     " See <https://users.rust-lang.org/t/coc-nvim-completion-pane-is-hard-to-read/41466>
     highlight link  CocFloating     markdown
   endif
-  highlight User1 ctermbg=Brown     ctermfg=White
-  highlight User2 ctermbg=Red       ctermfg=DarkRed
-  highlight User3 ctermbg=Blue      ctermfg=White
-  highlight User4 ctermbg=White     ctermfg=DarkMagenta
-  highlight User5 ctermbg=Green     ctermfg=DarkRed
-  highlight User6 ctermbg=White     ctermfg=Black
-  highlight User7 ctermbg=Green     ctermfg=Red
-  highlight User8 ctermbg=Cyan      ctermfg=LightRed
-  highlight User9 ctermbg=Magenta   ctermfg=Yellow
-  highlight User0 ctermbg=LightGray ctermfg=White
+  " highlight User1 ctermbg=Brown     ctermfg=White
+  " highlight User2 ctermbg=Red       ctermfg=DarkRed
+  " highlight User3 ctermbg=Blue      ctermfg=White
+  " highlight User4 ctermbg=White     ctermfg=DarkMagenta
+  " highlight User5 ctermbg=Green     ctermfg=DarkRed
+  " highlight User6 ctermbg=White     ctermfg=Black
+  " highlight User7 ctermbg=Green     ctermfg=Red
+  " highlight User8 ctermbg=Cyan      ctermfg=LightRed
+  " highlight User9 ctermbg=Magenta   ctermfg=Yellow
+  " highlight User0 ctermbg=LightGray ctermfg=White
+" }}}
+
+" See ":help 'statusline'"
+" statusline {{{
+  if has("statusline")
+    let stl_sep = '  |  '
+    set laststatus=2   " use 2 lines for the status bar
+    " Format the status line
+    set statusline=
+    set statusline+=[%n]                                " buffer number
+    set statusline+=\ %<%F                              " Filepath
+    set statusline+=\ %{&paste?'[paste]':'[nopaste]'}   " warning if paste is set
+    set statusline+=%m%r%w%h                            " Options: modified,readonly,help buffer,Preview window flag
+    " switch to the right side
+    set statusline+=%=
+    set statusline+=Line\ %l,Column\ %v
+    set statusline+=%{stl_sep}%{&fileformat}
+    set statusline+=%{stl_sep}%{strlen(&fileencoding)?&fileencoding:'none'}    " encoding
+    set statusline+=%{stl_sep}Tab\ Size:\ %{&tabstop}
+    set statusline+=%{stl_sep}%-16y                       " filetype, file format (dos/unix..)
+  endif
 " }}}
 
 " Vim UI {{{
@@ -171,22 +192,6 @@ let g:mapleader = ','
   endif
 
   set list listchars=tab:>-,trail:-,nbsp:+
-
-  " FIXME: rewrite like sublime text or vim-airline
-  if has("statusline")
-    set laststatus=2   " use 2 lines for the status bar
-    " Format the status line
-    set statusline=
-    set statusline+=%1*\[%n]                              " buffer number
-    set statusline+=%1*\ %<%F\                            " Filepath
-    set statusline+=%6*\ %{(&fenc!=''?&fenc:&enc)}\       " encoding
-    set statusline+=%3*\ %y[%{&ff}]                       " filetype, file format (dos/unix..)
-    set statusline+=%3*%m%r%w%h\                          " Options: modified,readonly,help buffer,Preview window flag
-    set statusline+=%4*\ %{&paste?'[paste]':'[nopaste]'}\ " warning if paste is set
-    set statusline+=%5*%=                                 " switch to the right side
-    set statusline+=%5*\ Line:\ %4l/%L\                   " current line/total lines (%)
-    set statusline+=%6*\ Column:\ %-4v                    " column number
-  endif
 
   " Show as much as possible of the last line in the window rather
   " than a column of "@", which is the default behavior.
