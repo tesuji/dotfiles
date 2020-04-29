@@ -438,6 +438,7 @@ let g:mapleader = ','
     \ 'make':           '#',
     \ 'python':         '#',
     \ 'perl':           '#',
+    \ 'yaml':           '#',
     \
     \ 'tex':            '%',
     \
