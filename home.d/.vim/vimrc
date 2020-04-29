@@ -137,6 +137,8 @@ let g:mapleader = ','
   highlight       Pmenu         ctermfg=Gray    ctermbg=Black         guifg=#FFFFFF   guibg=#0F0F0F
   highlight       PmenuSel      ctermfg=White   ctermbg=Gray          guifg=#0F0F0F   guibg=#F0F0F0
   highlight       PmenuSbar     ctermfg=None    ctermbg=DarkGray      guifg=NONE      guibg=#777777
+  " Search
+  highlight     Search          ctermfg=grey    ctermbg=blue    guibg=peru      guifg=wheat     cterm=NONE
   if has('nvim')
     " FIXME: Without this setting the CocFloating color is unreadable
     " See <https://users.rust-lang.org/t/coc-nvim-completion-pane-is-hard-to-read/41466>
