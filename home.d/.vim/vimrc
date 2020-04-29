@@ -166,9 +166,11 @@ let g:mapleader = ','
     set showcmd                                         " Show (partial) command in the last line of the screen
   endif
 
+  set list listchars=tab:>-,trail:-,nbsp:+
+
+  " FIXME: rewrite like sublime text or vim-airline
   if has("statusline")
     set laststatus=2   " use 2 lines for the status bar
-    set listchars="tab:> ,trail:-,nbsp:+"
     " Format the status line
     set statusline=
     set statusline+=%1*\[%n]                              " buffer number
