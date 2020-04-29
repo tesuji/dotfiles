@@ -133,45 +133,44 @@ let g:mapleader = ','
 " }}}
 
 " Colors {{{
-  " Popup menu
-  highlight       Pmenu           ctermbg=Black     ctermfg=Gray
-  highlight       PmenuSel        ctermbg=DarkGray  ctermfg=Yellow
-  highlight       PmenuSbar       ctermbg=Blue      ctermfg=DarkGray
+ " Popup menu
+  highlight       Pmenu         ctermfg=Gray    ctermbg=Black         guifg=#FFFFFF   guibg=#0F0F0F
+  highlight       PmenuSel      ctermfg=White   ctermbg=Gray          guifg=#0F0F0F   guibg=#F0F0F0
+  highlight       PmenuSbar     ctermfg=None    ctermbg=DarkGray      guifg=NONE      guibg=#777777
   if has('nvim')
     " FIXME: Without this setting the CocFloating color is unreadable
     " See <https://users.rust-lang.org/t/coc-nvim-completion-pane-is-hard-to-read/41466>
     highlight link  CocFloating     markdown
   endif
-  " highlight User1 ctermbg=Brown     ctermfg=White
-  " highlight User2 ctermbg=Red       ctermfg=DarkRed
-  " highlight User3 ctermbg=Blue      ctermfg=White
-  " highlight User4 ctermbg=White     ctermfg=DarkMagenta
-  " highlight User5 ctermbg=Green     ctermfg=DarkRed
-  " highlight User6 ctermbg=White     ctermfg=Black
-  " highlight User7 ctermbg=Green     ctermfg=Red
-  " highlight User8 ctermbg=Cyan      ctermfg=LightRed
-  " highlight User9 ctermbg=Magenta   ctermfg=Yellow
-  " highlight User0 ctermbg=LightGray ctermfg=White
+
+  highlight     StatusLine      ctermfg=black   ctermbg=cyan    guifg=black     guibg=#8fbfdc   cterm=none      term=none
+  highlight     User1           ctermfg=Gray    ctermbg=Black   guifg=#FFFFFF   guibg=#0F0F0F
 " }}}
 
 " See ":help 'statusline'"
 " statusline {{{
   if has("statusline")
-    let stl_sep = '  |  '
     set laststatus=2   " use 2 lines for the status bar
     " Format the status line
-    set statusline=
+    set statusline=%1*
     set statusline+=[%n]                                " buffer number
-    set statusline+=\ %<%F                              " Filepath
-    set statusline+=\ %{&paste?'[paste]':'[nopaste]'}   " warning if paste is set
-    set statusline+=%m%r%w%h                            " Options: modified,readonly,help buffer,Preview window flag
+    set statusline+=\ %<%f                                " filepath
+    set statusline+=\ %{&paste?'[paste]':'[nopaste]'}     " is paste set?
+    set statusline+=%3m                                 " modified flag
+    set statusline+=%4r                                 " readonly flag
+    set statusline+=%9w                                 " preview window flag
+    set statusline+=%6h                                 " buffer flag
     " switch to the right side
     set statusline+=%=
     set statusline+=Line\ %l,Column\ %v
-    set statusline+=%{stl_sep}%{&fileformat}
-    set statusline+=%{stl_sep}%{strlen(&fileencoding)?&fileencoding:'none'}    " encoding
-    set statusline+=%{stl_sep}Tab\ Size:\ %{&tabstop}
-    set statusline+=%{stl_sep}%-16y                       " filetype, file format (dos/unix..)
+    set statusline+=\ \ \|\ \                           " seperator
+    set statusline+=%{&fileformat}                      " e.g.: dos/unix
+    set statusline+=\ \ \|\ \                           " seperator
+    set statusline+=%{strlen(&fenc)?&fenc:'none'}       " file encoding
+    set statusline+=\ \ \|\ \                           " seperator
+    set statusline+=Tab\ Size:\ %{&tabstop}
+    set statusline+=\ \ \|\ \                           " seperator
+    set statusline+=%-16y                               " filetype
   endif
 " }}}
 
