@@ -351,6 +351,8 @@ let g:mapleader = ','
   "cnoreabbrev Qall qall
   "cmap Tabe tabe
   " Switching windows
+  " NOTE: use <C-w><S-h> or type ":wincmd H" to go from hozontal to vertical layout
+  " For more: read ":help ^w"
   noremap <C-j> <C-w>j
   noremap <C-k> <C-w>k
   noremap <C-l> <C-w>l
