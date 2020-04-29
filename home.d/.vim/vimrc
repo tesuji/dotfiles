@@ -228,22 +228,20 @@ let g:mapleader = ','
 
     augroup my_lang_settings
       autocmd! " clear this group
-      " But do wrap on these types of files...
-      autocmd FileType java setlocal noexpandtab
-      autocmd FileType html setlocal wrap
-      "autocmd BufEnter Makefile setlocal noexpandtab shiftwidth=4
-      "autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
-      "autocmd FileType markdown setlocal wrap
-      autocmd FileType php setlocal
-      autocmd FileType python setlocal wrap formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
-      autocmd FileType perl setlocal wrap
-      autocmd FileType ruby setlocal wrap
+      autocmd FileType gitcommit        setlocal spell spelllang=en_us complete+=kspell
+      autocmd FileType markdown         setlocal wrap spell spelllang=en_us complete+=kspell
+      autocmd FileType html             setlocal wrap
+      autocmd FileType java             setlocal noexpandtab
+      "autocmd FileType make            setlocal noexpandtab shiftwidth=4
+      autocmd FileType php              setlocal
+      autocmd FileType python           setlocal wrap formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
+      autocmd FileType perl             setlocal wrap
+      autocmd FileType ruby             setlocal wrap
       " XXX: vim is slow with large math text files
-      autocmd FileType tex setlocal nocursorline | :NoMatchParen
-      " FIXME: Disable to find if it causes folding on saving and reload
-      "autocmd FileType rust setlocal foldmethod=syntax formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
-      "autocmd FileType vim setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
-      autocmd FileType xml setlocal noexpandtab shiftwidth=4
+      autocmd FileType tex              setlocal nocursorline | :NoMatchParen
+      "autocmd FileType rust            setlocal foldmethod=syntax formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
+      "autocmd FileType vim             setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
+      autocmd FileType xml              setlocal noexpandtab shiftwidth=4
     augroup END
   endif
 " }}}
