@@ -268,9 +268,12 @@ let g:mapleader = ','
 
 " Completion {{{
   set wildmenu            " enable CTRL-N and CTRL-P to scroll command-line completions
-  set wildmode=list:longest
+  set wildmode=full
   " Ignore compiled files
   set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,.svn
+  if !has('nvim')
+    set wildoptions=tagfile
+  endif
 " }}}
 
 " Mouse and scrolling {{{
