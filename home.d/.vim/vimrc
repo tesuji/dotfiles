@@ -365,8 +365,8 @@ let g:mapleader = ','
   nnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
   vnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
 
-  inoremap <C-a>	<esc>I
-  inoremap <C-e>	<End>
+  inoremap <C-a>        <esc>I
+  inoremap <C-e>        <End>
 
   " Search for selected text, forwards or backwards.
   " NOTE:
@@ -415,12 +415,11 @@ let g:mapleader = ','
 " }}}
 
 " Comments {{{
-  " FIXME: use autocmd to change my_comment on load
-  map gcc :call CommentLines()<cr>
-  map gcu :call UncommentLines()<cr>
+  noremap gcc :call CommentLines()<cr>
+  noremap gcu :call UncommentLines()<cr>
 
   " Improved from https://github.com/BurntSushi/dotfiles/blob/e5c72a924e0d163e130692d46ff7f4d9188307bf/.config/nvim/include/comment.vim
-  let g:my_comment = get({
+  let s:comment_leaders = {
     \ 'javascript':     '//',
     \ 'c':              '//',
     \ 'cpp':            '//',
@@ -439,22 +438,25 @@ let g:mapleader = ','
     \
     \ 'tex':            '%',
     \
-    \ 'vim':            '"'},
-    \ &filetype,
-    \ '')
+    \ 'vim':            '"',
+    \ }
 
-  fun! RegexLiteral(str)
-      return escape(a:str, '*$.^/')
-  endfun
-
-  fun! CommentLines()
-    if g:my_comment != ''
-      exe ':s/^\(\s*\)/\1' . escape(g:my_comment, '/') . ' /e'
+  function! CommentLines()
+    let l:leader = get(s:comment_leaders, &filetype, '')
+    if l:leader != ''
+      exe ':s/^\(\s*\)/\1' . escape(l:leader, '/') . ' /e'
+    else
+      echoerr 'No command leader for this filetype'
     endif
   endfun
 
-  fun! UncommentLines()
-    exe ':s/^\(\s*\)' . RegexLiteral(g:my_comment) . '\s*/\1/e'
+  function! UncommentLines()
+    let l:leader = get(s:comment_leaders, &filetype, '')
+    if l:leader != ''
+      exe ':s/^\(\s*\)' . escape(l:leader, '*$.^/') . '\s*/\1/e'
+    else
+      echoerr 'No command leader for this filetype'
+    endif
   endfun
 " }}}
 
