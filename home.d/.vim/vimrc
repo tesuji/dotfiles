@@ -8,8 +8,14 @@ if !has('nvim')
 endif
 
 " vim-plug doesn't work with fish shell
-if !executable('zsh')
-  set shell=/bin/bash
+if &shell =~# 'fish$'
+  if executable('zsh')
+    set shell=zsh
+  elseif executable('bash')
+    set shell=bash
+  else
+    set shell=sh
+  endif
 endif
 
 " Use `vim "+runtime syntax/colortest.vim"` to test vim color
