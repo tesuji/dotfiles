@@ -211,33 +211,40 @@ let g:mapleader = ','
 " }}}
 
 " Automatic commands {{{
+  " NOTE: use `augroup` not not duplicate `autocmd` each time the config loaded
   " Only do this part when compiled with support for auto-commands.
   if exists('+autocmd')
+    augroup my_buf_settings
+      autocmd! " clear this group
+      " Jump to the last position when reopening a file
+      "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+      " remove whitespaces on save
+      "autocmd BufWritePre *.php,*.md,*.vim,*.txt,*.js,*.py,*.sh,*.c,*.cpp,*.h,*.hpp,*.java,*.sh :call TrimTrailingWhiteSpace()
+      " Disable visualbell
+      autocmd GUIEnter * set visualbell t_vb=
+      " Run checktime in buffers, but avoiding the "Command Line" (q:) window
+      autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
+    augroup END
 
-    " Jump to the last position when reopening a file
-    "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-    " remove whitespaces on save
-    "autocmd BufWritePre *.php,*.md,*.vim,*.txt,*.js,*.py,*.sh,*.c,*.cpp,*.h,*.hpp,*.java,*.sh :call TrimTrailingWhiteSpace()
-    " Disable visualbell
-    autocmd GUIEnter * set visualbell t_vb=
-    " Run checktime in buffers, but avoiding the "Command Line" (q:) window
-    autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
-
-    " But do wrap on these types of files...
-    autocmd FileType java setlocal noexpandtab
-    autocmd FileType html setlocal wrap
-    autocmd BufEnter Makefile setlocal noexpandtab shiftwidth=4
-    autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
-    autocmd FileType markdown setlocal wrap
-    autocmd FileType php setlocal
-    autocmd FileType python setlocal wrap formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
-    autocmd FileType perl setlocal wrap
-    autocmd FileType ruby setlocal wrap
-    " FIXME: Disable to find if it causes folding on saving and reload
-    "autocmd FileType rust setlocal foldmethod=syntax formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
-    "autocmd FileType vim setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
-    autocmd FileType xml setlocal noexpandtab shiftwidth=4
+    augroup my_lang_settings
+      autocmd! " clear this group
+      " But do wrap on these types of files...
+      autocmd FileType java setlocal noexpandtab
+      autocmd FileType html setlocal wrap
+      "autocmd BufEnter Makefile setlocal noexpandtab shiftwidth=4
+      "autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
+      "autocmd FileType markdown setlocal wrap
+      autocmd FileType php setlocal
+      autocmd FileType python setlocal wrap formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
+      autocmd FileType perl setlocal wrap
+      autocmd FileType ruby setlocal wrap
+      " XXX: vim is slow with large math text files
+      autocmd FileType tex setlocal nocursorline | :NoMatchParen
+      " FIXME: Disable to find if it causes folding on saving and reload
+      "autocmd FileType rust setlocal foldmethod=syntax formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
+      "autocmd FileType vim setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
+      autocmd FileType xml setlocal noexpandtab shiftwidth=4
+    augroup END
   endif
 " }}}
 
