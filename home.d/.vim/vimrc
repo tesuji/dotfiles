@@ -45,6 +45,10 @@ if has('win32')
   set guioptions-=t
 endif
 
+" Load indentation rules and plugins according to the detected filetype
+filetype plugin indent on
+set formatoptions=tcqj
+
 " With a map leader it is possible to do extra key combinations
 " like <leader>w saves the current file
 " The mapleader has to be set before vundle starts loading all
@@ -208,11 +212,7 @@ let g:mapleader = ','
 
 " Automatic commands {{{
   " Only do this part when compiled with support for auto-commands.
-  if has("autocmd")
-    " Load indentation rules and
-    " plugins according to the detected filetype.
-    filetype plugin indent on
-    set formatoptions=tcqj
+  if exists('+autocmd')
 
     " Jump to the last position when reopening a file
     "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
