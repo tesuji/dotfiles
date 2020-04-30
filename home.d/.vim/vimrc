@@ -22,7 +22,7 @@ endif
 "set t_Co=256
 
 " See <https://neovim.io/doc/user/term.html>
-if exists('+termguicolors')
+if has('termguicolors')
   if $TERM =~ '^\(rxvt\|screen\|interix\|putty\)\(-.*\)\?$'
       set notermguicolors
     elseif $TERM =~ '^\(tmux\|iterm\|vte\|gnome\)\(-.*\)\?$'
@@ -213,15 +213,15 @@ let g:mapleader = ','
   "set softtabstop=2    " insert/delete 2 spaces when hitting a TAB/BACKSPACE
   "set tabstop=8        " a hard TAB displays as 8 columns
   "set expandtab        " insert spaces when hitting TABs
-  set pastetoggle=<F3> " paste mode to avoid autoindent
+  set pastetoggle=<F3>  " paste mode to avoid autoindent
 " }}}
 
 " Automatic commands {{{
   " NOTE: use `augroup` not not duplicate `autocmd` each time the config loaded
   " Only do this part when compiled with support for auto-commands.
-  if exists('+autocmd')
+  if has('autocmd')
     augroup my_buf_settings
-      autocmd! " clear this group
+      autocmd!
       " Jump to the last position when reopening a file
       "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
       " remove whitespaces on save
@@ -233,7 +233,7 @@ let g:mapleader = ','
     augroup END
 
     augroup my_lang_settings
-      autocmd! " clear this group
+      autocmd!
       autocmd FileType gitcommit        setlocal spell spelllang=en_us complete+=kspell
       autocmd FileType markdown         setlocal wrap spell spelllang=en_us complete+=kspell
       autocmd FileType html             setlocal wrap
