@@ -140,19 +140,22 @@ let g:mapleader = ','
 
 " Colors {{{
  " Popup menu
-  highlight       Pmenu         ctermfg=Gray    ctermbg=Black         guifg=#FFFFFF   guibg=#0F0F0F
-  highlight       PmenuSel      ctermfg=White   ctermbg=Gray          guifg=#0F0F0F   guibg=#F0F0F0
-  highlight       PmenuSbar     ctermfg=None    ctermbg=DarkGray      guifg=NONE      guibg=#777777
-  " Search
-  highlight     Search          ctermfg=grey    ctermbg=blue    guibg=peru      guifg=wheat     cterm=NONE
+  hi Pmenu      ctermfg=Gray    ctermbg=Black         guifg=#FFFFFF   guibg=#0F0F0F
+  hi PmenuSel   ctermfg=White   ctermbg=Gray          guifg=#0F0F0F   guibg=#F0F0F0
+  hi PmenuSbar  ctermfg=none    ctermbg=DarkGray      guifg=NONE      guibg=#777777
+
+  hi Search                     ctermfg=0       ctermbg=11      gui=NONE        guifg=#0F1419   guibg=#FFEE99
+  hi MatchParen cterm=underline ctermbg=6                       gui=underline   guifg=#E6E1CF   guibg=#0F1419
+
   if has('nvim')
     " FIXME: Without this setting the CocFloating color is unreadable
     " See <https://users.rust-lang.org/t/coc-nvim-completion-pane-is-hard-to-read/41466>
-    highlight link  CocFloating     markdown
+    hi link  CocFloating     markdown
   endif
 
-  highlight     StatusLine      ctermfg=black   ctermbg=cyan    guifg=black     guibg=#8fbfdc   cterm=none      term=none
-  highlight     User1           ctermfg=Gray    ctermbg=Black   guifg=#FFFFFF   guibg=#0F0F0F
+  hi StatusLine   cterm=none    term=none    ctermfg=Gray ctermbg=Black gui=NONE guifg=#FFFFFF guibg=#0F0F0F
+  hi StatusLineNC cterm=reverse term=reverse                                     guifg=#3E4B59 guibg=#14191F
+  "hi User1        ctermfg=Gray  ctermbg=Black   guifg=#FFFFFF   guibg=#0F0F0F
 " }}}
 
 " See ":help 'statusline'"
@@ -160,7 +163,7 @@ let g:mapleader = ','
   if has('statusline')
     set laststatus=2   " use 2 lines for the status bar
     " Format the status line
-    set statusline=%1*
+    set statusline=
     set statusline+=[%n]                                " buffer number
     set statusline+=\ %<%f                              " filepath
     set statusline+=\ %{&paste?'[paste]':'[nopaste]'}   " is paste set?
