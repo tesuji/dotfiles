@@ -290,13 +290,12 @@ let g:mapleader = ','
 " }}}
 
 " Mouse and scrolling {{{
-  set mouse=n         " use mouse in normal mode
-  set mousemodel=popup " do not change cursor when right click
-  "set mouse=a         " Enable mouse usage (all modes: normal,insert,command,help mode)
+  set mouse=r          " only scroll, not click
+  set mousemodel=popup " Popup a menu on right click
   " 7 lines to the cursor - when moving using j/k
-  set scrolloff=7
+  set scrolloff=7      " minimum screen lines around the cursor
+  set sidescroll=1     " minimal columns to scroll horizontally
   set sidescrolloff=15
-  set sidescroll=1
 " }}}
 
 " Search {{{
