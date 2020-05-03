@@ -87,8 +87,13 @@ let g:mapleader = ','
   " If using a dark background within the editing area and syntax
   " highlighting turn on this option as well
   set background=dark
-  set history=10000   " maximum of command history
+  set history=1000     " maximum of command history
+  " Do not increase octal 007 to 010
+  set nrformats-=octal
   "set autowrite       " Automatically save before commands like :next and :make
+
+  set sessionoptions-=options
+  set viewoptions-=options
 
   set timeout          " time out for mappings
   set timeoutlen=1000  " wait up to 1000ms after <mapleader>
@@ -111,6 +116,10 @@ let g:mapleader = ','
   " exist in the background without being in a window.
   " http://items.sjbach.com/319/configuring-vim-right
   set hidden          " remember undo after quitting
+
+  " directories for swp files
+  set backupdir=~/.vim/backup
+  set directory=~/.vim/backupf
 
   " Turn off swap files since most stuff is in SVN, git et.c anyway...
   set noswapfile
@@ -383,8 +392,22 @@ let g:mapleader = ','
   nnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
   vnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
 
-  inoremap <C-a>        <esc>I
+  " emacs like keymaps
+  " NOTE: CTRL-o executes one command then returns to Insert mode
+  inoremap <C-a>        <C-o>I
   inoremap <C-e>        <End>
+
+  if empty(mapcheck('<C-U>', 'i'))
+    inoremap <C-U>      <C-G>u<C-U>
+  endif
+  if empty(mapcheck('<C-W>', 'i'))
+    inoremap <C-W>      <C-G>u<C-W>
+  endif
+
+  noremap <C-n>         :tabnew<cr>
+  noremap <C-z>         :shell<cr>
+  noremap <C-s>         :w<cr>
+  inoremap <C-s>        <esc>:w<cr>
 
   " Search for selected text, forwards or backwards.
   " NOTE:
