@@ -423,7 +423,6 @@ let g:mapleader = ','
   endif
 
   noremap <C-n>         :tabnew<cr>
-  noremap <C-z>         :shell<cr>
   noremap <C-s>         :w<cr>
   inoremap <C-s>        <esc>:w<cr>
 
