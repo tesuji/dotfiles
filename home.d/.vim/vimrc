@@ -342,7 +342,7 @@ let g:mapleader = ','
   " toggle spell-checking with F6 (same as Sublime Text)
   nmap <F6> :setlocal spell! spelllang=en_us<cr>
   " turn off search highlight
-  nnoremap <leader><space> :nohlsearch<cr>
+  nnoremap <esc><esc> :nohlsearch<cr>
   " Move up/down editor lines, rather than next line in file
   nnoremap j gj
   nnoremap k gk
