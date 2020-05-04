@@ -498,6 +498,8 @@ let g:mapleader = ','
     \ 'tex':            '%',
     \
     \ 'vim':            '"',
+    \
+    \ 'haskell':        '--',
     \ }
 
   function! CommentLines()
