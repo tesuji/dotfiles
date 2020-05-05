@@ -414,6 +414,8 @@ let g:mapleader = ','
   " NOTE: CTRL-o executes one command then returns to Insert mode
   inoremap <C-a>        <C-o>I
   inoremap <C-e>        <End>
+  inoremap <C-k>        <C-o>d$
+  inoremap <C-backspace>        <C-w>
 
   if empty(mapcheck('<C-U>', 'i'))
     inoremap <C-U>      <C-G>u<C-U>
