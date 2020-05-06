@@ -80,7 +80,9 @@ let g:mapleader = ','
   Plug 'tpope/vim-sleuth'
 
   if has('nvim')
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    if $SESSION_TYPE != ''      " remote installation only
+      Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    endif
   endif
 
   " Initialize plugin system
