@@ -179,7 +179,6 @@ let g:mapleader = ','
     set statusline+=%3m                                 " modified flag
     set statusline+=%4r                                 " readonly flag
     set statusline+=%9w                                 " preview window flag
-    set statusline+=%6h                                 " buffer flag
     " switch to the right side
     set statusline+=%=
     set statusline+=Line\ %l,Column\ %v
