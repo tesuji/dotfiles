@@ -266,7 +266,7 @@ let g:mapleader = ','
       "autocmd FileType rust            setlocal foldmethod=syntax formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
       "autocmd FileType vim             setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
       autocmd FileType xml              setlocal noexpandtab shiftwidth=4
-      autocmd FileType haskell          setlocal complete-=t
+      autocmd FileType haskell          setlocal complete-=t expandtab
     augroup END
   endif
 " }}}
