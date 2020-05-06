@@ -328,19 +328,17 @@ let g:mapleader = ','
   nnoremap <C-p> :FZF<cr>
   noremap <leader>h :%!xxd<cr>:set syntax=xxd<cr> " for binary file
   noremap <leader>u :%!xxd -r<cr>:syntax enable<cr> " to revert after xxd
-  nmap <leader>w :w!<cr> " fast saving
-  nmap <leader>q :q<cr>  " quit file
-  nmap <leader>Q :q!<cr> " quit anyway
+  noremap <leader>w :w!<cr> " fast saving
+  noremap <leader>q :q<cr>  " quit file
+  noremap <leader>Q :q!<cr> " quit anyway
   " split the current window horizontally
   nnoremap <leader>- :sp<cr>
   " split the current window vertically
   nnoremap <leader>\| :vs<cr>
-  " Fast set wrapping
-  nmap <leader>r :set wrap<cr>
   " sudo write when no have enough privilege
-  nmap <leader>W :w !sudo tee % > /dev/null<cr>
+  noremap <leader>W :w !sudo tee % > /dev/null<cr>
   " toggle spell-checking with F6 (same as Sublime Text)
-  nmap <F6> :setlocal spell! spelllang=en_us<cr>
+  noremap <F6> :setlocal spell! spelllang=en_us<cr>
   " turn off search highlight
   nnoremap <esc><esc> :nohlsearch<cr>
   " Move up/down editor lines, rather than next line in file
