@@ -23,9 +23,9 @@ endif
 
 " See <https://neovim.io/doc/user/term.html>
 if has('termguicolors')
-  if $TERM =~ '^\(rxvt\|screen\|interix\|putty\)\(-.*\)\?$'
+  if $TERM =~# '^\(rxvt\|screen\|interix\|putty\)\(-.*\)\?$'
     set notermguicolors
-  elseif $TERM =~ '^\(tmux\|iterm\|vte\|gnome\)\(-.*\)\?$'
+  elseif $TERM =~# '^\(tmux\|iterm\|vte\|gnome\)\(-.*\)\?$'
     set termguicolors
   elseif $TERM ==# 'xterm'
     if $XTERM_VERSION != '' || $KONSOLE_PROFILE_NAME != '' || $VTE_VERSION != ''
