@@ -24,13 +24,15 @@ endif
 " See <https://neovim.io/doc/user/term.html>
 if has('termguicolors')
   if $TERM =~ '^\(rxvt\|screen\|interix\|putty\)\(-.*\)\?$'
-      set notermguicolors
-    elseif $TERM =~ '^\(tmux\|iterm\|vte\|gnome\)\(-.*\)\?$'
+    set notermguicolors
+  elseif $TERM =~ '^\(tmux\|iterm\|vte\|gnome\)\(-.*\)\?$'
+    set termguicolors
+  elseif $TERM ==# 'xterm'
+    if $XTERM_VERSION != '' || $KONSOLE_PROFILE_NAME != '' || $VTE_VERSION != ''
       set termguicolors
-    elseif $TERM =~ '^\(xterm\)\(-.*\)\?$'
-      "if $XTERM_VERSION != '' || $KONSOLE_PROFILE_NAME != '' || $VTE_VERSION != ''
-        set termguicolors
-      "endif
+    endif
+  elseif $TERM ==# 'xterm-256color'
+    set termguicolors
   endif
   " Enable true color in vim (not nvim)
   " See
