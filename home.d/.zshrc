@@ -26,6 +26,7 @@ esac
 # to add other keys to this hash, see: man 5 terminfo
 typeset -g -A key
 
+# Use `infocmp -x` to view current terminal capabilities
 key[Home]="${terminfo[khome]}"
 key[End]="${terminfo[kend]}"
 key[Insert]="${terminfo[kich1]}"
