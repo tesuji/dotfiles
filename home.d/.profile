@@ -55,6 +55,7 @@ for p in "${HOME}/bin" "${HOME}/.local/bin"; do
 done
 
 # -- Exported environment variable --------------------------------------------
+# NOTE: Most variables should be in ~/.pam_environment
 
 # Enable the keyring for applications run through the terminal, such as SSH.
 #
@@ -82,9 +83,8 @@ if command_exist ssh-agent; then
   fi
 fi
 
-# Set less options
-#PAGER="less"
-export LESS='--line-numbers --RAW-CONTROL-CHARS'
+# Colorize man using less
+# Ref: <https://wiki.archlinux.org/index.php/Color_output_in_console#Using_less>
 LESS_TERMCAP_mb=$(printf '\e[1;36m')    # begin blink
 LESS_TERMCAP_md=$(printf '\e[1;31m')    # begin bold
 LESS_TERMCAP_me=$(printf '\e[0m')       # reset bold/blink
@@ -93,41 +93,7 @@ LESS_TERMCAP_se=$(printf '\e[0m')       # reset reverse video
 LESS_TERMCAP_us=$(printf '\e[1;32m')    # begin underline
 LESS_TERMCAP_ue=$(printf '\e[0m')       # reset underline
 export LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_so LESS_TERMCAP_se LESS_TERMCAP_us LESS_TERMCAP_ue
-export LESSHISTFILE='-' # prevent less' history file
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# Make vim the default editor.
-export EDITOR='vim'
-export VISUAL="${EDITOR}"
-
-# Prefer US English and use UTF-8.
-# Ref https://wiki.archlinux.org/index.php/locale
-export LC_CTYPE='en_US.UTF-8'
-#LC_TIME="en_GB.UTF-8"
-#LC_PAPER="en_GB.UTF-8"
-#LC_MEASUREMENT="en_GB.UTF-8"
-export LANG='en_US.UTF-8'
-# WARNING: Using LC_ALL is strongly discouraged as it overrides everything.
-# Please use it only when testing and never set it in a startup file.
-#LC_ALL='en_US.UTF-8'
-
-export PYTHONSTARTUP="${HOME}/.pythonrc"
-#SYSTEMD_LESS='FRSMK'
-
-# MySQL prompt
-#MYSQL_PS1="\R|\m:\s \h.\d> "
-
-# Check whether we are in SSH sessions
-# https://unix.stackexchange.com/a/9607/178265
-if [ -n "${SSH_CLIENT}" ] || [ -n "${SSH_CONNECTION}" ] || [ -n "${SSH_TTY}" ]; then
-  SESSION_TYPE=ssh
-else
-  case "/$(ps -o comm= -p "${PPID}")" in
-    */sshd ) SESSION_TYPE=ssh;;
-  esac
-fi
-
-export SESSION_TYPE
 
 # NOTE:
 #   Some shells have their own builtin version of ps so we use `command`

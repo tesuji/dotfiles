@@ -1,8 +1,48 @@
 # vim: set filetype=pamconf
 
+# NOTE:
+# * Use @{HOME} instead of ${HOME}
+# * This file is read before ~/.profile, ~/.bash_profile and ~/.zshenv.
+# Ref: <https://wiki.archlinux.org/index.php/Environment_variables#Using_pam_env>
+
 # gpg-agent is not better than ssh-agent: https://unix.stackexchange.com/a/371910/178265
 # Ensure each process can find your `gpg-agent`
 #SSH_AGENT_PID                  DEFAULT=
 #SSH_AUTH_SOCK                  DEFAULT="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
 # Disable keyring daemon components to use `gpg-agent`
 GSM_SKIP_SSH_AGENT_WORKAROUND   DEFAULT=1
+
+# Make Vim the default editor
+EDITOR                          DEFAULT=vim
+VISUAL                          DEFAULT=vim
+# Use `sudoedit` to edit files as normal user and save as superuser
+SUDO_EDITOR                     DEFAULT=vim
+
+# Prefer US English and use UTF-8.
+# Ref https://wiki.archlinux.org/index.php/locale
+LANG                            DEFAULT=en_US.UTF-8
+LC_CTYPE                        DEFAULT=en_US.UTF-8
+#LC_TIME                        DEFAULT=en_GB.UTF-8
+#LC_PAPER                       DEFAULT=en_GB.UTF-8
+#LC_MEASUREMENT                 DEFAULT=en_GB.UTF-8
+# WARNING: Using LC_ALL is strongly discouraged as it overrides everything.
+# Please use it only when testing and never set it in a startup file.
+#LC_ALL                         DEFAULT=en_US.UTF-8
+
+# Set the REMOTE_HOST variable for any hosts that are remote, default
+# to "localhost" rather than not being set at all
+REMOTE_HOST                     DEFAULT=localhost       OVERRIDE=@{PAM_RHOST}
+
+PYTHONSTARTUP                   DEFAULT=@{HOME}/.pythonrc
+
+# Set less options
+#PAGER                          DEFAULT=less
+LESS                            DEFAULT="--line-numbers --RAW-CONTROL-CHARS"
+# Prevent less history file
+LESSHISTFILE                    DEFAULT="-"
+
+# Rust env
+CARGO_TARGET_DIR                DEFAULT=@{HOME}/.cargo/target
+
+# MySQL prompt
+#MYSQL_PS1                      DEFAULT="\R|\m:\s \h.\d> "

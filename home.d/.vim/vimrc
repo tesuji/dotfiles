@@ -80,7 +80,7 @@ let g:mapleader = ','
   Plug 'tpope/vim-sleuth'
 
   if has('nvim')
-    if $SESSION_TYPE != ''      " remote installation only
+    if $REMOTE_HOST != 'localhost'
       Plug 'neoclide/coc.nvim', {'branch': 'release'}
     endif
   endif
