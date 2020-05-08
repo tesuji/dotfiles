@@ -6,56 +6,45 @@
 
 ### Download the Arch installation image
 
-Go to [Arch Linux](https://www.archlinux.org/download/) homepage and download the Arch Linux iso
+Go to [Arch Linux](https://www.archlinux.org/download/) homepage and download the Arch Linux ISO
 
-### Burn the iso to a blank disc
+### Burn the ISO to a blank disc
 
 #### On Linux
 
 Find out the name of USB drive with `lsblk`. Make sure that it is **not** mounted.
 
-Run the following command, replacing `/dev/sdx` with drive, e.g. `/dev/sdb`. (Do **not** append a partition number, so do **not** use something like `/dev/sdb1`)
+Run the following command, replacing `/dev/sdx` with drive, e.g. `/dev/sdb`.
+(Do **not** append a partition number, so do **not** use something like `/dev/sdb1`)
 
 ```bash
 sudo dd bs=4M if='path_to_iso' of='path_to_usb' status=progress oflag=sync
 ```
 
-Example: asume usb is in `/dev/sdb` and `iso` image in `home`, then type this
+Example: assume USB is in `/dev/sdb` and `ISO` image in `home`, then type this
 
 ```bash
-sudo dd bs=4M if='/home/username/ArchLinux.iso' of='/dev/sdb' status=progress oflag=sync
+sudo dd bs=4M if='/home/username/ArchLinux.ISO' of='/dev/sdb' status=progress oflag=sync
 ```
 
 **Note**: To restore the USB drive as an empty, usable storage device after using the Arch ISO image, the iso9660
 filesystem signature needs to be removed by running `wipefs --all /dev/sdx` as root, before
-[repartitioning](https://wiki.archlinux.org/index.php/Repartition) and
-[reformating](https://wiki.archlinux.org/index.php/Reformat) the USB drive.
+[re-partitioning](https://wiki.archlinux.org/index.php/Repartition) and
+[re-formatting](https://wiki.archlinux.org/index.php/Reformat) the USB drive.
 
 #### On Windows
 
-Use [Rufus](https://rufus.akeo.ie) to burn iso to installation media
+Use [Rufus](https://rufus.akeo.ie) to burn ISO to installation media
 
-**Note**: Be sure to select **DD image** mode from the dropdown menu or the image will be transferred [incorrectly](https://wiki.archlinux.org/index.php/USB_flash_installation_media#Using_Rufus).
-
-#### On mac
-
-Plug usb into mac
-
-In terminal, type this : `diskutil list`. Then check usb from the output
-using the amount of data.
-
-Let assume it is `/dev/disk3`
-
-Then unmount the usb : `diskutil unmountDisk /dev/disk3`
-
-And run this command: `sudo dd if='path_to_iso' of='/dev/disk3' bs=1M && sync`
+**Note**: Be sure to select **DD image** mode from the dropdown menu or the image
+will be transferred [incorrectly](https://wiki.archlinux.org/index.php/USB_flash_installation_media#Using_Rufus).
 
 ### Backup any data on computer or the drive you are installing Arch Linux on.
 
 ### Insert the installation media to computer
 
 - Press the key that allows you to change the boot order
-- On most newer computers, this is `F12`. through the exact key should
+- On most newer computers, this is `F12`. Through the exact key should
 be displayed on the screen during boot up.
 - Select `Boot from Arch Linux (x86_64)`
 
@@ -71,9 +60,9 @@ ping archlinux.org
 
 If no connection is available, stop the *dhcpcd* service with `systemctl stop dhcpcd@` and press `Tab`.
 
-This command `ping www.google.com > /dev/null 2>&1 &` will keep internet from being interrupted by long unusing time.
+This command `ping www.google.com > /dev/null 2>&1 &` will keep internet from being interrupted by long unused time.
 
-If you have an **authoried internet access**, use `elinks` with `javascript` to login:
+If you have an **authorized internet access**, use `elinks` with `javascript` to login:
 
 - type `elinks archlinux.org`
 - press the `Esc` key. Press `o` to open `Options manager`
@@ -90,7 +79,7 @@ Ensure the system clock is accurate:
 timedatectl set-ntp true
 ```
 
-To check the service status, use timedatectl status.
+To check the service status, use `timedatectl` status.
 
 ## Set Up Partitions
 
@@ -303,13 +292,10 @@ alias vi=vim
 ```
 
 Type `vi /etc/locale.gen`.
-Uncomment `en_US.UTF-8 UTF-8`, `en_GB.UTF-8 UTF-8` in `/etc/locale.gen`, and generate them with:
+Uncomment `en_US.UTF-8 UTF-8`, `en_GB.UTF-8 UTF-8` in `/etc/locale.gen`,
+and generate them with: `locale-gen`
 
-```bash
-locale-gen
-```
-
-Set the LANG variable in `locale.conf(5)` accordingly:
+Set the "LANG" variable in `locale.conf(5)` accordingly:
 
 ```bash
 echo -n 'LANG=en_US.UTF-8' | tee /etc/locale.conf
@@ -319,7 +305,13 @@ localectl set-locale LANG=en_US.UTF-8
 
 ### Set hostname
 
-Create the [hostname](https://wiki.archlinux.org/index.php/Hostname) file and add matching entries to `hosts(5)`:
+The hostname of the machine can be set using:
+
+```bash
+hostnamectl set-hostname <hostname>
+```
+
+Or creating the [hostname](https://wiki.archlinux.org/index.php/Hostname) file and add matching entries to `hosts(5)`:
 
 ```bash
 $ echo myhostname > /etc/hostname
@@ -380,18 +372,18 @@ Include = /etc/pacman.d/mirrorlist
 ```
 Save changes and exit.
 
-After that, type `pacman -Sy` to refresh reposity list.
+After that, type `pacman -Sy` to refresh repository list.
 
 ### Create a normal user
 
 Because being `root` user when using normal task is dangerous, you could destroy
 all system by mistake when you are `root` user.
 
-Replace myusername with username, type the following commands
+Type the following commands
 
 ```bash
-useradd -m -G power,storage,wheel myusername
-passwd myusername
+useradd -m -G power,storage,wheel <username>
+passwd <username>
 ```
 
 Now install the `sudo` package, `sudo` will let you have `superuser` privilege
@@ -404,7 +396,7 @@ visudo
 
 Scroll down and uncomment this line: `%wheel ALL=(ALL) ALL`. Save and exit the editor.
 
-### Configure the bootloader
+### Configure the boot loader
 
 This is the software that loads the OS when computer starts.
 If you're doing **dual boot**, type this :
@@ -415,7 +407,7 @@ pacman -S os-prober
 
 #### Only UEFI
 
-Mount **efi** partition:
+Mount **EFI** partition:
 
 ```bash
 #########################
@@ -475,27 +467,16 @@ Use the password you created as a normal user to log in.
 
 `sudo pacman -S bash-completion`
 
-#### Enable `AUR` reposity
+#### Enable `AUR` repository
 
 `AUR` is one of the best of Arch Linux with community maintain packages.
 
-##### PacAUR (not maintained)
+Common AUR helpers:
 
-> From http://cdavis.us/wiki/index.php/Arch_Linux_Install_Guide
+* Aura: <https://github.com/fosskers/aura#installation>
+* pacaur (unmaintained): <http://cdavis.us/wiki/index.php/Arch_Linux_Install_Guide>
 
-##### General steps for others <aur helpers>
-
-+ Now install `<aur_helpers>`
-
-  ```bash
-  mkdir -p ~/.aur/aur_helpers && cd $_
-  gpg --keyserver pgp.mit.edu --recv-keys <key_id>
-  git clone https://aur.archlinux.org/<aur_helpers>.git
-  cd <aur_helpers>
-  makepkg -si PKGBUILD
-  ```
-
-**More:** https://wiki.archlinux.org/index.php/makepkg#Improving_compile_times
+**More:** <https://wiki.archlinux.org/index.php/makepkg#Improving_compile_times>
 
 #### If you have trouble with `Wi-Fi`
 
@@ -505,9 +486,9 @@ Google for install `wifi driver for arch`
 
 For safe, type `sudo passwd -dl root`
 
-#### Install XFCE4 Dekstop, Sreen locker and Sound Server
+#### Install XFCE4 Desktop, screen locker and Sound Server
 
-> See also: https://wiki.archlinux.org/index.php/Xorg#Driver_installation
+> See also: <https://wiki.archlinux.org/index.php/Xorg#Driver_installation>
 
 ##### 1) Install your graphics driver
 
@@ -517,7 +498,7 @@ If Arch is in VMWare, just install `xf86-input-vmmouse`, `xf86-video-vmware`,
 ###### Intel
 
 Intel GPU driver (`xf86-video-intel`) as graphics driver (Often not recommended, see note
-https://wiki.archlinux.org/index.php/Intel_graphics#Installation)
+<https://wiki.archlinux.org/index.php/Intel_graphics#Installation)>
 
 ```
 sudo pacman -S vulkan-intel xf86-video-intel mesa
@@ -547,7 +528,7 @@ Choose either **a)**, **b)** or **c)** for installing desktop manager
 
 ###### a) Install LXDM (Light X11 Desktop Manager)
 
-Install desktop manager **LXDM** and Sreen locker **XScreenSaver**
+Install desktop manager **LXDM** and screen locker **XScreenSaver**
 
 ```
 sudo pacman -S lxdm xscreensaver
@@ -630,13 +611,13 @@ sudo pacman -S xfce4
 
 ##### 7) Install cursor theme
 
-Use defautl Ubuntu cursor theme:
+Use default Ubuntu cursor theme:
 
 ```bash
 pacman -S xcursor-vanilla-dmz xcursor-vanilla-dmz-aa
 ```
 
-For more, read https://wiki.archlinux.org/index.php/Cursor_themes
+For more, read <https://wiki.archlinux.org/index.php/Cursor_themes>.
 
 ### Finally, reboot system with `reboot`
 
