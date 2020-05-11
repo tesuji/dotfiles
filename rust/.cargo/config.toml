@@ -12,6 +12,8 @@ opt-level = 0
 [target.x86_64-unknown-linux-gnu]
 rustflags = [
     "-C", "link-arg=-fuse-ld=lld",
+    # Use `diff <(rustc --print cfg) <(rustc --print cfg -C target-cpu=<cpu name>)`
+    # to know what new target features are enabled
     "-C", "target-cpu=sandybridge",
 ]
 linker = "clang"
