@@ -482,10 +482,11 @@ let g:mapleader = ','
 " }}}
 
 " Comments {{{
+  " FIXME(hard): Parse 'comments' set option for comment leader <https://vimhelp.org/change.txt.html#format-comments>.
   noremap gcc :call CommentLines()<cr>
   noremap gcu :call UncommentLines()<cr>
 
-  " Improved from https://github.com/BurntSushi/dotfiles/blob/e5c72a924e0d163e130692d46ff7f4d9188307bf/.config/nvim/include/comment.vim
+  " Improved from <https://github.com/BurntSushi/dotfiles/blob/e5c72a924e0d163e130692d46ff7f4d9188307bf/.config/nvim/include/comment.vim>.
   let s:comment_leaders = {
     \ 'javascript':     '//',
     \ 'c':              '//',
