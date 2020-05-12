@@ -414,6 +414,14 @@ let g:mapleader = ','
   inoremap {<cr> {<cr>}<ESC>O
   inoremap {;<cr> {<cr>};<ESC>O
 
+  " Move line up/down: <https://vi.stackexchange.com/a/2682/17399>
+  nnoremap <M-Up>        :m-2<cr>
+  nnoremap <M-Down>      :m+<cr>
+  inoremap <M-Up>        <esc>:m-2<cr>==gi
+  inoremap <M-Down>      <esc>:m+<cr>==gi
+  vnoremap <M-Up>        :m '<-2<cr>gv=gv
+  vnoremap <M-Down>      :m '>+<cr>gv=gv
+
   nnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
   vnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
 
