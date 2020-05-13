@@ -90,7 +90,7 @@
 		UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}'); \
 		BRANCH=$(echo \"${UPSTREAM}\" | cut -f2- -d/); \
 		UPSTREAM=$(echo \"${UPSTREAM}\" | cut -f1 -d/); \
-		git pull \"$@\" \"${UPSTREAM}\" \"${BRANCH}\"; \
+		git pull --no-stat \"$@\" \"${UPSTREAM}\" \"${BRANCH}\"; \
 	}; f"
 	pr = "!f() { git fetch -fu \"${2:-upstream}\" +refs/pull/\"${1}\"/head:refs/remotes/\"${2:-upstream}\"/pr/\"${1}\"; }; f"
 	pushf = push --force-with-lease
