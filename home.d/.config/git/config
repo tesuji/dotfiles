@@ -85,7 +85,7 @@
 
 	# -- Sharing and Updating Projects ----------------------------------------
 	#pullr = pull --rebase
-	pull1 = pull --depth=1 # pull right after clone
+	#pull1 = pull --depth=1 # pull right after clone
 	pullb = "!f() { \
 		UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}'); \
 		BRANCH=$(echo \"${UPSTREAM}\" | cut -f2- -d/); \
