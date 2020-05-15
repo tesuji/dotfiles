@@ -27,6 +27,11 @@ if has('termguicolors')
     set notermguicolors
   elseif $TERM =~# '^\(tmux\|iterm\|vte\|gnome\)\(-.*\)\?$'
     set termguicolors
+    if !has('nvim')
+      " vim inside tmux doesn't support arrows key properly: <https://superuser.com/a/402084/510572>
+      execute "set <xLeft>=\e[1;*D"
+      execute "set <xRight>=\e[1;*C"
+    endif
   elseif $TERM ==# 'xterm'
     if $XTERM_VERSION != '' || $KONSOLE_PROFILE_NAME != '' || $VTE_VERSION != ''
       set termguicolors
