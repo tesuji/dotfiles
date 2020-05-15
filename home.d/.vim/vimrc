@@ -142,7 +142,8 @@ let g:mapleader = ','
   " remember copy registers after quitting in the .viminfo file -- 20
   " jump links, regs up to 500 lines'
   "set viminfo='20,\"500
-  set guicursor=a:blinkon0 " Disable cursor blink
+  " let's default cursor for nvim
+  "set guicursor=a:blinkon0 " Disable cursor blink
   " Disable auto append EOL on save in binary files
   set noeol
   "set nofixeol
@@ -410,8 +411,8 @@ let g:mapleader = ','
   nnoremap Y y$
 
   " binding ' and " cause problems more than it helps
-  " inoremap " ""<left>
-  " inoremap ' ''<left>
+  "inoremap " ""<left>
+  "inoremap ' ''<left>
   inoremap ( ()<left>
   inoremap [ []<left>
   inoremap { {}<left>
