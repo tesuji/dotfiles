@@ -98,7 +98,9 @@ user_pref("browser.tabs.closeWindowWithLastTab",                false);
 
 // PREF: Disable smooth when scrolling
 user_pref("general.smoothScroll",                               false);
-user_pref("layout.spellcheckDefault",                           0);
+
+// PREF: Don't touch spellcheck settings
+//user_pref("layout.spellcheckDefault",                           0);
 
 // PREF: Fix problem with context menu on XFCE
 //       The context menu is not rightfully positioned.
