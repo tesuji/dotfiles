@@ -66,13 +66,13 @@ done
 # * https://wiki.archlinux.org/index.php/SSH_keys#ssh-agent
 # * https://wiki.archlinux.org/index.php/GnuPG#SSH_agent
 
-# Disabled, see <https://unix.stackexchange.com/a/371910/178265>
 # For `gpg-agent` to work correctly.
-# GPG_TTY=$(tty)
-# export GPG_TTY
-# if command_exist gpg-connect-agent; then
-#   gpg-connect-agent updatestartuptty /bye > /dev/null
-# fi
+GPG_TTY=$(tty)
+export GPG_TTY
+# Disabled, see <https://unix.stackexchange.com/a/371910/178265>
+#if command_exist gpg-connect-agent; then
+#  gpg-connect-agent updatestartuptty /bye > /dev/null
+#fi
 
 if command_exist ssh-agent; then
   if ! pgrep -u "$USER" ssh-agent > /dev/null; then
