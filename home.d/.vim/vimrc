@@ -341,11 +341,11 @@ let g:mapleader = ','
   " eliminates :W style typos due to lazy holding shift.
   nnoremap ; :
   nnoremap <C-p> :FZF<cr>
-  noremap <leader>h :%!xxd<cr>:set syntax=xxd<cr> " for binary file
-  noremap <leader>u :%!xxd -r<cr>:syntax enable<cr> " to revert after xxd
-  noremap <leader>w :w!<cr> " fast saving
-  noremap <leader>q :q<cr>  " quit file
-  noremap <leader>Q :q!<cr> " quit anyway
+  nnoremap <leader>h :%!xxd<cr>:set syntax=xxd<cr>
+  nnoremap <leader>u :%!xxd -r<cr>:syntax enable<cr>
+  nnoremap <leader>w :w!<cr>
+  nnoremap <leader>q :q<cr>
+  nnoremap <leader>Q :q!<cr>
   " split the current window horizontally
   nnoremap <leader>- :sp<cr>
   " split the current window vertically
