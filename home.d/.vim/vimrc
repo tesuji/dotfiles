@@ -338,6 +338,7 @@ let g:mapleader = ','
   " Making it so ; works like : for commands. Saves typing and
   " eliminates :W style typos due to lazy holding shift.
   nnoremap ; :
+  nnoremap <C-g> :GFiles<cr>
   nnoremap <C-p> :FZF<cr>
   nnoremap <leader>h :%!xxd<cr>:set syntax=xxd<cr>
   nnoremap <leader>u :%!xxd -r<cr>:syntax enable<cr>
