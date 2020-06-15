@@ -14,18 +14,22 @@ CONFIG_PATH=.cargo/config.toml
 if [[ -e .cargo/config ]]; then
     CONFIG_PATH=.cargo/config
 # FIXME: Don't use trap as it may surprises while debugging cargo errors.
-# elif [[ ! -e "$CONFIG_PATH" ]]; then
-#     function cleanup {
-#         rm -rf "$CONFIG_PATH"
-#     }
-#     trap cleanup EXIT
+#elif [[ ! -e "$CONFIG_PATH" ]]; then
+#    function cleanup {
+#        rm -rf "$CONFIG_PATH"
+#    }
+#    trap cleanup EXIT
 fi
-# FIXME: abort for panicking doesn't work in cargo-expand. As it unwraps somewhere.
+
+# FIXME:
+# * abort for panicking doesn't work in `cargo-expand`. As it unwraps somewhere in `proc-macro2` crate.
+# * strip option is unstable and tracked at <https://github.com/rust-lang/rust/issues/72110>.
 cat > "$CONFIG_PATH" << EOF
 [profile.release]
 lto = true
 codegen-units = 1
-# panic = 'abort'
+#panic = 'abort'
+#strip = "debuginfo"
 EOF
 
 cargo build --release "$@"
