@@ -417,11 +417,10 @@ let g:mapleader = ','
   " binding ' and " cause problems more than it helps
   "inoremap " ""<left>
   "inoremap ' ''<left>
-  inoremap ( ()<left>
-  inoremap [ []<left>
-  inoremap { {}<left>
+  "inoremap ( ()<left>
+  "inoremap [ []<left>
+  "inoremap { {}<left>
   inoremap {<cr> {<cr>}<ESC>O
-  inoremap {;<cr> {<cr>};<ESC>O
 
   " Move line up/down: <https://vi.stackexchange.com/a/2682/17399>
   nnoremap <S-Up>        :m-2<cr>
