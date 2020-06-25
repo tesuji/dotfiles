@@ -50,6 +50,10 @@ tarball() {
   find usr ! -type d | fakeroot tar -cJvf "$1" -T -
 }
 
+webserver() {
+  python3 -m http.server "$@"
+}
+
 # Print specific variable of gcc
 parse_gcc_var() {
   [ "$#" -ne 1 ] && return
