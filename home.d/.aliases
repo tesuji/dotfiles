@@ -104,8 +104,13 @@ fi
 # shellcheck disable=SC2230
 if ! alias which >/dev/null 2>&1; then
   # which command on Debian-based distros lack support for long options
-  if which -h >/dev/null 2>&1; then
-    which() {
+  if command which -h >/dev/null 2>&1; then
+    # Use `function` declaration because on "bash 4.2.46(2)-release (x86_64-redhat-linux-gnu)"
+    # we have this error:
+    #
+    #     -bash: /home/lzutao/.aliases: line 108: syntax error near unexpected token `('
+    #     -bash: /home/lzutao/.aliases: line 108: `    which() {'
+    function which() {
       { alias; declare -f; } \
       | command which --tty-only --read-alias --read-functions --show-tilde --show-dot
     }
