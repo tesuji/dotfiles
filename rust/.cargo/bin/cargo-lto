@@ -26,7 +26,7 @@ fi
 # * strip option is unstable and tracked at <https://github.com/rust-lang/rust/issues/72110>.
 cat > "$CONFIG_PATH" << EOF
 [profile.release]
-lto = true
+lto = "thin"
 codegen-units = 1
 #panic = 'abort'
 #strip = "debuginfo"
