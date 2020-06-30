@@ -1,0 +1,7 @@
+!! ~/.Xmodmap: Custom keymap table
+!!
+!! For more info, read <https://wiki.archlinux.org/index.php/Xmodmap>.
+
+! Disable ATL_R keymap on Dell E6540 because it is near to CTRL_R
+! which is easy to mistype.
+keycode 108 =
