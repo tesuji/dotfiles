@@ -102,6 +102,13 @@ git config --global user.email "$USER_EMAIL"
 
 * `fontconfig` may cause noised font rendering on [Fedora](https://getfedora.org).
 
+### TERM=tmux-256color with tmux from source
+
+```bash
+wget https://gist.github.com/nicm/ea9cf3c93f22e0246ec858122d9abea1/raw/37ae29fc86e88b48dbc8a674478ad3e7a009f357/tmux-256color
+/bin/tic -x tmux-256color
+```
+
 ### Xubuntu 18.04 desktop freezes with movable mouse
 
 Try kill `compton` daemon:
