@@ -18,11 +18,6 @@ Try to be compatible with tmux 1.8 and 2.3+. Use <kbd>Alt</kbd><kbd>A</kbd> as p
 
 Manual configuration (no dependencies).
 
-**Preview**:
-
-![zsh preview](docs/img/zsh_preview.png)
-![vim preview](docs/img/zsh_vim_view.png)
-
 ### subl
 
 **Keymap**: View this [config](subl/.config/sublime-text-3/Packages/User/Default%20%28Linux%29.sublime-keymap).
