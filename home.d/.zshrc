@@ -121,7 +121,7 @@ HISTSIZE=1000                 # 1000 lines of history within the shell
 SAVEHIST=1000                 # 1000 lines of history in $HISTFILE
 HISTFILE="${HOME}/.zsh_history" # Where to save shell history
 # Ignore saving in $HISTFILE, but still in the shell
-HISTORY_IGNORE='([bf]g|cd ..|l|l[alsh]|less *|vim *)'
+HISTORY_IGNORE='(cd ..|pwd|ls|less|suspend|poweroff|reboot)'
 
 # Watch other user login/out
 watch=all   # watch all logins, default "notme"
