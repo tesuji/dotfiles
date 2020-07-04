@@ -56,22 +56,7 @@ the following command in proper distribution.
 
 ### Installation
 
-Install with backup in `dotfiles/.backup`:
-
-```bash
-cd ~
-git clone https://github.com/lzutao/dotfiles.git
-cd dotfiles
-./install.sh -b
-```
-
-Or without backup:
-
-```bash
-./install.sh
-```
-
-Now configure git:
+Configure git:
 
 ```bash
 USER_NAME="foo"
@@ -87,6 +72,15 @@ git config --global user.email "$USER_EMAIL"
 ```
 
 [Telling Git about your signing key][git_gpg] if you have one.
+
+Now install it. Note that you have manually backup and remove old configs.
+
+```bash
+cd ~
+git clone https://github.com/lzutao/dotfiles.git
+cd dotfiles
+stow <whatever>
+```
 
 [git_gpg]: https://help.github.com/articles/telling-git-about-your-signing-key/
 
