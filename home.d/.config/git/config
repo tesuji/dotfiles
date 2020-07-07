@@ -157,6 +157,7 @@
 [diff]
 	tool = vimdiff
 	algorithm = histogram
+	noprefix = true
 [difftool]
 	prompt = false
 [merge]
