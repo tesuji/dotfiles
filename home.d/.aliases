@@ -230,6 +230,8 @@ alias readelf='readelf -W'
 #alias rot13='tr "[A-Za-z]" "[N-ZA-Mn-za-m]"'
 alias rm='rm -I'
 #alias ssh-keygen='ssh-keygen -E md5 -lf'
+# When hang, find its matching SSH: `ssh -x -a [...] -s sftp`
+alias sshfs='sshfs -o reconnect -C'
 alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 alias sudo='sudo '
 #alias synctime='ntpd -qg'  # install ntp package
