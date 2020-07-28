@@ -184,3 +184,5 @@
 [include]
 	# Include private information about user.user and user.email
 	path = ~/.config/git/config.local
+[init]
+	defaultBranch = main
