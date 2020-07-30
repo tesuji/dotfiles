@@ -236,11 +236,7 @@ alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no
 alias sudo='sudo '
 #alias synctime='ntpd -qg'  # install ntp package
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"'
-if command -v nvim > /dev/null; then
-  alias vi='nvim'
-else
-  alias vi='vim'
-fi
+alias vi='vim'
 alias wifiscan='nmcli device wifi rescan'
 alias wifils='nmcli device wifi list'
 #alias wifipasswod='sudo grep -r "^psk" /etc/NetworkManager/system-connections/'
