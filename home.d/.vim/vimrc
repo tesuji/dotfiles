@@ -520,6 +520,7 @@ let g:mapleader = ','
     \ 'python':         '#',
     \ 'perl':           '#',
     \ 'yaml':           '#',
+    \ 'toml':           '#',
     \
     \ 'tex':            '%',
     \
