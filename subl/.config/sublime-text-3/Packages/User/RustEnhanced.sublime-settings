@@ -2,4 +2,5 @@
     "rust_env": {"PATH": "$PATH:$HOME/.cargo/bin"},
     "rust_syntax_checking": false,
     "translate_tabs_to_spaces": true,
+    "tab_size": 4,
 }
