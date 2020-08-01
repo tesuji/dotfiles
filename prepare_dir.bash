@@ -24,6 +24,7 @@ EMPTY_DIRS_IN_HOME=(
 
     .config/sublime-text-3/Packages/User
 
+    .vim/plugged
     .config/vim/autoload
     .config/nvim/
     .local/share/nvim/site/autoload
