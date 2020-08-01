@@ -33,7 +33,7 @@ user_pref("browser.search.suggest.enabled",                     false);
 user_pref("extensions.pocket.enabled",                          false);
 
 // PREF: Disable screenshot feature to the ... menu on the address bar
-user_pref("extensions.screenshots.disabled",                    true);
+//user_pref("extensions.screenshots.disabled",                    true);
 
 // PREF: Disable reader mode
 user_pref("reader.parse-on-load.enabled",                       false);
