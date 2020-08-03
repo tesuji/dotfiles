@@ -26,6 +26,7 @@
 	chkconflict = "!f() { git for-each-ref --no-merged=\"${1:-master}\" --shell --format='git merge --no-ff --no-commit %(refname); git merge --abort' refs/heads; }; f"
 	conflicts = diff --name-only --diff-filter=U
 	touch = "!f() { git ls-files -z \"*.$1\" | xargs -0 touch; }; f"
+	find-merge = log --reverse --ancestry-path --merges # <SHA-1>..master
 
 	# -- Basic  ---------------------------------------------------------------
 	addu = add --update
