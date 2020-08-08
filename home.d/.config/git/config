@@ -27,6 +27,9 @@
 	conflicts = diff --name-only --diff-filter=U
 	touch = "!f() { git ls-files -z \"*.$1\" | xargs -0 touch; }; f"
 	find-merge = log --reverse --ancestry-path --merges # <SHA-1>..master
+	# https://github.blog/2018-09-10-highlights-from-git-2-19#user-content-compare-histories-with-git-range-diff
+	# For example: git range-diff master foo@{3} foo
+	diff-rebased = git range-diff
 
 	# -- Basic  ---------------------------------------------------------------
 	addu = add --update
