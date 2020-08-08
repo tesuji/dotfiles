@@ -60,6 +60,9 @@ path_append() {
 # * https://wiki.archlinux.org/index.php/SSH_keys#ssh-agent
 # * https://wiki.archlinux.org/index.php/GnuPG#SSH_agent
 
+export PYTHONSTARTUP=${HOME}/.pythonrc
+export CARGO_TARGET_DIR=${HOME}/.cargo/target
+
 # For `gpg-agent` to work correctly.
 GPG_TTY=$(tty)
 export GPG_TTY
