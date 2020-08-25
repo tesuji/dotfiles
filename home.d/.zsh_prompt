@@ -29,16 +29,16 @@ setprompt() {
 
   # Set a fancy prompt (non-color if it is a dumb terminal)
   if [ "$TERM" != "dumb" ]; then
-    user_at_host='%B%F{cyan}%n %F{white}at '%F{yellow}${host_style}'%F{white} in %F{green}%~%k'
-    error_prompt='%(?..%K{red}%F{white}[%?]%k )' # Print exit code if exit code != 0
-    job_prompt='%(1j.%K{blue} %j%k .)'  # Print number of job if there are background jobs
-    time_prompt='%F{white}%T%b%f'       # Time format -> hh:mm
+    time_prompt='%B%F{white}[%T]%f%b'       # Time format -> hh:mm
+    user_at_host='%B%F{cyan}%n@'${host_style}'%f %F{green}%d%f%b'
+    error_prompt='%(?..%F{red}[%?]%f )' # Print exit code if exit code != 0
+    job_prompt='%(1j. %F{blue}[%j]%f .)'  # Print number of job if there are background jobs
     shell_state='%F{red}%#%f'
   else
-    user_at_host='%n at '"${host_style}"' in %~'
+    time_prompt='[%T]'
+    user_at_host='%n@'"${host_style}"' %d'
     error_prompt='%(?..[%?] )'
-    job_prompt='%(1j. %j .)'
-    time_prompt='%T'
+    job_prompt='%(1j. [%j] .)'
     shell_state='%#'
   fi
 
@@ -46,8 +46,8 @@ setprompt() {
   #     user at host in ~/Documents
   #     9:39 $
   # Reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
-  PROMPT="${user_at_host}
-${error_prompt}${job_prompt}${time_prompt} ${shell_state} "
+  PROMPT="${time_prompt} ${user_at_host} ${error_prompt} ${job_prompt}
+${shell_state} "
   export PROMPT
 }
 

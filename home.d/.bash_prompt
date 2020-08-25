@@ -66,21 +66,21 @@ setprompt() {
 
   # Set a fancy prompt (non-color if it is a dumb terminal)
   if [ "$TERM" != "dumb" ]; then
-    user_at_host="${bold_col}${cyan_col}\u${white_col} at ${yellow_col}${host_style} ${white_col}in ${green_col}\w"
+    time_prompt="${white_col}[\A]${reset_col}" # disable bold
+    user_at_host="${cyan_col}\u@${host_style} ${green_col}$(pwd)"
     error_prompt="${red_col}\$(exitstatus)"
-    time_prompt="${white_col}\A ${reset_col}" # disable bold
-    shell_state="${red_col}\$ ${reset_col}"
+    shell_state="${red_col}\$${reset_col}"
   else
-    user_at_host="\u at ${host_style} in \w"
+    time_prompt="[\A]" # disable bold
+    user_at_host="\u@${host_style} $(pwd)"
     error_prompt="\$(exitstatus)"
-    time_prompt="\A " # disable bold
-    shell_state="\$ "
+    shell_state="\$"
   fi
 
   # Sample result:
   #     user at host in ~/Documents
   #     9:39 $
-  PS1="${user_at_host}\n${error_prompt}${time_prompt}${shell_state}"
+  PS1="${time_prompt} ${user_at_host} ${error_prompt}\n${shell_state} "
 
   # If this is an xterm set the title to dir
   case "${TERM}" in
