@@ -140,7 +140,7 @@ KEYTIMEOUT=1
 #
 # Print fpath with:
 #    % print -rl -- $fpath
-fpath+="$HOME/.zfunc"
+fpath=("$HOME/.zfunc" $fpath)
 
 autoload -Uz compinit # Use modern completion system
 
