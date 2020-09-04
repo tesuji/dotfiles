@@ -162,6 +162,7 @@
 	tool = vimdiff
 	algorithm = histogram
 	noprefix = true
+	colorMoved = dimmed-zebra
 [difftool]
 	prompt = false
 [merge]
