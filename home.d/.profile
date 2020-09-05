@@ -66,6 +66,12 @@ export CARGO_TARGET_DIR=${HOME}/.cargo/target
 # For `gpg-agent` to work correctly.
 GPG_TTY=$(tty)
 export GPG_TTY
+
+# Ref: https://wiki.gentoo.org/wiki/GnuPG#Changing_pinentry_for_SSH_logins
+if [[ -n "$SSH_CONNECTION" || -n "$REMOTE_HOST" ]]; then
+  export PINENTRY_USER_DATA="USE_CURSES=1"
+fi
+
 # Disabled, see <https://unix.stackexchange.com/a/371910/178265>
 #if command_exist gpg-connect-agent; then
 #  gpg-connect-agent updatestartuptty /bye > /dev/null
