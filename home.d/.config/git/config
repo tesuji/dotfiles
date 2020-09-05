@@ -20,7 +20,6 @@
 	fetch-tag-force = "!f() { git fetch --depth=1 --no-tags origin \"+refs/tags/$1:refs/tags/$1\"; }; f"
 	# Emulate bash alias
 	alias = "!f() { git config alias.\"$@\"; }; f"
-	remotes = "remote -v"
 	stale = "remote prune"
 	# usage: git co master; git chkconflict | sh -xs
 	chkconflict = "!f() { git for-each-ref --no-merged=\"${1:-master}\" --shell --format='git merge --no-ff --no-commit %(refname); git merge --abort' refs/heads; }; f"
