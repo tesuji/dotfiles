@@ -190,3 +190,5 @@
 	path = ~/.config/git/config.local
 [init]
 	defaultBranch = main
+[rerere]
+	enabled = true
