@@ -111,6 +111,8 @@
 	cpc = cherry-pick --continue
 	# Add a subtree to your git project
 	sba = "!f() { git subtree add --prefix \"$2\" \"$1\" master --squash; }; f"
+	# submodule
+	smu = submodule update
 
 	# -- Administration -------------------------------------------------------
 	# Remove sensitive data from history, after a push
