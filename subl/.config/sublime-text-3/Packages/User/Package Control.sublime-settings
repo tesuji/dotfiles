@@ -1,5 +1,7 @@
 {
+	// From <https://packagecontrol.io/docs/settings>
 	"bootstrapped": true,
+	"ignore_vcs_packages": true,
 	"in_process_packages":
 	[
 	],
@@ -7,8 +9,7 @@
 	[
 		"NASM x86 Assembly",
 		"Package Control",
-		"Rust Enhanced",
 		"TOML",
 		"VimL"
-	]
+	],
 }
