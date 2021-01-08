@@ -77,6 +77,18 @@ fi
 #  gpg-connect-agent updatestartuptty /bye > /dev/null
 #fi
 
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+  if [ -d /run/user/ ]; then
+    XDG_RUNTIME_DIR=/run/user/$(id -u)
+  else
+    # For OpenBSD
+    XDG_RUNTIME_DIR=/tmp/runtime-$(id -u)
+    if [ ! -d "$XDG_RUNTIME_DIR" ]; then
+      mkdir -m 0700 "$XDG_RUNTIME_DIR"
+    fi
+  fi
+fi
+
 if command_exist ssh-agent; then
   if ! pgrep -u "$USER" ssh-agent > /dev/null; then
     ssh-agent -s > "$XDG_RUNTIME_DIR/ssh-agent.env"
