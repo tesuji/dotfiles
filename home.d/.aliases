@@ -217,10 +217,17 @@ fi
 unset my_ls
 
 alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
-alias ln='ln -iv'
-alias mkdir='mkdir -pv'
-alias mv='mv -iv'
-alias nc='nc -v'
+if mkdir -v > /dev/null 2>&1; then
+  alias ln='ln -iv'
+  alias mkdir='mkdir -pv'
+  alias mv='mv -iv'
+  alias nc='nc -v'
+else
+  # OpenBSD doesn't support -v flag
+  alias ln='ln -i'
+  alias mkdir='mkdir -p'
+  alias mv='mv -i'
+fi
 alias objdump='objdump -M intel'
 alias patch='patch -p1' # or use `git apply -3`
 alias py='python3'
