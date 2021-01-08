@@ -204,13 +204,14 @@ alias lh='ls -dF .??*'
 alias ll='ls -lF'
 
 # Detect which `ls` flavor is in use
-my_ls="ls -h --group-directories-first"
+my_ls="ls -h"
 # shellcheck disable=SC2139
 if ls --color > /dev/null 2>&1; then # GNU ls support colors
-  alias ls="${my_ls} --color"
+  alias ls="${my_ls} --color --group-directories-first"
 elif ls --G > /dev/null 2>&1; then # BSD ls
   alias ls="${my_ls} -G"
 else
+  # this maybe OpenBSD
   alias ls="${my_ls}"
 fi
 unset my_ls
