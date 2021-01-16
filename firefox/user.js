@@ -36,7 +36,7 @@ user_pref("extensions.pocket.enabled",                          false);
 //user_pref("extensions.screenshots.disabled",                    true);
 
 // PREF: Disable reader mode
-user_pref("reader.parse-on-load.enabled",                       false);
+//user_pref("reader.parse-on-load.enabled",                       false);
 
 /******************************************************************************
  * SECTION: Firefox (anti-)features / components                              *
