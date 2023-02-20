@@ -49,7 +49,15 @@ path_append() {
 #done
 
 # -- Exported environment variable --------------------------------------------
-# NOTE: Most variables should be in ~/.pam_environment
+# NOTE: Most variables should be in ~/.config/environement.d
+
+ENV_GEN=/lib/systemd/user-environment-generators/30-systemd-environment-d-generator
+if [ -x "$ENV_GEN" ]; then
+  # export the env in `eval`
+  set -a
+  eval "$(ENV_GEN)"
+  set +a
+fi
 
 # Enable the keyring for applications run through the terminal, such as SSH.
 #
