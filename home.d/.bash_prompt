@@ -67,12 +67,12 @@ setprompt() {
   # Set a fancy prompt (non-color if it is a dumb terminal)
   if [ "$TERM" != "dumb" ]; then
     time_prompt="${white_col}[\A]${reset_col}" # disable bold
-    user_at_host="${cyan_col}\u@${host_style} ${green_col}$(pwd)"
+    user_at_host="${cyan_col}\u@${host_style} ${green_col}\w"
     error_prompt="${red_col}\$(exitstatus)"
     shell_state="${red_col}\$${reset_col}"
   else
     time_prompt="[\A]" # disable bold
-    user_at_host="\u@${host_style} $(pwd)"
+    user_at_host="\u@${host_style} \w"
     error_prompt="\$(exitstatus)"
     shell_state="\$"
   fi
