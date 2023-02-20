@@ -55,7 +55,7 @@ ENV_GEN=/lib/systemd/user-environment-generators/30-systemd-environment-d-genera
 if [ -x "$ENV_GEN" ]; then
   # export the env in `eval`
   set -a
-  eval "$(ENV_GEN)"
+  eval "$($ENV_GEN)"
   set +a
 fi
 
