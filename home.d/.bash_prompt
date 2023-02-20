@@ -58,7 +58,7 @@ setprompt() {
   fi
 
   # Add constant string (remote) when connected via SSH.
-  if [ "$REMOTE_HOST" != "localhost" ]; then
+  if [ "$REMOTE_HOST" != ":0" ]; then
     host_style="\h (remote)"
   else
     host_style="\h"
