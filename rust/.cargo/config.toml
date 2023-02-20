@@ -17,3 +17,6 @@ rustflags = [
     "-C", "target-cpu=sandybridge",
 ]
 linker = "clang"
+[registries.crates-io]
+protocol = "sparse"
+
