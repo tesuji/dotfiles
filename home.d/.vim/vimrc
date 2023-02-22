@@ -85,7 +85,7 @@ let g:mapleader = ','
   Plug 'tpope/vim-sleuth'
 
   if has('nvim')
-    if $REMOTE_HOST != 'localhost'
+    if $REMOTE_HOST == 'false'
       Plug 'neoclide/coc.nvim', {'branch': 'release'}
       " NOTE: using `exe` here to avoid empty screen because of `source`
       exe 'source '. stdpath('config') . '/coc.vim'

@@ -21,7 +21,7 @@ esac
 setprompt() {
   local host_style user_at_host error_prompt job_prompt time_prompt shell_state
   # Add constant string (remote) when connected via SSH.
-  if [ "$REMOTE_HOST" != ":0" ]; then
+  if [ "$REMOTE_HOST" == true ]; then
     host_style="%m (remote)"
   else
     host_style="%m"
