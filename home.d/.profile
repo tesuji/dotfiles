@@ -66,6 +66,9 @@ if [ -x "$ENV_GEN" ]; then
   set +a
 fi
 
+export PYTHONSTARTUP=${HOME}/.pythonrc
+export CARGO_TARGET_DIR=${HOME}/.cargo/target
+
 # Enable the keyring for applications run through the terminal, such as SSH.
 #
 # We want to prefer `gpg-agent` when possible (because it has nice UI) and
@@ -74,9 +77,7 @@ fi
 # For more info, read:
 # * https://wiki.archlinux.org/index.php/SSH_keys#ssh-agent
 # * https://wiki.archlinux.org/index.php/GnuPG#SSH_agent
-
-export PYTHONSTARTUP=${HOME}/.pythonrc
-export CARGO_TARGET_DIR=${HOME}/.cargo/target
+# * https://curiouslynerdy.com/gpg-agent-for-ssh-on-ubuntu/
 
 # For `gpg-agent` to work correctly.
 GPG_TTY=$(tty)
@@ -87,10 +88,19 @@ if [ -n "$SSH_CONNECTION" ] || [ "$REMOTE_HOST" = true ]; then
   export PINENTRY_USER_DATA="USE_CURSES=1"
 fi
 
+# alternatives use systemd --user services
+# Ref: <https://wiki.archlinux.org/title/GnuPG#gpg-agent>
+if false; then
+  systemctl --user enable gpg-agent.socket
+  systemctl --user start gpg-agent.socket
+  systemctl --user enable gpg-agent-ssh.socket
+  systemctl --user start gpg-agent-ssh.socket
+fi
 # Disabled, see <https://unix.stackexchange.com/a/371910/178265>
-#if command_exist gpg-connect-agent; then
-#  gpg-connect-agent updatestartuptty /bye > /dev/null
-#fi
+# Ref: <https://wiki.archlinux.org/title/GnuPG#Configure_pinentry_to_use_the_correct_TTY>
+if command_exist gpg-connect-agent; then
+  gpg-connect-agent updatestartuptty /bye > /dev/null
+fi
 
 if [ -z "$XDG_RUNTIME_DIR" ]; then
   if [ -d /run/user/ ]; then
@@ -104,12 +114,15 @@ if [ -z "$XDG_RUNTIME_DIR" ]; then
   fi
 fi
 
-if command_exist ssh-agent; then
-  if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent -s > "$XDG_RUNTIME_DIR/ssh-agent.env"
-  fi
-  if [ -z "$SSH_AUTH_SOCK" ]; then
-    . "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
+# use gpg-agent instead
+if false; then
+  if command_exist ssh-agent; then
+    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+      ssh-agent -s > "$XDG_RUNTIME_DIR/ssh-agent.env"
+    fi
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+      . "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
+    fi
   fi
 fi
 
