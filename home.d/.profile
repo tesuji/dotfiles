@@ -51,7 +51,7 @@ path_append() {
 # -- Exported environment variable --------------------------------------------
 # NOTE: Most variables should be in ~/.config/environement.d
 
-if [ "$DISPLAY" == ":0" ]; then
+if [ "$DISPLAY" = ":0" ]; then
   REMOTE_HOST=false
 else
   REMOTE_HOST=true
@@ -83,7 +83,7 @@ GPG_TTY=$(tty)
 export GPG_TTY
 
 # Ref: https://wiki.gentoo.org/wiki/GnuPG#Changing_pinentry_for_SSH_logins
-if [ -n "$SSH_CONNECTION" ] || [ "$REMOTE_HOST" == true ]; then
+if [ -n "$SSH_CONNECTION" ] || [ "$REMOTE_HOST" = true ]; then
   export PINENTRY_USER_DATA="USE_CURSES=1"
 fi
 
