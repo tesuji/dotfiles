@@ -91,6 +91,11 @@ stow <whatever>
 
 * `fontconfig` may cause noised font rendering on [Fedora](https://getfedora.org).
 
+### Fedora
+#### Use hardware rendenring
+Ref: <https://rpmfusion.org/Howto/Multimedia>.
+Use `DRI_PRIME=1 glxinfo -B` or `vainfo` to check.
+
 ### TERM=tmux-256color with tmux from source
 
 ```bash
