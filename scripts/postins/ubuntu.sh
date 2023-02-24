@@ -45,7 +45,7 @@ set_option_fstab() {
     && sudo cp -f "${NEW_FSTAB}" "$FSTAB"
 }
 
-# Usage: set_option_fstab <PBKDF2 hash>
+# Usage: set_passwd_grub <PBKDF2 hash>
 # Set password to protect GRUB menu
 #
 # NOTE:
