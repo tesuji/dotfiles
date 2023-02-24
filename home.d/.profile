@@ -86,6 +86,8 @@ export GPG_TTY
 # Ref: https://wiki.gentoo.org/wiki/GnuPG#Changing_pinentry_for_SSH_logins
 if [ -n "$SSH_CONNECTION" ] || [ "$REMOTE_HOST" = true ]; then
   export PINENTRY_USER_DATA="USE_CURSES=1"
+else
+  export PINENTRY_USER_DATA="USE_TTY=1"
 fi
 
 # alternatives use systemd --user services
