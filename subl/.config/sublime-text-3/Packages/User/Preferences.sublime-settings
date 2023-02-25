@@ -4,7 +4,7 @@
 	"font_face": "Consolas",
 	"ignored_packages":
 	[
-		"Rust"
+		"Rust",
 	],
 	"line_padding_bottom": 1,
 	"line_padding_top": 1,
@@ -14,5 +14,5 @@
 	"show_git_status": false,
 	"spell_check": true,
 	"theme": "Adaptive.sublime-theme",
-	"trim_trailing_white_space_on_save": false
+	"trim_trailing_white_space_on_save": false,
 }
