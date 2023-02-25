@@ -87,17 +87,17 @@ export GPG_TTY
 if [ -n "$SSH_CONNECTION" ] || [ "$REMOTE_HOST" = true ]; then
   export PINENTRY_USER_DATA="USE_CURSES=1"
 else
-  export PINENTRY_USER_DATA="USE_TTY=1"
+  # export PINENTRY_USER_DATA="USE_TTY=1"
+  unset PINENTRY_USER_DATA
 fi
 
 # alternatives use systemd --user services
 # Ref: <https://wiki.archlinux.org/title/GnuPG#gpg-agent>
-if false; then
-  systemctl --user enable gpg-agent.socket
-  systemctl --user start gpg-agent.socket
-  systemctl --user enable gpg-agent-ssh.socket
-  systemctl --user start gpg-agent-ssh.socket
-fi
+#systemctl --user enable gpg-agent.socket
+#systemctl --user start gpg-agent.socket
+#systemctl --user enable gpg-agent-ssh.socket
+#systemctl --user start gpg-agent-ssh.socket
+
 # Disabled, see <https://unix.stackexchange.com/a/371910/178265>
 # Ref: <https://wiki.archlinux.org/title/GnuPG#Configure_pinentry_to_use_the_correct_TTY>
 if command_exist gpg-connect-agent; then
@@ -117,16 +117,14 @@ if [ -z "$XDG_RUNTIME_DIR" ]; then
 fi
 
 # use gpg-agent instead
-if false; then
-  if command_exist ssh-agent; then
-    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-      ssh-agent -s > "$XDG_RUNTIME_DIR/ssh-agent.env"
-    fi
-    if [ -z "$SSH_AUTH_SOCK" ]; then
-      . "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
-    fi
-  fi
-fi
+#if command_exist ssh-agent; then
+#if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+#ssh-agent -s > "$XDG_RUNTIME_DIR/ssh-agent.env"
+#fi
+#if [ -z "$SSH_AUTH_SOCK" ]; then
+#. "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
+#fi
+#fi
 
 # Colorize man using less
 # Ref: <https://wiki.archlinux.org/index.php/Color_output_in_console#Using_less>
