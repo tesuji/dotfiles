@@ -79,10 +79,6 @@ export CARGO_TARGET_DIR=${HOME}/.cargo/target
 # * https://wiki.archlinux.org/index.php/GnuPG#SSH_agent
 # * https://curiouslynerdy.com/gpg-agent-for-ssh-on-ubuntu/
 
-# For `gpg-agent` to work correctly.
-GPG_TTY=$(tty)
-export GPG_TTY
-
 # Ref: https://wiki.gentoo.org/wiki/GnuPG#Changing_pinentry_for_SSH_logins
 if [ -n "$SSH_CONNECTION" ] || [ "$REMOTE_HOST" = true ]; then
   export PINENTRY_USER_DATA="USE_CURSES=1"
@@ -97,12 +93,6 @@ fi
 #systemctl --user start gpg-agent.socket
 #systemctl --user enable gpg-agent-ssh.socket
 #systemctl --user start gpg-agent-ssh.socket
-
-# Disabled, see <https://unix.stackexchange.com/a/371910/178265>
-# Ref: <https://wiki.archlinux.org/title/GnuPG#Configure_pinentry_to_use_the_correct_TTY>
-if command_exist gpg-connect-agent; then
-  gpg-connect-agent updatestartuptty /bye > /dev/null
-fi
 
 if [ -z "$XDG_RUNTIME_DIR" ]; then
   if [ -d /run/user/ ]; then

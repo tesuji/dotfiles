@@ -26,6 +26,11 @@ HISTFILESIZE=2000
 # Do NOT put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth:erasedups
 
+# For `gpg-agent` to work correctly.
+GPG_TTY=$(tty)
+export GPG_TTY
+gpg-connect-agent updatestartuptty /bye >/dev/null
+
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
 # append to the history file, don't overwrite it

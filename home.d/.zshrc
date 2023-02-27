@@ -195,3 +195,8 @@ setopt NO_BG_NICE
 autoload -Uz run-help
 unalias run-help 2>/dev/null
 alias help='run-help'
+
+
+# -- GPG configs --------------------------------------------------------------
+export GPG_TTY=$(tty)
+gpg-connect-agent updatestartuptty /bye >/dev/null
