@@ -3,6 +3,9 @@ br = 'build --release'
 rr = 'run --release'
 f = 'fmt'
 
+[registries.crates-io]
+protocol = "sparse"
+
 # Set the settings for build scripts and proc-macros.
 [profile.release.build-override]
 opt-level = 0
@@ -17,6 +20,3 @@ rustflags = [
     "-C", "target-cpu=sandybridge",
 ]
 linker = "clang"
-[registries.crates-io]
-protocol = "sparse"
-
