@@ -51,7 +51,7 @@ path_append() {
 # -- Exported environment variable --------------------------------------------
 # NOTE: Most variables should be in ~/.config/environement.d
 
-if [ "$DISPLAY" = ":0" ]; then
+if [ "$DISPLAY" = ":0" ] || [ "$DISPLAY" = ":1" ]; then
   REMOTE_HOST=false
 else
   REMOTE_HOST=true
