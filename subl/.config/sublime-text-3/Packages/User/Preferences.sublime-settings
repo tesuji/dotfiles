@@ -1,7 +1,6 @@
 {
 	"color_scheme": "Mariana.sublime-color-scheme",
 	"default_line_ending": "unix",
-	"font_face": "Consolas",
 	"ignored_packages":
 	[
 		"Rust",
@@ -12,7 +11,12 @@
 	"shift_tab_unindent": true,
 	"show_encoding": true,
 	"show_git_status": false,
-	"spell_check": true,
+	// "spell_check": true,
 	"theme": "Adaptive.sublime-theme",
 	"trim_trailing_white_space_on_save": false,
+	"added_words":
+	[
+		"reparse",
+	],
+	"folder_exclude_patterns": ["target", ".git"],
 }
