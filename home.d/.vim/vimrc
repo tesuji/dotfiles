@@ -84,13 +84,13 @@ let g:mapleader = ','
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-sleuth'
 
-  if has('nvim')
-    if $REMOTE_HOST == 'false'
-      Plug 'neoclide/coc.nvim', {'branch': 'release'}
-      " NOTE: using `exe` here to avoid empty screen because of `source`
-      exe 'source '. stdpath('config') . '/coc.vim'
-    endif
-  endif
+  " if has('nvim')
+  "   if $REMOTE_HOST == 'false'
+  "     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  "     " NOTE: using `exe` here to avoid empty screen because of `source`
+  "     exe 'source '. stdpath('config') . '/coc.vim'
+  "   endif
+  " endif
 
   " Initialize plugin system
   call plug#end()
