@@ -22,4 +22,4 @@ rustflags = [
     # to know what new target features are enabled
     "-C", "target-cpu=sandybridge",
 ]
-linker = "clang"
+# linker = "clang"
