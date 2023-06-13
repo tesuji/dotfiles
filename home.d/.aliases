@@ -371,6 +371,8 @@ if [ -x '/usr/bin/dpkg' ]; then
   #alias apts='apt-cache search'
   #alias lsapt='apt list --installed'
 
+  alias fd=fdfind
+
   #clrapt() {
   #  >&2 printf 'Clearing apt cache ...\n'
   #  sudo apt-get clean
