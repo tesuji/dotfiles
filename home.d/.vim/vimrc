@@ -83,6 +83,7 @@ let g:mapleader = ','
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-surround'
 
   " if has('nvim')
   "   if $REMOTE_HOST == 'false'
