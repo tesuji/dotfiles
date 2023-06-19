@@ -51,10 +51,11 @@ path_append() {
 # -- Exported environment variable --------------------------------------------
 # NOTE: Most variables should be in ~/.config/environement.d
 
-if [ "$DISPLAY" = ":0" ] || [ "$DISPLAY" = ":1" ]; then
-  REMOTE_HOST=false
-else
+# Using $DISPLAY to detect remote host is not accurate, using $SSH_* instead.
+if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
   REMOTE_HOST=true
+else
+  REMOTE_HOST=false
 fi
 export REMOTE_HOST
 
