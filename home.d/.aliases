@@ -128,11 +128,10 @@ if command_exist xclip; then
            * ) input="$*";;
     esac
     if [ -z "$input" ]; then  # If no input, print usage message.
-      >&2 cat << EOF
-Copies a string to the clipboard.
-Usage: copy <string>
-       echo <string> | copy
-EOF
+      >&2 echo \
+        "Copies a string to the clipboard.\n"\
+        "Usage: copy <string>\n"\
+        "echo <string> | copy"
       return 1
     fi
 
