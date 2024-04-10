@@ -90,6 +90,11 @@ mkcd() {
   /bin/mkdir -p "$@" && cd "$_" && pwd
 }
 
+# Get the program name of a running X window
+name_of_xwindows() {
+  xprop WM_CLASS "$@"
+}
+
 if command_exist vmhgfs-fuse; then
   # Usage: vmmount /path/to/mount/point
   vmmount() {
