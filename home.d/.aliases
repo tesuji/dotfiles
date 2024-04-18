@@ -31,6 +31,7 @@ extract() {
       *.rar )              unrar x         "$1";;
       *.7z )               7z e            "$1";;
       *.z )                uncompress      "$1";;
+      *.deb )              dpkg --extract  "$@";;
       * )
         >&2 printf '"%s" cannot be extracted via extract()\n' "$1"
         return 1
