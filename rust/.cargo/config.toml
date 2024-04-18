@@ -2,12 +2,22 @@
 br = 'build --release'
 rr = 'run --release'
 f = 'fmt'
+lto = 'build --release --profile=lto'
 
 [registries.crates-io]
 protocol = "sparse"
 
 [net]
 git-fetch-with-cli = true
+
+[profile.lto]
+inherits = "release"
+lto = "thin"
+codegen-units = 1
+strip = "debuginfo"
+# FIXME: abort doesn't work in `cargo-expand`. As it unwraps
+# somewhere in `proc-macro2` crate.
+#panic = 'abort'
 
 # Set the settings for build scripts and proc-macros.
 [profile.release.build-override]
