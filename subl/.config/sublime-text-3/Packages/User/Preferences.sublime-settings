@@ -19,4 +19,6 @@
 		"reparse",
 	],
 	"folder_exclude_patterns": ["target", ".git"],
+	"index_files": false,
+	"font_size": 11,
 }
