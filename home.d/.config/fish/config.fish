@@ -127,7 +127,6 @@ alias rm='rm -I'
 # When hang, find its matching SSH: `ssh -x -a [...] -s sftp`
 alias sshfs='sshfs -o reconnect -C'
 alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
-alias sudo='sudo '
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"'
 alias vi='vim '
 alias wifiscan='nmcli device wifi rescan'
