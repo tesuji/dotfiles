@@ -50,7 +50,7 @@ if [ -z "$XDG_RUNTIME_DIR" ]
   end
 end
 
-set -gx SSH_AUTH_SOCK "${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
+set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
 # XXX: bashism in generators
 # set ENV_GEN /lib/systemd/user-environment-generators/30-systemd-environment-d-generator
