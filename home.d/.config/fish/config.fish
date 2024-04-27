@@ -19,6 +19,13 @@ fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
 # -- Exported environment variable --------------------------------------------
 # NOTE: Most variables should be in ~/.config/environement.d
 
+# Using $DISPLAY to detect remote host is not accurate, using $SSH_* instead.
+if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]
+  set -gx REMOTE_HOST true
+else
+  set -gx REMOTE_HOST false
+end
+
 set -gx PYTHONSTARTUP $HOME/.pythonrc
 set -gx CARGO_TARGET_DIR $HOME/.cargo/target
 
@@ -31,13 +38,6 @@ end
 
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git'
 
-# Using $DISPLAY to detect remote host is not accurate, using $SSH_* instead.
-if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]
-  set -gx REMOTE_HOST true
-else
-  set -gx REMOTE_HOST false
-end
-
 if [ -z "$XDG_RUNTIME_DIR" ]
   if [ -d /run/user/ ]
     set -gx XDG_RUNTIME_DIR /run/user/(id -u)
@@ -49,6 +49,8 @@ if [ -z "$XDG_RUNTIME_DIR" ]
     end
   end
 end
+
+set -gx SSH_AUTH_SOCK "${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
 
 # XXX: bashism in generators
 # set ENV_GEN /lib/systemd/user-environment-generators/30-systemd-environment-d-generator
