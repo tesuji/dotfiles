@@ -240,15 +240,6 @@ elif command_exist nasm; then
   alias asm64='_assembly 64'
 fi
 
-if command_exist fuser; then
-  # Usage: findport 123
-  # find pid base on tcp port
-  findport() {
-    fuser --verbose --namespace tcp "$1"
-  }
-  alias lsport='ss --processes --all --tcp'
-fi
-
 # Terminal browser Elinks
 if command_exist elinks; then
   alias elinks='elinks --no-connect'

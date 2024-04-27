@@ -12,6 +12,8 @@ alias dd='dd status=progress'
 alias df='df -h'
 alias du='du -sch'
 alias fails='journalctl -p 3 -xb'
+# find pid base on tcp port
+alias findport='fuser --verbose --namespace tcp '
 alias free='free -h'
 alias g++='g++ -Wall -Wpedantic -Wextra -Weffc++ -masm=intel' #-fno-stack-protector
 alias gcc='gcc -masm=intel'
@@ -25,8 +27,8 @@ alias l='ls -CF'
 alias la='ls -AF'
 alias lh='ls -dF .??*'
 alias ll='ls -lF'
-
 alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
+alias lsport='ss --processes --all --tcp'
 alias objdump='objdump -M intel'
 alias patch='patch -p1' # or use `git apply -3`
 alias py='python3'

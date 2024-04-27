@@ -83,7 +83,6 @@ else
   alias ls="ls -h"
 end
 
-alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
 if mkdir -v > /dev/null 2>&1
   alias ln='ln -iv'
   alias mkdir='mkdir -pv'
