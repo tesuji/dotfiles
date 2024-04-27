@@ -65,6 +65,6 @@ unset lz_ssh_comletion
 [ -f "${HOME}/.bash_prompt" ] && . "${HOME}/.bash_prompt"
 # * "$HOME/.extra" can be used for other settings you don't want to commit.
 [ -f "${HOME}/.extra" ] && . "${HOME}/.extra"
-[ -f "${HOME}/.aliases" ] && . "${HOME}/.aliases"
+[ -f "${HOME}/.bash_aliases" ] && . "${HOME}/.bash_aliases"
 
 alias chi='history -c'

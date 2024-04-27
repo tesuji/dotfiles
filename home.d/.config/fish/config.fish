@@ -52,7 +52,7 @@ end
 
 set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
-### functions and aliases ###
+### Functions
 
 function lssh
   ps -ef | command grep '[s]sh.*pts'
@@ -63,36 +63,16 @@ function mkcd
   /bin/mkdir -p "$argv" && cd "$argv[-1]" && pwd
 end
 
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias buildtype='gcc -dumpmachine' # or make --version; bash --version; uname -o -m
-alias cls='tput reset'
-alias cp='cp -iv'
-alias dd='dd status=progress'
-alias df='df -h'
+### Aliases
+
+[ -f ~/.aliases ] && source ~/.aliases
+
+alias cdroot='cd (git root)'
 # Only diffutils v3.4+ includes the --color option
 # CentOS 7 has diffutils 3.3
 if diff --color 2>&1 | grep -q 'missing operand'
   alias diff="diff --unified --color"
 end
-alias du='du -sch'
-alias fails='journalctl -p 3 -xb'
-alias fd=fdfind
-alias free='free -h'
-alias g++='g++ -Wall -Wpedantic -Wextra -Weffc++ -masm=intel' #-fno-stack-protector
-alias gcc='gcc -masm=intel'
-alias gccn='gcc -Wfatal-errors -std=gnu11 -Wall -Wextra' # -pedantic #-fno-stack-protector
-alias gccex='gcc -Wfatal-errors -m32 -fno-stack-protector -Wl,-z,norelro -z execstack -g'
-alias gdb='gdb -q'
-alias rust-gdb='rust-gdb -q'
-alias grep="grep --color"
-alias hd='hexdump -C'
-alias l='ls -CF'
-alias la='ls -AF'
-alias lh='ls -dF .??*'
-alias ll='ls -lF'
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1 # GNU ls support colors
   alias ls="ls -h --color --group-directories-first"
@@ -115,21 +95,3 @@ else
   alias mkdir='mkdir -p'
   alias mv='mv -i'
 end
-alias objdump='objdump -M intel'
-alias patch='patch -p1' # or use `git apply -3`
-alias py='python3'
-alias pip='pip3'
-alias py2='python2'
-alias py3='python3'
-alias readelf='readelf -W'
-#alias rot13='tr "[A-Za-z]" "[N-ZA-Mn-za-m]"'
-alias rm='rm -I'
-# When hang, find its matching SSH: `ssh -x -a [...] -s sftp`
-alias sshfs='sshfs -o reconnect -C'
-alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
-alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"'
-alias vi='vim '
-alias wifiscan='nmcli device wifi rescan'
-alias wifils='nmcli device wifi list'
-# This works on par with bin/stop-wakeup.sh
-alias suspend='systemctl suspend'
