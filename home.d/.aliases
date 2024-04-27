@@ -10,6 +10,7 @@ alias cls='tput reset'
 alias cp='cp -iv'
 alias dd='dd status=progress'
 alias df='df -h'
+alias diff="diff --unified --color"
 alias du='du -sch'
 alias fails='journalctl -p 3 -xb'
 # find pid base on tcp port
@@ -27,8 +28,15 @@ alias l='ls -CF'
 alias la='ls -AF'
 alias lh='ls -dF .??*'
 alias ll='ls -lF'
+[ $OS = gnu ] && alias ls="ls -h --color --group-directories-first"
+[ $OS = bsd ] && alias ls="ls -h -G"
+[ $OS = unknown ] && alias ls="ls -h"
 alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
 alias lsport='ss --processes --all --tcp'
+[ $OS = gnu ] && alias lssh="pgrep -a 'ssh' -t pts/0"
+[ ! $OS = gnu ] && alias lssh="pgrep -l -f 'ssh'"
+# Get the program name of a running X window
+alias name_of_xwindows="xprop WM_CLASS"
 alias objdump='objdump -M intel'
 alias patch='patch -p1' # or use `git apply -3`
 alias py='python3'
@@ -42,6 +50,8 @@ alias rm='rm -I'
 # When hang, find its matching SSH: `ssh -x -a [...] -s sftp`
 alias sshfs='sshfs -o reconnect -C'
 alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
+# This works on par with bin/stop-wakeup.sh
+alias suspend='systemctl suspend'
 #alias synctime='ntpd -qg'  # install ntp package
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"'
 alias vi='vim '

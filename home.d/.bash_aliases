@@ -82,18 +82,9 @@ gccinc() {
   printf '\n' | gcc -E -Wp,-v - -fsyntax-only > /dev/null
 }
 
-lssh() {
-  ps -ef | command grep '[s]sh.*pts'
-}
-
 # Make path for each argument and cd into the last path
 mkcd() {
   /bin/mkdir -p "$@" && cd "$_" && pwd
-}
-
-# Get the program name of a running X window
-name_of_xwindows() {
-  xprop WM_CLASS "$@"
 }
 
 if command_exist vmhgfs-fuse; then
@@ -159,6 +150,15 @@ fi
 
 # -- Aliases ------------------------------------------------------------------
 
+if ls --color > /dev/null 2>&1; then # GNU ls support colors
+  OS=gnu
+elif ls --G > /dev/null 2>&1; then # BSD ls
+  OS=bsd
+else
+  # this maybe OpenBSD
+  OS=unknown
+fi
+
 [ -f "${HOME}/.aliases" ] && . "${HOME}/.aliases"
 
 # Enable color support of ls
@@ -177,41 +177,18 @@ if command_exist ctags; then
   alias cproto='ctags --sort=no -x --c-kinds=fp'
 fi
 
-# Only diffutils v3.4+ includes the --color option
-# CentOS 7 has diffutils 3.3
-if diff --color 2>&1 | grep -q 'missing operand'; then
-  alias diff="diff --unified --color"
-fi
-
-# Detect which `ls` flavor is in use
-# shellcheck disable=SC2139
-if ls --color > /dev/null 2>&1; then # GNU ls support colors
-  alias ls="ls -h --color --group-directories-first"
-elif ls --G > /dev/null 2>&1; then # BSD ls
-  alias ls="ls -h -G"
-else
-  # this maybe OpenBSD
-  alias ls="ls -h"
-fi
-
-if mkdir -v > /dev/null 2>&1; then
+if [ $OS = gnu ] || [ $OS = bsd ]; then
   alias ln='ln -iv'
   alias mkdir='mkdir -pv'
   alias mv='mv -iv'
   alias nc='nc -v'
-else
-  # OpenBSD doesn't support -v flag
+elif [ $OS = unknown ]; then
   alias ln='ln -i'
   alias mkdir='mkdir -p'
   alias mv='mv -i'
 fi
 
 alias sudo='sudo '
-
-# This works on par with bin/stop-wakeup.sh
-suspend() {
-  systemctl suspend
-}
 
 # if [ -x '/usr/bin/xflock4' ]; then
 #  alias suspend='xflock4 && systemctl suspend'

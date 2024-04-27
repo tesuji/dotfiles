@@ -54,10 +54,6 @@ set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
 ### Functions
 
-function lssh
-  ps -ef | command grep '[s]sh.*pts'
-end
-
 # Make path for each argument and cd into the last path
 function mkcd
   /bin/mkdir -p "$argv" && cd "$argv[-1]" && pwd
@@ -65,31 +61,25 @@ end
 
 ### Aliases
 
+if ls --color > /dev/null 2>&1 # GNU ls support colors
+  set OS gnu
+else if ls --G > /dev/null 2>&1 # BSD ls
+  set OS bsd
+else
+  # this maybe OpenBSD
+  set OS unknown
+end
+
 [ -f ~/.aliases ] && source ~/.aliases
 
 alias cdroot='cd (git root)'
-# Only diffutils v3.4+ includes the --color option
-# CentOS 7 has diffutils 3.3
-if diff --color 2>&1 | grep -q 'missing operand'
-  alias diff="diff --unified --color"
-end
-# Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1 # GNU ls support colors
-  alias ls="ls -h --color --group-directories-first"
-else if ls --G > /dev/null 2>&1 # BSD ls
-  alias ls="ls -h -G"
-else
-  # this maybe OpenBSD
-  alias ls="ls -h"
-end
 
-if mkdir -v > /dev/null 2>&1
+if [ $OS = gnu ] || [ $OS = bsd ]
   alias ln='ln -iv'
   alias mkdir='mkdir -pv'
   alias mv='mv -iv'
   alias nc='nc -v'
-else
-  # OpenBSD doesn't support -v flag
+else if [ $OS = unknown ]
   alias ln='ln -i'
   alias mkdir='mkdir -p'
   alias mv='mv -i'
