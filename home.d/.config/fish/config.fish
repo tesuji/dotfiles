@@ -52,15 +52,6 @@ end
 
 set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
-# XXX: bashism in generators
-# set ENV_GEN /lib/systemd/user-environment-generators/30-systemd-environment-d-generator
-# if [ -x "$ENV_GEN" ]
-#   # export the env in `eval`
-#   set -a
-#   eval "($ENV_GEN)"
-#   set +a
-# fi
-
 ### functions and aliases ###
 
 function lssh
