@@ -268,34 +268,6 @@ if command_exist audacious; then
   }
 fi
 
-# Alias for each distribution {{{
-# See more https://wiki.debian.org/ReduceDebian
-#clrdesktop() {
-#  >&2 printf 'Clearing non-English part in .desktop files ...\n'
-#  if [ -d "/usr/share/applications" ]; then
-#    sudo find /usr/share/applications -type f -iname '*.desktop' -exec /bin/sed -E -i '/]=/d' '{}' '+'
-#  fi
-#}
-#
-#clrhelp() {
-#  local DIRS
-#  DIRS=( '! -name '{C,en_GB} )
-#  >&2 printf 'Clearing non-English help files ...\n'
-#  find /usr/share/help -mindepth 1 -maxdepth 1 "${DIRS[@]}" -exec /bin/rm -Irf '{}' '+'
-#}
-#
-#clrlocale() {
-#  local DIRS
-#  DIRS=( '! -name en'{,_US,_GB,'@quot'} )
-#  >&2 printf 'Clearing non-English locale files ...\n'
-#  find /usr/share/locale -mindepth 1 -maxdepth 1 "${DIRS[@]}" -type d -exec /bin/rm -Irf '{}' '+'
-#}
-#
-#clrman() {
-#  >&2 printf 'Clearing non-standard man files ...\n'
-#  find /usr/share/man -mindepth 1 -maxdepth 1 ! -name 'man*' -type d -exec /bin/rm -Irf '{}' '+'
-#}
-
 # Alias that depends on Linux distro
 # Note:
 #   Use [ -x program ] to test to assure that these programs are actually
@@ -310,8 +282,6 @@ if [ -x '/usr/bin/dpkg' ]; then
   alias dpkglist='dpkg --listfiles' # List files from installed package
   #alias apts='apt-cache search'
   #alias lsapt='apt list --installed'
-
-  alias fd=fdfind
 
   #clrapt() {
   #  >&2 printf 'Clearing apt cache ...\n'
