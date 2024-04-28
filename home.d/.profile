@@ -53,18 +53,9 @@ path_append() {
 
 # Using $DISPLAY to detect remote host is not accurate, using $SSH_* instead.
 if [ -n "$SSH_CONNECTION" ] || [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-  REMOTE_HOST=true
+  export REMOTE_HOST=true
 else
-  REMOTE_HOST=false
-fi
-export REMOTE_HOST
-
-ENV_GEN=/lib/systemd/user-environment-generators/30-systemd-environment-d-generator
-if [ -x "$ENV_GEN" ]; then
-  # export the env in `eval`
-  set -a
-  eval "$($ENV_GEN)"
-  set +a
+  export REMOTE_HOST=false
 fi
 
 export PYTHONSTARTUP=${HOME}/.pythonrc
@@ -81,7 +72,7 @@ export CARGO_TARGET_DIR=${HOME}/.cargo/target
 # * https://curiouslynerdy.com/gpg-agent-for-ssh-on-ubuntu/
 
 # Ref: https://wiki.gentoo.org/wiki/GnuPG#Changing_pinentry_for_SSH_logins
-if [ -n "$SSH_CONNECTION" ] || [ "$REMOTE_HOST" = true ]; then
+if [ "$REMOTE_HOST" = true ]; then
   export PINENTRY_USER_DATA="USE_CURSES=1"
 else
   # export PINENTRY_USER_DATA="USE_TTY=1"
@@ -106,6 +97,8 @@ if [ -z "$XDG_RUNTIME_DIR" ]; then
     fi
   fi
 fi
+
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
 # use gpg-agent instead
 #if command_exist ssh-agent; then

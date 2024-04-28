@@ -35,7 +35,7 @@ set -gx PYTHONSTARTUP $HOME/.pythonrc
 set -gx CARGO_TARGET_DIR $HOME/.cargo/target
 
 # Ref: https://wiki.gentoo.org/wiki/GnuPG#Changing_pinentry_for_SSH_logins
-if [ -n "$SSH_CONNECTION" ] || [ "$REMOTE_HOST" = true ]
+if [ "$REMOTE_HOST" = true ]
   set -gx PINENTRY_USER_DATA "USE_CURSES=1"
 else
   set -e PINENTRY_USER_DATA
