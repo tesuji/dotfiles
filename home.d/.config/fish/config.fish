@@ -1,20 +1,25 @@
 #!/usr/bin/env fish
-# Commands to run in interactive sessions can go here
-if status is-interactive
-    fish_config prompt choose informative
-    # Vi-style bindings that inherit emacs-style bindings in all modes
-    function fish_hybrid_key_bindings
-        fish_default_key_bindings -M insert
-        fish_vi_key_bindings --no-erase insert
-    end
-    set -g fish_key_bindings fish_hybrid_key_bindings
-
-    # For `gpg-agent` to work correctly.
-    set -gx GPG_TTY (tty)
-    gpg-connect-agent updatestartuptty /bye >/dev/null
-end
 
 fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
+
+if not status is-interactive
+  exit
+end
+
+# Disable greetings text on every runs
+set -g fish_greeting
+
+fish_config prompt choose informative
+# Vi-style bindings that inherit emacs-style bindings in all modes
+function fish_hybrid_key_bindings
+    fish_default_key_bindings -M insert
+    fish_vi_key_bindings --no-erase insert
+end
+set -g fish_key_bindings fish_hybrid_key_bindings
+
+# For `gpg-agent` to work correctly.
+set -gx GPG_TTY (tty)
+gpg-connect-agent updatestartuptty /bye >/dev/null
 
 # -- Exported environment variable --------------------------------------------
 # NOTE: Most variables should be in ~/.config/environement.d
