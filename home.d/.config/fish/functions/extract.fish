@@ -4,8 +4,8 @@
 #
 # Credit: http://nparikh.org/notes/zshrc.txt
 function extract
-  set lower_name "(printf '%s' "$argv[1]" | tr '[:upper:]' '[:lower:]')"
-  switch "$lower_name"
+  set lower_name (string lower "$argv[1]")
+  switch $lower_name
     case '*'.tar '*'.x
       tar -xvf "$argv"
     case '*'.tar.bz2 '*'.tbz2
