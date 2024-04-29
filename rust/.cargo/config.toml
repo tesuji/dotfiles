@@ -2,7 +2,7 @@
 br = 'build --release'
 rr = 'run --release'
 f = 'fmt'
-lto = 'build --release --profile=lto'
+lto = 'build --profile=lto'
 
 [registries.crates-io]
 protocol = "sparse"
