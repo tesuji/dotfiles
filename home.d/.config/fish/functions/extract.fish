@@ -7,31 +7,31 @@ function extract
   set lower_name (string lower "$argv[1]")
   switch $lower_name
     case '*'.tar '*'.x
-      tar -xvf "$argv"
+      tar -xvf $argv
     case '*'.tar.bz2 '*'.tbz2
-      tar -xjvf "$argv"
+      tar -xjvf $argv
     case '*'.tar.xz
-      tar -xJvf "$argv"
+      tar -xJvf $argv
     case '*'.tar.gz '*'.tgz
-      tar -xzvf "$argv"
+      tar -xzvf $argv
     case '*'.tar.lzma
-      tar --lzma -xvf "$argv"
+      tar --lzma -xvf $argv
     case '*'.bz2
-      bunzip2 "$argv"
+      bunzip2 $argv
     case '*'.xz
-      unxz "$argv"
+      unxz $argv
     case '*'.gz
-      gunzip -k "$argv"
+      gunzip -k $argv
     case '*'.zip
-      unzip "$argv"
+      unzip $argv
     case '*'.rar
-      unrar x "$argv"
+      unrar x $argv
     case '*'.7z
-      7z e "$argv"
+      7z e $argv
     case '*'.z
-      uncompress "$argv"
+      uncompress $argv
     case '*'.deb
-      dpkg --extract "$argv"
+      dpkg --extract $argv
     case '*'
       printf '"%s" cannot be extracted via extract()\n' "$argv[1]"
       return 1
