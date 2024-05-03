@@ -33,7 +33,7 @@ alias ll='ls -lF'
 [ $OS = unknown ] && alias ls="ls -h"
 alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
 alias lsport='ss --processes --all --tcp'
-[ $OS = gnu ] && alias lssh="pgrep -a 'ssh' -t pts/0"
+[ $OS = gnu ] && alias lssh="pgrep -a 'ssh'"
 [ ! $OS = gnu ] && alias lssh="pgrep -l -f 'ssh'"
 # Get the program name of a running X window
 alias name_of_xwindows="xprop WM_CLASS"
