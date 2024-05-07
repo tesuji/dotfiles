@@ -61,7 +61,7 @@
 	showvi = show --reverse --ignore-all-space
 
 	# -- Branching, Merging and Patching --------------------------------------
-	br = branch
+	br = branch -vv
 	brv = branch -avv
 	co = checkout
 	restore = checkout --
