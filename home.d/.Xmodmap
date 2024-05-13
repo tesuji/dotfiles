@@ -5,3 +5,4 @@
 
 ! Map ATL_R keysym to CTRL_R as it is easy to mistype.
 ! keycode 108 = Control_R NoSymbol Control_R
+! keycode 114 = 

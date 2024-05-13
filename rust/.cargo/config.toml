@@ -20,6 +20,10 @@ strip = "debuginfo"
 #panic = 'abort'
 
 # Set the settings for build scripts and proc-macros.
+[profile.dev.package."*"]
+debug = "limited"
+[profile.dev.build-override]
+debug = false
 [profile.release.build-override]
 opt-level = 0
 [profile.bench.build-override]
