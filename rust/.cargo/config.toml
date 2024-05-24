@@ -10,6 +10,10 @@ protocol = "sparse"
 [net]
 git-fetch-with-cli = true
 
+[env]
+# Useful when debugging cargo keeps rebuilding packages.
+#CARGO_LOG=cargo::core::compiler::fingerprint=info
+
 [profile.lto]
 inherits = "release"
 lto = "thin"
