@@ -4,6 +4,12 @@ Read more in [Make your Arch fonts beautiful easily!](https://www.reddit.com/r/a
 
 ## Install some fonts, for example:
 
+Try fonts-incosolata, fonts-cascadia-code, literation mono;
+
+```
+sudo apt install fonts-cascadia-code
+```
+
 Install the fonts you will need: `sudo pacman -S ttf-dejavu noto-fonts-cjk noto-fonts`
 
 If you want to install Emoji: `sudo pacman -S noto-fonts-emoji`
