@@ -68,7 +68,7 @@ set formatoptions=tcqj
 " like <leader>w saves the current file
 " The mapleader has to be set before vundle starts loading all
 " the plugins.
-"let mapleader   = ','
+let mapleader   = ','
 "let g:mapleader = ','
 
 " NOTE: plugins/themes/colorschemes are not activated before `plug#end`.
@@ -336,6 +336,9 @@ set formatoptions=tcqj
 " }}}
 
 " Key mappings/bindings {{{
+  " Repeat finding using previous F, f, t, T.
+  nnoremap <leader>, ,
+  nnoremap <leader>; ;
   " Making it so ; works like : for commands. Saves typing and
   " eliminates :W style typos due to lazy holding shift.
   nnoremap ; :
