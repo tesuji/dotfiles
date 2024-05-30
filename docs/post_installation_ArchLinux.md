@@ -349,6 +349,15 @@ EOF
 
 `sudo apt install curl wget apt-transport-https dirmngr`
 
+## Generate only en_GB and en_US locales
+
+```console
+% locale -a
+% vi /var/lib/locales/supported.d/{en, local}
+% sudo dpkg-reconfigure locales
+% locale -a
+```
+
 ## Disable downloading translations
 
 Create a file named `/etc/apt/apt.conf.d/99translations` and put the following in it:

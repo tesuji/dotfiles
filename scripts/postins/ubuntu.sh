@@ -121,7 +121,8 @@ purge_unneeded_locale() {
   LC_ALL='C.UTF-8'
   export LC_ALL
 
-  sudo apt-get purge -y language-pack-en-base
+  # this is wrong, do not run this
+  # sudo apt-get purge -y language-pack-en-base
 
   readonly prefer_lang='en_US.UTF-8'
   readonly prefer_locale='en_US.UTF-8 UTF-8'
