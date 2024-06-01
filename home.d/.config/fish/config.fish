@@ -14,6 +14,8 @@ fish_config prompt choose informative
 function fish_hybrid_key_bindings
     fish_default_key_bindings -M insert
     fish_vi_key_bindings --no-erase insert
+    bind --user \ca beginning-of-line
+    bind --user \ce end-of-line
 end
 set -g fish_key_bindings fish_hybrid_key_bindings
 
