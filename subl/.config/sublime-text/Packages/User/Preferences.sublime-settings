@@ -20,8 +20,9 @@
 	],
 	"folder_exclude_patterns": ["target", ".git"],
 	"index_files": false,
-	"font_size": 11,
+	"relative_line_numbers": true,
 	// "font_face": "Inconsolata", // not good for vietnameses characters
 	// "font_face": "Cascadia Mono", // cursive fonts
 	"font_face": "Liberation Mono",
+	"font_size": 11,
 }
