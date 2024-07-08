@@ -17,6 +17,11 @@
 	"added_words":
 	[
 		"reparse",
+		"initializer",
+		"const",
+		"subcommands",
+		"toolchain",
+		"subcommand",
 	],
 	"folder_exclude_patterns": ["target", ".git"],
 	"index_files": false,
@@ -24,5 +29,11 @@
 	// "font_face": "Inconsolata", // not good for vietnameses characters
 	// "font_face": "Cascadia Mono", // cursive fonts
 	"font_face": "Liberation Mono",
+	"ignored_words":
+	[
+		"dst",
+		"rustup",
+		"src",
+	],
 	"font_size": 11,
 }
