@@ -24,6 +24,7 @@ extract() {
       *.tar.xz )           tar -xJvf       "$1";;
       *.tar.gz | *.tgz )   tar -xzvf       "$1";;
       *.tar.lzma )         tar --lzma -xvf "$1";;
+      *.tar.zst )          tar --zstd -xvf "$1";;
       *.bz2 )              bunzip2         "$1";;
       *.xz )               unxz            "$1";;
       *.gz )               gunzip -k       "$1";;

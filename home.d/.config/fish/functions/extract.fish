@@ -16,6 +16,8 @@ function extract
       tar -xzvf $argv
     case '*'.tar.lzma
       tar --lzma -xvf $argv
+    case '*'.tar.zst
+      tar --zstd -xvf $argv
     case '*'.bz2
       bunzip2 $argv
     case '*'.xz
