@@ -2,7 +2,13 @@
 !!
 !! For more info, read <https://wiki.archlinux.org/index.php/Xmodmap>.
 !! Or just output `xmodmap -pke > .Xmodmap.example` and see there.
+!! Please clear modifier keys before assignment.
+!! See <https://wiki.archlinux.org/title/xmodmap#Reassigning_modifiers_to_keys_on_your_keyboard>.
 
-! Map ATL_R keysym to CTRL_R as it is easy to mistype.
-! keycode 108 = Control_R NoSymbol Control_R
-! keycode 114 = 
+! Disable Right arrow key <- Stuck!
+keycode 114 =
+! Map Caps_Lock to Right, Pause to Caps_Lock
+clear lock
+keycode 66 = Right NoSymbol Right
+keycode 127 = Caps_Lock NoSymbol Caps_Lock
+add lock = Caps_Lock
