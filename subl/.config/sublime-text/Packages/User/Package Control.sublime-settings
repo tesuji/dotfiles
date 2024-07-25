@@ -6,9 +6,9 @@
 	],
 	"installed_packages":
 	[
-		"NASM x86 Assembly",
 		"Package Control",
 		"Rust Enhanced",
 		"TOML",
+		"x86 and x86_64 Assembly",
 	],
 }
