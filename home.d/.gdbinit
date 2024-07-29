@@ -18,3 +18,14 @@ set history expansion on
 set print pretty on
 
 set confirm off
+
+# From <https://stackoverflow.com/a/42741367>.
+# The binary strip or without $fp, `info frame` sometimes is wrong about frame.
+# Use $rbp at least.
+define xbt
+  set $xbp = (void **)$arg0
+  while 1
+    x/2a $xbp
+    set $xbp = (void **)$xbp[0]
+  end
+end
