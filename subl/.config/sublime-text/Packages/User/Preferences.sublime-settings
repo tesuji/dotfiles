@@ -23,7 +23,14 @@
 		"toolchain",
 		"subcommand",
 	],
-	"folder_exclude_patterns": ["target", ".git"],
+	"folder_exclude_patterns": ["target", ".svn", ".git", ".hg", "CVS", ".Trash", ".Trash-*"],
+	"file_exclude_patterns": [
+		"*.pyc", "*.pyo", "*.exe", "*.dll", "*.obj", "*.deb",
+		"*.o", "*.a", "*.lib", "*.so", "*.so.?", "*.dylib",
+		"*.ncb", "*.sdf", "*.suo", "*.pdb", "*.idb", ".DS_Store",
+		".directory", "desktop.ini", "*.class", "*.psd", "*.db",
+		"*.sublime-workspace",
+	],
 	"index_files": false,
 	"relative_line_numbers": true,
 	// "font_face": "Inconsolata", // not good for vietnameses characters
