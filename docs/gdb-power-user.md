@@ -1,5 +1,20 @@
-use `start` to run program until main function
-`ctrl-x-a` to rum tui mode
+### pretty print type/struct offset
+
+```
+ptype /o struct _IO_FILE
+```
+
+### load source code to step into
+
+```
+$ wget https://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.gz
+$ tar -xvf glibc-2.27.tar.gz
+Run the binary in GDB and set a breakpoint anywhere (or CTRL + C)
+(gdb) dir path/to/glibc-2.27/libio/
+```
+
+### use `start` to run program until main function
+`ctrl-x-a` to run tui mode
 `ctrl-x-2` second windows, cycle through
 
 ```gdb
@@ -64,6 +79,11 @@ until
 (gdb) catch catch # to catch C++ exception
 (gdb) catch syscall sleep # to stop when calling sleep() syscall
 (gdb) catch syscall 100 # stop when calling 100th syscall
+(gdb) catch syscall ptrace # workaround anti-debugging
+commands 1
+set ($eax) = 0
+continue
+end
 ```
 
 ## to save your breakpoints
@@ -80,5 +100,3 @@ until
 $1 = (int *) 0x5
 (gdb)
 ```
-
-
