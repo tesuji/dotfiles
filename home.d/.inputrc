@@ -52,6 +52,7 @@ $else
     "\e[3;3~": kill-word
 $endif
 
+"\C-L": clear-screen
 "\C-K": kill-line
 "\C-U": backward-kill-line
 
