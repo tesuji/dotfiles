@@ -159,6 +159,8 @@ Function analysis (normal mode)
 af: Analyze functions
 afl: List all functions
 	number of functions: afl~?
+aae: analyze references with ESIL
+	for x86 get_pc_thunk strings
 afi: Returns information about the functions we are currently at
 afr: Rename function: structure and flag
 afr off: Restore function name set by r2
@@ -220,6 +222,7 @@ px n @ offset: Print hexdump (or just x) of n bytes
 pxw n @ offset: Print hexdump of n words
 	pxw size@offset  prints hexadecimal words at address
 pd n @ offset: Print n opcodes disassembled
+pdc: poor decompiler
 pD n @ offset: Print n bytes disassembled
 pi n @ offset: Print n instructions disassembled (no address, XREFs, etc. just instructions)
 pdf @ offset: Print disassembled function
