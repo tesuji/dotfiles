@@ -63,7 +63,7 @@
 
 	# -- Branching, Merging and Patching --------------------------------------
 	br = branch -vv
-	brv = branch -avv
+	bra = branch -avv
 	co = checkout
 	restore = checkout --
 	author = shortlog --summary --numbered
