@@ -22,6 +22,7 @@ function fish_hybrid_key_bindings
     fish_vi_key_bindings --no-erase insert
     bind --user \ca beginning-of-line
     bind --user \ce end-of-line
+    bind --preset -M insert \e\[3\;5\~ kill-word
 end
 set -g fish_key_bindings fish_hybrid_key_bindings
 

@@ -23,7 +23,7 @@ set mark-symlinked-directories on
 set match-hidden-files off
 
 # Show all auto-complete results at once
-set page-completions off
+set page-completions on
 
 # If there are more than 42 possible completions for a word, ask to show them all
 set completion-query-items 42
@@ -51,10 +51,11 @@ $else
     # commands (i.e. more intelligent Up/Down behavior)
     "\e[A": history-search-backward
     "\e[B": history-search-forward
-
-    # Use Alt/Meta + Delete to delete the preceding word
-    "\e[3;3~": kill-word
 $endif
+
+# Use Alt/Meta + Delete to delete the preceding word
+"\e[3;3~": kill-word
+"\e[3;5~": kill-word
 
 "\C-L": clear-screen
 "\C-K": kill-line
