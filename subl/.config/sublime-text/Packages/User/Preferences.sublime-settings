@@ -28,7 +28,7 @@
 		"*.pyc", "*.pyo", "*.exe", "*.dll", "*.obj", "*.deb",
 		"*.o", "*.a", "*.lib", "*.so", "*.so.?", "*.dylib",
 		"*.ncb", "*.sdf", "*.suo", "*.pdb", "*.idb", ".DS_Store",
-		".directory", "desktop.ini", "*.class", "*.psd", "*.db",
+		".directory", "desktop.ini", "*.class", "*.psd", "*.db", "*.pdf",
 		"*.sublime-workspace",
 	],
 	"index_files": false,
