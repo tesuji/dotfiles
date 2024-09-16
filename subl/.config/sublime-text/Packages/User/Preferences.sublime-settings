@@ -1,5 +1,5 @@
 {
-	"color_scheme": "Monokai.sublime-color-scheme",
+	"color_scheme": "auto",
 	"default_line_ending": "unix",
 	"ignored_packages":
 	[
@@ -43,4 +43,6 @@
 		"src",
 	],
 	"font_size": 11,
+	"dark_color_scheme": "Mariana.sublime-color-scheme",
+	"light_color_scheme": "Breakers.sublime-color-scheme",
 }
