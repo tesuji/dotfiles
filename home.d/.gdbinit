@@ -29,3 +29,5 @@ define xbt
     set $xbp = (void **)$xbp[0]
   end
 end
+
+# set context-sections regs

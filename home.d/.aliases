@@ -48,6 +48,7 @@ alias readelf='readelf -W'
 alias rm='rm -I'
 #alias ssh-keygen='ssh-keygen -E md5 -lf'
 # When hang, find its matching SSH: `ssh -x -a [...] -s sftp`
+alias scapy='scapy -H'
 alias sshfs='sshfs -o reconnect -C'
 alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 # This works on par with bin/stop-wakeup.sh
