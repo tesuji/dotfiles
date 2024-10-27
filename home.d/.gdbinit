@@ -1,6 +1,12 @@
 # ~/.gdbinit : Script file for gdb - GNU Debugger
 
 #source ~/peda/peda.py
+# Prefer to manually run context
+#set context-sections regs
+#gef context.layout ""
+
+# If you compile with -g or at least not stripped
+#dir <path/to/source dir>
 
 set disassembly-flavor intel
 
@@ -30,4 +36,3 @@ define xbt
   end
 end
 
-# set context-sections regs
