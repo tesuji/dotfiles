@@ -3,7 +3,8 @@
 # Please read <https://wiki.archlinux.org/title/Map_scancodes_to_keycodes>
 # before changing this file.
 
-# Acer A514 Right key not working, disable it.
+# Acer A514 Right key is stuck, disable it.
 evdev:atkbd:dmi:bvn*:bvr*:bd*:svnAcer*:pn*:*
- KEYBOARD_KEY_cd=reserved
+ KEYBOARD_KEY_c5=capslock
  KEYBOARD_KEY_3a=right
+ KEYBOARD_KEY_cd=reserved
