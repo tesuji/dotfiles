@@ -1,10 +1,10 @@
 #!/usr/bin/env fish
 
-fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
-
 if not status is-interactive
   exit
 end
+
+fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
 
 # Disable greetings text on every runs
 set -g fish_greeting
