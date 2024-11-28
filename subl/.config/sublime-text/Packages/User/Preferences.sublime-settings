@@ -31,6 +31,7 @@
 		"Changelogs",
 		"Changelog",
 		"refactorings",
+		"syscall",
 	],
 	"folder_exclude_patterns": ["target", ".svn", ".git", ".hg", "CVS", ".Trash", ".Trash-*"],
 	"file_exclude_patterns": [
@@ -38,7 +39,7 @@
 		"*.o", "*.a", "*.lib", "*.so", "*.so.?", "*.dylib", "*.out",
 		"*.ncb", "*.sdf", "*.suo", "*.pdb", "*.idb", ".DS_Store",
 		".directory", "desktop.ini", "*.class", "*.psd", "*.db", "*.pdf",
-		"*.sublime-workspace",
+		"*.sublime-workspace", ".zip",
 	],
 	"index_files": false,
 	"relative_line_numbers": true,
