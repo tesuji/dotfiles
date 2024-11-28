@@ -1,5 +1,6 @@
 # ~/.gdbinit : Script file for gdb - GNU Debugger
 
+#set debuginfod enabled off
 #source ~/peda/peda.py
 # Prefer to manually run context
 #set context-sections regs
@@ -20,6 +21,7 @@ set pagination off
 set history save on
 set history filename ~/.gdb_history
 set history size 32768
+set history remove-duplicates unlimited
 set history expansion on
 set print pretty on
 
