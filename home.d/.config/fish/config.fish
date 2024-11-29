@@ -9,6 +9,13 @@ fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
 # Disable greetings text on every runs
 set -g fish_greeting
 
+# print duration of last command
+function print_time --on-event fish_postexec
+    if [ $CMD_DURATION -gt 5000 ];
+        printf "[^] last command took %d ms\n" $CMD_DURATION
+    end
+end
+
 # from <https://github.com/fish-shell/fish-shell/issues/8635>.
 set fish_cursor_default     block
 set fish_cursor_insert      line
