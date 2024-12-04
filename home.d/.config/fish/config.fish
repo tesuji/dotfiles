@@ -12,7 +12,8 @@ set -g fish_greeting
 # print duration of last command
 function print_time --on-event fish_postexec
     if [ $CMD_DURATION -gt 5000 ];
-        printf "[^] last command took %d ms\n" $CMD_DURATION
+        /bin/python3 -c \
+          "dur = $CMD_DURATION; print(f'[^] last command took {dur / 1000} s')"
     end
 end
 

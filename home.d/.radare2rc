@@ -12,4 +12,4 @@ e scr.color = 2
 # e asm.cmt.right=true
 
 # Do not show bytes with instruction
-e asm.bytes=false
+#e asm.bytes=false
