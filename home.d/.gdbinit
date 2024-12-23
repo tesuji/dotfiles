@@ -12,7 +12,7 @@
 set disassembly-flavor intel
 
 #start; info proc mapp
-#set follow-fork-mode child
+set follow-fork-mode parent
 
 # When inspecting large portions of code the scrollbar works better than 'less'
 set pagination off
