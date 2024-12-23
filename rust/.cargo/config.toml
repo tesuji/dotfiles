@@ -39,5 +39,5 @@ rustflags = [
     # "-C", "link-arg=-fuse-ld=lld",
     # Use `diff <(rustc --print cfg) <(rustc --print cfg -C target-cpu=<cpu name>)`
     # to know what new target features are enabled
-    "-C", "target-cpu=sandybridge",
+    "-C", "target-cpu=x86-64-v3", # 2013, -v2 2008
 ]
