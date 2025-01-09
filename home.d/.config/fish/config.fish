@@ -9,14 +9,6 @@ fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
 # Disable greetings text on every runs
 set -g fish_greeting
 
-# print duration of last command
-function print_time --on-event fish_postexec
-    if [ $CMD_DURATION -gt 5000 ];
-        /bin/python3 -c \
-          "dur = $CMD_DURATION; print(f'[^] last command took {dur / 1000} s')"
-    end
-end
-
 # from <https://github.com/fish-shell/fish-shell/issues/8635>.
 set fish_cursor_default     block
 set fish_cursor_insert      line
@@ -80,6 +72,19 @@ set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 function mkcd
   /bin/mkdir -p "$argv" && cd "$argv[-1]" && pwd
 end
+
+# print duration of last command
+function print_time --on-event fish_postexec
+    if [ $CMD_DURATION -gt 5000 ];
+        /bin/python3 -c \
+          "dur = $CMD_DURATION; print(f'[^] last command took {dur / 1000} s')"
+    end
+end
+
+function multicd
+    echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
+end
+abbr --add dotdot --regex '^\.\.+$' --function multicd
 
 ### Aliases
 

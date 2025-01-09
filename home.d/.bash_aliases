@@ -151,6 +151,11 @@ fi
 
 # -- Aliases ------------------------------------------------------------------
 
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
 if ls --color > /dev/null 2>&1; then # GNU ls support colors
   OS=gnu
 elif ls --G > /dev/null 2>&1; then # BSD ls
