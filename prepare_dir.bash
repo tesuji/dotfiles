@@ -41,5 +41,5 @@ EMPTY_DIRS_IN_HOME=(
 )
 
 for dir in "${EMPTY_DIRS_IN_HOME[@]}"; do
-    mkdir -p "${HOME}/${dir}"
+  stow --no-folding "$dir"
 done
