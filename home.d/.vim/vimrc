@@ -106,9 +106,6 @@ let mapleader   = ','
   set nrformats-=octal
   "set autowrite       " Automatically save before commands like :next and :make
 
-  set sessionoptions-=options
-  set viewoptions-=options
-
   set timeout          " time out for mappings
   set timeoutlen=1000  " wait up to 1000ms after <mapleader>
   set ttimeout         " time out for key codes
@@ -131,14 +128,19 @@ let mapleader   = ','
   " http://items.sjbach.com/319/configuring-vim-right
   set hidden          " remember undo after quitting
 
-  " directories for swp files
-  set backupdir=~/.vim/backup
-  set directory=~/.vim/backupf
-
+  " Uncomment this to disable :mksession command
+  "set sessionoptions-=options
   " Turn off swap files since most stuff is in SVN, git et.c anyway...
-  set noswapfile
-  set nobackup
-  set nowritebackup
+  "set noswapfile
+  " Uncomment this to disable saving cursor/history
+  "set viewoptions-=options
+
+  " directories for swp files
+  "set backupdir=~/.vim/backup
+  "set directory=~/.vim/backupf
+
+  "set nobackup
+  "set nowritebackup
 
   " system settings
   set lazyredraw           " no redraws in macros (good performance config)
