@@ -9,6 +9,8 @@
 # If you compile with -g or at least not stripped
 #dir <path/to/source dir>
 
+# Default input offset radix to hexi just like windbg.
+set input-radix 16
 set disassembly-flavor intel
 
 #start; info proc mapp
