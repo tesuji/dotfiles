@@ -13,3 +13,6 @@ e scr.color = 2
 
 # Do not show bytes with instruction
 #e asm.bytes=false
+
+# Do not show vertical border line
+e asm.lines.fcn=false
