@@ -34,25 +34,29 @@ binary_repr = repr(binary)
 libc_repr = repr(libc)
 %>\
 #!/usr/bin/env python3
-%if not quiet:
-# This exploit template was generated via:
-# $ ${' '.join(map(sh_string, argv))}
-%endif
 from pwn import *
 sys.tracebacklimit = 4
 context(endian = "little", encoding='utf-8') # arch='amd64'
 context.terminal = ["tmux", "splitw", "-h"]
 const = constants
 
-%if not quiet:
-# Set up pwntools for the correct architecture
-%endif
+# quick functions
+def pwninit():
+    ELF.base = ELF.address
+    tube.s = tube.send
+    tube.sa = tube.sendafter
+    tube.sl = tube.sendline
+    tube.sla = tube.sendlineafter
+    tube.rcu = tube.recvuntil
+    pass
+pwninit()
 %if ctx.binary or not host:
+
 libc_path = ${libc_repr}
 exe_path = args.EXE or ${binary_repr}
 exe = context.binary = ELF(exe_path, checksec=False)
 with context.silent:
-    if args.REMOTE and libc_path:
+    if exe.arch not in ['amd64', 'i386'] or (args.REMOTE and libc_path):
         libc = ELF(libc_path, checksec=False)
     elif libc := exe.libc: libc.address = 0
     pass
@@ -77,8 +81,8 @@ password = args.PASSWORD or ${repr(password)}
 %if ssh:
 remote_path = ${repr(remote_path)}
 %endif
-
 %if ssh:
+
 # Connect to the remote SSH server
 shell = None
 if not args.LOCAL:
@@ -115,11 +119,19 @@ def conn(argv=[]):
         r = process(argv or [exe_path])
     return r
 
-def cmd(n): r.sendlineafter('> ', str(n))
+PROMPT = b'> '
+def cmd(n):
+    r.rcu(PROMPT)
+    out = str(n) if isinstance(n, int) else n
+    r.sl(out)
 
 #===========================================================
 #                    EXPLOIT GOES HERE
 #===========================================================
+
+if libc:
+    libc.sym['binsh'] = next(libc.search(b'/bin/sh\0'))
+    # libc.sym['trap'] = next(libc.search(b'\xcc', executable=True))
 
 r = conn()
 def main():
