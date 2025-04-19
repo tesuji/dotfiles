@@ -47,6 +47,7 @@
 	cip = commit --patch
 	cis = commit --signoff
 	cig = commit --gpg-sign
+	civ = commit -v
 	# Amend the currently staged files to the latest commit
 	# or commit --amend --date=""
 	# or commit --amend --reset-author
