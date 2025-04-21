@@ -40,6 +40,6 @@ EMPTY_DIRS_IN_HOME=(
     .zfunc
 )
 
-for dir in "${EMPTY_DIRS_IN_HOME[@]}"; do
-  stow --no-folding "$dir"
-done
+pushd $HOME
+# or use stow --no-folding when stow
+mkdir -p "${EMPTY_DIRS_IN_HOME[@]}"
