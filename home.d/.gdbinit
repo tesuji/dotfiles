@@ -17,7 +17,8 @@ set disassembly-flavor intel
 set follow-fork-mode parent
 
 # When inspecting large portions of code the scrollbar works better than 'less'
-set pagination off
+#set pagination off
+set height 50
 
 # Keep a history of all the commands typed. Search is possible using ctrl+r
 set history save on
