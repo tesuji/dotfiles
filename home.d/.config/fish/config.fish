@@ -54,7 +54,8 @@ end
 
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git'
 
-eval (ssh-agent -c)
+#eval (ssh-agent -c)
+source $HOME/.config/fish/source-ssh-agent.fish
 
 ### Functions
 
