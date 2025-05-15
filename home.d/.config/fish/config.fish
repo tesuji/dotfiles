@@ -4,6 +4,10 @@ if not status is-interactive
   exit
 end
 
+# buggy termux fish #11056
+# or update to fiah 4.0.2
+#set -Ua fish_features no-keyboard-protocols
+
 fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
 
 # Disable greetings text on every runs
