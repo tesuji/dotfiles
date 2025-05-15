@@ -24,7 +24,8 @@ setprompt() {
   local bold_col reset_col black_col red_col green_col orange_col blue_col \
         purple_col cyan_col violet_col white_col yellow_col tput_ncolors
 
-  [ -x /usr/bin/tput ] \
+  tput_ncolors=0
+  command -v tput >/dev/null \
   && tput_ncolors="$(tput colors 2>/dev/null)" # Number of supported colors
 
   # If you need Solarized theme, get it from http://git.io/solarized-colors
