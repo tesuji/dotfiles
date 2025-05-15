@@ -31,10 +31,6 @@ function fish_hybrid_key_bindings
 end
 set -g fish_key_bindings fish_hybrid_key_bindings
 
-# For `gpg-agent` to work correctly.
-set -gx GPG_TTY (tty)
-gpg-connect-agent updatestartuptty /bye >/dev/null
-
 # -- Exported environment variable --------------------------------------------
 # NOTE: Most variables should be in ~/.config/environement.d
 
@@ -57,19 +53,7 @@ end
 
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git'
 
-if [ -z "$XDG_RUNTIME_DIR" ]
-  if [ -d /run/user/ ]
-    set -gx XDG_RUNTIME_DIR /run/user/(id -u)
-  else
-    # For OpenBSD
-    set -gx XDG_RUNTIME_DIR /tmp/runtime-(id -u)
-    if [ ! -d "$XDG_RUNTIME_DIR" ]
-      mkdir -m 0700 "$XDG_RUNTIME_DIR"
-    end
-  end
-end
-
-set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
+eval (ssh-agent -c)
 
 ### Functions
 
