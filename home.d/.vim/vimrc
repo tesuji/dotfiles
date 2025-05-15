@@ -238,7 +238,7 @@ let mapleader   = ','
 " }}}
 
 " Indentation {{{
-  set nowrap           " do not wrap lines
+  set wrap " mobile
   set autoindent       " indent at the same level of the previous line
   set smartindent      " smart auto indenting
   set smarttab         " smart tab handling for indenting
@@ -247,7 +247,9 @@ let mapleader   = ','
   "set softtabstop=2    " insert/delete 2 spaces when hitting a TAB/BACKSPACE
   "set tabstop=8        " a hard TAB displays as 8 columns
   "set expandtab        " insert spaces when hitting TABs
-  set pastetoggle=<F3> " paste mode to avoid autoindent
+  if !has('nvim')
+    set pastetoggle=<F3> " paste mode to avoid autoindent
+  endif
 " }}}
 
 " Automatic commands {{{
@@ -279,6 +281,7 @@ let mapleader   = ','
       autocmd FileType ruby             setlocal wrap
       " XXX: vim is slow with large math text files
       autocmd FileType tex              setlocal nocursorline | :NoMatchParen
+      autocmd FileType c                setlocal foldmethod=syntax formatoptions+=croq tabstop=2 softtabstop=4 shiftwidth=4 textwidth=80
       "autocmd FileType rust            setlocal foldmethod=syntax formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
       "autocmd FileType vim             setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
       autocmd FileType xml              setlocal noexpandtab shiftwidth=4 tabstop=2
