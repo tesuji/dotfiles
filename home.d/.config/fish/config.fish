@@ -19,7 +19,8 @@ set fish_cursor_insert      line
 set fish_cursor_replace_one underscore
 set fish_cursor_visual      block
 
-fish_config prompt choose informative
+fish_config prompt choose terlar
+
 # Vi-style bindings that inherit emacs-style bindings in all modes
 function fish_hybrid_key_bindings
     fish_default_key_bindings -M insert
