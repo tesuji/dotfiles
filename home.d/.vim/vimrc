@@ -276,7 +276,7 @@ let mapleader   = ','
       autocmd FileType java             setlocal noexpandtab
       "autocmd FileType make            setlocal noexpandtab shiftwidth=4
       autocmd FileType php              setlocal
-      autocmd FileType python           setlocal wrap formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
+      autocmd FileType python           setlocal foldmethod=indent formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
       autocmd FileType perl             setlocal wrap
       autocmd FileType ruby             setlocal wrap
       " XXX: vim is slow with large math text files
