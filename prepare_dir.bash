@@ -11,6 +11,7 @@ EMPTY_DIRS_IN_HOME=(
     .config/autostart-scripts
 
     .config/fontconfig
+    .config/fish
 
     .config/git
     .config/hg
