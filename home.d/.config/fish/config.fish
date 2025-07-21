@@ -30,6 +30,7 @@ function fish_hybrid_key_bindings
     bind --preset -M insert \e\[3\;5\~ kill-word
 end
 set -g fish_key_bindings fish_hybrid_key_bindings
+#set -Ua fish_features no-keyboard-protocols
 
 # For `gpg-agent` to work correctly.
 set -gx GPG_TTY (tty)
@@ -91,6 +92,7 @@ function multicd
 end
 abbr --add dotdot --regex '^\.\.+(/?)$' --function multicd
 abbr --add clang-format clang-format --style=Google
+abbr --add g git
 
 ### Aliases
 
