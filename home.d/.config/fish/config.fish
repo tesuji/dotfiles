@@ -93,6 +93,8 @@ end
 abbr --add dotdot --regex '^\.\.+(/?)$' --function multicd
 abbr --add clang-format clang-format --style=Google
 abbr --add g git
+abbr --add vi nvim
+abbr --add wget wget --content-disposition
 
 ### Aliases
 
