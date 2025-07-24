@@ -333,7 +333,7 @@ let mapleader   = ','
 " }}}
 
 " Mouse and scrolling {{{
-  set mouse=r          " only scroll, not click
+  "set mouse=r          " only scroll, not click
   set mousemodel=popup " Popup a menu on right click
   " 7 lines to the cursor - when moving using j/k
   set scrolloff=7      " minimum screen lines around the cursor
