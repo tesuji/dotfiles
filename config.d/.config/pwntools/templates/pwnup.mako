@@ -37,7 +37,8 @@ libc_repr = repr(libc)
 from pwn import *
 sys.tracebacklimit = 4
 context(endian = "little", encoding='utf-8') # arch='amd64'
-context.terminal = ["tmux", "splitw", "-v"]
+# Use pwntools-terminal which loads nix env to the new tmux pane.
+#context.terminal = ["tmux", "splitw", "-v"]
 const = constants
 
 # quick functions
@@ -132,8 +133,6 @@ def cmd(n):
 gdbscript = """\
 c
 """
-
-os.environ["PATH"] = "/usr/bin:" +  os.environ["PATH"]
 
 if libc:
     libc.sym['binsh'] = next(libc.search(b'/bin/sh\0'))
