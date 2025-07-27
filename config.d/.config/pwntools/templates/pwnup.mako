@@ -37,7 +37,7 @@ libc_repr = repr(libc)
 from pwn import *
 sys.tracebacklimit = 4
 context(endian = "little", encoding='utf-8') # arch='amd64'
-context.terminal = ["tmux", "splitw", "-h"]
+context.terminal = ["tmux", "splitw", "-v"]
 const = constants
 
 # quick functions
@@ -56,7 +56,9 @@ libc_path = ${libc_repr}
 exe_path = args.EXE or ${binary_repr}
 exe = context.binary = ELF(exe_path, checksec=False)
 with context.silent:
-    if exe.arch not in ['amd64', 'i386'] or (args.REMOTE and libc_path):
+    if b"musl" in exe.linker:
+        libc = ELF(libc_path, checksec=False)
+    elif exe.arch not in ['amd64', 'i386'] or (args.REMOTE and libc_path):
         libc = ELF(libc_path, checksec=False)
     elif libc := exe.libc: libc.address = 0
     pass
@@ -125,9 +127,13 @@ def cmd(n):
     out = str(n) if isinstance(n, int) else n
     r.sl(out)
 
-#===========================================================
-#                    EXPLOIT GOES HERE
-#===========================================================
+#             EXPLOIT GOES HERE               #
+
+gdbscript = """\
+c
+"""
+
+os.environ["PATH"] = "/usr/bin:" +  os.environ["PATH"]
 
 if libc:
     libc.sym['binsh'] = next(libc.search(b'/bin/sh\0'))
