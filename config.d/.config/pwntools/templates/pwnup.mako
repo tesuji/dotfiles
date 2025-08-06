@@ -112,7 +112,7 @@ def gdb_pause(interactive=False):
     r.unrecv(d)
 
 def conn(argv=[]):
-    if args.REMOTE:
+    if args.REMOTE or args.NC:
         r = remote(host, int(port), ssl=args.SSL)
     elif args.DOCKER:
         r = remote('localhost', int(1337))
@@ -127,16 +127,23 @@ def cmd(n):
     r.rcu(PROMPT)
     out = str(n) if isinstance(n, int) else n
     r.sl(out)
+    pass
 
 #             EXPLOIT GOES HERE               #
 
-gdbscript = """\
+gdbscript = """
+source ~/.bata-gef.py
 c
 """
 
 if libc:
     libc.sym['binsh'] = next(libc.search(b'/bin/sh\0'))
     # libc.sym['trap'] = next(libc.search(b'\xcc', executable=True))
+    pass
+
+nc = args.NC or ("0 1337")
+host, port = nc.split()[-2:]
+port = int(port)
 
 r = conn()
 def main():
