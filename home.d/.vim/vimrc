@@ -194,7 +194,8 @@ let mapleader   = ','
     " FIXME: Without this setting the CocFloating color is unreadable
     " See <https://users.rust-lang.org/t/coc-nvim-completion-pane-is-hard-to-read/41466>
     hi link  CocFloating     markdown
-    colorscheme default
+    " nvim 0.11 default scheme is not colorful enough.
+    colorscheme koehler
   endif
 " }}}
 
