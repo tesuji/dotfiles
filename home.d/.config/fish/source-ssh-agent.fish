@@ -8,6 +8,7 @@ function start_agent
     ssh-add
 end
 
+#set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
 set -gx SSH_AUTH_SOCK $PREFIX/var/run/ssh-agent.socket
 
 set MESSAGE (ssh-add -L 2>&1)
