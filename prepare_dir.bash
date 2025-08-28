@@ -39,6 +39,8 @@ EMPTY_DIRS_IN_HOME=(
 
     .local/share/bash-completion/completion
     .zfunc
+
+    .ipython/profile_default/
 )
 
 pushd $HOME
