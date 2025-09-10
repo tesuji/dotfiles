@@ -16,7 +16,10 @@ exec $HOME/.local/bin/bwrap \
   --ro-bind /run/ /run/ \
   --ro-bind /usr/ /usr/ \
   --dev-bind /dev/kvm /dev/kvm \
-  --dev-bind /dev/dri /dev/dri \
+  --dev-bind /dev/vfio /dev/vfio \
+  --dev-bind /dev/vhost-vsock /dev/vhost-vsock \
+  --dev-bind /dev/vhost-net /dev/vhost-net \
+  --dev-bind /dev/net /dev/net \
   --bind /tmp/.X11-unix /tmp/.X11-unix \
   --bind $XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
   --bind /var /var \
