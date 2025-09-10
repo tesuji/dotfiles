@@ -57,7 +57,9 @@ libc_path = ${libc_repr}
 exe_path = args.EXE or ${binary_repr}
 exe = context.binary = ELF(exe_path, checksec=False)
 with context.silent:
-    if b"musl" in exe.linker:
+    if not exe.linker:
+        libc = None
+    elif b"musl" in exe.linker:
         libc = ELF(libc_path, checksec=False)
     elif exe.arch not in ['amd64', 'i386'] or (args.REMOTE and libc_path):
         libc = ELF(libc_path, checksec=False)
@@ -111,15 +113,18 @@ def gdb_pause(interactive=False):
     if interactive: r.interactive()
     r.unrecv(d)
 
-def conn(argv=[]):
+def conn(argv=[], **kwargs):
     if args.REMOTE or args.NC:
         r = remote(host, int(port), ssl=args.SSL)
     elif args.DOCKER:
         r = remote('localhost', int(1337))
     elif args.GDB:
-        r = gdb.debug(argv or [exe_path], exe=exe_path, gdbscript=gdbscript)
+        r = gdb.debug(argv or [exe_path],
+                exe=exe_path,
+                gdbscript=gdbscript,
+                **kwargs)
     else:
-        r = process(argv or [exe_path])
+        r = process(argv or [exe_path], **kwargs)
     return r
 
 PROMPT = b'> '
