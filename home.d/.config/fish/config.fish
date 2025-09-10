@@ -80,6 +80,9 @@ abbr --add clang-format clang-format --style=Google
 abbr --add g git
 abbr --add vi nvim
 abbr --add wget wget --content-disposition
+abbr --add rsqlite3 rlwrap sqlite3
+abbr --add firefox env DISPLAY=:1 firefox
+abbr --add rp-linux "rp-linux -f | rg -v hlt"
 
 ### Aliases
 

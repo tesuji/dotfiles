@@ -537,6 +537,8 @@ let mapleader   = ','
     \ 'go':             '//',
     \ 'rust':           '//',
     \
+    \ 'fish':           '#',
+    \ 'nix':            '#',
     \ 'php':            '#',
     \ 'ruby':           '#',
     \ 'sh':             '#',
@@ -545,6 +547,7 @@ let mapleader   = ','
     \ 'perl':           '#',
     \ 'yaml':           '#',
     \ 'toml':           '#',
+    \ 'tmux':           '#',
     \
     \ 'tex':            '%',
     \
