@@ -10,6 +10,29 @@ end
 
 fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
 
+#if ! test -d /nix;
+#  exec $HOME/.local/bin/bwrap \
+#    --unshare-user \
+#    --uid $(id -u) \
+#    --gid $(id -g) \
+#    --die-with-parent \
+#    --bind $HOME/.nix /nix \
+#    --proc /proc \
+#    --dev /dev \
+#    --tmpfs /tmp \
+#    --ro-bind /bin/ /bin/ \
+#    --ro-bind /sbin/ /sbin/ \
+#    --ro-bind /etc/ /etc/ \
+#    --ro-bind /lib/ /lib/ \
+#    --ro-bind /lib64/ /lib64/ \
+#    --ro-bind /run/ /run/ \
+#    --ro-bind /usr/ /usr/ \
+#    --dev-bind /dev/kvm /dev/kvm \
+#    --bind /var /var \
+#    --bind $HOME $HOME \
+#    $HOME/.local/bin/fish
+#end
+
 # Disable greetings text on every runs
 set -g fish_greeting
 
@@ -109,3 +132,8 @@ else if [ $OS = unknown ]
   alias mkdir='mkdir -p'
   alias mv='mv -i'
 end
+
+#set nix_src $HOME/.nix-profile/etc/profile.d/nix.fish
+#if test -z $NIX_CC
+#    [ -e $nix_src ] && source $nix_src; # added by Nix installer
+#end
