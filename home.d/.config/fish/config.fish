@@ -11,26 +11,9 @@ end
 fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
 
 #if ! test -d /nix;
-#  exec $HOME/.local/bin/bwrap \
-#    --unshare-user \
-#    --uid $(id -u) \
-#    --gid $(id -g) \
-#    --die-with-parent \
-#    --bind $HOME/.nix /nix \
-#    --proc /proc \
-#    --dev /dev \
-#    --tmpfs /tmp \
-#    --ro-bind /bin/ /bin/ \
-#    --ro-bind /sbin/ /sbin/ \
-#    --ro-bind /etc/ /etc/ \
-#    --ro-bind /lib/ /lib/ \
-#    --ro-bind /lib64/ /lib64/ \
-#    --ro-bind /run/ /run/ \
-#    --ro-bind /usr/ /usr/ \
-#    --dev-bind /dev/kvm /dev/kvm \
-#    --bind /var /var \
-#    --bind $HOME $HOME \
-#    $HOME/.local/bin/fish
+#  set -l UID (id -u)
+#  set -l UID (id -g)
+#  source ~/.nix-binds.sh
 #end
 
 # Disable greetings text on every runs
