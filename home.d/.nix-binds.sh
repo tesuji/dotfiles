@@ -1,6 +1,10 @@
 #!/bin/sh
 # Cannot ise tmpfs since pwntools shares gdb scripts between tmux panes.
 #--tmpfs /tmp \
+[ ! -d /tmp/$UID ] \
+  && rm -f /tmp/$UID \
+  && mkdir /tmp/$UID
+
 exec $HOME/.local/bin/bwrap \
   --unshare-user \
   --uid $UID \
@@ -21,7 +25,7 @@ exec $HOME/.local/bin/bwrap \
   --dev-bind /dev/vhost-vsock /dev/vhost-vsock \
   --dev-bind /dev/vhost-net /dev/vhost-net \
   --dev-bind /dev/net /dev/net \
-  --bind /tmp/ /tmp/ \
+  --bind /tmp/$UID/ /tmp/ \
   --bind $XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
   --bind /var /var/ \
   --bind $HOME $HOME \
