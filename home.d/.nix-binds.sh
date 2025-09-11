@@ -28,6 +28,7 @@ $HOME/.local/bin/bwrap \
   --dev-bind /dev/vhost-net /dev/vhost-net \
   --dev-bind /dev/net /dev/net \
   --bind /tmp/$UID/ /tmp/ \
+  --bind /tmp/tmux-$UID/ /tmp/tmux-$UID/ \
   --bind $XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
   --bind /var /var/ \
   --bind $HOME $HOME \
