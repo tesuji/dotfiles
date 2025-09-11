@@ -12,9 +12,8 @@ fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
 
 #if ! test -d /nix;
 #  set -l UID (id -u)
-#  set -l UID (id -g)
-#  set -l BIN "$HOME/.local/bin/fish"
-#  source ~/.nix-binds.sh
+#  set -l GID (id -g)
+#  source ~/.nix-binds.sh "$HOME/.local/bin/fish"
 #end
 
 # Disable greetings text on every runs

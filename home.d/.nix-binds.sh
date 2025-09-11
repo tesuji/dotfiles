@@ -1,11 +1,13 @@
 #!/bin/sh
+# If use with bash, export argv="$@"
 # Cannot ise tmpfs since pwntools shares gdb scripts between tmux panes.
 #--tmpfs /tmp \
 [ ! -d /tmp/$UID ] \
   && rm -f /tmp/$UID \
   && mkdir /tmp/$UID
 
-exec $HOME/.local/bin/bwrap \
+exec \
+$HOME/.local/bin/bwrap \
   --unshare-user \
   --uid $UID \
   --gid $GID \
@@ -29,5 +31,5 @@ exec $HOME/.local/bin/bwrap \
   --bind $XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
   --bind /var /var/ \
   --bind $HOME $HOME \
-  $BIN
+  $argv
 
