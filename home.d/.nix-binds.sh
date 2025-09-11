@@ -29,5 +29,5 @@ exec $HOME/.local/bin/bwrap \
   --bind $XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
   --bind /var /var/ \
   --bind $HOME $HOME \
-  $HOME/.local/bin/fish
+  $BIN
 

@@ -13,6 +13,7 @@ fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
 #if ! test -d /nix;
 #  set -l UID (id -u)
 #  set -l UID (id -g)
+#  set -l BIN "$HOME/.local/bin/fish"
 #  source ~/.nix-binds.sh
 #end
 
