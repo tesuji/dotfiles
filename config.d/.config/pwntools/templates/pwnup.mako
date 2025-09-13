@@ -48,6 +48,7 @@ def pwninit():
     tube.sa = tube.sendafter
     tube.sl = tube.sendline
     tube.sla = tube.sendlineafter
+    tube.rl = tube.recvline
     tube.rcu = tube.recvuntil
     pass
 pwninit()
