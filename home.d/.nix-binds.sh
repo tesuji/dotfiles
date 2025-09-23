@@ -22,6 +22,7 @@ $HOME/.local/bin/bwrap \
   --ro-bind /lib64/ /lib64/ \
   --ro-bind /run/ /run/ \
   --ro-bind /usr/ /usr/ \
+  --ro-bind /sys/ /sys/ \
   --dev-bind /dev/kvm /dev/kvm \
   --dev-bind /dev/vfio /dev/vfio \
   --dev-bind /dev/vhost-vsock /dev/vhost-vsock \
