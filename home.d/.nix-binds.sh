@@ -32,6 +32,7 @@ $HOME/.local/bin/bwrap \
   --bind /tmp/tmux-$UID/ /tmp/tmux-$UID/ \
   --bind $XDG_RUNTIME_DIR $XDG_RUNTIME_DIR \
   --bind /var /var/ \
+  --bind /run/tmux/$UID/ /run/tmux/$UID/ \
   --bind $HOME $HOME \
   $argv
 
