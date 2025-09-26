@@ -89,6 +89,7 @@ abbr --add wget wget --content-disposition
 abbr --add rsqlite3 rlwrap sqlite3
 abbr --add firefox env DISPLAY=:1 firefox
 abbr --add rp-linux "rp-linux -f | rg -v hlt"
+abbr --add lsport ss --processes --all --tcp --numeric
 
 ### Aliases
 

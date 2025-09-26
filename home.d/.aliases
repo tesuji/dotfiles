@@ -28,7 +28,6 @@ alias ll='ls -lF'
 [ $OS = bsd ] && alias ls="ls -h -G"
 [ $OS = unknown ] && alias ls="ls -h"
 alias lsblk='lsblk -o name,mountpoint,label,size,uuid'
-alias lsport='ss --processes --all --tcp'
 [ $OS = gnu ] && alias lssh="pgrep -af 'ssh '"
 [ ! $OS = gnu ] && alias lssh="pgrep -l -f 'ssh '"
 # Get the program name of a running X window
@@ -51,7 +50,6 @@ alias sshpw='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no
 alias suspend='systemctl suspend'
 #alias synctime='ntpd -qg'  # install ntp package
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"'
-alias vi='vim '
 alias wifiscan='nmcli device wifi rescan'
 alias wifils='nmcli device wifi list'
 #alias wifipasswod='sudo grep -r "^psk" /etc/NetworkManager/system-connections/'

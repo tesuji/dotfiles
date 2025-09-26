@@ -155,6 +155,8 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+alias lsport='ss --processes --all --tcp'
+alias vi='vim '
 
 if ls --color > /dev/null 2>&1; then # GNU ls support colors
   OS=gnu
