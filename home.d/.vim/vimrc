@@ -213,13 +213,13 @@ let mapleader   = ','
     set statusline+=%9w                                 " preview window flag
     " switch to the right side
     set statusline+=%=
-    set statusline+=Line\ %l,Column\ %v
+    set statusline+=Line\ %l:%v
     set statusline+=\ \ \|\ \                           " seperator
     set statusline+=%{&fileformat}                      " e.g.: dos/unix
     set statusline+=\ \ \|\ \                           " seperator
     set statusline+=%{strlen(&fenc)?&fenc:'none'}       " file encoding
     set statusline+=\ \ \|\ \                           " seperator
-    set statusline+=Tab\ Size:\ %{&tabstop}
+    set statusline+=ts:\ %{&tabstop}
     set statusline+=\ \ \|\ \                           " seperator
     set statusline+=%-16y                               " filetype
   endif
