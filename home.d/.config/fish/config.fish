@@ -5,7 +5,7 @@ if not status is-interactive
 end
 
 # buggy termux fish #11056
-# or update to fiah 4.0.2
+# or update to fish 4.0.2
 #set -Ua fish_features no-keyboard-protocols
 
 fish_add_path "$HOME/.cargo/bin" "$HOME/.local/bin"
@@ -36,7 +36,6 @@ function fish_hybrid_key_bindings
     bind --preset -M insert \e\[3\;5\~ kill-word
 end
 set -g fish_key_bindings fish_hybrid_key_bindings
-#set -Ua fish_features no-keyboard-protocols
 
 # -- Exported environment variable --------------------------------------------
 # NOTE: Most variables should be in ~/.config/environement.d
