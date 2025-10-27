@@ -539,17 +539,19 @@ let mapleader   = ','
     \ 'go':             '//',
     \ 'rust':           '//',
     \
+    \ 'bash':           '#',
     \ 'fish':           '#',
+    \ 'gdb':            '#',
+    \ 'make':           '#',
     \ 'nix':            '#',
     \ 'php':            '#',
+    \ 'perl':           '#',
+    \ 'python':         '#',
     \ 'ruby':           '#',
     \ 'sh':             '#',
-    \ 'make':           '#',
-    \ 'python':         '#',
-    \ 'perl':           '#',
-    \ 'yaml':           '#',
     \ 'toml':           '#',
     \ 'tmux':           '#',
+    \ 'yaml':           '#',
     \
     \ 'tex':            '%',
     \
