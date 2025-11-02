@@ -540,6 +540,7 @@ let mapleader   = ','
     \ 'rust':           '//',
     \
     \ 'bash':           '#',
+    \ 'dockerfile':     '#',
     \ 'fish':           '#',
     \ 'gdb':            '#',
     \ 'make':           '#',
