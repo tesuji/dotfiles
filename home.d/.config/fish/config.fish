@@ -37,6 +37,11 @@ function fish_hybrid_key_bindings
 end
 set -g fish_key_bindings fish_hybrid_key_bindings
 
+# dont call slow handler
+function fish_command_not_found
+  __fish_default_command_not_found_handler $argv[1]
+end
+
 # -- Exported environment variable --------------------------------------------
 # NOTE: Most variables should be in ~/.config/environement.d
 
