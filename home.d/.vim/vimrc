@@ -209,7 +209,7 @@ let mapleader   = ','
     set statusline=
     set statusline+=[%n]                                " buffer number
     set statusline+=\ %<%f                              " filepath
-    set statusline+=\ %{&paste?'[paste]':'[nopaste]'}   " is paste set?
+    set statusline+=\ %{&paste?'[paste]':'[nopas]'}     " is paste set?
     set statusline+=%3m                                 " modified flag
     set statusline+=%4r                                 " readonly flag
     set statusline+=%9w                                 " preview window flag
@@ -221,9 +221,9 @@ let mapleader   = ','
     set statusline+=\ \ \|\ \                           " seperator
     set statusline+=%{strlen(&fenc)?&fenc:'none'}       " file encoding
     set statusline+=\ \ \|\ \                           " seperator
-    set statusline+=ts:\ %{&tabstop}
+    set statusline+=ts,sw:\ %{&tabstop},%{&shiftwidth}
     set statusline+=\ \ \|\ \                           " seperator
-    set statusline+=%-16y                               " filetype
+    set statusline+=%-12y                               " filetype
   endif
 " }}}
 
