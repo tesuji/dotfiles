@@ -91,7 +91,7 @@ abbr --add g git
 abbr --add vi nvim
 abbr --add wget wget --content-disposition
 abbr --add rsqlite3 rlwrap sqlite3
-abbr --add firefox env DISPLAY=:1 firefox
+abbr --add firefox firefox --display :1
 abbr --add rp-linux "rp-linux -f | rg -v hlt"
 abbr --add lsport ss --processes --all --tcp --numeric
 
