@@ -25,9 +25,11 @@ EMPTY_DIRS_IN_HOME=(
 
     .config/sublime-text-3/Packages/User
 
+    .vim
     .vim/plugged
     .config/vim/autoload
     .config/nvim/
+    .local/share/nvim
     .local/share/nvim/site/autoload
 
     .config/pip
@@ -44,5 +46,9 @@ EMPTY_DIRS_IN_HOME=(
 )
 
 pushd $HOME
+
+# rm symlink dirs
+rm "${EMPTY_DIRS_IN_HOME[@]}" || true
+
 # or use stow --no-folding when stow
 mkdir -p "${EMPTY_DIRS_IN_HOME[@]}"
