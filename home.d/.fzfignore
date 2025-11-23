@@ -1,0 +1,6 @@
+.git
+*.out
+*.o
+*.png
+*.img
+*.jpg
