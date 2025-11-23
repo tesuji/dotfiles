@@ -270,7 +270,7 @@ let mapleader   = ','
 " }}}
 
 " Automatic commands {{{
-  " NOTE: use `augroup` not not duplicate `autocmd` each time the config loaded
+  " NOTE: use `augroup` to not duplicate `autocmd` each time the config loaded
   " Only do this part when compiled with support for auto-commands.
   if has('autocmd')
     augroup my_buf_settings
@@ -285,24 +285,30 @@ let mapleader   = ','
       autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
     augroup END
 
+    " :help line-continuation.
     augroup my_lang_settings
       autocmd!
-      autocmd FileType gitcommit        setlocal spell spelllang=en_us complete+=kspell
-      autocmd FileType markdown         setlocal wrap spell spelllang=en_us complete+=kspell
-      autocmd FileType html             setlocal wrap
-      autocmd FileType java             setlocal noexpandtab
-      "autocmd FileType make            setlocal noexpandtab shiftwidth=4
-      autocmd FileType php              setlocal
-      autocmd FileType python           setlocal foldmethod=indent formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
-      autocmd FileType perl             setlocal wrap
-      autocmd FileType ruby             setlocal wrap
+      autocmd FileType gitcommit setlocal spell spelllang=en_us complete+=kspell
+      autocmd FileType markdown  setlocal wrap spell spelllang=en_us complete+=kspell
+      autocmd FileType html      setlocal wrap
+      autocmd FileType java      setlocal noexpandtab
+      "autocmd FileType make      setlocal noexpandtab shiftwidth=4
+      autocmd FileType php       setlocal
+      autocmd FileType python    setlocal foldmethod=indent
+            \ formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
+      autocmd FileType perl      setlocal wrap
+      autocmd FileType ruby      setlocal wrap
       " XXX: vim is slow with large math text files
-      autocmd FileType tex              setlocal nocursorline | :NoMatchParen
-      autocmd FileType c                setlocal foldmethod=syntax formatoptions+=croq tabstop=2 softtabstop=4 shiftwidth=4 textwidth=80
-      "autocmd FileType rust            setlocal foldmethod=syntax formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
-      "autocmd FileType vim             setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
-      autocmd FileType xml              setlocal noexpandtab shiftwidth=4 tabstop=2
-      autocmd FileType haskell          setlocal complete-=t expandtab
+      autocmd FileType tex       setlocal nocursorline | :NoMatchParen
+      autocmd FileType c         setlocal foldmethod=syntax
+            \ formatoptions+=croq tabstop=2 softtabstop=4 shiftwidth=4 textwidth=120
+      autocmd FileType cpp       setlocal foldmethod=syntax
+            \ formatoptions+=croq tabstop=2 softtabstop=4 shiftwidth=4 textwidth=120
+      "autocmd FileType rust      setlocal foldmethod=syntax
+      "     \ formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
+      "autocmd FileType vim       setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
+      autocmd FileType xml       setlocal noexpandtab shiftwidth=4 tabstop=2
+      autocmd FileType haskell   setlocal complete-=t expandtab
     augroup END
   endif
 " }}}
