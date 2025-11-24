@@ -114,18 +114,19 @@ def gdb_pause(interactive=False):
     if interactive: r.interactive()
     r.unrecv(d)
 
-def conn(argv=[], **kwargs):
+def conn(argv=[], *a, **kwargs):
     if args.REMOTE or args.NC:
         r = remote(host, int(port), ssl=args.SSL)
     elif args.DOCKER:
-        r = remote('localhost', int(1337))
+        r = remote('localhost', int(args.PORT or 1337))
     elif args.GDB:
         r = gdb.debug(argv or [exe_path],
                 exe=exe_path,
                 gdbscript=gdbscript,
+                *a,
                 **kwargs)
     else:
-        r = process(argv or [exe_path], **kwargs)
+        r = process(argv or [exe_path], *a, **kwargs)
     return r
 
 PROMPT = b'> '
@@ -135,7 +136,7 @@ def cmd(n):
     r.sl(out)
     pass
 
-#             EXPLOIT GOES HERE               #
+# =========== EXPLOIT GOES HERE ============= #
 
 gdbscript = """
 source ~/.bata-gef.py
@@ -152,13 +153,8 @@ host, port = nc.split()[-2:]
 port = int(port)
 
 r = conn()
-def main():
-    global r
-    pass
 
-try:
-    main()
-    if hasattr(r, 'pid'): print(f'pid = {r.pid}')
-    r.interactive()
-except Exception as exc:
-    raise exc
+if hasattr(r, 'pid'): print(f'pid = {r.pid}')
+r.interactive()
+
+# vim: set ft=python
