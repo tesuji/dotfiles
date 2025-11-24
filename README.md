@@ -8,7 +8,7 @@ Currently only tested for Debian-based and Arch-based distro.
 
 | Shell      | WM / DE | Editor     | Terminal      | Multiplexer | Compositor | Audio      | Monitor | Mail | IRC |
 | ---------- | ------- | ---------- | ------------- | ----------- | ---------- | ---------- | ------- | ---- | --- |
-| bash / zsh | XFCE    | Vim / Subl | xfce4 / urxvt | tmux        | compton    | pulseaudio | custom  |      |     |
+| fish       | XFCE    | Vim / Subl | xfce4 / urxvt | tmux        | compton    | pulseaudio | custom  |      |     |
 
 ### tmux
 
@@ -28,7 +28,7 @@ Manual configuration (no dependencies).
 
 ### Firefox
 
-Install tweak by:
+Install tweaks by:
 
 ```bash
 sh ./scripts/tweak_firefox.sh
