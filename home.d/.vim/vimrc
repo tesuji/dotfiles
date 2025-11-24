@@ -537,10 +537,10 @@ let mapleader   = ','
 
   " Improved from <https://github.com/BurntSushi/dotfiles/blob/e5c72a924e0d163e130692d46ff7f4d9188307bf/.config/nvim/include/comment.vim>.
   let s:comment_leaders = {
-    \ 'javascript':     '//',
     \ 'c':              '//',
     \ 'cpp':            '//',
     \ 'java':           '//',
+    \ 'javascript':     '//',
     \ 'objc':           '//',
     \ 'scala':          '//',
     \ 'go':             '//',
@@ -566,6 +566,8 @@ let mapleader   = ','
     \ 'vim':            '"',
     \
     \ 'haskell':        '--',
+    \
+    \ 'markdown':       '<!--',
     \ }
 
   function! CommentLines()
