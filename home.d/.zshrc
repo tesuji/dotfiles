@@ -141,6 +141,9 @@ KEYTIMEOUT=1
 # Print fpath with:
 #    % print -rl -- $fpath
 fpath=("$HOME/.zfunc" $fpath)
+if test -d "$HOME"/.nix-profile/share/zsh/site-functions/ ; then
+  fpath+=("$HOME"/.nix-profile/share/zsh/site-functions/)
+fi
 
 autoload -Uz compinit # Use modern completion system
 
