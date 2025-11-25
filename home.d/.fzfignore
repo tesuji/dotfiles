@@ -27,3 +27,6 @@
 *.db
 *.pdf
 *.zip
+*.ko
+*.gz
+*.tar
