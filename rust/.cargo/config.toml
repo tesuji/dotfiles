@@ -41,3 +41,7 @@ rustflags = [
     # to know what new target features are enabled
     "-C", "target-cpu=x86-64-v3", # 2013, -v2 2008
 ]
+
+# https://doc.rust-lang.org/cargo/reference/unstable.html#profile-hint-mostly-unused-option
+[profile.dev.package.huge-mostly-unused-dependency]
+hint-mostly-unused = true
