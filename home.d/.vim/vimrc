@@ -86,7 +86,7 @@ let mapleader   = ','
   Plug 'tpope/vim-surround'
 
   " Needs python 3.8+ for neovim
-  let g:python3_host_prog = '/usr/bin/python3'
+  let g:python3_host_prog = $PREFIX . '/bin/python3'
 
   if has('nvim')
     Plug 'Shougo/deoplete.nvim'
