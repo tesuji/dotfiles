@@ -6,11 +6,12 @@
   && rm -f /tmp/$UID \
   && mkdir /tmp/$UID
 
+# fakeoot broke eith --unshare-user
+  # --unshare-user \
+  # --uid $UID \
+  # --gid $GID \
 exec \
 $HOME/.local/bin/bwrap \
-  --unshare-user \
-  --uid $UID \
-  --gid $GID \
   --die-with-parent \
   --bind $HOME/.nix /nix \
   --proc /proc \
