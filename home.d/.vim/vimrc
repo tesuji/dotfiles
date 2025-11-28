@@ -379,6 +379,7 @@ let mapleader   = ','
   nnoremap <leader>w :w!<cr>
   nnoremap <leader>q :q<cr>
   nnoremap <leader>Q :q!<cr>
+  nnoremap <leader>n :set nowrap<cr>
   " split the current window horizontally
   nnoremap <leader>- :sp<cr>
   " split the current window vertically
