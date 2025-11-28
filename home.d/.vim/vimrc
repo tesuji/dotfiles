@@ -307,7 +307,8 @@ let mapleader   = ','
             \ formatoptions+=croq tabstop=2 softtabstop=4 shiftwidth=4 textwidth=120
       "autocmd FileType rust      setlocal foldmethod=syntax
       "     \ formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
-      "autocmd FileType vim       setlocal foldenable foldmethod=marker foldlevel=0 modelines=1
+      "autocmd FileType vim       setlocal foldmethod=marker foldlevel=0 modelines=1
+      "      \ expandtab tabstop=2 shiftwidth=2
       autocmd FileType xml       setlocal noexpandtab shiftwidth=4 tabstop=2
       autocmd FileType haskell   setlocal complete-=t expandtab
     augroup END
@@ -382,12 +383,10 @@ let mapleader   = ','
   nnoremap <leader>- :sp<cr>
   " split the current window vertically
   nnoremap <leader>\| :vs<cr>
-  " sudo write when no have enough privilege
-  " FIXME: Currently there are no other way to support nvim
+  " sudo write when we dont have enough privilege
+  " XXX: neovim doesn't support interactive commands so sudo asks for passwords may fail.
   " <https://github.com/neovim/neovim/issues/1716>
-  if !has('nvim')
-    noremap <leader>W :w !sudo tee % > /dev/null<cr>
-  endif
+  noremap <leader>W :w !sudo tee % > /dev/null<cr>
   " toggle spell-checking with F6 (same as Sublime Text)
   noremap <F6> :setlocal spell! spelllang=en_us<cr>
   " turn off search highlight
@@ -598,3 +597,5 @@ else
     source ~/.vim/vimrc.local
   endif
 endif
+
+" vim: set et ts=2 sw=2
