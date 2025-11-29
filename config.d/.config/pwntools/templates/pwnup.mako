@@ -102,7 +102,7 @@ def log_calc(**kwargs):
     for name, value in kwargs.items():
         info(f"CALC: {name:16} = {value:#x}")
 
-def gdb_pause(interactive=False):
+def ezpause(interactive=False):
     if args.REMOTE: return
     d = r.clean(0.1)
     pid = r.pid if hasattr(r, 'pid') else -1
@@ -153,4 +153,4 @@ r = conn()
 if hasattr(r, 'pid'): print(f'pid = {r.pid}')
 r.interactive()
 
-# vim: set ft=python
+# vim: set ft=python foldenable foldmethod=syntax foldlevel=0
