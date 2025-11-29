@@ -37,12 +37,10 @@ libc_repr = repr(libc)
 from pwn import *
 sys.tracebacklimit = 4
 context(endian = "little", encoding='utf-8') # arch='amd64'
-# Use pwntools-terminal which loads nix env to the new tmux pane.
 #context.terminal = ["tmux", "splitw", "-v"]
 const = constants
 
-# quick functions
-def pwninit():
+if True:
     ELF.base = ELF.address
     tube.s = tube.send
     tube.sa = tube.sendafter
@@ -50,8 +48,6 @@ def pwninit():
     tube.sla = tube.sendlineafter
     tube.rl = tube.recvline
     tube.rcu = tube.recvuntil
-    pass
-pwninit()
 %if ctx.binary or not host:
 
 libc_path = ${libc_repr}
