@@ -123,7 +123,7 @@ let mapleader   = ','
   "set autowrite       " Automatically save before commands like :next and :make
 
   set timeout          " time out for mappings
-  set timeoutlen=1000  " wait up to 1000ms after <mapleader>
+  set timeoutlen=2000  " wait up to mili-seconds after <mapleader>
   set ttimeout         " time out for key codes
   set ttimeoutlen=50 " time to wait after ESC for special key
 
