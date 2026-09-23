@@ -85,15 +85,14 @@ let mapleader   = ','
   Plug 'tpope/vim-sleuth'
   Plug 'tpope/vim-surround'
 
-  let g:python3_host_prog = '/usr/bin/python3'
+  source ~/.vim/python3.vim
 
   if has('nvim')
     Plug 'Shougo/deoplete.nvim'
-{{- if eq .chezmoi.hostname "pop-os" }}
+  " XXX: if not on a remote host
   "     Plug 'neoclide/coc.nvim', {'branch': 'release'}
   "     " NOTE: using `exe` here to avoid empty screen because of `source`
   "     exe 'source '. stdpath('config') . '/coc.vim'
-{{- end }}
   endif
 
   " Initialize plugin system
