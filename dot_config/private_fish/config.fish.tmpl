@@ -42,9 +42,11 @@ function fish_command_not_found
   __fish_default_command_not_found_handler $argv[1]
 end
 
+{{- if eq .chezmoi.hostname "pop-os" }}
 # For `gpg-agent` to work correctly.
 set -gx GPG_TTY (tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
+{{- end }}
 
 # -- Exported environment variable --------------------------------------------
 # NOTE: Most variables should be in ~/.config/environement.d
@@ -70,6 +72,7 @@ set -e PINENTRY_USER_DATA
 
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --ignore-file ~/.fzfignore'
 
+{{- if eq .chezmoi.hostname "pop-os" }}
 if [ -z "$XDG_RUNTIME_DIR" ]
   if [ -d /run/user/ ]
     set -gx XDG_RUNTIME_DIR /run/user/(id -u)
@@ -81,6 +84,11 @@ if [ -z "$XDG_RUNTIME_DIR" ]
     end
   end
 end
+{{- else if eq .chezmoi.hostname "localhost" }}
+# For termux
+#eval (ssh-agent -c)
+source $HOME/.config/fish/source-ssh-agent.fish
+{{- end }}
 
 set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
 
