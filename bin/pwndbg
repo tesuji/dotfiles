@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+# if you clone github, remember to do this first:
+# pip install poetry
+# poetry install
+ROOTDIR=$HOME/github/pwndbg/
+source $ROOTDIR/.venv/bin/activate
+exec gdb -q -x $ROOTDIR/gdbinit.py \
+-ex 'set context-sections ""' \
+-ex 'set show-compact-regs on' \
+-ex 'set emulate off' \
+-ex 'set show-tips off' \
+-ex 'set context-backtrace-lines -1' \
+$@

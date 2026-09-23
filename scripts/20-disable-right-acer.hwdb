@@ -1,0 +1,10 @@
+# This file is
+# /usr/lib/udev/hwdb.d/20-disable-right-acer.hwdb
+# Please read <https://wiki.archlinux.org/title/Map_scancodes_to_keycodes>
+# before changing this file.
+
+# Acer A514 Right key is stuck, disable it.
+evdev:atkbd:dmi:bvn*:bvr*:bd*:svnAcer*:pn*:*
+ KEYBOARD_KEY_c5=capslock
+ KEYBOARD_KEY_3a=right
+ KEYBOARD_KEY_cd=reserved

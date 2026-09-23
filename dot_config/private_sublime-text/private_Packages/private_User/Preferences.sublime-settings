@@ -1,0 +1,59 @@
+{
+	"color_scheme": "Mariana.sublime-color-scheme",
+	"default_line_ending": "unix",
+	"ignored_packages":
+	[
+		"Rust",
+		"x86 and x86_64 Assembly",
+	],
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
+	"mini_diff": false,
+	"shift_tab_unindent": true,
+	"show_encoding": true,
+	"show_git_status": false,
+	// "spell_check": true,
+	"theme": "Adaptive.sublime-theme",
+	"trim_trailing_white_space_on_save": false,
+	"added_words":
+	[
+		"reparse",
+		"initializer",
+		"const",
+		"subcommands",
+		"toolchain",
+		"subcommand",
+		"rvalues",
+		"demangle",
+		"backtrace",
+		"glibc",
+		"pwndbg",
+		"linkable",
+		"Changelogs",
+		"Changelog",
+		"refactorings",
+		"syscall",
+	],
+	"folder_exclude_patterns": ["target", ".svn", ".git", ".hg", "CVS", ".Trash", ".Trash-*"],
+	"file_exclude_patterns": [
+		"*.pyc", "*.pyo", "*.exe", "*.dll", "*.obj", "*.deb",
+		"*.o", "*.a", "*.lib", "*.so", "*.so.?", "*.dylib", "*.out",
+		"*.ncb", "*.sdf", "*.suo", "*.pdb", "*.idb", ".DS_Store",
+		".directory", "desktop.ini", "*.class", "*.psd", "*.db", "*.pdf",
+		"*.sublime-workspace", ".zip",
+	],
+	"index_files": false,
+	"relative_line_numbers": true,
+	// "font_face": "Inconsolata", // not good for vietnameses characters
+	// "font_face": "Cascadia Mono", // cursive fonts
+	"font_face": "Liberation Mono",
+	"ignored_words":
+	[
+		"dst",
+		"rustup",
+		"src",
+	],
+	"font_size": 11,
+	"dark_color_scheme": "Mariana.sublime-color-scheme",
+	"light_color_scheme": "Breakers.sublime-color-scheme",
+}

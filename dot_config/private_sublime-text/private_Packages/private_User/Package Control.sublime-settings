@@ -1,0 +1,14 @@
+{
+	"bootstrapped": true,
+	"ignore_vcs_packages": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Package Control",
+		"Rust Enhanced",
+		"TOML",
+		"x86 and x86_64 Assembly",
+	],
+}

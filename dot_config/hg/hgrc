@@ -1,0 +1,42 @@
+# ~/.hgrc : Per-user config (see 'hg help config' for more info)
+# Ref: https://www.mercurial-scm.org/doc/hgrc.5.html
+
+# git remote add -f remotename url
+# Edit .hg/hgrc and add the line 'remotename = url' under section '[paths]'; see below for getting changesets
+
+[ui]
+# name and email, e.g.
+# username = Jane Doe <jdoe@example.com>
+username = Lzu Tao <taolzu@gmail.com>
+# Enable SSH compression
+ssh = ssh -C
+# We recommend enabling tweakdefaults to get slight improvements to
+# the UI over time. Make sure to set HGPLAIN in the environment when
+# writing scripts!
+tweakdefaults = True
+#color = never
+#paginate = never
+
+[pager]
+#pager = less -FRX
+#ignore = version, help, update
+
+[extensions]
+# uncomment these lines to enable some popular extensions
+color =
+#churn =
+hgext.convert=
+#graphlog =
+#mq =
+#rebase =
+#record =
+#transplant =
+#progress =
+#extdiff =
+
+[alias]
+purge = !$HG status --no-status --unknown -0 re: | xargs -0 rm -f
+fetch = pull
+pull = !$HG fetch && $HG pull -u
+push = push -r .
+df = diff --color-words

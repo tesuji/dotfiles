@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+# ~/.bash_prompt: Shell prompt for Bash
+
+exitstatus() {
+  # Do NOT use local var, cause it hang bash when output
+  retval=$?
+  [ "${retval}" -ne 0 ] && printf '[%s] ' "${retval}"
+}
+
+# Ref https://github.com/mathiasbynens/dotfiles/blob/master/.bash_prompt
+# Non-printing escape sequences have to be enclosed in `\[\e[` and `\]`
+#
+# To see which colors xterm-256color supports:
+#
+#    for C in {0..255}; do
+#      tput setaf $C # for foreground color
+#      # tput setab $C # for background color
+#      echo -n "$C "
+#    done
+#    tput sgr0
+#    echo
+setprompt() {
+  local host_style user_at_host error_prompt time_prompt shell_state
+  local bold_col reset_col black_col red_col green_col orange_col blue_col \
+        purple_col cyan_col violet_col white_col yellow_col tput_ncolors
+
+  tput_ncolors=0
+  command -v tput >/dev/null \
+  && tput_ncolors="$(tput colors 2>/dev/null)" # Number of supported colors
+
+  # If you need Solarized theme, get it from http://git.io/solarized-colors
+  # shellcheck disable=SC2034
+  if [ "$tput_ncolors" -eq 256 ]; then
+    bold_col="\[$(tput bold)\]"
+    reset_col="\[$(tput sgr0)\]"
+    black_col="\[$(tput setaf 0)\]"
+    red_col="\[$(tput setaf 1)\]"
+    green_col="\[$(tput setaf 10)\]"
+    orange_col="\[$(tput setaf 166)\]"
+    blue_col="\[$(tput setaf 33)\]"
+    purple_col="\[$(tput setaf 13)\]"
+    cyan_col="\[$(tput setaf 14)\]"
+    violet_col="\[$(tput setaf 61)\]"
+    white_col="\[$(tput setaf 15)\]"
+    yellow_col="\[$(tput setaf 11)\]"
+  elif [ "$tput_ncolors" -ge 8 ]; then
+    bold_col="\[$(tput bold)\]"
+    reset_col="\[$(tput sgr0)\]"
+    black_col="\[$(tput setaf 0)\]"
+    red_col="\[$(tput setaf 1)\]"
+    green_col="\[$(tput setaf 2)\]"
+    orange_col="\[$(tput setaf 3)\]"
+    blue_col="\[$(tput setaf 4)\]"
+    purple_col="\[$(tput setaf 5)\]"
+    cyan_col="\[$(tput setaf 6)\]"
+    violet_col="${bold_col}${purple_col}" # Need ${reset_col} after using
+    white_col="\[$(tput setaf 7)\]"
+    yellow_col="\[$(tput setaf 3)\]"
+  fi
+
+  # Add constant string (remote) when connected via SSH.
+{{- if ne .chezmoi.hostname "pop-os" }}
+    host_style="\h (remote)"
+{{- else }}
+    host_style="\h"
+{{- end }}
+
+  # Set a fancy prompt (non-color if it is a dumb terminal)
+  if [ "$TERM" != "dumb" ]; then
+    time_prompt="${white_col}[\A]${reset_col}" # disable bold
+    user_at_host="${cyan_col}\u@${host_style} ${green_col}\w"
+    error_prompt="${red_col}\$(exitstatus)"
+    shell_state="${red_col}\$${reset_col}"
+  else
+    time_prompt="[\A]" # disable bold
+    user_at_host="\u@${host_style} \w"
+    error_prompt="\$(exitstatus)"
+    shell_state="\$"
+  fi
+
+  # Sample result:
+  #     user at host in ~/Documents
+  #     9:39 $
+  PS1="${time_prompt} ${user_at_host} ${error_prompt}\n${shell_state} "
+
+  # If this is an xterm set the title to dir
+  case "${TERM}" in
+    rxvt* | *xterm* ) PS1="\[\e]0;\w\a\]${PS1}";;
+  esac
+
+  export PS1
+}
+
+setprompt

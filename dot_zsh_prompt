@@ -1,0 +1,54 @@
+#!/usr/bin/env zsh
+
+# -- Window title -------------------------------------------------------------
+
+# From: https://github.com/MrElendig/dotfiles-alice/blob/master/.zshrc
+case "${TERM}" in
+  screen* | xterm* | rxvt* )
+    # Ref:
+    #   https://wiki.archlinux.org/index.php/zsh#xterm_title
+    #   http://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h2-Operating-System-Commands
+    precmd() {
+      print -Pn '\e]2;%1~\a'
+    }
+    #preexec() {
+    #  print -Pn '\e]2;%n@%m %1~ %# '
+    #  print -n "${(q)1}\a"
+    #}
+    ;;
+esac
+
+setprompt() {
+  local host_style user_at_host error_prompt job_prompt time_prompt shell_state
+  # Add constant string (remote) when connected via SSH.
+{{- if ne .chezmoi.hostname "pop-os" }}
+    host_style="%m (remote)"
+{{- else }}
+    host_style="%m"
+{{- end }}
+
+  # Set a fancy prompt (non-color if it is a dumb terminal)
+  if [ "$TERM" != "dumb" ]; then
+    time_prompt='%B%F{white}[%T]%f%b'       # Time format -> hh:mm
+    user_at_host='%B%F{cyan}%n@'${host_style}'%f %F{green}%d%f%b'
+    error_prompt='%(?..%F{red}[%?]%f )' # Print exit code if exit code != 0
+    job_prompt='%(1j. %F{blue}[%j]%f .)'  # Print number of job if there are background jobs
+    shell_state='%F{red}%#%f'
+  else
+    time_prompt='[%T]'
+    user_at_host='%n@'"${host_style}"' %d'
+    error_prompt='%(?..[%?] )'
+    job_prompt='%(1j. [%j] .)'
+    shell_state='%#'
+  fi
+
+  # Sample result:
+  #     user at host in ~/Documents
+  #     9:39 $
+  # Reference: http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+  PROMPT="${time_prompt} ${user_at_host} ${error_prompt} ${job_prompt}
+${shell_state} "
+  export PROMPT
+}
+
+setprompt

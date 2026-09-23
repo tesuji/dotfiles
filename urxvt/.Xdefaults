@@ -1,0 +1,112 @@
+# ~/.Xdefaults
+#
+# Settings for urxvt v9.22
+# See urxvt --help for more options
+# http://manpages.ubuntu.com/manpages/bionic/man1/urxvt.1.html
+
+# To access the clipboard selection
+#     Ctrl + Alt + C
+#     Ctrl + Alt + V
+#
+# Xterm escapes, word by word movement
+URxvt.keysym.Control-Left:  \033[1;5D
+URxvt.keysym.Control-Right: \033[1;5C
+
+# Create window with specific size
+URxvt.geometry:             110x32
+
+# Set cursor color (green)
+URxvt.cursorColor:          #00aa00
+
+# Set font type
+URxvt.font:                 xft:Monospace:size=10
+# Using Bitmap font instead
+#URxvt.font:8x13
+# Bold font color
+URxvt.colorBD:              #f57900
+
+# Character set used as delimiters for double-click word selection
+#URxvt.cutchars:            string
+
+# Reduce the spacing against too wide
+# Disable cause using Bitmap font
+URxvt.letterSpace:          -1
+
+# Enable the default extensions and simple tab support
+#URxvt.perl-ext-common:default,matcher,tabbed
+# To control tabs use
+#     S + Down  : new tab
+#     S + Left  : go to the left tab
+#     S + Right : go to the right tab
+#     C + Left  : move tab to the left
+#     C + Right : move tab to the right
+
+# Choose FireFox open URL on TERMINAL
+#URxvt.urlLaucher:          firefox
+
+# Set which button opens the link
+# In this case: Left-click
+#URxvt.matcher.button:      1
+
+# Set the Scrollbar style
+URxvt.scrollstyle:          plain
+URxvt.scrollBar_right:      True
+# Do not scroll with output
+URxvt.scrollTtyOutput:      False
+# Scroll back to the bottom on keypress
+URxvt.scrollTtyKeypress:    True
+# Scroll in relation to buffer (with mouse scroll or shift+page up)
+URxvt.scrollWithBuffer:     True
+# Scrollbar width in pixels
+URxvt.thickness:            10
+# Set color for the scrollbar's trough area
+#URxvt.troughColor:
+
+# Save number lines in the scrollback buffer [default 1000]
+URxvt.saveLines:            2048
+
+## Set colors theme: green on black
+URxvt.background:           #000000
+URxvt.foreground:           #17f018
+
+# black & dark gray
+URxvt.color0:               #000000
+URxvt.color8:               #555555
+
+# red & light red
+URxvt.color1:               #aa0000
+URxvt.color9:               #ff5555
+
+# green & light green
+URxvt.color2:               #00aa00
+URxvt.color10:              #55ff55
+
+# brown & yellow
+URxvt.color3:               #aa5500
+URxvt.color11:              #ffff55
+
+# blue & light blue
+URxvt.color4:               #0000aa
+URxvt.color12:              #5555ff
+
+# magenta & light magenta
+URxvt.color5:               #aa00aa
+URxvt.color13:              #ff55ff
+
+# cyan & light cyan
+URxvt.color6:               #00aaaa
+URxvt.color14:              #55ffff
+
+# light gray & white
+URxvt.color7:               #aaaaaa
+URxvt.color15:              #ffffff
+
+# Disable the scrollback buffer for the secondary screen
+URxvt.secondaryScreen:      True
+URxvt.secondaryScroll:      False
+
+# Disable the annoying CTRL + SHIFT shortcut that enter ISO-14755 mode
+URxvt.iso14755:             False
+URxvt.iso14755_52:          False
+
+# end of file

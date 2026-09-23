@@ -1,0 +1,601 @@
+" ~/.vimrc file
+
+if !has('nvim')
+  " Normally we use vim-extensions. If you want true vi-compatibility
+  " remove the following line.
+  " Place it first as it changes any settings below.
+  set nocompatible
+endif
+
+" vim-plug doesn't work with fish shell
+if &shell =~# 'fish$'
+  if executable('zsh')
+    set shell=zsh
+  elseif executable('bash')
+    set shell=bash
+  else
+    set shell=sh
+  endif
+endif
+
+" Use `vim "+runtime syntax/colortest.vim"` to test vim color
+"set t_Co=256
+
+" See <https://neovim.io/doc/user/term.html>
+if has('termguicolors')
+  if $TERM =~# '^\(rxvt\|screen\|interix\|putty\)\(-.*\)\?$'
+    set notermguicolors
+  elseif $TERM =~# '^\(tmux\|iterm\|vte\|gnome\)\(-.*\)\?$'
+    set termguicolors
+    if !has('nvim')
+      " vim inside tmux doesn't support arrows key properly: <https://superuser.com/a/402084/510572>
+      execute "set <xLeft>=\e[1;*D"
+      execute "set <xRight>=\e[1;*C"
+    endif
+  elseif $TERM ==# 'xterm'
+    if $XTERM_VERSION != '' || $KONSOLE_PROFILE_NAME != '' || $VTE_VERSION != ''
+      set termguicolors
+    endif
+  elseif $TERM ==# 'xterm-256color'
+    set termguicolors
+  endif
+  " Enable true color in vim (not nvim)
+  " See
+  " * :help xterm-true-color
+  " * https://github.com/tmux/tmux/issues/1246
+  if !has('nvim') && &termguicolors
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  endif
+endif
+
+" Switch syntax highlighting on when the terminal has colors or when using the
+" GUI (which always has colors).
+if &t_Co > 2 || has("gui_running")
+  syntax enable      " enable syntax highlighting
+endif
+
+" For Win32 GUI, remove 't' flag from 'guioptions': no tearoff menu entries.
+if has('win32')
+  set guioptions-=t
+endif
+
+" Load indentation rules and plugins according to the detected filetype
+filetype plugin indent on
+set formatoptions=tcqj
+
+" With a map leader it is possible to do extra key combinations
+" like <leader>w saves the current file
+" The mapleader has to be set before vundle starts loading all
+" the plugins.
+let mapleader   = ','
+"let g:mapleader = ','
+
+" NOTE: plugins/themes/colorschemes are not activated before `plug#end`.
+" vim-plug {{{
+  " Specify a directory for plugins
+  call plug#begin('~/.vim/plugged')
+
+  Plug 'cespare/vim-toml'
+  Plug 'rust-lang/rust.vim'
+  Plug 'bogado/file-line'
+
+  Plug 'junegunn/fzf'
+  Plug 'junegunn/fzf.vim'
+  Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-surround'
+
+  let g:python3_host_prog = '/usr/bin/python3'
+
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim'
+{{- if eq .chezmoi.hostname "pop-os" }}
+  "     Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  "     " NOTE: using `exe` here to avoid empty screen because of `source`
+  "     exe 'source '. stdpath('config') . '/coc.vim'
+{{- end }}
+  endif
+
+  " Initialize plugin system
+  call plug#end()
+
+  if has('nvim')
+    let g:deoplete#enable_at_startup = 1
+
+    call deoplete#custom#option({
+      \ 'fuzzy_completion': v:true,
+      \ 'auto_complete_delay': 200,
+      \ 'ignore_case': v:true,
+      \ 'smart_case': v:false,
+      \ })
+    call deoplete#custom#source('_', 'ignore_case', v:true)
+  endif
+" }}}
+
+" Environment {{{
+  " If using a dark background within the editing area and syntax
+  " highlighting turn on this option as well
+  set background=dark
+  set history=1000     " maximum of command history
+  " Do not increase octal 007 to 010
+  set nrformats-=octal
+  "set autowrite       " Automatically save before commands like :next and :make
+
+  set timeout          " time out for mappings
+  set timeoutlen=2000  " wait up to mili-seconds after <mapleader>
+  set ttimeout         " time out for key codes
+  set ttimeoutlen=50 " time to wait after ESC for special key
+
+  " modelines have historically been a source of security/resource
+  " vulnerabilities -- disable by default, even when 'nocompatible' is set
+  set nomodeline
+
+  " disable warning when editing file in read-only mode
+  set noreadonly
+
+  " Linebreak on 500 characters
+  set linebreak
+  set textwidth=500
+
+  "set autoread # reload file changed outside
+  " This makes vim act like all other editors, buffers can
+  " exist in the background without being in a window.
+  " http://items.sjbach.com/319/configuring-vim-right
+  set hidden          " remember undo after quitting
+
+  " Uncomment this to disable :mksession command
+  "set sessionoptions-=options
+  " Turn off swap files since most stuff is in SVN, git et.c anyway...
+  "set noswapfile
+  " Uncomment this to disable saving cursor/history
+  "set viewoptions-=options
+
+  " directories for swp files
+  "set backupdir=~/.vim/backup
+  "set directory=~/.vim/backupf
+
+  "set nobackup
+  "set nowritebackup
+
+  " system settings
+  set lazyredraw           " no redraws in macros (good performance config)
+  "set confirm              " get a dialog when :q, :w, or :wq fails
+  " remember copy registers after quitting in the .viminfo file -- 20
+  " jump links, regs up to 500 lines'
+  "set viminfo='20,\"500
+  " let's default cursor for nvim
+  "set guicursor=a:blinkon0 " Disable cursor blink
+  " Disable auto append EOL on save in binary files
+  set noeol
+  "set nofixeol
+  " No annoying sound on errors
+  set noerrorbells novisualbell t_vb=
+" }}}
+
+" Encoding {{{
+  set encoding=utf-8
+  set ttyfast " send more characters for redraws
+  set fileformat=unix       " file mode is unix
+  "set fileformats=unix,dos  " only detect unix file format, displays that ^M with dos files
+" }}}
+
+" Colors {{{
+  if !has('nvim')
+   " Popup menu
+    hi Pmenu      ctermfg=Gray    ctermbg=Black         guifg=#FFFFFF   guibg=#0F0F0F
+    hi PmenuSel   ctermfg=White   ctermbg=Gray          guifg=#0F0F0F   guibg=#F0F0F0
+    hi PmenuSbar  ctermfg=none    ctermbg=DarkGray      guifg=NONE      guibg=#777777
+
+    hi Search                     ctermfg=0       ctermbg=11      gui=NONE        guifg=#0F1419   guibg=#FFEE99
+    hi MatchParen cterm=underline ctermbg=6                       gui=underline   guifg=#E6E1CF   guibg=#0F1419
+
+    hi StatusLine   cterm=none    term=none    ctermfg=Gray ctermbg=Black gui=NONE guifg=#FFFFFF guibg=#0F0F0F
+    hi StatusLineNC cterm=reverse term=reverse                                     guifg=#3E4B59 guibg=#14191F
+    hi User1        ctermfg=Gray  ctermbg=Black   guifg=#FFFFFF   guibg=#0F0F0F
+  else
+    " FIXME: Without this setting the CocFloating color is unreadable
+    " See <https://users.rust-lang.org/t/coc-nvim-completion-pane-is-hard-to-read/41466>
+    hi link  CocFloating     markdown
+    " nvim 0.11 default scheme is not colorful enough.
+    colorscheme koehler
+  endif
+" }}}
+
+" See ":help 'statusline'"
+" statusline {{{
+  if has('statusline')
+    set laststatus=2   " use 2 lines for the status bar
+    " Format the status line
+    set statusline=
+    set statusline+=[%n]                                " buffer number
+    set statusline+=\ %<%f                              " filepath
+    set statusline+=\ %{&paste?'[paste]':'[nopas]'}     " is paste set?
+    set statusline+=%3m                                 " modified flag
+    set statusline+=%4r                                 " readonly flag
+    set statusline+=%9w                                 " preview window flag
+    " switch to the right side
+    set statusline+=%=
+    set statusline+=Line\ %l:%v
+    set statusline+=\ \ \|\ \                           " seperator
+    set statusline+=%{&fileformat}                      " e.g.: dos/unix
+    set statusline+=\ \ \|\ \                           " seperator
+    set statusline+=%{strlen(&fenc)?&fenc:'none'}       " file encoding
+    set statusline+=\ \ \|\ \                           " seperator
+    set statusline+=ts,sw:\ %{&tabstop},%{&shiftwidth}
+    set statusline+=\ \ \|\ \                           " seperator
+    set statusline+=%-12y                               " filetype
+  endif
+" }}}
+
+" Vim UI {{{
+  set number                                            " Show current abs line numbers
+  set relativenumber                                    " Help for commands like 5dd or 5j
+  "set cursorline                                        " highlight current line
+  set cmdheight=2                                       " Height of the command bar
+  set showmode                                          " Show mode: normal,insert,command,help mode
+  " Show file in Terminal titlebar but restore old one when quitting
+  set title
+  set titleold=
+  set nostartofline
+  if has("cmdline_info")
+    set ruler                                           " Always show current position in status bar
+    "set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
+    set showcmd                                         " Show (partial) command in the last line of the screen
+  endif
+
+  set list listchars=tab:>-,trail:-,nbsp:+
+
+  " Show as much as possible of the last line in the window rather
+  " than a column of "@", which is the default behavior.
+  set display="lastline,msgsep"
+  " Configure backspace so it acts as it should act
+  set backspace=indent,eol,start " Allow backspacing over everything in insert mode
+  set shortmess="filnxtToOF"
+  set whichwrap=b,s,h,l,<,>,[,]  " backspace and cursor keys wrap to
+" }}}
+
+" Indentation {{{
+  set wrap " mobile
+  set autoindent       " indent at the same level of the previous line
+  set smartindent      " smart auto indenting
+  set smarttab         " smart tab handling for indenting
+  " NOTE: use sleuth.vim to guess buffer settings
+  "set shiftwidth=2     " operation >> indents 2 columns; << unindents 2 columns
+  "set softtabstop=2    " insert/delete 2 spaces when hitting a TAB/BACKSPACE
+  "set tabstop=8        " a hard TAB displays as 8 columns
+  "set expandtab        " insert spaces when hitting TABs
+  if !has('nvim')
+    set pastetoggle=<F3> " paste mode to avoid autoindent
+  endif
+" }}}
+
+" Automatic commands {{{
+  " NOTE: use `augroup` to not duplicate `autocmd` each time the config loaded
+  " Only do this part when compiled with support for auto-commands.
+  if has('autocmd')
+    augroup my_buf_settings
+      autocmd!
+      " Jump to the last position when reopening a file
+      "autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+      " remove whitespaces on save
+      "autocmd BufWritePre *.php,*.md,*.vim,*.txt,*.js,*.py,*.sh,*.c,*.cpp,*.h,*.hpp,*.java,*.sh :call TrimTrailingWhiteSpace()
+      " Disable visualbell
+      autocmd GUIEnter * set visualbell t_vb=
+      " Run checktime in buffers, but avoiding the "Command Line" (q:) window
+      autocmd CursorHold * if getcmdwintype() == '' | checktime | endif
+    augroup END
+
+    " :help line-continuation.
+    augroup my_lang_settings
+      autocmd!
+      autocmd FileType gitcommit setlocal spell spelllang=en_us complete+=kspell
+      autocmd FileType markdown  setlocal wrap spell spelllang=en_us complete+=kspell
+      autocmd FileType html      setlocal wrap
+      autocmd FileType java      setlocal noexpandtab
+      "autocmd FileType make      setlocal noexpandtab shiftwidth=4
+      autocmd FileType php       setlocal
+      autocmd FileType python    setlocal foldmethod=indent
+            \ formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
+      autocmd FileType perl      setlocal wrap
+      autocmd FileType ruby      setlocal wrap
+      " XXX: vim is slow with large math text files
+      autocmd FileType tex       setlocal nocursorline | :NoMatchParen
+      autocmd FileType c         setlocal foldmethod=syntax
+            \ formatoptions+=croq tabstop=2 softtabstop=4 shiftwidth=4 textwidth=120
+      autocmd FileType cpp       setlocal foldmethod=syntax
+            \ formatoptions+=croq tabstop=2 softtabstop=4 shiftwidth=4 textwidth=120
+      "autocmd FileType rust      setlocal foldmethod=syntax
+      "     \ formatoptions+=croq tabstop=4 softtabstop=4 shiftwidth=4 textwidth=120
+      "autocmd FileType vim       setlocal foldmethod=marker foldlevel=0 modelines=1
+      "      \ expandtab tabstop=2 shiftwidth=2
+      autocmd FileType xml       setlocal noexpandtab shiftwidth=4 tabstop=2
+      autocmd FileType haskell   setlocal complete-=t expandtab
+    augroup END
+  endif
+" }}}
+
+" Syntax highlight
+" Default highlight is better than polyglot
+"let g:polyglot_disabled = ['python']
+"let python_highlight_all = 1
+
+" Folds {{{
+  set nofoldenable        " dont fold by default
+  set foldlevel=99
+  " XXX: do not set foldmethod by default, it causes folding on saving or reload
+  "set foldmethod=indent " fold based on indent
+  "set foldnestmax=3     " deepest fold is 3 levels
+  "set foldcolumn=1      " Add a bit extra margin to the left
+  " Use space to open/closes folds and set foldenable
+  nnoremap <space> za
+  " Turn on fold
+  noremap <leader>f :set foldenable<cr>
+" }}}
+
+" Completion {{{
+  set wildmenu            " enable CTRL-N and CTRL-P to scroll command-line completions
+  set wildmode=full
+  " Ignore compiled files
+  set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,.svn
+  if !has('nvim')
+    set wildoptions=tagfile
+  endif
+" }}}
+
+" Mouse and scrolling {{{
+  "set mouse=r          " only scroll, not click
+  set mousemodel=popup " Popup a menu on right click
+  " 7 lines to the cursor - when moving using j/k
+  set scrolloff=7      " minimum screen lines around the cursor
+  set sidescroll=1     " minimal columns to scroll horizontally
+  set sidescrolloff=15
+" }}}
+
+" Search {{{
+  set hlsearch        " highlight search (very useful!)
+  set incsearch       " search incrementally (search while typing)
+  set ignorecase      " Do case insensitive matching
+  set smartcase       " but do case sensitive if you type uppercase characters
+  set gdefault        " /g flag on :s substitutions by default
+  set magic           " For regular expression, change the way backslashes
+                      " are used in search patterns
+  set showmatch       " highlight matching [{()}]
+  set matchtime=2     " show matching bracket for 0.2 seconds
+  set matchpairs+=<:> " specially for html
+" }}}
+
+" Key mappings/bindings {{{
+  " Repeat finding using previous F, f, t, T.
+  nnoremap <leader>, ,
+  nnoremap <leader>; ;
+  " Making it so ; works like : for commands. Saves typing and
+  " eliminates :W style typos due to lazy holding shift.
+  nnoremap ; :
+  nnoremap <C-g> :GFiles<cr>
+  nnoremap <C-p> :FZF<cr>
+  nnoremap <leader>h :%!xxd<cr>:set syntax=xxd<cr>
+  nnoremap <leader>u :%!xxd -r<cr>:syntax enable<cr>
+  nnoremap <leader>w :w!<cr>
+  nnoremap <leader>q :q<cr>
+  nnoremap <leader>Q :q!<cr>
+  nnoremap <leader>n :set nowrap<cr>
+  " split the current window horizontally
+  nnoremap <leader>- :sp<cr>
+  " split the current window vertically
+  nnoremap <leader>\| :vs<cr>
+  " sudo write when we dont have enough privilege
+  " XXX: neovim doesn't support interactive commands so sudo asks for passwords may fail.
+  " <https://github.com/neovim/neovim/issues/1716>
+  noremap <leader>W :w !sudo tee % > /dev/null<cr>
+  " toggle spell-checking with F6 (same as Sublime Text)
+  noremap <F6> :setlocal spell! spelllang=en_us<cr>
+  " turn off search highlight
+  nnoremap <esc><esc> :nohlsearch<cr>
+  " Move up/down editor lines, rather than next line in file
+  nnoremap j gj
+  nnoremap k gk
+  "nnoremap <silent> <Esc> :nohlsearch<Bar>:echo<cr>
+  " Search mappings: These will make it so that going to the next one in a
+  " search will center on the line it's found in.
+  nnoremap n nzzzv
+  nnoremap N Nzzzv
+  " Tab back and forth between those files
+  nnoremap <TAB> :bnext<cr>
+  nnoremap <S-TAB> :bprevious<cr>
+  " close only one buffer
+  nnoremap <leader>c :bd<cr>
+  " no one is really happy until you have this shortcuts
+  "cnoreabbrev W! w!
+  "cnoreabbrev Q! q!
+  "cnoreabbrev Qall! qall!
+  "cnoreabbrev Wq wq
+  "cnoreabbrev Wa wa
+  "cnoreabbrev wQ wq
+  "cnoreabbrev WQ wq
+  "cnoreabbrev W w
+  "cnoreabbrev Q q
+  "cnoreabbrev Qall qall
+  "cmap Tabe tabe
+  " Switching windows
+  " NOTE: use <C-w><S-h> or type ":wincmd H" to go from hozontal to vertical layout
+  " For more: read ":help ^w"
+  noremap <C-j> <C-w>j
+  noremap <C-k> <C-w>k
+  noremap <C-l> <C-w>l
+  noremap <C-h> <C-w>h
+
+  noremap <C-left>      :wincmd <<cr>
+  noremap <C-right>     :wincmd ><cr>
+  noremap <C-up>        :wincmd +<cr>
+  noremap <C-down>      :wincmd -<cr>
+
+  noremap <leader>1 1gt
+  noremap <leader>2 2gt
+  noremap <leader>3 3gt
+  noremap <leader>4 4gt
+  noremap <leader>5 5gt
+  noremap <leader>6 6gt
+  noremap <leader>7 7gt
+  noremap <leader>8 8gt
+  noremap <leader>9 9gt
+  noremap <leader>0 :tablast<cr>
+
+  " Vmap for maintain Visual Mode after shifting > and <
+  vnoremap < <gv
+  vnoremap > >gv
+  " Yank to the end of the line, to be consistent with C and D.
+  nnoremap Y y$
+
+  " binding ' and " cause problems more than it helps
+  "inoremap " ""<left>
+  "inoremap ' ''<left>
+  "inoremap ( ()<left>
+  "inoremap [ []<left>
+  "inoremap { {}<left>
+  inoremap {<cr> {<cr>}<ESC>O
+
+  " Move line up/down: <https://vi.stackexchange.com/a/2682/17399>
+  nnoremap <S-Up>        :m-2<cr>
+  nnoremap <S-Down>      :m+<cr>
+  inoremap <S-Up>        <esc>:m-2<cr>==gi
+  inoremap <S-Down>      <esc>:m+<cr>==gi
+  vnoremap <S-Up>        :m '<-2<cr>gv=gv
+  vnoremap <S-Down>      :m '>+<cr>gv=gv
+
+  nnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
+  vnoremap <F5>     :call TrimTrailingWhiteSpace()<cr>
+
+  " emacs like keymaps
+  " NOTE: CTRL-o executes one command then returns to Insert mode
+  inoremap <C-a>        <C-o>I
+  inoremap <C-e>        <End>
+  inoremap <C-k>        <C-o>d$
+  inoremap <C-backspace>        <C-w>
+
+  if empty(mapcheck('<C-U>', 'i'))
+    inoremap <C-U>      <C-G>u<C-U>
+  endif
+  if empty(mapcheck('<C-W>', 'i'))
+    inoremap <C-W>      <C-G>u<C-W>
+  endif
+
+  noremap <C-n>         :tabnew<cr>
+  noremap <C-s>         :w<cr>
+  inoremap <C-s>        <esc>:w<cr>
+
+  " Search for selected text, forwards or backwards.
+  " NOTE:
+  "     <C-R>/ is the contents of the last search pattern
+  "            (see http://vimdoc.sourceforge.net/htmldoc/cmdline.html#c_CTRL-R)
+  vnoremap <silent> * :<C-U>call GetVisualSelectedText('/')<cr>/<C-R>/<cr>
+  vnoremap <silent> # :<C-U>call GetVisualSelectedText('?')<cr>?<C-R>/<cr>
+
+  " Use ":reg" to view content of all vim registers
+  if executable('xsel')
+    nnoremap <leader>y     :w !xsel -i -b<cr><cr>
+    vnoremap <leader>y     :'<,'>w !xsel -i -b<cr><cr>
+     noremap <leader>p     :r !xsel -o -b<cr><cr>
+    nnoremap <leader>d     :d<cr>""w !xsel -i -b <cr><cr>
+    vnoremap <leader>d     :'<,'>d<cr>""w !xsel -i -b <cr><cr>
+    nnoremap <leader>x     :x<cr>""w !xsel -i -b <cr><cr>
+    vnoremap <leader>x     :'<,'>x<cr>""w !xsel -i -b <cr><cr>
+  endif
+" }}}
+
+" Helper functions {{{
+  "
+  " Write a Vim script manual: http://vimdoc.sourceforge.net/htmldoc/usr_41.html
+  "
+
+  " strips trailing whitespace at the end of all of lines
+  fun! TrimTrailingWhiteSpace()
+    let l:save = winsaveview()
+    %s/\s\+$//e
+    call winrestview(l:save)
+  endfun
+
+  " Escape string in selected text
+  " http://vim.wikia.com/wiki/Search_for_visually_selected_text
+  fun! GetVisualSelectedText(cmd)
+    let l:old_reg=getreg('"')
+    let l:old_regtype=getregtype('"')
+    norm! gvy
+    let l:escape_range = '\.*$^~['
+    let l:pattern_esc = escape(@", a:cmd.l:escape_range)
+    let l:pattern = substitute(l:pattern_esc, '\_s\+', '\\_s\\+', 'g')
+    norm! gV
+    let @/ = l:pattern
+    call setreg('"', l:old_reg, l:old_regtype)
+  endfun
+" }}}
+
+" Comments {{{
+  " FIXME(hard): Parse 'comments' set option for comment leader <https://vimhelp.org/change.txt.html#format-comments>.
+  noremap gcc :call CommentLines()<cr>
+  noremap gcu :call UncommentLines()<cr>
+
+  " Improved from <https://github.com/BurntSushi/dotfiles/blob/e5c72a924e0d163e130692d46ff7f4d9188307bf/.config/nvim/include/comment.vim>.
+  let s:comment_leaders = {
+    \ 'c':              '//',
+    \ 'cpp':            '//',
+    \ 'java':           '//',
+    \ 'javascript':     '//',
+    \ 'objc':           '//',
+    \ 'scala':          '//',
+    \ 'go':             '//',
+    \ 'rust':           '//',
+    \
+    \ 'bash':           '#',
+    \ 'dockerfile':     '#',
+    \ 'fish':           '#',
+    \ 'gdb':            '#',
+    \ 'make':           '#',
+    \ 'nix':            '#',
+    \ 'php':            '#',
+    \ 'perl':           '#',
+    \ 'python':         '#',
+    \ 'ruby':           '#',
+    \ 'sh':             '#',
+    \ 'toml':           '#',
+    \ 'tmux':           '#',
+    \ 'yaml':           '#',
+    \
+    \ 'tex':            '%',
+    \
+    \ 'vim':            '"',
+    \
+    \ 'haskell':        '--',
+    \
+    \ 'markdown':       '<!--',
+    \ }
+
+  function! CommentLines()
+    let l:leader = get(s:comment_leaders, &filetype, '')
+    if l:leader != ''
+      exe ':s/^\(\s*\)/\1' . escape(l:leader, '/') . ' /e'
+    else
+      echoerr 'No command leader for this filetype'
+    endif
+  endfun
+
+  function! UncommentLines()
+    let l:leader = get(s:comment_leaders, &filetype, '')
+    if l:leader != ''
+      exe ':s/^\(\s*\)' . escape(l:leader, '*$.^/') . '\s*/\1/e'
+    else
+      echoerr 'No command leader for this filetype'
+    endif
+  endfun
+" }}}
+
+if has('nvim')
+  if filereadable(stdpath('config') . '/local.vim')
+    exe 'source ' . stdpath('config') . '/local.vim'
+  endif
+else
+  if filereadable(expand("~/.vim/vimrc.local"))
+    source ~/.vim/vimrc.local
+  endif
+endif
+
+" vim: set et ts=2 sw=2

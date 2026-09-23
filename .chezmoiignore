@@ -1,0 +1,9 @@
+bin/
+docs/
+firefox/
+scripts/
+urxvt/
+CONTRIBUTING.md
+LICENSE
+TODO.md
+README.md
