@@ -29,9 +29,9 @@ verlt() {
 
 TMUX_VERSION="$(tmux -V | cut -d' ' -f2)"
 
-{{- if eq .chezmoi.hostname "darwin" }}
+{{- if eq .chezmoi.os "darwin" }}
 tmux source-file "${TMUX_CONFIG_DIR}/macos.conf";;
-{{- else if eq .chezmoi.hostname "freebsd" }}
+{{- else if eq .chezmoi.os "freebsd" }}
 tmux source-file "${TMUX_CONFIG_DIR}/freebsd.conf";;
 {{- else }}
 # tmux display -p "Unknown OS";;

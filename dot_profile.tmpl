@@ -65,7 +65,7 @@ export CARGO_TARGET_DIR=${HOME}/.cargo/target
 # * https://curiouslynerdy.com/gpg-agent-for-ssh-on-ubuntu/
 
 # Ref: https://wiki.gentoo.org/wiki/GnuPG#Changing_pinentry_for_SSH_logins
-{{- if ne .chezmoi.hostname "pop-os" }}
+{{- if not (has .chezmoi.hostname .localhosts) }}
   export PINENTRY_USER_DATA="USE_CURSES=1"
 {{- else }}
   # export PINENTRY_USER_DATA="USE_TTY=1"
