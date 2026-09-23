@@ -5,7 +5,7 @@
 # gpg-agent is not better than ssh-agent: https://unix.stackexchange.com/a/371910/178265
 # Ensure each process can find your `gpg-agent`
 # But for desktop only
-{{- if eq .chezmoi.hostname "pop-os" }}
+{{- if eq .chezmoi.hostname .desktop }}
 SSH_AGENT_PID=${SSH_AGENT_PID:+}
 SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
 # Disable keyring daemon components to use `gpg-agent`
