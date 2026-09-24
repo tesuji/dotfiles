@@ -76,12 +76,13 @@ set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --ignore-file ~/.fzfi
 if [ -z "$XDG_RUNTIME_DIR" ]
   if [ -d /run/user/ ]
     set -gx XDG_RUNTIME_DIR /run/user/(id -u)
+{{- if eq .chezmoi.os "openbsd" }}
   else
-    # For OpenBSD
     set -gx XDG_RUNTIME_DIR /tmp/runtime-(id -u)
     if [ ! -d "$XDG_RUNTIME_DIR" ]
       mkdir -m 0700 "$XDG_RUNTIME_DIR"
     end
+{{- end }}
   end
 end
 {{- else if eq .chezmoi.hostname "localhost" }}
