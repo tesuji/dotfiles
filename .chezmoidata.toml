@@ -1,2 +1,6 @@
 desktop = "pop-os"
-localhosts=["pop-os", "localhost"]
+localhosts=[
+	"pop-os",
+	# this is android termux hostname
+	"localhost",
+]
