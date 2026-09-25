@@ -8,14 +8,10 @@ if !has('nvim')
 endif
 
 " vim-plug doesn't work with fish shell
-if &shell =~# 'fish$'
-  if executable('zsh')
-    set shell=zsh
-  elseif executable('bash')
-    set shell=bash
-  else
-    set shell=sh
-  endif
+if executable('bash')
+  set shell=bash
+else
+  set shell=sh
 endif
 
 " Use `vim "+runtime syntax/colortest.vim"` to test vim color
@@ -66,8 +62,7 @@ set formatoptions=tcqj
 
 " With a map leader it is possible to do extra key combinations
 " like <leader>w saves the current file
-" The mapleader has to be set before vundle starts loading all
-" the plugins.
+" The mapleader has to be set before starting to load all the plugins.
 let mapleader   = ','
 "let g:mapleader = ','
 
@@ -587,15 +582,5 @@ let mapleader   = ','
     endif
   endfun
 " }}}
-
-if has('nvim')
-  if filereadable(stdpath('config') . '/local.vim')
-    exe 'source ' . stdpath('config') . '/local.vim'
-  endif
-else
-  if filereadable(expand("~/.vim/vimrc.local"))
-    source ~/.vim/vimrc.local
-  endif
-endif
 
 " vim: set et ts=2 sw=2
