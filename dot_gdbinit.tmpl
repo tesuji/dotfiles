@@ -9,6 +9,15 @@
 # If you compile with -g or at least not stripped
 #dir <path/to/source dir>
 
+{{- if .chezmoi.homeDir | contains "hacker" }}
+# for libslub
+python import gdb.types
+python
+import sys
+sys.path.append("/usr/local/lib/python3.8/dist-packages/")
+end
+{{- end }}
+
 # Default input offset radix to hexi just like windbg.
 set input-radix 16
 set disassembly-flavor intel

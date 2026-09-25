@@ -135,7 +135,11 @@ def cmd(n):
 # =========== EXPLOIT GOES HERE ============= #
 
 gdbscript = """
+{{- if .chezmoi.homeDir | contains "hacker" }}
+source {{ .chezmoi.homeDir }}/.bata-gef.py
+{{- else }}
 source ~/.bata-gef.py
+{{- end }}
 c
 """
 

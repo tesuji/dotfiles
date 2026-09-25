@@ -25,7 +25,11 @@ set fish_cursor_insert      line
 set fish_cursor_replace_one underscore
 set fish_cursor_visual      block
 
+{{- if .chezmoi.homeDir | contains "hacker" }}
+fish_config prompt choose minimalist
+{{- else }}
 fish_config prompt choose terlar
+{{- end}}
 
 # Vi-style bindings that inherit emacs-style bindings in all modes
 function fish_hybrid_key_bindings
@@ -70,7 +74,7 @@ set -gx PINENTRY_USER_DATA "USE_CURSES=1"
 set -e PINENTRY_USER_DATA
 {{- end }}
 
-set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --ignore-file ~/.fzfignore'
+set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --ignore-file {{ .chezmoi.homeDir }}/.fzfignore'
 
 {{- if eq .chezmoi.hostname .desktop }}
 if [ -z "$XDG_RUNTIME_DIR" ]
@@ -117,11 +121,18 @@ abbr --add g git
 abbr --add vi nvim
 abbr --add wget wget --content-disposition
 abbr --add rsqlite3 rlwrap sqlite3
-abbr --add firefox firefox --display :1
 abbr --add rp-linux "rp-linux -f | rg -v hlt"
 abbr --add lsport ss --processes --all --tcp --numeric
 abbr --add fix-touchpad "sudo modprobe -r i2c_hid_acpi && sudo modprobe i2c_hid_acpi"
 abbr --add cz chezmoi
+{{- if .chezmoi.homeDir | contains "hacker" }}
+abbr --add firefox firefox --display :0
+abbr --add tree tree -C
+abbr --add d8 /challenge/d8 --allow-natives-syntax
+abbr --add up ps -p "(pgrep -f '^/run/dojo/bin/sleep 6h')" -o etime
+{{- else }}
+abbr --add firefox firefox --display :1
+{{- end}}
 
 ### Aliases
 

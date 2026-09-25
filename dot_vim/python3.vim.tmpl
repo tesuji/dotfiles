@@ -1,6 +1,8 @@
 {{- if eq .chezmoi.os "android" }}
 " Needs python 3.8+ for neovim
 let g:python3_host_prog = $PREFIX . '/bin/python3'
+{{- else if .chezmoi.homeDir | contains "hacker" }}
+let g:python3_host_prog = '/home/hacker/.nvim-venv/bin/python3'
 {{- else }}
 let g:python3_host_prog = '/usr/bin/python3'
 {{- end}}
