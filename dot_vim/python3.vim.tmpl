@@ -1,8 +1,17 @@
-{{- if eq .chezmoi.os "android" }}
 " Needs python 3.8+ for neovim
+
+" Clear the flag that tells Neovim the provider is already 'done'
+unlet! g:loaded_python3_provider
+
+{{- if eq .chezmoi.hostname .desktop }}
+let g:python3_host_prog = '/usr/bin/python3'
+{{- else if eq .chezmoi.os "android" }}
 let g:python3_host_prog = $PREFIX . '/bin/python3'
 {{- else if .chezmoi.homeDir | contains "hacker" }}
 let g:python3_host_prog = '/home/hacker/.nvim-venv/bin/python3'
-{{- else }}
-let g:python3_host_prog = '/usr/bin/python3'
+{{- else if .chezmoi.hostname | contains "cfarm" }}
+"let g:loaded_python3_provider = 1
+let g:python3_host_prog = '{{ .chezmoi.homeDir }}/venv/bin/python3'
+" Force-load the internal Neovim Python 3 provider script
+"runtime autoload/provider/python3.vim
 {{- end}}
