@@ -1,0 +1,206 @@
+#!/usr/bin/env python3
+"""
+moshw - ssh_config-style wrapper for mosh
+
+Reads a config file formatted like ~/.ssh/config (Host blocks with
+indented key/value lines) and turns the matched block into a mosh
+command line, then execs mosh.
+
+Default config location: ~/.config/moshw/config
+Override with -c/--config, or set MOSHW_CONFIG.
+
+Config format (same shape as ssh_config):
+
+    Host myserver
+        HostName example.com
+        User alice
+        Port 2222
+        MoshPort 60000:60100
+        Predict adaptive
+        IPv4 yes
+        RemoteCommand tmux attach
+
+    Host otherserver
+        HostName 10.0.0.5
+        Ssh ssh -i ~/.ssh/id_ed25519
+
+    Host *
+        Predict adaptive
+        IPv4 yes
+
+Matching follows ssh_config semantics: blocks are scanned top to
+bottom, "Host" lines may list multiple space-separated glob patterns
+(fnmatch-style, so "*" and "?" work), and for each key the FIRST
+matching block that sets it wins -- so put specific hosts first and
+put shared defaults in a trailing "Host *" block.
+
+Recognized keys (all optional, case-insensitive):
+    HostName           actual host/IP to connect to (defaults to the alias)
+    User               remote username (combined as user@hostname)
+    Port               SSH port used to bootstrap the mosh session
+    MoshPort           UDP port or port range for mosh itself (-p)
+    Ssh                full ssh command to use, e.g. "ssh -i ~/.ssh/id_ed25519"
+    Client             path to local mosh-client binary
+    Server             path to remote mosh-server binary/command
+    Predict            adaptive | always | never   (--predict=...)
+    PredictOverwrite   yes/no                       (-a)
+    PredictNo          yes/no                       (-n)
+    Localhost          yes/no                       (-l)
+    IPv4               yes/no                       (-4)
+    IPv6               yes/no                       (-6)
+    ExperimentalRemoteIP  yes/no                     (--experimental-remote-ip)
+    RemoteCommand      command to run on the remote host after connecting
+
+Usage:
+    moshw.py HOST [-- extra mosh args]
+    moshw.py -c /path/to/config HOST
+"""
+
+import argparse
+import fnmatch
+import os
+import shlex
+import sys
+
+DEFAULT_CONFIG = os.path.expanduser("~/.config/moshw/config")
+TRUE_VALUES = {"yes", "true", "1", "on"}
+
+
+def parse_config(path):
+    """Parse an ssh_config-style file into a list of (patterns, options) blocks."""
+    blocks = []
+    current_patterns = None
+    current_opts = None
+
+    with open(path, "r") as f:
+        for raw_line in f:
+            line = raw_line.strip()
+            if not line or line.startswith("#"):
+                continue
+
+            # ssh_config allows "Key Value" or "Key=Value"
+            if "=" in line and line.split()[0].lower() != "host":
+                key, _, value = line.partition("=")
+                key, value = key.strip(), value.strip()
+            else:
+                parts = line.split(None, 1)
+                if len(parts) == 1:
+                    key, value = parts[0], ""
+                else:
+                    key, value = parts
+
+            if key.lower() == "host":
+                if current_patterns is not None:
+                    blocks.append((current_patterns, current_opts))
+                current_patterns = value.split()
+                current_opts = {}
+            else:
+                if current_opts is None:
+                    raise ValueError(
+                        f"moshw: config error: key '{key}' before any Host line"
+                    )
+                current_opts.setdefault(key.lower(), value)
+
+    if current_patterns is not None:
+        blocks.append((current_patterns, current_opts))
+
+    return blocks
+
+
+def resolve(blocks, alias):
+    """Merge options for the given alias, ssh_config-style (first match wins per key)."""
+    merged = {}
+    for patterns, opts in blocks:
+        if any(fnmatch.fnmatch(alias, pat) for pat in patterns):
+            for k, v in opts.items():
+                merged.setdefault(k, v)
+    return merged
+
+
+def is_true(value):
+    return str(value).strip().lower() in TRUE_VALUES
+
+
+def build_command(alias, opts, extra_args):
+    mosh_args = []
+
+    if opts.get("client"):
+        mosh_args.append(f"--client={opts['client']}")
+    if opts.get("server"):
+        mosh_args.append(f"--server={opts['server']}")
+    if opts.get("ssh"):
+        mosh_args.append(f"--ssh={opts['ssh']}")
+    elif opts.get("port"):
+        mosh_args.append(f"--ssh=ssh -p {opts['port']}")
+    if opts.get("moshport"):
+        mosh_args += ["-p", opts["moshport"]]
+    if opts.get("predict"):
+        mosh_args.append(f"--predict={opts['predict']}")
+
+    if is_true(opts.get("predictoverwrite", "")):
+        mosh_args.append("-a")
+    if is_true(opts.get("predictno", "")):
+        mosh_args.append("-n")
+    if is_true(opts.get("localhost", "")):
+        mosh_args.append("-l")
+    if is_true(opts.get("ipv4", "")):
+        mosh_args.append("-4")
+    if is_true(opts.get("ipv6", "")):
+        mosh_args.append("-6")
+    if is_true(opts.get("experimentalremoteip", "")):
+        mosh_args.append("--experimental-remote-ip")
+
+    hostname = opts.get("hostname", alias)
+    user = opts.get("user")
+    target = f"{user}@{hostname}" if user else hostname
+
+    cmd = ["mosh"] + mosh_args + list(extra_args) + [target]
+
+    if opts.get("remotecommand"):
+        cmd += shlex.split(opts["remotecommand"])
+
+    return cmd
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="ssh_config-style wrapper for mosh",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=__doc__,
+    )
+    parser.add_argument(
+        "-c", "--config",
+        default=os.environ.get("MOSHW_CONFIG", DEFAULT_CONFIG),
+        help=f"config file path (default: {DEFAULT_CONFIG})",
+    )
+    parser.add_argument("host", help="host alias to look up in the config")
+    parser.add_argument(
+        "extra", nargs=argparse.REMAINDER,
+        help="extra args passed straight through to mosh (put after '--')",
+    )
+    args = parser.parse_args()
+
+    extra = args.extra
+    if extra and extra[0] == "--":
+        extra = extra[1:]
+
+    if not os.path.isfile(args.config):
+        sys.exit(
+            f"moshw: config file not found: {args.config}\n"
+            f"moshw: (create it, or pass -c /path/to/config)"
+        )
+
+    try:
+        blocks = parse_config(args.config)
+    except ValueError as e:
+        sys.exit(str(e))
+
+    opts = resolve(blocks, args.host)
+    cmd = build_command(args.host, opts, extra)
+
+    print("+ " + " ".join(shlex.quote(c) for c in cmd), file=sys.stderr)
+    os.execvp(cmd[0], cmd)
+
+
+if __name__ == "__main__":
+    main()
