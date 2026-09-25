@@ -133,6 +133,8 @@ abbr --add firefox firefox --display :0
 abbr --add tree tree -C
 abbr --add d8 /challenge/d8 --allow-natives-syntax
 abbr --add up ps -p "(pgrep -f '^/run/dojo/bin/sleep 6h')" -o etime
+{{- else if .chezmoi.hostname | contains "cfarm" }}
+abbr --add ssh ssh -F ~/.ssh/config
 {{- else }}
 abbr --add firefox firefox --display :1
 {{- end}}
