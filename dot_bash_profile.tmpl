@@ -20,21 +20,21 @@ exec $SHELL
 {{- else if .chezmoi.homeDir | contains "hacker" }}
 # patch pwndbg, root files ...
 symlink_cfg() {
-       $sudo test -e /root/.inputrc && return
-       $sudo /home/hacker/.local/bin/chezmoi apply --source /home/hacker/.local/share/chezmoi -D /root/
-       $sudo ln -fs /home/hacker/.gdb_history /root/
-       $sudo mkdir -p /root/.vim/plugged/
-       $sudo ln -fsr .vim/plugged/* /root/.vim/plugged/
-       $sudo mkdir -p /root/.local/share/nvim/
-       $sudo ln -fsr /home/hacker/.local/share/nvim/rplugin.vim /root/.local/share/nvim/
-       $sudo ln -fsr /home/hacker/.local/bin/fzf /usr/local/bin/
-       $sudo ln -fsr /home/hacker/.fzfignore /root/
+  $sudo test -e /root/.inputrc && return
+  $sudo /home/hacker/.local/bin/chezmoi apply --source /home/hacker/.local/share/chezmoi -D /root/
+  $sudo ln -fs /home/hacker/.gdb_history /root/
+  $sudo mkdir -p /root/.vim/plugged/
+  $sudo ln -fsr .vim/plugged/* /root/.vim/plugged/
+  $sudo mkdir -p /root/.local/share/nvim/
+  $sudo ln -fsr /home/hacker/.local/share/nvim/rplugin.vim /root/.local/share/nvim/
+  $sudo ln -fsr /home/hacker/.local/bin/fzf /usr/local/bin/
+  $sudo ln -fsr /home/hacker/.fzfignore /root/
 }
 
 read -r privileged < /run/dojo/sys/workspace/privileged
 if test 0 -lt $privileged ; then
-       sudo=/run/dojo/bin/sudo
-       symlink_cfg
+  sudo=/run/dojo/bin/sudo
+  symlink_cfg
 fi
 
 # Only auto-start tmux if not already inside tmux
@@ -43,6 +43,7 @@ if [ -z "$DISPLAY" ] && [ -z "$SSH_CONNECTION" ] && [ -z "$TMUX" ]; then
 fi
 
 if [[ $SHLBL -le 2 ]]; then
+  /home/hacker/.local/bin/chezmoi init
   exec ~/fish
 fi
 {{- end }}
