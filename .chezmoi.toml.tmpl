@@ -1,0 +1,7 @@
+{{- $tmuxVersion := "" -}}
+{{- if lookPath "tmux" -}}
+  {{- $tmuxVersion = output "tmux" "-V" | trimPrefix "tmux " | trim | substr 0 3 -}}
+{{- end -}}
+
+[data]
+    tmuxVersion = {{ $tmuxVersion | quote }}

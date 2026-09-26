@@ -66,7 +66,21 @@ set-option -g word-separators ', )(][}{":><'"'"
 set -ga terminal-overrides ',xterm-*:XT,xterm-256color:RGB:Tc'
 # ':smcup@:rmcup@:kUP5=\eOA:kDN5=\eOB:kLFT5=\eOD:kRIT5=\eOC'
 
-run-shell '${HOME}/.config/tmux/startup.sh'
+{{- if eq .chezmoi.os "darwin" }}
+source-file "${HOME}/.config/tmux/macos.conf";;
+{{- else if eq .chezmoi.os "freebsd" }}
+source-file "${HOME}/.config/tmux/freebsd.conf";;
+{{- else }}
+# tmux display -p "Unknown OS";;
+{{- end }}
+
+{{- if semverCompare ">2.3" .tmuxVersion }}
+source-file "${HOME}/.config/tmux/24_plus.conf"
+{{- else if semverCompare ">2.0" .tmuxVersion }}
+source-file "${HOME}/.config/tmux/23.conf"
+{{- else }}
+source-file "${HOME}/.config/tmux/18.conf"
+{{- end }}
 
 # -- display ------------------------------------------------------------------
 
@@ -133,7 +147,15 @@ bind-key -n C-l     send-keys C-l \; run-shell 'sleep 0.1' \; clear-history
 # -- mouse --------------------------------------------------------------------
 
 # Add mouse support.
+{{- if semverCompare ">=2.1" .tmuxVersion }}
 set -g mouse on
+{{- else }}
+set -g mode-mouse on
+set -g mouse-resize-pane on
+set -g mouse-select-pane on
+set -g mouse-select-window on
+{{- end }}
+
 # Toggle mouse
 bind-key m set -g mouse on  \; display 'Mouse: ON'
 bind-key M set -g mouse off \; display 'Mouse: OFF'
