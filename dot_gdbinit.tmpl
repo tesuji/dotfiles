@@ -1,6 +1,7 @@
 # ~/.gdbinit : Script file for gdb - GNU Debugger
 
-#set debuginfod enabled off
+{{ if not (.chezmoi.homeDir | contains "hacker") }}#{{- end -}}
+set debuginfod enabled off
 #source ~/peda/peda.py
 # Prefer to manually run context
 #set context-sections regs
