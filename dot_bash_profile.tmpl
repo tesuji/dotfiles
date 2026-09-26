@@ -14,7 +14,7 @@
 # ~/.bash_login and ~/.profile are checked in that order.
 # The skeleton file /etc/skel/.bash_profile also sources ~/.bashrc
 
-{{- if not (has .chezmoi.hostname .localhosts) }}
+{{- if .chezmoi.hostname | contains "cfarm" }}
 export SHELL=$HOME/.local/bin/fish
 exec $SHELL
 {{- else if .chezmoi.homeDir | contains "hacker" }}
