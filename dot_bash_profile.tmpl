@@ -21,12 +21,9 @@ exec $SHELL
 # patch pwndbg, root files ...
 symlink_cfg() {
        $sudo test -e /root/.inputrc && return
-       $sudo rm -f /root/{.bashrc,.profile,.gdbinit,.radare2rc}
-       pushd /home/hacker/ndotfiles/ > /dev/null
-       $sudo ./prepare_dir.bash > /dev/null
-       $sudo /home/hacker/.local/bin/stow home.d/ config.d/ -t /root/
+       $sudo /home/hacker/.local/bin/chezmoi apply --source /home/hacker/.local/share/chezmoi -D /root/
        $sudo ln -fs /home/hacker/.gdb_history /root/
-       popd > /dev/null
+       $sudo mkdir -p /root/.vim/plugged/
        $sudo ln -fsr .vim/plugged/* /root/.vim/plugged/
        $sudo mkdir -p /root/.local/share/nvim/
        $sudo ln -fsr /home/hacker/.local/share/nvim/rplugin.vim /root/.local/share/nvim/

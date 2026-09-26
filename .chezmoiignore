@@ -10,3 +10,8 @@ README.md
 {{- if ne .chezmoi.hostname .desktop }}
 .config/xfce4/
 {{- end}}
+{{- if eq .chezmoi.username "root" }}
+.vim
+.config/nvim/
+.config/sublime-text/
+{{- end}}
