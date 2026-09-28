@@ -18,6 +18,9 @@
 export SHELL=$HOME/.local/bin/fish
 exec $SHELL
 {{- else if .chezmoi.homeDir | contains "hacker" }}
+pkill ttyd
+/home/hacker/.local/bin/chezmoi init
+
 # patch pwndbg, root files ...
 symlink_cfg() {
   $sudo test -e /root/.inputrc && return
@@ -43,8 +46,6 @@ if [ -z "$DISPLAY" ] && [ -z "$SSH_CONNECTION" ] && [ -z "$TMUX" ]; then
 fi
 
 if [[ $SHLBL -le 2 ]]; then
-  killall ttyd
-  /home/hacker/.local/bin/chezmoi init
   exec ~/fish
 fi
 {{- end }}
