@@ -15,3 +15,6 @@ README.md
 .config/nvim/
 .config/sublime-text/
 {{- end}}
+{{- if ne .chezmoi.os "android" }}
+.termux/
+{{- end}}
