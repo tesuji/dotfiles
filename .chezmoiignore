@@ -18,3 +18,7 @@ README.md
 {{- if ne .chezmoi.os "android" }}
 .termux/
 {{- end}}
+{{- if .chezmoi.hostname | hasPrefix "cfarm" | not }}
+.nix-binds.sh
+init-tmux.sh
+{{- end}}
